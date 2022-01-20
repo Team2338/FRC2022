@@ -7,17 +7,11 @@ package team.gif.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
-    /* Used to declare singleton class */
-    private static ExampleSubsystem instance = null;
-    public static ExampleSubsystem getInstance() {
-        if (instance == null) {
-            instance = new ExampleSubsystem();
-        }
-        return instance;
-    }
-
     /** Creates a new ExampleSubsystem. */
-    public ExampleSubsystem() {}
+    public ExampleSubsystem() {
+        super();
+
+    }
 
     @Override
     public void periodic() {

@@ -18,6 +18,7 @@ public class ExampleCommand extends CommandBase {
      * @param subsystem The subsystem used by this command.
      */
     public ExampleCommand(ExampleSubsystem subsystem) {
+        super();
         m_subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
