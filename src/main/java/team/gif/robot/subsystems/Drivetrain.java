@@ -151,7 +151,7 @@ public class Drivetrain extends SubsystemBase {
                 getLeftEncoderPos_Meters(),
                 getRightEncoderPos_Meters());
         } else {
-            System.out.println("Cannot set robot odemetry. Pigeon is not in ready state.");
+            System.out.println("Cannot set robot odometry. Pigeon is not in ready state.");
         }
     }
 
@@ -170,8 +170,8 @@ public class Drivetrain extends SubsystemBase {
      * @return The current wheel speeds.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(_leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.drivetrain.WHEEL_CICUMFERENCE,
-                                                _rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.drivetrain.WHEEL_CICUMFERENCE );
+        return new DifferentialDriveWheelSpeeds(_leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.drivetrain.WHEEL_CIRCUMFERENCE,
+                                                _rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
     /**

@@ -17,7 +17,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class Constants {
     public static class drivetrain {
         public static double WHEEL_DIAMETER = 0.127; // IN METERS
-        public static double WHEEL_CICUMFERENCE = WHEEL_DIAMETER * 3.14159; // IN METERS
+        public static double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * 3.14159; // IN METERS
 
         public static double TICKS_TO_METERS = 10000;
         public static double TICKS_TO_METERS_LEFT = 10115; //10058; // Pushed bot 17 feet, recorded ticks (51816), converted to meters
