@@ -43,15 +43,15 @@ public class Drivetrain extends SubsystemBase {
 */
     // ------------ Variables for Trajectory End) ----------
 
-    public static Drivetrain getInstance() {
+    /*public static Drivetrain getInstance() {
         if (instance == null) {
             System.out.println("drivetrain init");
             instance = new Drivetrain();
         }
         return instance;
-    }
+    }*/
 
-    private Drivetrain() {
+    public Drivetrain() {
         super();
 
         leftTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_ONE);
