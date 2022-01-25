@@ -7,6 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.drivetrain.Drive;
 import team.gif.robot.subsystems.Drivetrain;
 
 /**
@@ -34,7 +35,9 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+
         drivetrain = new Drivetrain();
+        driveCommand = new Drive();
     }
 
     /**
