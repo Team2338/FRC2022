@@ -53,7 +53,7 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         super();
-
+        System.out.println("Creating Drivetrain");
         leftTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_ONE);
         leftTalon2 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_TWO);
         rightTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_ONE);
@@ -102,6 +102,7 @@ public class Drivetrain extends SubsystemBase {
         resetEncoders();
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
         resetPose();
+        System.out.println("Drivetrain Constructed");
     }
 
     public void currentLimitingSetup(){

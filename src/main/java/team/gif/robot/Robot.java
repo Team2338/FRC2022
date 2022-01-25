@@ -16,13 +16,13 @@ import team.gif.robot.subsystems.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
 
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
-
-    public static Drivetrain drivetrain = new Drivetrain();
+    private static Command driveCommand = null;
+    public static Drivetrain drivetrain = null;
     public static OI oi;
 
     /**
@@ -34,6 +34,7 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        drivetrain = new Drivetrain();
     }
 
     /**
@@ -83,7 +84,9 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
         oi = new OI();
+        driveCommand.schedule();
     }
 
     /** This function is called periodically during operator control. */

@@ -20,11 +20,12 @@ public class Drive extends CommandBase {
      *
      * @param subsystem The subsystem used by this command.
      */
-    public Drive(Drivetrain subsystem) {
+    public Drive() {
         super();
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.drivetrain);
+        System.out.println("Drivetrain Command Scheduled");
     }
 
     // Called when the command is initially scheduled.
@@ -37,16 +38,16 @@ public class Drive extends CommandBase {
         /*
          * Tank Drive
          */
-//        double currSpeed = Robot.oi.driver.getLeftY();
-//        double rotation = Robot.oi.driver.getRightX();
-//        Robot.drivetrain.driveArcade(currSpeed, rotation);
+        double currSpeed = Robot.oi.driver.getLeftY();
+        double rotation = Robot.oi.driver.getRightX();
+        Robot.drivetrain.driveArcade(currSpeed, rotation);
 
         /*
          * True Tank Drive
          */
-        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
-        double currR = -Robot.oi.driver.getRightY();
-        Robot.drivetrain.setSpeed(currL, currR);
+//        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
+//        double currR = -Robot.oi.driver.getRightY();
+//        Robot.drivetrain.setSpeed(currL, currR);
     }
 
     // Returns true when the command should end.
