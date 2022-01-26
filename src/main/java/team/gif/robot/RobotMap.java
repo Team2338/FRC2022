@@ -27,4 +27,10 @@ public abstract class RobotMap {
 
     //pigeon
     public static final int PIGEON_CAN = 2;
+    /*
+    public static final int SOLENOID_ZERO = 0;
+    public static final int SOLENOID_ONE = 1;
+    public static final int SOLENOID_TWO = 2;
+    */
+
 }
