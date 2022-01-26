@@ -5,6 +5,10 @@ import team.gif.robot.subsystems.Intake;
 
 public class IntakeRun extends CommandBase
 {
+    public IntakeRun(){
+        super();
+        addRequirements(Robot.intake);
+    }
 
 
     // Called when the command is initially scheduled.
@@ -16,17 +20,7 @@ public class IntakeRun extends CommandBase
 
 
     public void execute() {
-        //if (!Indexer.getInstance().getState()[1] || !Indexer.getInstance().getState()[2])
-        //} else {
         Robot.intake.setSpeed(0.75);
-        }
-
-
-
-    // Called once the command ends or is interrupted.
-    @Override
-    public void end(boolean interrupted) {
-        Robot.intake.setSpeed(0);
     }
 
     // Returns true when the command should end.
@@ -35,6 +29,14 @@ public class IntakeRun extends CommandBase
     {
         return false;
     }
+
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        Robot.intake.setSpeed(0);
+    }
+
+
 }
 
 

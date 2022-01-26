@@ -6,7 +6,10 @@ import team.gif.robot.subsystems.Intake;
 
 public class IntakeReverse extends CommandBase
 {
-
+    public IntakeReverse(){
+        super();
+        addRequirements(Robot.intake);
+    }
 
     // Called when the command is initially scheduled.
     @Override
@@ -19,16 +22,17 @@ public class IntakeReverse extends CommandBase
         Robot.intake.setSpeed(-0.5);
     }
 
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         Robot.intake.setSpeed(0);
     }
 
-    // Returns true when the command should end.
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
 }
 
