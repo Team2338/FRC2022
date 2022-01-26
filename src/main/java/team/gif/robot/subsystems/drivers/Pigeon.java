@@ -29,14 +29,14 @@ public class Pigeon {
     public Pigeon(TalonSRX talon){
         _pigeon = new PigeonIMU(talon);
         instance = this;
-
-        // Puts a Gyro type widget on dashboard and assigns
-        // the function getHeading_Shuffleboard
-        ShuffleboardTab   tab  = Shuffleboard.getTab("SmartDashboard"); //gets a reference to the shuffleboard tab
-        tab.add("BotHead",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> getCompassHeading(),null);});
     }
 
-
+    public void addToShuffleboard(String tabName, String widgetTitle) {
+        // Puts a Gyro type widget on dashboard and assigns
+        // the function getHeading_Shuffleboard
+        ShuffleboardTab   tab  = Shuffleboard.getTab(tabName); //gets a reference to the shuffleboard tab
+        tab.add(widgetTitle,(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> getCompassHeading(),null);});
+    }
     /**
      * Returns heading from pigeon
      *      turning counterclockwise, values increase
