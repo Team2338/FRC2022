@@ -7,6 +7,9 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.subsystems.Intake;
+import team.gif.robot.commands.drivetrain.Drive;
+import team.gif.robot.subsystems.Drivetrain;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,12 +18,16 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
 
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
+    private static Command driveCommand = null;
+    public static Drivetrain drivetrain = null;
+    public static OI oi;
 
+    public static final Intake intake = new Intake();
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -30,6 +37,9 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+
+        drivetrain = new Drivetrain();
+        driveCommand = new Drive();
     }
 
     /**
@@ -79,6 +89,9 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
+        oi = new OI();
+        driveCommand.schedule();
     }
 
     /** This function is called periodically during operator control. */
