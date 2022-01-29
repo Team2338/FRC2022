@@ -40,7 +40,7 @@ public class Drive extends CommandBase {
          */
         double currSpeed = Robot.oi.driver.getLeftY();
         double rotation = Robot.oi.driver.getRightX();
-        Robot.drivetrain.driveArcade(currSpeed, rotation);
+        Robot.drivetrain.driveArcade(rotation, currSpeed);
 
         /*
          * True Tank Drive

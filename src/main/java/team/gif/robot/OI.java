@@ -72,8 +72,8 @@ public class OI {
 
         // Driver Controls
 //        dLT.whileHeld(new Pivot());
-        dLBump.whileHeld(new IntakeReverse());
-        dRBump.whileHeld(new IntakeRun());
+        dLBump.whenHeld(new IntakeReverse());
+        dRBump.whenHeld(new IntakeRun());
 
 
     }
