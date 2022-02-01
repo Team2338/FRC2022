@@ -25,7 +25,6 @@ public class Drive extends CommandBase {
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.drivetrain);
-        System.out.println("Drivetrain Command Scheduled");
     }
 
     // Called when the command is initially scheduled.

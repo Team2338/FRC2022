@@ -53,7 +53,6 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         super();
-        System.out.println("Creating Drivetrain");
         leftTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_ONE);
         leftTalon2 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_TWO);
         rightTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_ONE);
@@ -95,14 +94,13 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        m_pigeon = Robot.isCompBot ? new Pigeon(leftTalon2) : new Pigeon();
+        m_pigeon = Robot.isCompBot ? new Pigeon(leftTalon2) : new Pigeon(leftTalon2);
 
         m_pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
 
         resetEncoders();
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
         resetPose();
-        System.out.println("Drivetrain Constructed");
     }
 
     public void currentLimitingSetup(){

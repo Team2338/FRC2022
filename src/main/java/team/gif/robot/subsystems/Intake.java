@@ -12,18 +12,14 @@ public class Intake extends SubsystemBase
 {
     private static final TalonSRX intakeMotor = new TalonSRX(RobotMap.INTAKE);
 
-
     public Intake() {
         super();
         intakeMotor.setInverted(true);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
-
-
     }
 
-    public void setSpeed(double speed) {
-        intakeMotor.set(ControlMode.PercentOutput, speed);
-
+    //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
+    public void setSpeedPercent(double percent) {
+        intakeMotor.set(ControlMode.PercentOutput, percent);
     }
-
 }

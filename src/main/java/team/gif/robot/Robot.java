@@ -18,7 +18,7 @@ import team.gif.robot.subsystems.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = true;
+    public static final boolean isCompBot = false;
 
     private Command m_autonomousCommand;
 

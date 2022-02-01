@@ -1,7 +1,6 @@
 package team.gif.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.Intake;
 
 public class IntakeRun extends CommandBase
 {
@@ -20,7 +19,7 @@ public class IntakeRun extends CommandBase
 
 
     public void execute() {
-        Robot.intake.setSpeed(0.75);
+        Robot.intake.setSpeedPercent(0.75);
     }
 
     // Returns true when the command should end.
@@ -33,7 +32,7 @@ public class IntakeRun extends CommandBase
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.intake.setSpeed(0);
+        Robot.intake.setSpeedPercent(0);
     }
 
 
