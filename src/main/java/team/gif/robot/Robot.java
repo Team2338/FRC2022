@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.subsystems.Intake;
 import team.gif.robot.commands.drivetrain.Drive;
 import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.util.Logger;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,7 +20,7 @@ import team.gif.robot.subsystems.Drivetrain;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends TimedRobot  {
     public static final boolean isCompBot = true;
 
     private Command m_autonomousCommand;
@@ -40,6 +43,7 @@ public class Robot extends TimedRobot {
 
         drivetrain = new Drivetrain();
         driveCommand = new Drive();
+        Logger.info("Robot started");
     }
 
     /**
@@ -56,11 +60,15 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        Logger.flush();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        Logger.info("Entering Disabled");
+    }
+
 
     @Override
     public void disabledPeriodic() {}
@@ -74,6 +82,7 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
+        Logger.info("Entering Autonomous");
     }
 
     /** This function is called periodically during autonomous. */
@@ -89,6 +98,8 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
+        Logger.info("Entering Teleop");
 
         oi = new OI();
         driveCommand.schedule();
