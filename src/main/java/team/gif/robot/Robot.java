@@ -4,11 +4,13 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import team.gif.robot.RobotMap;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,6 +25,9 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
     public static Pigeon m_pigeon = null;
 
+    // Creating an new tab in shuffleboard.
+    ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -35,6 +40,15 @@ public class Robot extends TimedRobot {
 
         m_pigeon = new Pigeon();
         m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
+
+        // T.S: Example Input from Shuffleboard issue
+        var inputValue = 0;
+        NetworkTableEntry exampleinput = tab.add("Example Input", inputValue).getEntry();
+        System.out.println("Example Input: " + inputValue);
+        /**
+         * This is a way to get an input from the shuffleboard.
+         * So, may change the PIDTune variable boolean to something.
+         */
     }
 
     /**
@@ -51,7 +65,6 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
