@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.Timer;
 
 
 
+
+
+
     /**
      * This class facilitates the logging of data to an external USB flash drive.
      * A new file, always called "latest.txt" is written to in the /logs/ folder of
@@ -109,6 +112,7 @@ import edu.wpi.first.wpilibj.Timer;
             if(message.isEmpty())
                 return;
             instance.log("INFO", message);
+
         }
 
         /**

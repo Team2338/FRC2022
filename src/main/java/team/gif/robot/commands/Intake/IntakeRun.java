@@ -1,7 +1,6 @@
 package team.gif.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.Intake;
 
 public class IntakeRun extends CommandBase
 {
@@ -9,6 +8,7 @@ public class IntakeRun extends CommandBase
         super();
         addRequirements(Robot.intake);
     }
+
 
 
     // Called when the command is initially scheduled.

@@ -12,7 +12,7 @@ public class util
         else
             return value;
     }
-
+    
     /**
      * Treat values within specified deadband as zero.
      */

@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package team.gif.robot;
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -11,17 +11,15 @@ import team.gif.robot.subsystems.Intake;
 import team.gif.robot.commands.drivetrain.Drive;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.util.Logger;
-
-
-
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot  {
-    public static final boolean isCompBot = true;
+
+public class Robot extends TimedRobot {
+    public static final boolean isCompBot = false;
 
     private Command m_autonomousCommand;
 
@@ -107,7 +105,11 @@ public class Robot extends TimedRobot  {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        double timeLeft = DriverStation.getMatchTime();
+        oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
+                     (timeLeft <=  5.0 && timeLeft >=  3.0));
+    }
 
     @Override
     public void testInit() {

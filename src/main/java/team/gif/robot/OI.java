@@ -72,15 +72,15 @@ public class OI {
 
         // Driver Controls
 //        dLT.whileHeld(new Pivot());
-        dLBump.whileHeld(new IntakeReverse());
-        dRBump.whileHeld(new IntakeRun());
+        dLBump.whenHeld(new IntakeReverse());
+        dRBump.whenHeld(new IntakeRun());
 
 
     }
-//    public void setRumble(boolean rumble) {
-//        driver.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
-//        driver.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
-//        aux.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
-//        aux.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
-//    }
+   public void setRumble(boolean rumble) {
+        driver.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
+        driver.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
+        aux.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
+        aux.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
+    }
 }
