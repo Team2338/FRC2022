@@ -5,9 +5,9 @@
 package team.gif.robot;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableValue;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import team.gif.robot.commands.ShuffleboardInput;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,10 +25,14 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
     public static Pigeon m_pigeon = null;
-    private NetworkTableEntry examplentry;
+    public static NetworkTableEntry examplentry;
+
     // T.S: Creating an new tab in shuffleboard.
     ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
-    private static int inputValue = 5;
+    //public double inputValue;
+    public ShuffleboardInput inputCommand;
+
+    public static double inputValue = 10;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -39,11 +43,16 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        inputCommand = new ShuffleboardInput();
 
         m_pigeon = new Pigeon();
         m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
-        examplentry = tab.add("Example Input", inputValue).getEntry();
+        // TS: Commented the getEntry method and implemented a button.
+        examplentry = tab.add("Example Input",inputValue)
+                .getEntry();
+        tab.add("Commant", inputCommand);
+
         /**
          * This is a way to get an input from the shuffleboard.
          * So, may change the PIDTune variable boolean to something.
@@ -65,10 +74,10 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
 
-        inputValue = (int) examplentry.getDouble(inputValue);
-        examplentry.setDouble(inputValue);
+        // TS: get the input from shuffleboard and returning it to inputValue
 
-        // print the example input value
+
+        // TS: print the example input value
         System.out.println("Example Input: " + inputValue);
     }
 
@@ -103,8 +112,6 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
-
-
     }
 
     /** This function is called periodically during operator control. */
