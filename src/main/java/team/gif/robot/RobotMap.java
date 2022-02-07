@@ -10,9 +10,12 @@ public abstract class RobotMap {
 
     // Other Motors
     public static final int INTAKE = 4;
+    public static final int INDEXER = 10;
+    public static final int BELT = 11;
 
     // Sensors
     public static final int SENSOR_STAGE_ONE = 1;
+    public static final int SENSOR_STAGE_TWO = 2;
 
     // Solenoids
     public static final int SOLENOID_HANGER = 0;

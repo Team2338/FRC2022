@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
-import team.gif.robot.commands.Intake.IntakeReverse;
-import team.gif.robot.commands.Intake.IntakeRun;
+import team.gif.robot.commands.intake.IntakeReverse;
+import team.gif.robot.commands.intake.IntakeRun;
 
 
 public class OI {

@@ -1,14 +1,14 @@
-package team.gif.robot.commands.Intake;
+package team.gif.robot.commands.intake;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class IntakeRun extends CommandBase
+public class IntakeReverse extends CommandBase
 {
-    public IntakeRun(){
+    public IntakeReverse(){
         super();
         addRequirements(Robot.intake);
     }
-
 
     // Called when the command is initially scheduled.
     @Override
@@ -16,16 +16,14 @@ public class IntakeRun extends CommandBase
     }
 
     // Called every time the scheduler runs while the command is scheduled.
-
-
+    @Override
     public void execute() {
-        Robot.intake.setSpeedPercent(0.75);
+        Robot.intake.setSpeedPercent(-0.5);
     }
 
     // Returns true when the command should end.
     @Override
-    public boolean isFinished()
-    {
+    public boolean isFinished() {
         return false;
     }
 
@@ -35,13 +33,5 @@ public class IntakeRun extends CommandBase
         Robot.intake.setSpeedPercent(0);
     }
 
-
 }
-
-
-
-
-
-
-
 
