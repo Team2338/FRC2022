@@ -9,10 +9,10 @@ import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
-public class IndexMidToTop extends CommandBase {
+public class IndexMidToBelt extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-    public IndexMidToTop() {
+    public IndexMidToBelt() {
         super();
         addRequirements(Robot.indexer);
     }
@@ -33,7 +33,7 @@ public class IndexMidToTop extends CommandBase {
         if(!Globals.indexerEnabled) {
             return true;
         } else {
-            return Robot.indexer.sensorStates()[1];
+            return Robot.indexer.sensorStates()[2];
         }
     }
 

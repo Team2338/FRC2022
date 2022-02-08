@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.indexer.IndexScheduler;
 import team.gif.robot.commands.indexer.IndexerIdle;
 
 
@@ -16,9 +15,9 @@ public class Indexer extends SubsystemBase {
     private static final TalonSRX wheelMotor = new TalonSRX(RobotMap.WHEEL_INDEX);
     private static final TalonSRX beltMotor = new TalonSRX(RobotMap.BELT);
 
-    private static final DigitalInput sOne = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
-    private static final DigitalInput sTwo = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
-    private static final DigitalInput sThree = new DigitalInput(RobotMap.SENSOR_STAGE_THREE);
+    private static final DigitalInput sensorOne = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
+    private static final DigitalInput sensorTwo = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
+    private static final DigitalInput sensorThree = new DigitalInput(RobotMap.SENSOR_STAGE_THREE);
 
     public Indexer() {
         super();
@@ -30,7 +29,7 @@ public class Indexer extends SubsystemBase {
     }
 
     public boolean[] sensorStates() {
-        return new boolean[]{!sOne.get(), !sTwo.get(), !sThree.get()};
+        return new boolean[]{false, sensorOne.get(), sensorTwo.get(), sensorThree.get()};
     }
 
     public void setIndexMotorSpeed(double percent) {

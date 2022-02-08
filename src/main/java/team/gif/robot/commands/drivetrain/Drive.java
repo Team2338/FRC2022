@@ -5,7 +5,7 @@
 package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import static team.gif.robot.Robot.*;
+import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
 public class Drive extends CommandBase {
@@ -14,7 +14,7 @@ public class Drive extends CommandBase {
 
     public Drive() {
         super();
-        addRequirements(drivetrain);
+        addRequirements(Robot.drivetrain);
     }
 
     // Called when the command is initially scheduled.
@@ -27,9 +27,9 @@ public class Drive extends CommandBase {
         /*
          * Tank Drive
          */
-        double currSpeed = oi.driver.getLeftY();
-        double rotation = oi.driver.getRightX();
-        drivetrain.driveArcade(rotation, currSpeed);
+        double currSpeed = Robot.oi.driver.getLeftY();
+        double rotation = Robot.oi.driver.getRightX();
+        Robot.drivetrain.driveArcade(rotation, currSpeed);
 
         /*
          * True Tank Drive

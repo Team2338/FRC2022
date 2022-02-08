@@ -33,7 +33,7 @@ public class IndexCollectorToMid extends CommandBase {
         if(!Globals.indexerEnabled) {
             return true;
         } else {
-            return Robot.indexer.sensorStates()[0];
+            return Robot.indexer.sensorStates()[1];
         }
     }
 

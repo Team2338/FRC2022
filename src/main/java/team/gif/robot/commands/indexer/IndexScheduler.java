@@ -34,7 +34,7 @@ public class IndexScheduler extends CommandBase {
         }
         if(currCommand == null && Globals.indexerEnabled) {
             if(!Robot.indexer.sensorStates()[2] && Robot.indexer.sensorStates()[1]) {
-                currCommand = new IndexMidToTop();
+                currCommand = new IndexMidToBelt();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
             if(!Robot.indexer.sensorStates()[1] && Robot.indexer.sensorStates()[0]) {
