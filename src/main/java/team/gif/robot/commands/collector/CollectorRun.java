@@ -1,14 +1,13 @@
-package team.gif.robot.commands.intake;
+package team.gif.robot.commands.collector;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class IntakeRun extends CommandBase
+public class CollectorRun extends CommandBase
 {
-    public IntakeRun(){
+    public CollectorRun(){
         super();
         addRequirements(Robot.intake);
     }
-
 
     // Called when the command is initially scheduled.
     @Override
@@ -16,10 +15,8 @@ public class IntakeRun extends CommandBase
     }
 
     // Called every time the scheduler runs while the command is scheduled.
-
-
     public void execute() {
-        if ((Robot.indexer.sensorStates()[0] && Robot.indexer.sensorStates()[1]) || (Robot.indexer.sensorStates()[1] && Robot.indexer.sensorStates()[2])) {
+        if ((Robot.indexer.getSensorCollector() && Robot.indexer.getSensorWheel()) || (Robot.indexer.getSensorWheel() && Robot.indexer.getSensorBelt())) {
             Robot.intake.setSpeedPercent(0);
             System.out.println("Robot Full");
         } else {
@@ -38,8 +35,6 @@ public class IntakeRun extends CommandBase
     public void end(boolean interrupted) {
         Robot.intake.setSpeedPercent(0);
     }
-
-
 }
 
 

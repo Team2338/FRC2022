@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.indexer.IndexScheduler;
-import team.gif.robot.commands.indexer.IndexerIdle;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Intake;
 import team.gif.robot.commands.drivetrain.Drive;
@@ -49,7 +48,7 @@ public class Robot extends TimedRobot {
         intake = new Intake();
         indexer = new Indexer();
 
-        CommandScheduler.getInstance().setDefaultCommand(indexer, new IndexerIdle());
+        CommandScheduler.getInstance().setDefaultCommand(indexer, new IndexScheduler());
     }
 
     /**

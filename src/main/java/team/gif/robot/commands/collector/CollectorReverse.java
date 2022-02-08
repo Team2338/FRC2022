@@ -1,11 +1,11 @@
-package team.gif.robot.commands.intake;
+package team.gif.robot.commands.collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class IntakeReverse extends CommandBase
+public class CollectorReverse extends CommandBase
 {
-    public IntakeReverse(){
+    public CollectorReverse(){
         super();
         addRequirements(Robot.intake);
     }

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.indexer.IndexerIdle;
+import team.gif.robot.commands.indexer.IndexScheduler;
 
 
 public class Indexer extends SubsystemBase {
@@ -15,9 +15,9 @@ public class Indexer extends SubsystemBase {
     private static final TalonSRX wheelMotor = new TalonSRX(RobotMap.WHEEL_INDEX);
     private static final TalonSRX beltMotor = new TalonSRX(RobotMap.BELT);
 
-    private static final DigitalInput sensorOne = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
-    private static final DigitalInput sensorTwo = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
-    private static final DigitalInput sensorThree = new DigitalInput(RobotMap.SENSOR_STAGE_THREE);
+    private static final DigitalInput sensorCollector = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
+    private static final DigitalInput sensorWheel = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
+    private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.SENSOR_STAGE_THREE);
 
     public Indexer() {
         super();
@@ -28,8 +28,16 @@ public class Indexer extends SubsystemBase {
         beltMotor.setInverted(false);
     }
 
-    public boolean[] sensorStates() {
-        return new boolean[]{false, sensorOne.get(), sensorTwo.get(), sensorThree.get()};
+    public boolean getSensorCollector() {
+        return sensorCollector.get();
+    }
+
+    public boolean getSensorWheel() {
+        return sensorWheel.get();
+    }
+
+    public boolean getSensorBelt() {
+        return sensorBelt.get();
     }
 
     public void setIndexMotorSpeed(double percent) {
@@ -41,6 +49,6 @@ public class Indexer extends SubsystemBase {
     }
 
     public void setDefaultCommand(Command defaultCommand) {
-        super.setDefaultCommand(new IndexerIdle());
+        super.setDefaultCommand(new IndexScheduler());
     }
 }
