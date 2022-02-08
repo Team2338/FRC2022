@@ -24,6 +24,7 @@ public class OI {
 
     public final XboxController driver = new XboxController(RobotMap.DRIVER_CONTROLLER_ID);
     public final XboxController aux = new XboxController(RobotMap.AUX_CONTROLLER_ID);
+    public final XboxController test = new XboxController(RobotMap.TEST_CONTROLLER_ID);
 
     public final JoystickButton dA = new JoystickButton(driver, 1);
     public final JoystickButton dB = new JoystickButton(driver, 2);
@@ -60,6 +61,23 @@ public class OI {
     public final POVButton aDPadDown = new POVButton(aux, 180);
     public final POVButton aDPadLeft = new POVButton(aux, 270);
 
+    public final JoystickButton tA = new JoystickButton(test, 1);
+    public final JoystickButton tB = new JoystickButton(test, 2);
+    public final JoystickButton tX = new JoystickButton(test, 3);
+    public final JoystickButton tY = new JoystickButton(test, 4);
+    public final JoystickButton tLBump = new JoystickButton(test, 5);
+    public final JoystickButton tRBump = new JoystickButton(test, 6);
+    public final JoystickButton tBack = new JoystickButton(test, 7);
+    public final JoystickButton tStart = new JoystickButton(test, 8);
+    public final JoystickButton tLStickBtn = new JoystickButton(test, 9);
+    public final JoystickButton tRStickBtn = new JoystickButton(test, 10);
+    public final AxisButton tRTrigger = new AxisButton(test,3,.05);
+    public final AxisButton tLTrigger = new AxisButton(test,2,.05);
+    public final POVButton tDPadUp = new POVButton(test, 0);
+    public final POVButton tDPadRight = new POVButton(test, 90);
+    public final POVButton tDPadDown = new POVButton(test, 180);
+    public final POVButton tDPadLeft = new POVButton(test, 270);
+
     public OI() {
         /*
          * TODO: Define what each button does
@@ -77,7 +95,6 @@ public class OI {
 
 
     }
-    
     public void setRumble(boolean rumble) {
         driver.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
         driver.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
