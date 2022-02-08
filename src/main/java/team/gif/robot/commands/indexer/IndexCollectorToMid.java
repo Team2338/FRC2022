@@ -5,15 +5,15 @@
 package team.gif.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
-public class IndexDefault extends CommandBase {
+public class IndexCollectorToMid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-    public IndexDefault() {
+    public IndexCollectorToMid() {
         super();
-        // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.indexer);
     }
 
@@ -24,21 +24,22 @@ public class IndexDefault extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.indexer.setIndexMotor(Robot.indexer.sensorStates()[0] && !Robot.indexer.sensorStates()[1] ? 0.8 : 0);
+        Robot.indexer.setIndexMotorSpeed(0.5);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(Robot.indexer.sensorStates()[0] && !Robot.indexer.sensorStates()[1]){
-            return false;
+        if(!Globals.indexerEnabled) {
+            return true;
+        } else {
+            return Robot.indexer.sensorStates()[0];
         }
-        return true;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setIndexMotor(0);
+        Robot.indexer.setIndexMotorSpeed(0);
     }
 }

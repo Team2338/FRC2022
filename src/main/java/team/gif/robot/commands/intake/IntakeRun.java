@@ -19,9 +19,13 @@ public class IntakeRun extends CommandBase
 
 
     public void execute() {
-        Robot.intake.setSpeedPercent(0.75);
+        if ((Robot.indexer.sensorStates()[0] && Robot.indexer.sensorStates()[1]) || (Robot.indexer.sensorStates()[1] && Robot.indexer.sensorStates()[2])) {
+            Robot.intake.setSpeedPercent(0);
+            System.out.println("Robot Full");
+        } else {
+            Robot.intake.setSpeedPercent(0.75);
+        }
     }
-
     // Returns true when the command should end.
     @Override
     public boolean isFinished()
