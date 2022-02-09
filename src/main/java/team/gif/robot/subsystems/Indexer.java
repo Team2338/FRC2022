@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
 import team.gif.robot.commands.indexer.IndexScheduler;
+import team.gif.robot.commands.indexer.IndexerIdle;
 
 
 public class Indexer extends SubsystemBase {
@@ -48,7 +49,4 @@ public class Indexer extends SubsystemBase {
         wheelMotor.set(ControlMode.PercentOutput, percent);
     }
 
-    public void setDefaultCommand(Command defaultCommand) {
-        super.setDefaultCommand(new IndexScheduler());
-    }
 }

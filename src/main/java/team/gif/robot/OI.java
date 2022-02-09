@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
+import team.gif.robot.commands.shooter.ShooterShoots;
 import team.gif.robot.commands.collector.CollectorReverse;
 import team.gif.robot.commands.collector.CollectorRun;
 
@@ -74,6 +75,7 @@ public class OI {
 //        dLT.whileHeld(new Pivot());
         dLBump.whenHeld(new CollectorReverse());
         dRBump.whenHeld(new CollectorRun());
+        dA.whenHeld(new ShooterShoots());
 
 
     }
