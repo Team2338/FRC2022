@@ -32,7 +32,10 @@ public class Robot extends TimedRobot {
     //public double inputValue;
     public ShuffleboardInput inputCommand;
 
-    public static double inputValue = 10;
+    // TS: the value of the something what is changing,(Example PID control).
+    private static double inputSink;
+    // TS: the value is getting the getEntry number
+    public static double inputValue = inputSink;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -43,6 +46,7 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        // TS: getting the submit button when you click the commend.
         inputCommand = new ShuffleboardInput();
 
         m_pigeon = new Pigeon();
@@ -51,7 +55,10 @@ public class Robot extends TimedRobot {
         // TS: Commented the getEntry method and implemented a button.
         examplentry = tab.add("Example Input",inputValue)
                 .getEntry();
-        tab.add("Commant", inputCommand);
+        // TS: displaying the submib button.
+        tab.add("Command", inputCommand);
+        // TS: setting the getEntry value to (Example PID control).
+        examplentry.setDouble(inputSink);
 
         /**
          * This is a way to get an input from the shuffleboard.
@@ -73,9 +80,6 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-
-        // TS: get the input from shuffleboard and returning it to inputValue
-
 
         // TS: print the example input value
         System.out.println("Example Input: " + inputValue);
