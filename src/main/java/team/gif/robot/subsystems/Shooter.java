@@ -3,6 +3,7 @@ package team.gif.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class Shooter extends SubsystemBase
@@ -26,10 +27,10 @@ public class Shooter extends SubsystemBase
         shooterMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
         shooterMotor.setSensorPhase(true);
 
-        shooterMotor.config_kP(0, 0.18);
-        shooterMotor.config_kI(0, 0);
-        shooterMotor.config_kD(0, 0);
-        shooterMotor.config_kF(0, 0.032);
+        shooterMotor.config_kP(0, Constants.shooter.kP);
+        shooterMotor.config_kI(0, Constants.shooter.kI);
+        shooterMotor.config_kD(0, Constants.shooter.kD);
+        shooterMotor.config_kF(0, Constants.shooter.kF);
 
         shooterMotor.selectProfileSlot(0, 0);
     }
