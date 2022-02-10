@@ -8,14 +8,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import team.gif.robot.commands.indexer.IndexScheduler;
-import team.gif.robot.commands.indexer.IndexerIdle;
-import team.gif.robot.commands.shooter.ShooterIdle;
-import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Intake;
 import team.gif.robot.commands.drivetrain.Drive;
 import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,9 +28,7 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     public static OI oi;
 
-    public static Intake intake = null;
-    public static Indexer indexer = null;
-    public static Shooter shooter = null;
+    public static final Intake intake = new Intake();
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -48,13 +41,6 @@ public class Robot extends TimedRobot {
 
         drivetrain = new Drivetrain();
         driveCommand = new Drive();
-
-        intake = new Intake();
-        indexer = new Indexer();
-        shooter = new Shooter();
-
-        indexer.setDefaultCommand(new IndexerIdle());
-        shooter.setDefaultCommand(new ShooterIdle());
     }
 
     /**

@@ -1,11 +1,11 @@
-package team.gif.robot.commands.collector;
+package team.gif.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class CollectorReverse extends CommandBase
+public class IntakeReverse extends CommandBase
 {
-    public CollectorReverse(){
+    public IntakeReverse(){
         super();
         addRequirements(Robot.intake);
     }
@@ -19,8 +19,6 @@ public class CollectorReverse extends CommandBase
     @Override
     public void execute() {
         Robot.intake.setSpeedPercent(-0.5);
-        Robot.indexer.setIndexMotorSpeed(-0.4);
-        Robot.indexer.setBeltMotorSpeed(-0.4);
     }
 
     // Returns true when the command should end.

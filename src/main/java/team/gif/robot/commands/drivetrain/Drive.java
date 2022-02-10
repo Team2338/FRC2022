@@ -5,15 +5,25 @@
 package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.OI;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.subsystems.ExampleSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class Drive extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     //private final ExampleSubsystem m_subsystem;
 
+    /**
+     * Creates a new ExampleCommand.
+     *
+     * @param subsystem The subsystem used by this command.
+     */
     public Drive() {
         super();
+
+        // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.drivetrain);
     }
 
