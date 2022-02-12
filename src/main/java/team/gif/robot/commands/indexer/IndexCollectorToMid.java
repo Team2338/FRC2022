@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
-public class Drive extends CommandBase {
+public class IndexCollectorToMid extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    //private final ExampleSubsystem m_subsystem;
 
-    public Drive() {
+    public IndexCollectorToMid() {
         super();
-        addRequirements(Robot.drivetrain);
+        addRequirements(Robot.indexer);
     }
 
     // Called when the command is initially scheduled.
@@ -24,28 +24,22 @@ public class Drive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        /*
-         * Tank Drive
-         */
-        double currSpeed = Robot.oi.driver.getLeftY();
-        double rotation = Robot.oi.driver.getRightX();
-        Robot.drivetrain.driveArcade(rotation, currSpeed);
-
-        /*
-         * True Tank Drive
-         */
-//        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
-//        double currR = -Robot.oi.driver.getRightY();
-//        Robot.drivetrain.setSpeed(currL, currR);
+        Robot.indexer.setIndexMotorSpeed(0.5);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        if(!Globals.indexerEnabled) {
+            return true;
+        } else {
+            return Robot.indexer.getSensorCollector();
+        }
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Robot.indexer.setIndexMotorSpeed(0);
+    }
 }
