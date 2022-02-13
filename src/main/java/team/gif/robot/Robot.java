@@ -7,7 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import team.gif.robot.commands.ShuffleboardInput;
+import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,17 +25,15 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
     public static Pigeon m_pigeon = null;
-    public static NetworkTableEntry examplentry;
 
+    public static NetworkTableEntry exampleShuffleboardEntry;
     // T.S: Creating an new tab in shuffleboard.
     ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
-    //public double inputValue;
-    public ShuffleboardInput inputCommand;
-
+    public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
     // TS: the value of the something what is changing,(Example PID control).
-    private static double inputSink;
+    public static double exampleShuffleboardEntrySyncValue;
     // TS: the value is getting the getEntry number
-    public static double inputValue = inputSink;
+    public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -46,19 +44,18 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+
         // TS: getting the submit button when you click the commend.
-        inputCommand = new ShuffleboardInput();
+        exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
         m_pigeon = new Pigeon();
         m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
-        // TS: Commented the getEntry method and implemented a button.
-        examplentry = tab.add("Example Input",inputValue)
+        // TS: add an getEntry tab in shuffleboard
+        exampleShuffleboardEntry = tab.add("Example Input",exampleShuffleboardValue )
                 .getEntry();
-        // TS: displaying the submib button.
-        tab.add("Command", inputCommand);
-        // TS: setting the getEntry value to (Example PID control).
-        examplentry.setDouble(inputSink);
+        // TS: add the example input submit button to the shuffleboard.
+        tab.add("Command", exampleShuffleboardEntryCommand);
 
         /**
          * This is a way to get an input from the shuffleboard.
@@ -82,7 +79,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
 
         // TS: print the example input value
-        System.out.println("Example Input: " + inputValue);
+        System.out.println("Example Input: " + exampleShuffleboardValue);
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
