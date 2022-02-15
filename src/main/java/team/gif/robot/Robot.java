@@ -4,6 +4,11 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,8 +32,8 @@ public class Robot extends TimedRobot {
     public static final boolean isCompBot = false;
 
     private Command m_autonomousCommand;
-
     private RobotContainer m_robotContainer;
+    public static Pigeon m_pigeon = null;
     private static Command driveCommand = null;
     public static Drivetrain drivetrain = null;
     public static OI oi;
@@ -36,6 +41,15 @@ public class Robot extends TimedRobot {
     public static Intake intake = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
+    public static NetworkTableEntry exampleShuffleboardEntry;
+    // T.S: Creating an new tab in shuffleboard.
+    ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
+    public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
+    // TS: the value of the something what is changing,(Example PID control).
+    public static double exampleShuffleboardEntrySyncValue;
+    // TS: the value is getting the getEntry number
+    public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -55,6 +69,19 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(new IndexerIdle());
         shooter.setDefaultCommand(new ShooterIdle());
+
+        // TS: getting the submit button when you click the commend.
+        exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
+
+        m_pigeon = new Pigeon();
+        m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
+
+        // TS: add an getEntry tab in shuffleboard
+        exampleShuffleboardEntry = tab.add("Example Input",exampleShuffleboardValue )
+                .getEntry();
+        // TS: add the example input submit button to the shuffleboard.
+        tab.add("Command", exampleShuffleboardEntryCommand);
+        exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
     }
 
     /**
