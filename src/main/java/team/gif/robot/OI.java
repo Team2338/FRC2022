@@ -95,6 +95,7 @@ public class OI {
 
 
     }
+
     public void setRumble(boolean rumble) {
         driver.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
         driver.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
