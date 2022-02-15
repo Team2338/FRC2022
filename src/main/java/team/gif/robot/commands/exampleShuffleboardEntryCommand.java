@@ -12,7 +12,7 @@ public class exampleShuffleboardEntryCommand extends CommandBase {
     public void initialize() {
         // T.S: we need to get value from the getEntry and set it to inputValue
         Robot.exampleShuffleboardValue = Robot.exampleShuffleboardEntry.getDouble(Robot.exampleShuffleboardValue);
-        Robot.exampleShuffleboardEntry.setDouble(Robot.exampleShuffleboardEntrySyncValue);
+        Robot.exampleShuffleboardEntry.setDouble(Robot.exampleShuffleboardValue);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

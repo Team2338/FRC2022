@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
                 .getEntry();
         // TS: add the example input submit button to the shuffleboard.
         tab.add("Command", exampleShuffleboardEntryCommand);
-
+        exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
         /**
          * This is a way to get an input from the shuffleboard.
          * So, may change the PIDTune variable boolean to something.
