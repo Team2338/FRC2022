@@ -57,10 +57,6 @@ public class Robot extends TimedRobot {
         // TS: add the example input submit button to the shuffleboard.
         tab.add("Command", exampleShuffleboardEntryCommand);
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
-        /**
-         * This is a way to get an input from the shuffleboard.
-         * So, may change the PIDTune variable boolean to something.
-         */
     }
 
     /**
@@ -77,9 +73,6 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-
-        // TS: print the example input value
-        System.out.println("Example Input: " + exampleShuffleboardValue);
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
