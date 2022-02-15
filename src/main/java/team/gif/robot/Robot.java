@@ -9,9 +9,18 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.subsystems.drivers.Pigeon;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.indexer.IndexScheduler;
+import team.gif.robot.commands.indexer.IndexerIdle;
+import team.gif.robot.commands.shooter.ShooterIdle;
+import team.gif.robot.subsystems.Indexer;
+import team.gif.robot.subsystems.Intake;
+import team.gif.robot.commands.drivetrain.Drive;
+import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,7 +34,13 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
     public static Pigeon m_pigeon = null;
+    private static Command driveCommand = null;
+    public static Drivetrain drivetrain = null;
+    public static OI oi;
 
+    public static Intake intake = null;
+    public static Indexer indexer = null;
+    public static Shooter shooter = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     // T.S: Creating an new tab in shuffleboard.
     ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
@@ -44,6 +59,16 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+
+        drivetrain = new Drivetrain();
+        driveCommand = new Drive();
+
+        intake = new Intake();
+        indexer = new Indexer();
+        shooter = new Shooter();
+
+        indexer.setDefaultCommand(new IndexerIdle());
+        shooter.setDefaultCommand(new ShooterIdle());
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
@@ -106,12 +131,17 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
+        oi = new OI();
+        driveCommand.schedule();
     }
 
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-
+        double timeLeft = DriverStation.getMatchTime();
+        oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
+                     (timeLeft <=  5.0 && timeLeft >=  3.0));
     }
 
     @Override
