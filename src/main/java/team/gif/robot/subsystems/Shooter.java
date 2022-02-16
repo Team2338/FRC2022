@@ -1,14 +1,22 @@
 package team.gif.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Solenoid;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class Shooter extends SubsystemBase
 {
-    private static final TalonSRX shooterMotor = new TalonSRX(RobotMap.INTAKE);
+    private static final TalonSRX shooterMotor = new TalonSRX(RobotMap.SHOOTER);
+    private static final Solenoid hood = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_HOOD);
 
     public Shooter() {
         super();
@@ -33,6 +41,8 @@ public class Shooter extends SubsystemBase
         shooterMotor.config_kF(0, Constants.shooter.kF);
 
         shooterMotor.selectProfileSlot(0, 0);
+
+        hood.set(false);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
@@ -44,5 +54,7 @@ public class Shooter extends SubsystemBase
         shooterMotor.set(ControlMode.Velocity, setPoint);
     }
 
-
+    public void setHood(boolean isUp) {
+        hood.set(isUp);
+    }
 }

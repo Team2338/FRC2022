@@ -12,6 +12,7 @@ public abstract class RobotMap {
     public static final int INTAKE = 4;
     public static final int WHEEL_INDEX = 10;
     public static final int BELT = 11;
+    public static final int SHOOTER = 14;
 
     // Sensors
     public static final int SENSOR_STAGE_ONE = 1;
@@ -20,6 +21,7 @@ public abstract class RobotMap {
 
     // Solenoids
     public static final int SOLENOID_HANGER = 0;
+    public static final int SOLENOID_HOOD = 1;
 
     // Color Sensor
     public static final int COLOR_SENSOR = 0;
