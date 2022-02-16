@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     public static OI oi;
 
+    public static Hood hood = null;
     public static Intake intake = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
@@ -66,6 +68,7 @@ public class Robot extends TimedRobot {
         intake = new Intake();
         indexer = new Indexer();
         shooter = new Shooter();
+        hood = new Hood();
 
         indexer.setDefaultCommand(new IndexerIdle());
         shooter.setDefaultCommand(new ShooterIdle());

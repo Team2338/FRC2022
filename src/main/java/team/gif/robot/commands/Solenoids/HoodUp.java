@@ -16,7 +16,7 @@ public class HoodUp extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {Robot.shooter.setHood(true);}
+    public void initialize() {Robot.hood.setHood(true);}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override

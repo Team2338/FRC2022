@@ -16,7 +16,6 @@ import team.gif.robot.RobotMap;
 public class Shooter extends SubsystemBase
 {
     private static final TalonSRX shooterMotor = new TalonSRX(RobotMap.SHOOTER);
-    private static final Solenoid hood = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_HOOD);
 
     public Shooter() {
         super();
@@ -41,8 +40,6 @@ public class Shooter extends SubsystemBase
         shooterMotor.config_kF(0, Constants.shooter.kF);
 
         shooterMotor.selectProfileSlot(0, 0);
-
-        hood.set(false);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
@@ -52,9 +49,5 @@ public class Shooter extends SubsystemBase
 
     public void setSpeedPID(double setPoint) {
         shooterMotor.set(ControlMode.Velocity, setPoint);
-    }
-
-    public void setHood(boolean isUp) {
-        hood.set(isUp);
     }
 }
