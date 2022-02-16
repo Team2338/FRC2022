@@ -45,8 +45,6 @@ public class Shooter extends SubsystemBase
         shooterMotor.configOpenloopRamp(1.0);
 
         shooterMotor.selectProfileSlot(0, 0);
-
-        hood.set(false);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
