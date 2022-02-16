@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.indexer.IndexScheduler;
-import team.gif.robot.commands.indexer.IndexerIdle;
 import team.gif.robot.commands.shooter.ShooterIdle;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Intake;
@@ -67,7 +66,7 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
         shooter = new Shooter();
 
-        indexer.setDefaultCommand(new IndexerIdle());
+        indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
 
         // TS: getting the submit button when you click the commend.

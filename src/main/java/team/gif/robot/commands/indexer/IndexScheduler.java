@@ -37,7 +37,7 @@ public class IndexScheduler extends CommandBase {
                 currCommand = new IndexMidToBelt();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
-            if(!Robot.indexer.getSensorWheel() && Robot.indexer.getSensorCollector()) {
+            if(!Robot.indexer.getSensorWheel()) {
                 currCommand = new IndexCollectorToMid();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
@@ -47,7 +47,7 @@ public class IndexScheduler extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return !Robot.indexer.getSensorCollector() || Robot.indexer.getSensorWheel();
+        return !Robot.indexer.getSensorWheel() || !Robot.indexer.getSensorBelt();
     }
 
     // Called once the command ends or is interrupted.

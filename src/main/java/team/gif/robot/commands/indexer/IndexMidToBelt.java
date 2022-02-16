@@ -33,7 +33,7 @@ public class IndexMidToBelt extends CommandBase {
         if(!Globals.indexerEnabled) {
             return true;
         } else {
-            return !Robot.indexer.getSensorWheel();
+            return !Robot.indexer.getSensorBelt();
         }
     }
 
