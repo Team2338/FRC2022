@@ -33,6 +33,9 @@ public abstract class RobotMap {
     // Compressors //
     public static final int COMPRESSOR_HOOD = 0; // todo rename
 
+    // Compressors //
+    public static final int COMPRESSOR_HOOD = 1;
+
     // Color Sensor
     public static final int COLOR_SENSOR = 0;
 
