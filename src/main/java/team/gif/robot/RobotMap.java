@@ -23,6 +23,9 @@ public abstract class RobotMap {
     public static final int SOLENOID_HANGER = 0;
     public static final int SOLENOID_HOOD = 1;
 
+    // Compressors //
+    public static final int COMPRESSOR_HOOD = 1;
+
     // Color Sensor
     public static final int COLOR_SENSOR = 0;
 
