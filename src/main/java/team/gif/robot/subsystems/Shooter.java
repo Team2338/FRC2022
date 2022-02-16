@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Solenoid;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
@@ -44,6 +45,8 @@ public class Shooter extends SubsystemBase
         shooterMotor.configOpenloopRamp(1.0);
 
         shooterMotor.selectProfileSlot(0, 0);
+
+        hood.set(false);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
