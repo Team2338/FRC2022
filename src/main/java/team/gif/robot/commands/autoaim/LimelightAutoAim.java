@@ -1,14 +1,14 @@
 package team.gif.robot.commands.autoaim;
 
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
+import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.drivetrain.Drive;
 import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Intake;
 import team.gif.robot.subsystems.Shooter;
 import team.gif.robot.subsystems.drivers.Pigeon;
@@ -27,12 +27,12 @@ public class LimelightAutoAim extends CommandBase {
     public void initialize() {
         System.out.println("Auto Aim Start");
 
-        Robot.limelight.setLEDMode(3);
+        Robot.m_limelight.setLEDMode(3);
 
-        Drivetrain.getInstance().leftTalon1.enableCurrentLimit(false);
-        Drivetrain.getInstance().leftTalon2.enableCurrentLimit(false);
-        Drivetrain.getInstance().rightTalon1.enableCurrentLimit(false);
-        Drivetrain.getInstance().rightTalon2.enableCurrentLimit(false);
+        Drivetrain.leftTalon1.enableCurrentLimit(false);
+        Drivetrain.leftTalon2.enableCurrentLimit(false);
+        Robot.drivetrain.rightTalon1.enableCurrentLimit(false);
+        Robot.drivetrain.rightTalon2.enableCurrentLimit(false);
 
         targetLocked = false;
 
@@ -58,7 +58,7 @@ public class LimelightAutoAim extends CommandBase {
 
         // bot must not be moving anymore
         if ( !robotHasSettled ) {
-            DifferentialDriveWheelSpeeds wheelSpeeds = Drivetrain.getInstance().getWheelSpeeds();
+            DifferentialDriveWheelSpeeds wheelSpeeds = Robot.drivetrain.getWheelSpeeds();
             if ( Math.abs(wheelSpeeds.leftMetersPerSecond) < velocitycap && Math.abs(wheelSpeeds.rightMetersPerSecond)< velocitycap ){
                 robotHasSettled = true;
                 System.out.println("AutoFire: Robot has settled");
@@ -88,14 +88,14 @@ public class LimelightAutoAim extends CommandBase {
             } else {
                 double offset = Robot.limelight.getXOffset();
                 if (offset > -1.0 && offset < 1.0) {
-                    Drivetrain.getInstance().tankDriveVolts(0, 0);
+                    Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else {
                     if (offset < 0) {
-                        Drivetrain.getInstance().tankDriveVolts(-motorVolts, motorVolts);
+                        Robot.drivetrain.tankDriveVolts(-motorVolts, motorVolts);
 
                     } else {
-                        Drivetrain.getInstance().tankDriveVolts(motorVolts, -motorVolts);
+                        Robot.drivetrain.tankDriveVolts(motorVolts, -motorVolts);
 
                     }
                     targetLocked = false;
@@ -117,10 +117,10 @@ public class LimelightAutoAim extends CommandBase {
         Indexer.getInstance().setSpeedTwo(0);
         Intake.getInstance().setSpeed(0);
 
-        Drivetrain.getInstance().leftTalon1.enableCurrentLimit(true);
-        Drivetrain.getInstance().leftTalon2.enableCurrentLimit(true);
-        Drivetrain.getInstance().rightTalon1.enableCurrentLimit(true);
-        Drivetrain.getInstance().rightTalon2.enableCurrentLimit(true);
+        Robot.drivetrain.leftTalon1.enableCurrentLimit(true);
+        Robot.drivetrain.leftTalon2.enableCurrentLimit(true);
+        Robot.drivetrain.rightTalon1.enableCurrentLimit(true);
+        Robot.drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
         Robot.limelight.setLEDMode(1);
