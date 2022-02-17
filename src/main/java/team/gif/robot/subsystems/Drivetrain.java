@@ -169,8 +169,8 @@ public class Drivetrain extends SubsystemBase {
      * @return The current wheel speeds.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(_leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.drivetrain.WHEEL_CIRCUMFERENCE,
-                                                _rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.drivetrain.WHEEL_CIRCUMFERENCE);
+        return new DifferentialDriveWheelSpeeds(_leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE,
+                                                _rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
     /**
@@ -211,14 +211,14 @@ public class Drivetrain extends SubsystemBase {
 
     //encoder positions in Meters
     public double getLeftEncoderPos_Meters() {
-        return _leftEncoderTalon.getSelectedSensorPosition() / Constants.drivetrain.TICKS_TO_METERS_LEFT;
+        return _leftEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_LEFT;
     }
 
     public double getRightEncoderPos_Meters() {
-        return _rightEncoderTalon.getSelectedSensorPosition() / Constants.drivetrain.TICKS_TO_METERS_RIGHT;
+        return _rightEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_RIGHT;
     }
 
     public double Ticks2Feet(double ticks) {
-        return ticks / Constants.drivetrain.TICKS_TO_METERS * 3.28084; // 3.28084 = feet to meters
+        return ticks / Constants.Drivetrain.TICKS_TO_METERS * 3.28084; // 3.28084 = feet to meters
     }
 }

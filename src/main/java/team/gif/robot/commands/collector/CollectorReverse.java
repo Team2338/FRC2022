@@ -7,7 +7,7 @@ public class CollectorReverse extends CommandBase
 {
     public CollectorReverse(){
         super();
-        addRequirements(Robot.intake);
+        addRequirements(Robot.collector);
     }
 
     // Called when the command is initially scheduled.
@@ -18,8 +18,8 @@ public class CollectorReverse extends CommandBase
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.intake.setSpeedPercent(-0.5);
-        Robot.indexer.setIndexMotorSpeed(-0.4);
+        Robot.collector.setSpeedPercent(-0.5);
+        Robot.indexer.setStageMotorSpeed(-0.4);
         Robot.indexer.setBeltMotorSpeed(-0.4);
     }
 
@@ -32,7 +32,7 @@ public class CollectorReverse extends CommandBase
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.intake.setSpeedPercent(0);
+        Robot.collector.setSpeedPercent(0);
     }
 
 }

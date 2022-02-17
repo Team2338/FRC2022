@@ -6,12 +6,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.drivetrain.Drive;
-import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.subsystems.Intake;
+import team.gif.robot.subsystems.Collector;
 import team.gif.robot.subsystems.Shooter;
-import team.gif.robot.subsystems.drivers.Pigeon;
 
 public class LimelightAutoAim extends CommandBase {
 
@@ -27,7 +24,7 @@ public class LimelightAutoAim extends CommandBase {
     public void initialize() {
         System.out.println("Auto Aim Start");
 
-        Robot.m_limelight.setLEDMode(3);
+        Robot.limelight.setLEDMode(3);
 
         Drivetrain.leftTalon1.enableCurrentLimit(false);
         Drivetrain.leftTalon2.enableCurrentLimit(false);
@@ -53,7 +50,7 @@ public class LimelightAutoAim extends CommandBase {
         }
 
         if ( Math.abs (Robot.limelight.getXOffset()) < 5 ) {
-            Shooter.getInstance().setPID(targetSpeed);
+            Robot.shooter.setSpeedPID(targetSpeed);
         }
 
         // bot must not be moving anymore
@@ -67,8 +64,8 @@ public class LimelightAutoAim extends CommandBase {
 
         if ( robotHasSettled ) {
             if (targetLocked) {
-                //System.out.println(Shooter.getInstance().getVelocity());
-                if (Shooter.getInstance().getVelocity() > (targetSpeed - 20.0)) {
+                //System.out.println(Robot.shooter.getVelocity());
+                if (Robot.shooter.getVelocity() > (targetSpeed - 20.0)) {
 
                     // we need to check again to make sure the robot hasn't overshot the target
                     double offset = Robot.limelight.getXOffset();
@@ -77,7 +74,7 @@ public class LimelightAutoAim extends CommandBase {
                         Indexer.getInstance().setSpeedFour(0.4); // 0.4
                         Indexer.getInstance().setSpeedThree(0.3); // 0.35
                         Indexer.getInstance().setSpeedTwo(0.3); // 0.35
-                        Intake.getInstance().setSpeed(0.3); // 0.35
+                        Collector.getInstance().setSpeed(0.3); // 0.35
                     } else {
                         System.out.println("Offset Adjusting at: " + offset);
                         // need to relock
@@ -110,12 +107,12 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         robotHasSettled = false;
-        Shooter.getInstance().setVoltage(0);
+        Robot.shooter.setVoltage(0);
         Indexer.getInstance().setSpeedFive(0);
         Indexer.getInstance().setSpeedFour(0);
         Indexer.getInstance().setSpeedThree(0);
         Indexer.getInstance().setSpeedTwo(0);
-        Intake.getInstance().setSpeed(0);
+        Collector.getInstance().setSpeed(0);
 
         Robot.drivetrain.leftTalon1.enableCurrentLimit(true);
         Robot.drivetrain.leftTalon2.enableCurrentLimit(true);

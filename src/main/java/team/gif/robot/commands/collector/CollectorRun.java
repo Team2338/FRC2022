@@ -6,7 +6,7 @@ public class CollectorRun extends CommandBase
 {
     public CollectorRun(){
         super();
-        addRequirements(Robot.intake);
+        addRequirements(Robot.collector);
     }
 
     // Called when the command is initially scheduled.
@@ -22,7 +22,7 @@ public class CollectorRun extends CommandBase
 //        } else {
 //            Robot.intake.setSpeedPercent(0.75);
 //        }
-        Robot.intake.setSpeedPercent(0.6);
+        Robot.collector.setSpeedPercent(0.6);
         //Robot.indexer.setIndexMotorSpeed(0.8);
         //Robot.indexer.setBeltMotorSpeed(1);
     }
@@ -36,7 +36,7 @@ public class CollectorRun extends CommandBase
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.intake.setSpeedPercent(0);
+        Robot.collector.setSpeedPercent(0);
     }
 }
 

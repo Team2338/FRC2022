@@ -15,7 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static class drivetrain {
+    public static class Drivetrain {
         public static double WHEEL_DIAMETER = 0.127; // IN METERS
         public static double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * 3.14159; // IN METERS
 
@@ -33,7 +33,7 @@ public final class Constants {
         public static final double kTrackWidthMeters = 1.0;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
 }
-    public static class autoConstants {
+    public static class AutoConstants {
         // part of trajectory but numbers are from example
         public static final double kMaxSpeedMetersPerSecond = 3.0;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3.0;
@@ -45,10 +45,27 @@ public final class Constants {
         public static final double kRamseteZeta = 0.7;
     }
 
-    public static class shooter {
+    public static class Shooter {
         public static final double kP = 0.18;
         public static final double kI = 0;
         public static final double kD = 0;
         public static final double kF = 0.032;
+
+        public static final double RPM_LOW = Robot.isCompBot ? 4300 : 4600;
+        public static final double RPM_HIGH = 4650;
+    }
+
+    public static class Climber {
+        // Elevator
+        public static final double P = 0.0; // Connor said 4
+        public static final double I = 0.0;
+        public static final double D = 0.0;
+        public static final double F = 0; //0.425
+        public static final double REV_F = 0.38;
+
+        public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
+
+        public static final int MAX_POS = 150; //145; //150; // 160;
+        public static final int MIN_POS = 1;
     }
 }
