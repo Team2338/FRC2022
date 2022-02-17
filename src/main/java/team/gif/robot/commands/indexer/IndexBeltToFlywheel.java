@@ -1,41 +1,38 @@
-package team.gif.robot.commands.shooter;
+package team.gif.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
-import static team.gif.robot.Globals.shooterIsInTolerance;
-
-public class ShooterShootsShort extends CommandBase {
-    public ShooterShootsShort() {
+public class IndexBeltToFlywheel extends CommandBase {
+    double initTime = 0;
+    public IndexBeltToFlywheel() {
         super();
-
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(Robot.shooter);
+        addRequirements(Robot.indexer);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.shooter.setSpeedPID(14000);
-
+        initTime = Timer.getFPGATimestamp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 14000) < 200;
+        Robot.indexer.setBeltMotorSpeed(1);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return Timer.getFPGATimestamp() - initTime > 2000;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.setSpeedPercent(0);
-        shooterIsInTolerance = false;
+        Robot.indexer.setIndexMotorSpeed(0);
     }
 }
