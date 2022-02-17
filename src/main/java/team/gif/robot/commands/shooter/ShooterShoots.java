@@ -30,7 +30,7 @@ public class ShooterShoots extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 200 ;
+        shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 2000 ;
 
     }
 

@@ -43,7 +43,7 @@ public class IndexScheduler extends CommandBase {
                 currCommand = new IndexCollectorToMid();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
-            if(shooterIsInTolerance){
+            if(shooterIsInTolerance && Robot.indexer.getSensorBelt()){
                 currCommand = new IndexBeltToFlywheel();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
