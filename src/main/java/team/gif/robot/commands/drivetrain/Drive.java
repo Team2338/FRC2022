@@ -25,18 +25,19 @@ public class Drive extends CommandBase {
     @Override
     public void execute() {
         /*
-         * Tank Drive
+         * Arcade Drive
          */
-        double currSpeed = Robot.oi.driver.getLeftY();
-        double rotation = Robot.oi.driver.getRightX();
-        Robot.drivetrain.driveArcade(rotation, currSpeed);
+
+//        double currSpeed = Robot.oi.driver.getLeftY();
+//        double rotation = Robot.oi.driver.getRightX();
+//        Robot.drivetrain.driveArcade(rotation, currSpeed);
 
         /*
          * True Tank Drive
          */
-//        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
-//        double currR = -Robot.oi.driver.getRightY();
-//        Robot.drivetrain.setSpeed(currL, currR);
+        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
+        double currR = -Robot.oi.driver.getRightY();
+        Robot.drivetrain.setSpeed(currL, currR);
     }
 
     // Returns true when the command should end.

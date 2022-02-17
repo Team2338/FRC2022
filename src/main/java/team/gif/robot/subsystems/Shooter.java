@@ -50,4 +50,8 @@ public class Shooter extends SubsystemBase
     public void setSpeedPID(double setPoint) {
         shooterMotor.set(ControlMode.Velocity, setPoint);
     }
+
+    public double getSpeed(){
+        return shooterMotor.getSelectedSensorVelocity();
+    }
 }
