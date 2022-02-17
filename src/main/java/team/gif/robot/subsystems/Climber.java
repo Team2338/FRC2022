@@ -46,10 +46,6 @@ public class Climber extends SubsystemBase {
         hangMotor.set(speed);
     }
 
-    public void setPoint(int position) {
-        hangPIDController.setReference(position, ControlType.kSmartMotion);
-    }
-
     public void setF() {
         hangPIDController.setFF(Constants.Climber.F);
     }
