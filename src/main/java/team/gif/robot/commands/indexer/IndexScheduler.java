@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
+import static team.gif.robot.Globals.shooterIsInTolerance;
+
 /** An example command that uses an example subsystem. */
 public class IndexScheduler extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -37,8 +39,12 @@ public class IndexScheduler extends CommandBase {
                 currCommand = new IndexMidToBelt();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
-            if(!Robot.indexer.getSensorWheel() && Robot.indexer.getSensorCollector()) {
+            if(!Robot.indexer.getSensorWheel()) {
                 currCommand = new IndexCollectorToMid();
+                CommandScheduler.getInstance().schedule(currCommand);
+            }
+            if(shooterIsInTolerance && Robot.indexer.getSensorBelt()){
+                currCommand = new IndexBeltToFlywheel();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
         }
@@ -47,7 +53,7 @@ public class IndexScheduler extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return !Robot.indexer.getSensorCollector() || Robot.indexer.getSensorWheel();
+        return false;
     }
 
     // Called once the command ends or is interrupted.

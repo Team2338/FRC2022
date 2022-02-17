@@ -23,8 +23,8 @@ public class CollectorRun extends CommandBase
 //            Robot.intake.setSpeedPercent(0.75);
 //        }
         Robot.intake.setSpeedPercent(0.6);
-        Robot.indexer.setIndexMotorSpeed(0.8);
-        Robot.indexer.setBeltMotorSpeed(1);
+        //Robot.indexer.setIndexMotorSpeed(0.8);
+        //Robot.indexer.setBeltMotorSpeed(1);
     }
     // Returns true when the command should end.
     @Override

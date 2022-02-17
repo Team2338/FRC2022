@@ -4,10 +4,14 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -15,7 +19,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.indexer.IndexScheduler;
-import team.gif.robot.commands.indexer.IndexerIdle;
 import team.gif.robot.commands.shooter.ShooterIdle;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Intake;
@@ -39,9 +42,11 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     public static OI oi;
 
+    public static Hood hood = null;
     public static Intake intake = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
+    public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     // T.S: Creating an new tab in shuffleboard.
     ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
@@ -64,11 +69,13 @@ public class Robot extends TimedRobot {
         drivetrain = new Drivetrain();
         driveCommand = new Drive();
 
+        compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
         intake = new Intake();
         indexer = new Indexer();
         shooter = new Shooter();
+        hood = new Hood();
 
-        indexer.setDefaultCommand(new IndexerIdle());
+        indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
 
         // TS: getting the submit button when you click the commend.
@@ -83,6 +90,14 @@ public class Robot extends TimedRobot {
         // TS: add the example input submit button to the shuffleboard.
         tab.add("Command", exampleShuffleboardEntryCommand);
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
+        tab.addBoolean("Color Sensor 2", indexer::getSensorBelt);
+        tab.addBoolean("Color Sensor 1", indexer::getSensorWheel);
+        tab.add(indexer);
+
+        tab.addNumber("Shooter Speed", shooter::getSpeed);
+
+        System.out.println(indexer.getSensorBelt());
+        System.out.println(indexer.getSensorWheel());
     }
 
     /**
@@ -99,6 +114,7 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+
     }
 
     /** This function is called once each time the robot enters Disabled mode. */

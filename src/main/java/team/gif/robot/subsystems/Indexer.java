@@ -4,11 +4,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.indexer.IndexScheduler;
-import team.gif.robot.commands.indexer.IndexerIdle;
 
 
 public class Indexer extends SubsystemBase {
@@ -16,9 +13,8 @@ public class Indexer extends SubsystemBase {
     private static final TalonSRX wheelMotor = new TalonSRX(RobotMap.WHEEL_INDEX);
     private static final TalonSRX beltMotor = new TalonSRX(RobotMap.BELT);
 
-    private static final DigitalInput sensorCollector = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
-    private static final DigitalInput sensorWheel = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
-    private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.SENSOR_STAGE_THREE);
+    private static final DigitalInput sensorWheel = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
+    private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
 
     public Indexer() {
         super();
@@ -27,10 +23,6 @@ public class Indexer extends SubsystemBase {
 
         wheelMotor.setInverted(false); // subject to change based on design feats I don't remember
         beltMotor.setInverted(false);
-    }
-
-    public boolean getSensorCollector() {
-        return sensorCollector.get();
     }
 
     public boolean getSensorWheel() {
@@ -46,7 +38,7 @@ public class Indexer extends SubsystemBase {
     }
 
     public void setBeltMotorSpeed(double percent) {
-        wheelMotor.set(ControlMode.PercentOutput, percent);
+        beltMotor.set(ControlMode.PercentOutput, percent);
     }
 
 }
