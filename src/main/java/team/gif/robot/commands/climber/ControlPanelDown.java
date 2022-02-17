@@ -17,7 +17,6 @@ public class ControlPanelDown extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.climber.setOpen();
         finished = false;
         Globals.climberMotorEnabled = true;
     }
