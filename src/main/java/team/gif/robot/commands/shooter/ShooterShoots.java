@@ -6,9 +6,8 @@ package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.ExampleSubsystem;
 
-import static team.gif.robot.Globals.shooterIsTolerance;
+import static team.gif.robot.Globals.shooterIsInTolerance;
 
 /** An example command that uses an example subsystem. */
 public class ShooterShoots extends CommandBase {
@@ -31,9 +30,8 @@ public class ShooterShoots extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(Math.abs(Robot.shooter.getSpeed() - 20000) < 200 ){
-            shooterIsTolerance = true;
-        }
+        shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 200 ;
+
     }
 
     // Returns true when the command should end.
@@ -46,6 +44,6 @@ public class ShooterShoots extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.shooter.setSpeedPercent(0);
-        shooterIsTolerance = false;
+        shooterIsInTolerance = false;
     }
 }

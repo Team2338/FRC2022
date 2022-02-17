@@ -93,6 +93,8 @@ public class Robot extends TimedRobot {
         tab.addBoolean("Color Sensor 1", indexer::getSensorWheel);
         tab.add(indexer);
 
+        tab.addNumber("Shooter Speed", shooter::getSpeed);
+
         System.out.println(indexer.getSensorBelt());
         System.out.println(indexer.getSensorWheel());
     }
