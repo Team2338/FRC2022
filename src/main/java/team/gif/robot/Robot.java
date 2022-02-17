@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -81,6 +82,12 @@ public class Robot extends TimedRobot {
         // TS: add the example input submit button to the shuffleboard.
         tab.add("Command", exampleShuffleboardEntryCommand);
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
+        tab.addBoolean("Color Sensor 2", indexer::getSensorBelt);
+        tab.addBoolean("Color Sensor 1", indexer::getSensorWheel);
+        tab.add(indexer);
+
+        System.out.println(indexer.getSensorBelt());
+        System.out.println(indexer.getSensorWheel());
     }
 
     /**
@@ -97,6 +104,7 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+
     }
 
     /** This function is called once each time the robot enters Disabled mode. */

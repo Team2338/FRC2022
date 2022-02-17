@@ -47,7 +47,7 @@ public class IndexScheduler extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return !Robot.indexer.getSensorWheel() || !Robot.indexer.getSensorBelt();
+        return false;
     }
 
     // Called once the command ends or is interrupted.

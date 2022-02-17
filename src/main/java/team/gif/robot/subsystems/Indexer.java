@@ -38,7 +38,7 @@ public class Indexer extends SubsystemBase {
     }
 
     public void setBeltMotorSpeed(double percent) {
-        wheelMotor.set(ControlMode.PercentOutput, percent);
+        beltMotor.set(ControlMode.PercentOutput, percent);
     }
 
 }
