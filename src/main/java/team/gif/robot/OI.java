@@ -10,6 +10,7 @@ import team.gif.robot.commands.Solenoids.HoodUp;
 import team.gif.robot.commands.shooter.ShooterShoots;
 import team.gif.robot.commands.collector.CollectorReverse;
 import team.gif.robot.commands.collector.CollectorRun;
+import team.gif.robot.commands.shooter.ShooterShootsShort;
 
 
 public class OI {
@@ -79,7 +80,8 @@ public class OI {
         dRBump.whenHeld(new CollectorRun());
         dA.whenHeld(new ShooterShoots());
         dX.whenPressed(new HoodDown());
-        dB.whenPressed(new HoodUp());
+        dB.whenPressed(new ShooterShootsShort());
+        dY.whenPressed(new HoodUp());
     }
     
     public void setRumble(boolean rumble) {
