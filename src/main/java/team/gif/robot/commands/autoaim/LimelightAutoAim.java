@@ -28,8 +28,8 @@ public class LimelightAutoAim extends CommandBase {
 
         Drivetrain.leftTalon1.enableCurrentLimit(false);
         Drivetrain.leftTalon2.enableCurrentLimit(false);
-        Robot.drivetrain.rightTalon1.enableCurrentLimit(false);
-        Robot.drivetrain.rightTalon2.enableCurrentLimit(false);
+        Drivetrain.rightTalon1.enableCurrentLimit(false);
+        Drivetrain.rightTalon2.enableCurrentLimit(false);
 
         targetLocked = false;
 
@@ -65,16 +65,13 @@ public class LimelightAutoAim extends CommandBase {
         if ( robotHasSettled ) {
             if (targetLocked) {
                 //System.out.println(Robot.shooter.getVelocity());
-                if (Robot.shooter.getVelocity() > (targetSpeed - 20.0)) {
+                if (Robot.shooter.getSpeed() > (targetSpeed - 20.0)) {
 
                     // we need to check again to make sure the robot hasn't overshot the target
                     double offset = Robot.limelight.getXOffset();
                     if (offset > -1.0 && offset < 1.0) {
-                        Indexer.getInstance().setSpeedFive(0.5); // 0.5
-                        Indexer.getInstance().setSpeedFour(0.4); // 0.4
-                        Indexer.getInstance().setSpeedThree(0.3); // 0.35
-                        Indexer.getInstance().setSpeedTwo(0.3); // 0.35
-                        Collector.getInstance().setSpeed(0.3); // 0.35
+                        Robot.indexer.setBeltMotorSpeed(0.5);
+                        Robot.indexer.setStageMotorSpeed(0.4);
                     } else {
                         System.out.println("Offset Adjusting at: " + offset);
                         // need to relock
@@ -107,17 +104,14 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         robotHasSettled = false;
-        Robot.shooter.setVoltage(0);
-        Indexer.getInstance().setSpeedFive(0);
-        Indexer.getInstance().setSpeedFour(0);
-        Indexer.getInstance().setSpeedThree(0);
-        Indexer.getInstance().setSpeedTwo(0);
-        Collector.getInstance().setSpeed(0);
+        Robot.shooter.setSpeedPercent(0);
+        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setStageMotorSpeed(0);
 
-        Robot.drivetrain.leftTalon1.enableCurrentLimit(true);
-        Robot.drivetrain.leftTalon2.enableCurrentLimit(true);
-        Robot.drivetrain.rightTalon1.enableCurrentLimit(true);
-        Robot.drivetrain.rightTalon2.enableCurrentLimit(true);
+        Drivetrain.leftTalon1.enableCurrentLimit(true);
+        Drivetrain.leftTalon2.enableCurrentLimit(true);
+        Drivetrain.rightTalon1.enableCurrentLimit(true);
+        Drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
         Robot.limelight.setLEDMode(1);

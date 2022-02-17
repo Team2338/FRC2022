@@ -20,7 +20,6 @@ public class HangerManualControl extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.climber.setOpen();
         SmartDashboard.putBoolean("Hang Control", true);
     }
 
@@ -53,7 +52,6 @@ public class HangerManualControl extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.climber.setClosed();
         Robot.climber.setSpeed(0);
         SmartDashboard.putBoolean("Hang Control", false);
     }
