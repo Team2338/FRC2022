@@ -6,9 +6,12 @@ package team.gif.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,9 +41,11 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     public static OI oi;
 
+    public static Hood hood = null;
     public static Intake intake = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
+    public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     // T.S: Creating an new tab in shuffleboard.
     ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
@@ -63,9 +68,11 @@ public class Robot extends TimedRobot {
         drivetrain = new Drivetrain();
         driveCommand = new Drive();
 
+        compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
         intake = new Intake();
         indexer = new Indexer();
         shooter = new Shooter();
+        hood = new Hood();
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
