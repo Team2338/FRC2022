@@ -1,4 +1,4 @@
-package team.gif.robot.commands.hanger;
+package team.gif.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
@@ -17,16 +17,16 @@ public class ControlPanelDown extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.hanger.setOpen();
+        Robot.climber.setOpen();
         finished = false;
-        Globals.controlPanelMotorEnabled = true;
+        Globals.climberMotorEnabled = true;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Robot.hanger.getPosition() > Constants.Hanger.MIN_POS) {
-            Robot.hanger.setSpeed(-0.6);
+        if (Robot.climber.getPosition() > Constants.Climber.MIN_POS) {
+            Robot.climber.setSpeed(-0.6);
         } else {
             finished = true;
         }
@@ -42,7 +42,7 @@ public class ControlPanelDown extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.hanger.setSpeed(0);
-        Globals.controlPanelMotorEnabled = false;
+        Robot.climber.setSpeed(0);
+        Globals.climberMotorEnabled = false;
     }
 }

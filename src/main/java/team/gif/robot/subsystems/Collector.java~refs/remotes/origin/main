@@ -25,8 +25,8 @@ public class Collector extends SubsystemBase {
     public void setSpeedPercentCollector(double percent) {
         collectorMotor.set(ControlMode.PercentOutput, percent);
     }
+
     public void setSpeedPercentEntry(double percent) {
         entryMotor.set(percent);
     }
 }
-

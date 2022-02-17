@@ -1,4 +1,4 @@
-package team.gif.robot.commands.hanger;
+package team.gif.robot.commands.climber;
 
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -20,7 +20,7 @@ public class HangerManualControl extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.hanger.setOpen();
+        Robot.climber.setOpen();
         SmartDashboard.putBoolean("Hang Control", true);
     }
 
@@ -33,28 +33,28 @@ public class HangerManualControl extends CommandBase {
             speed = 0;
         }
 
-        if (!Globals.controlPanelMotorEnabled) {
+        if (!Globals.climberMotorEnabled) {
             // do not allow the elevator to go below the lowest point
             // overrides if the Aux A button is pressed
             // This prevents the elevator for overrunning in normal condition
             // but allows us to reset the 0 position when the robot is turned on
             // and the elevator is not in the starting position
             if (Robot.oi.aux.getAButton()) {
-                Robot.hanger.enableLowerSoftLimit(false);
+                Robot.climber.enableLowerSoftLimit(false);
             } else {
-                Robot.hanger.enableLowerSoftLimit(true);
+                Robot.climber.enableLowerSoftLimit(true);
             }
 
             // run the elevator either up or down
-            Robot.hanger.setSpeed(speed);
+            Robot.climber.setSpeed(speed);
         }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.hanger.setClosed();
-        Robot.hanger.setSpeed(0);
+        Robot.climber.setClosed();
+        Robot.climber.setSpeed(0);
         SmartDashboard.putBoolean("Hang Control", false);
     }
 

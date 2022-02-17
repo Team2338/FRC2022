@@ -1,12 +1,10 @@
-package team.gif.robot.commands.intake;
+package team.gif.robot.commands.collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.subsystems.Intake;
+import team.gif.robot.Robot;
+import team.gif.robot.subsystems.Collector;
 
 public class IntakeUp extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
-    private final Intake intake = Intake.getInstance();
 
     public IntakeUp() {
         //addRequirements(intake);
@@ -14,7 +12,7 @@ public class IntakeUp extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.setSolenoids(false, false, true);
+        Robot.collector.setSolenoid(false);
     }
 
     @Override
