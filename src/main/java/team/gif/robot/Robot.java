@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.Hood;
+import team.gif.robot.subsystems.drivers.Limelight;
 import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,6 +40,7 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
     private RobotContainer m_robotContainer;
     public static Pigeon m_pigeon = null;
+    public static Limelight m_limelight = null;
     private static Command driveCommand = null;
     public static Drivetrain drivetrain = null;
     public static OI oi;
@@ -46,6 +49,7 @@ public class Robot extends TimedRobot {
     public static Intake intake = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
+    public static Climber climber = null;
     public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     // T.S: Creating an new tab in shuffleboard.
@@ -65,11 +69,13 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        m_limelight = new Limelight();
 
         drivetrain = new Drivetrain();
         driveCommand = new Drive();
 
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
+        climber = new Climber();
         intake = new Intake();
         indexer = new Indexer();
         shooter = new Shooter();

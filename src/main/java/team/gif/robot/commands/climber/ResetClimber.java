@@ -1,19 +1,19 @@
-package team.gif.robot.commands.hanger;
+package team.gif.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class ResetHanger extends CommandBase {
+public class ResetClimber extends CommandBase {
     //@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-    public ResetHanger() {
+    public ResetClimber() {
         // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.hanger.zeroEncoder();
+        Robot.climber.zeroEncoder();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

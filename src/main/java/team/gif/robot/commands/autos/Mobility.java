@@ -1,16 +1,17 @@
 package team.gif.robot.commands.autos;
 
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.util.Units;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
+import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Mobility extends SequentialCommandGroup {
         // create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
-        return rc.andThen(() -> Drivetrain.getInstance().tankDriveVolts(0, 0));
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
     public Mobility() {
