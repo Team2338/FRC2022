@@ -14,11 +14,11 @@ import team.gif.robot.Robot;
 /**
  * Describe the Command functionality here
  */
-public class LowerElevator extends CommandBase {
+public class LowerClimber extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private boolean isHoldState = false;
   // Called when the command is initially scheduled.
-  public LowerElevator() {
+  public LowerClimber() {
       super();
       addRequirements(Robot.climber);
   }

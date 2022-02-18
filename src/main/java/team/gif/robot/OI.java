@@ -11,6 +11,8 @@ import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.climber.ClimberDown;
 import team.gif.robot.commands.climber.ClimberMax;
 import team.gif.robot.commands.climber.HangerManualControl;
+import team.gif.robot.commands.climber.Lower4Inches;
+import team.gif.robot.commands.climber.LowerClimber;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
@@ -125,8 +127,8 @@ public class OI {
 
         aY.toggleWhenPressed(new HangerManualControl());
         aDPadDown.whenPressed(new ClimberMax());
-        aDPadLeft.whenPressed(new Cl)
-
+        aDPadLeft.whenPressed(new LowerClimber());
+        aDPadUp.whenPressed(new Lower4Inches());
     }
 
     public void setRumble(boolean rumble) {
