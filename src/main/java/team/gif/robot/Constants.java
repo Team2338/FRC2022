@@ -51,8 +51,8 @@ public final class Constants {
         public static final double kD = 0;
         public static final double kF = 0.032;
 
-        public static final double RPM_LOW = Robot.isCompBot ? 4300 : 4600;
-        public static final double RPM_HIGH = 4650;
+        public static final double RPM_LOW = Robot.isCompBot ? 14000 : 14000;
+        public static final double RPM_HIGH = 20000;
     }
 
     public static class Climber {

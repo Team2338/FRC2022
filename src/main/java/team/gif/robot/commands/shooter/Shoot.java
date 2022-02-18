@@ -15,23 +15,28 @@ public class Shoot extends CommandBase {
 
     public Shoot() {
         super();
-
-        // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.shooter.setSpeedPID(20000);
+        //Robot.shooter.setSpeedPID(20000);
 
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 2000 ;
+        //shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 1000 ;
+        if ( ( Robot.shooter.isInToleranceHigh())
+                && (Robot.indexer.getSensorBelt())) {
 
+//            System.out.println("Firing speed " + Robot.shooter.getVelocity());
+            Robot.indexer.setBeltMotorSpeed(1.0);
+            // The indexer will move the remaining power cells forward. No need to move them here.
+        } else {
+            Robot.indexer.setBeltMotorSpeed(0);
+        }
     }
 
     // Returns true when the command should end.
@@ -43,7 +48,7 @@ public class Shoot extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.setSpeedPercent(0);
-        shooterIsInTolerance = false;
+//        Robot.shooter.setSpeedPercent(0);
+//        shooterIsInTolerance = false;
     }
 }

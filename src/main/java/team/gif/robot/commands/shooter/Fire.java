@@ -5,6 +5,7 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Indexer;
 
+@Deprecated
 public class Fire extends CommandBase {
 
     public Fire() {

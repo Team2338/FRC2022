@@ -13,7 +13,7 @@ public abstract class RobotMap {
     public static final int WHEEL_INDEX = 10;
     public static final int BELT = 2;
     public static final int SHOOTER = 13;
-    public static final int HANGER = 99; //TODO
+    public static final int HANGER = 15; //TODO
 
     // Sensors
     public static final int SENSOR_STAGE_ONE = 0;
@@ -22,11 +22,11 @@ public abstract class RobotMap {
     // Solenoids
     public static final int SOLENOID_HANGER = 5;
     public static final int SOLENOID_HOOD = 4;
-    public static final int SOLENOID_COLLECTOR = 99; //TODO
+    public static final int SOLENOID_COLLECTOR = 3; //TODO
 
 
     // Compressors //
-    public static final int COMPRESSOR_HOOD = 1;
+    public static final int COMPRESSOR_HOOD = 0; // todo rename
 
     // Color Sensor
     public static final int COLOR_SENSOR = 0;

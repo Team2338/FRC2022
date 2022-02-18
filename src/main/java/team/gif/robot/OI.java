@@ -113,13 +113,14 @@ public class OI {
 
         dA.whenHeld(new Shoot());
         dX.whenPressed(new HoodDown());
-        dB.whenPressed(new ShootShort());
+        dB.whenHeld(new ShootShort());
+        dB.whenPressed(new HoodUp());
         dY.whenPressed(new HoodUp());
-        dStart.whenPressed(new ReverseIndex());
+        dStart.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenActive(new ToggleIndexer());
-        dBack.whileHeld(new RevFlywheel());
+        dBack.whenHeld(new RevFlywheel());
 
-        aLBump.whileHeld(new RevFlywheel());
+        aLBump.whenHeld(new RevFlywheel());
         aRBump.whileHeld(new RapidFire());
         aLTrigger.whileHeld(new LimelightAutoAim());
         aRTrigger.whileHeld(new Fire());

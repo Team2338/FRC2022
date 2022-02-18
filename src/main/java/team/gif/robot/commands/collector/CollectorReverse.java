@@ -19,8 +19,6 @@ public class CollectorReverse extends CommandBase
     @Override
     public void execute() {
         Robot.collector.setSpeedPercent(-0.5);
-        Robot.indexer.setStageMotorSpeed(-0.4);
-        Robot.indexer.setBeltMotorSpeed(-0.4);
     }
 
     // Returns true when the command should end.
