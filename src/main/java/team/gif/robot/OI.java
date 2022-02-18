@@ -21,7 +21,7 @@ import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
 import team.gif.robot.commands.collector.CollectorReverse;
 import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.shooter.ShooterShootsShort;
+import team.gif.robot.commands.shooter.ShootShort;
 
 
 public class OI {
