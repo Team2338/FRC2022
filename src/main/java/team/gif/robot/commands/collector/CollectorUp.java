@@ -2,11 +2,10 @@ package team.gif.robot.commands.collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.Collector;
 
-public class IntakeUp extends CommandBase {
+public class CollectorUp extends CommandBase {
 
-    public IntakeUp() {
+    public CollectorUp() {
         //addRequirements(intake);
     }
 

@@ -5,8 +5,8 @@ import team.gif.robot.Robot;
 
 import static team.gif.robot.Globals.shooterIsInTolerance;
 
-public class ShooterShootsShort extends CommandBase {
-    public ShooterShootsShort() {
+public class ShootShort extends CommandBase {
+    public ShootShort() {
         super();
 
         // Use addRequirements() here to declare subsystem dependencies.

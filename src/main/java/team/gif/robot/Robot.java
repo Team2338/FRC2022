@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import team.gif.robot.commands.climber.HangerManualControl;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.Hood;

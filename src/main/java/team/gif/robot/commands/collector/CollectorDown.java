@@ -3,9 +3,9 @@ package team.gif.robot.commands.collector;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class IntakeDown extends CommandBase {
+public class CollectorDown extends CommandBase {
 
-    public IntakeDown() {
+    public CollectorDown() {
         //addRequirements(intake);
     }
 

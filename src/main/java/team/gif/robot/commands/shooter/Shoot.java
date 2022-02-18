@@ -10,10 +10,10 @@ import team.gif.robot.Robot;
 import static team.gif.robot.Globals.shooterIsInTolerance;
 
 /** An example command that uses an example subsystem. */
-public class ShooterShoots extends CommandBase {
+public class Shoot extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-    public ShooterShoots() {
+    public Shoot() {
         super();
 
         // Use addRequirements() here to declare subsystem dependencies.

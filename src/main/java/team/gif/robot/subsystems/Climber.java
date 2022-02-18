@@ -24,14 +24,16 @@ public class Climber extends SubsystemBase {
         // Limit Switch
         limitSwitch.enableLimitSwitch(true);
         // Soft Limits
-        hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-        hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+        hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
+        hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
 
-        hangMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, Constants.Climber.MAX_POS);
-        hangMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, Constants.Climber.MIN_POS);
+        //TODO: DISABLE HARD & SOFT LIMITS
 
         hangMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         SmartDashboard.putBoolean("Hang Control", false);
+
+        //TODO: REPLACE SMARTDASHBOARD WITH NETWORKENTRY
+        //TODO: ADD DEFAULT COMMAND FOR CLIMBER
     }
 
     public void zeroEncoder() {

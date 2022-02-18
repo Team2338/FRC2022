@@ -7,10 +7,20 @@ import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
 import team.gif.robot.commands.Solenoids.HoodDown;
 import team.gif.robot.commands.Solenoids.HoodUp;
-import team.gif.robot.commands.shooter.ShooterShoots;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
+import team.gif.robot.commands.climber.ClimberDown;
+import team.gif.robot.commands.climber.ClimberMax;
+import team.gif.robot.commands.climber.HangerManualControl;
+import team.gif.robot.commands.collector.CollectorDown;
+import team.gif.robot.commands.indexer.ReverseIndex;
+import team.gif.robot.commands.indexer.ToggleIndexer;
+import team.gif.robot.commands.shooter.Fire;
+import team.gif.robot.commands.shooter.RapidFire;
+import team.gif.robot.commands.shooter.RevFlywheel;
+import team.gif.robot.commands.shooter.Shoot;
 import team.gif.robot.commands.collector.CollectorReverse;
 import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.shooter.ShooterShootsShort;
+import team.gif.robot.commands.shooter.ShootShort;
 
 
 public class OI {
@@ -96,10 +106,27 @@ public class OI {
 //        dLT.whileHeld(new Pivot());
         dLBump.whenHeld(new CollectorReverse());
         dRBump.whenHeld(new CollectorRun());
-        dA.whenHeld(new ShooterShoots());
+        dRBump.whenPressed(new CollectorDown()); //TODO: CREATE SOLENOID CLASS
+        dLTrigger.whileHeld(new LimelightAutoAim());
+        dRTrigger.whileHeld(new RapidFire());
+
+        dA.whenHeld(new Shoot());
         dX.whenPressed(new HoodDown());
-        dB.whenPressed(new ShooterShootsShort());
+        dB.whenPressed(new ShootShort());
         dY.whenPressed(new HoodUp());
+        dStart.whenPressed(new ReverseIndex());
+        dLStickBtn.toggleWhenActive(new ToggleIndexer());
+        dBack.whileHeld(new RevFlywheel());
+
+        aLBump.whileHeld(new RevFlywheel());
+        aRBump.whileHeld(new RapidFire());
+        aLTrigger.whileHeld(new LimelightAutoAim());
+        aRTrigger.whileHeld(new Fire());
+
+        aY.toggleWhenPressed(new HangerManualControl());
+        aDPadDown.whenPressed(new ClimberMax());
+        aDPadLeft.whenPressed(new Cl)
+
     }
 
     public void setRumble(boolean rumble) {
