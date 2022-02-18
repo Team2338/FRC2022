@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import team.gif.robot.commands.Solenoids.HoodDown;
 import team.gif.robot.commands.Solenoids.HoodUp;
 import team.gif.robot.commands.autoaim.LimelightAutoAim;
-import team.gif.robot.commands.climber.ClimberDown;
 import team.gif.robot.commands.climber.ClimberMax;
 import team.gif.robot.commands.climber.HangerManualControl;
 import team.gif.robot.commands.climber.Lower4Inches;
