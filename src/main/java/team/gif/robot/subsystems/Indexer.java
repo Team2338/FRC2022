@@ -25,7 +25,7 @@ public class Indexer extends SubsystemBase {
         beltMotor.setInverted(false);
     }
 
-    public boolean getSensorWheel() {
+    public boolean getSensorStage() {
         return sensorWheel.get();
     }
 

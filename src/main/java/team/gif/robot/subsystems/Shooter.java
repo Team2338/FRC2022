@@ -52,4 +52,6 @@ public class Shooter extends SubsystemBase
     public double getSpeed(){
         return shooterMotor.getSelectedSensorVelocity();
     }
+
+    public String getVelocity_Shuffleboard(){ return String.format("%12.0f",getSpeed());}
 }
