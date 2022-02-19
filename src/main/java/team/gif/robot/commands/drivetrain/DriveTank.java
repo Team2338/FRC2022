@@ -23,7 +23,11 @@ public class DriveTank extends CommandBase {
          */
         double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
         double currR = -Robot.oi.driver.getRightY();
-        Robot.drivetrain.setSpeed(currL, -currR);
+        if(Robot.isCompBot) {
+            Robot.drivetrain.setSpeed(currL, -currR);
+        } else {
+            Robot.drivetrain.setSpeed(currL, currR);
+        }
     }
 
     // Returns true when the command should end.
