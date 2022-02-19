@@ -17,6 +17,7 @@ import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.climber.ResetClimber;
+import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.subsystems.Climber;
@@ -31,7 +32,7 @@ import team.gif.robot.commands.indexer.IndexScheduler;
 import team.gif.robot.commands.shooter.ShooterIdle;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Collector;
-import team.gif.robot.commands.drivetrain.Drive;
+import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
 
@@ -48,7 +49,6 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
     public static Pigeon m_pigeon = null;
     public static Limelight limelight = null;
-    private static Command driveCommand = null;
     public static Drivetrain drivetrain = null;
     private boolean _runAutoScheduler = true;
     public static OI oi;
@@ -69,6 +69,8 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
 
+    public static DriveArcade arcadeeDrive;
+    public static DriveTank tankDrive;
 
     // T.S: Creating an new tab in shuffleboard.
     ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
@@ -91,7 +93,6 @@ public class Robot extends TimedRobot {
         limelight = new Limelight();
 
         drivetrain = new Drivetrain();
-        driveCommand = new Drive();
 
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
         climber = new Climber();
@@ -99,9 +100,12 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
         shooter = new Shooter();
         hood = new Hood();
+        tankDrive = new DriveTank();
+        arcadeeDrive = new DriveArcade();
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
+        drivetrain.setDefaultCommand(arcadeeDrive);
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
@@ -124,6 +128,10 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("ResetHead", new ResetHeading()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
 
         tab.addNumber("Shooter Speed", shooter::getSpeed);
+
+        //ts: switching drives mode
+        tab.add("Tank Drive", new DriveTank());
+        tab.add("Arcade Drive", new DriveArcade());
     }
 
     /**
@@ -223,7 +231,6 @@ public class Robot extends TimedRobot {
         }
         oi = new OI();
         compressor.enableDigital();
-        driveCommand.schedule();
     }
 
     /** This function is called periodically during operator control. */
