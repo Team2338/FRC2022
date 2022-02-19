@@ -29,7 +29,12 @@ public class DriveArcade extends CommandBase {
          */
         double rotation = Robot.oi.driver.getRightX();
         double currSpeed = Robot.oi.driver.getLeftY();
-        Robot.drivetrain.driveArcade(rotation,-currSpeed);
+        if(Robot.isCompBot) {
+            Robot.drivetrain.driveArcade(rotation, -currSpeed);
+        } else {
+            Robot.drivetrain.driveArcade(-currSpeed, rotation);
+        }
+
     }
 
     // Returns true when the command should end.
