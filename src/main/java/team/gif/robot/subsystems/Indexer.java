@@ -119,8 +119,4 @@ public class Indexer extends SubsystemBase {
     public double getBeltMotorSpeed() {
         return beltMotor.getEncoder().getVelocity();
     }
-
-    public String addBeltVelocityShuffleBoard() {
-        return String.format("%8.2f", getBeltMotorSpeed());
-    }
 }
