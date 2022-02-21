@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
 
-    public static DriveArcade arcadeeDrive;
+    public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
 
     // T.S: Creating an new tab in shuffleboard.
@@ -101,11 +101,11 @@ public class Robot extends TimedRobot {
         shooter = new Shooter();
         hood = new Hood();
         tankDrive = new DriveTank();
-        arcadeeDrive = new DriveArcade();
+        arcadeDrive = new DriveArcade();
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-        drivetrain.setDefaultCommand(arcadeeDrive);
+        drivetrain.setDefaultCommand(arcadeDrive);
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
@@ -122,6 +122,7 @@ public class Robot extends TimedRobot {
         tab.addBoolean("Color Sensor 2", indexer::getSensorBelt);
         tab.addBoolean("Color Sensor 1", indexer::getSensorStage);
         tab.add(indexer);
+        tab.addString("Belt Velocity", indexer::addBeltVelocityShuffleBoard);
         SmartDashboard.putData("Hanger", new ResetClimber()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
         limelight.setLEDMode(1);//force off
 

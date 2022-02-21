@@ -7,7 +7,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 
@@ -30,6 +32,12 @@ public class Indexer extends SubsystemBase {
 
         wheelMotor.setInverted(false); // subject to change based on design feats I don't remember
         beltMotor.setInverted(false);
+
+        beltPIDControl.setP(Constants.Indexer.kPBelt);
+        beltPIDControl.setI(Constants.Indexer.kIBelt);
+        beltPIDControl.setD(Constants.Indexer.kDBelt);
+        beltPIDControl.setFF(Constants.Indexer.kFFBelt);
+        beltPIDControl.setIZone(Constants.Indexer.kIZoneBelt);
     }
 
     public boolean getSensorStage() {
@@ -50,5 +58,13 @@ public class Indexer extends SubsystemBase {
 
     public void setBeltMotorSpeedPID(double setPoint) {
         beltPIDControl.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+    }
+
+    public double getBeltMotorSpeed() {
+        return beltMotor.getEncoder().getVelocity();
+    }
+
+    public String addBeltVelocityShuffleBoard() {
+        return String.format("%8.2f", getBeltMotorSpeed());
     }
 }

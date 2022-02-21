@@ -26,12 +26,9 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         //shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 1000 ;
-        if ( ( Robot.shooter.isInToleranceHigh())
-                && (Robot.indexer.getSensorBelt())) {
-
-//            System.out.println("Firing speed " + Robot.shooter.getVelocity());
+        if (Robot.shooter.isInToleranceHigh() && Robot.indexer.getSensorBelt()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
-            // The indexer will move the remaining power cells forward. No need to move them here.
+            //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
         } else {
             Robot.indexer.setBeltMotorSpeedPercent(0);
         }
