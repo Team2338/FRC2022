@@ -5,22 +5,27 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class Shooter extends SubsystemBase
 {
-    private static final TalonSRX shooterMotor = new TalonSRX(RobotMap.SHOOTER);
+    private static final TalonFX shooterMotor = new TalonFX(RobotMap.SHOOTER);
 
     public Shooter() {
         super();
         shooterMotor.configFactoryDefault();
 
         shooterMotor.setNeutralMode(NeutralMode.Coast);
+<<<<<<< Updated upstream
         shooterMotor.setInverted(InvertType.InvertMotorOutput);
+=======
+        shooterMotor.setInverted(TalonFXInvertType.Clockwise);
+>>>>>>> Stashed changes
 
         // Configure soft and hard limits
         shooterMotor.configForwardSoftLimitEnable(false);
@@ -29,8 +34,7 @@ public class Shooter extends SubsystemBase
         shooterMotor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
 
         // Configure the sensor
-        shooterMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
-        shooterMotor.setSensorPhase(true);
+        shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
 
         shooterMotor.config_kP(0, Constants.Shooter.kP);
         shooterMotor.config_kI(0, Constants.Shooter.kI);
