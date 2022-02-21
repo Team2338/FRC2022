@@ -72,6 +72,14 @@ public final class Constants {
         public static final double kIZoneBelt = 0;
     }
 
+    public static class Indexer {
+        public static final double kPBelt = 0;
+        public static final double kIBelt = 0;
+        public static final double kDBelt = 0;
+        public static final double kFFBelt = 0;
+        public static final double kIZoneBelt = 0;
+    }
+
     public static class Climber {
         // Elevator
         public static final double P = 0.0; // Connor said 4
