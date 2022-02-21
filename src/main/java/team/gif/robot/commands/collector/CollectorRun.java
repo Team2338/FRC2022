@@ -18,15 +18,7 @@ public class CollectorRun extends CommandBase
 
     // Called every time the scheduler runs while the command is scheduled.
     public void execute() {
-//        if ((Robot.indexer.getSensorCollector() && Robot.indexer.getSensorWheel()) || (Robot.indexer.getSensorWheel() && Robot.indexer.getSensorBelt())) {
-//            Robot.intake.setSpeedPercent(0);
-//            System.out.println("Robot Full");
-//        } else {
-//            Robot.intake.setSpeedPercent(0.75);
-//        }
         Robot.collector.setSpeedPercent(0.6);
-        //Robot.indexer.setIndexMotorSpeed(0.8);
-        //Robot.indexer.setBeltMotorSpeed(1);
     }
     // Returns true when the command should end.
     @Override

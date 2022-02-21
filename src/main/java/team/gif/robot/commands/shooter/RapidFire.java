@@ -24,7 +24,7 @@ public class RapidFire extends CommandBase {
 
         if ( ( Robot.shooter.getSpeed() > (speed - 20.0) )) {
             Robot.indexer.setBeltMotorSpeedPercent(0.5);
-            Robot.indexer.setStageMotorSpeed(0.4);
+            Robot.indexer.setMidMotorSpeed(0.4);
         }
     }
 
@@ -36,7 +36,7 @@ public class RapidFire extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.indexer.setBeltMotorSpeedPercent(0);
-        Robot.indexer.setStageMotorSpeed(0);
+        Robot.indexer.setMidMotorSpeed(0);
 
         Globals.indexerEnabled = true;
     }

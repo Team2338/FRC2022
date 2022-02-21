@@ -68,7 +68,7 @@ public class LimelightAutoAim extends CommandBase {
                     double offset = Robot.limelight.getXOffset();
                     if (offset > -1.0 && offset < 1.0) {
                         Robot.indexer.setBeltMotorSpeedPercent(0.5);
-                        Robot.indexer.setStageMotorSpeed(0.4);
+                        Robot.indexer.setMidMotorSpeed(0.4);
                     } else {
                         System.out.println("Offset Adjusting at: " + offset);
                         // need to relock
@@ -103,7 +103,7 @@ public class LimelightAutoAim extends CommandBase {
         robotHasSettled = false;
         Robot.shooter.setSpeedPercent(0);
         Robot.indexer.setBeltMotorSpeedPercent(0);
-        Robot.indexer.setStageMotorSpeed(0);
+        Robot.indexer.setMidMotorSpeed(0);
 
         Drivetrain.leftTalon1.enableCurrentLimit(true);
         Drivetrain.leftTalon2.enableCurrentLimit(true);

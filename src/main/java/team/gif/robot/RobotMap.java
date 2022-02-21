@@ -3,21 +3,21 @@ package team.gif.robot;
 public abstract class RobotMap {
 
     // Drive Motors
-    public static final int DRIVE_LEFT_ONE = 0;
-    public static final int DRIVE_LEFT_TWO = 1;
-    public static final int DRIVE_RIGHT_ONE = 4;
-    public static final int DRIVE_RIGHT_TWO = 5;
+    public static final int MOTOR_DRIVE_LEFT_ONE = 0;
+    public static final int MOTOR_DRIVE_LEFT_TWO = 1;
+    public static final int MOTOR_DRIVE_RIGHT_ONE = 4;
+    public static final int MOTOR_DRIVE_RIGHT_TWO = 5;
 
     // Other Motors
-    public static final int INTAKE = 3;
-    public static final int WHEEL_INDEX = 10;
-    public static final int BELT = 2;
-    public static final int SHOOTER = 13;
-    public static final int HANGER = 15; //TODO
+    public static final int MOTOR_INTAKE = 3;
+    public static final int MOTOR_MID_INDEX = 10;
+    public static final int MOTOR_BELT = 2;
+    public static final int MOTOR_SHOOTER = 13;
+    public static final int MOTOR_HANGER = 15; //TODO
 
     // Sensors
-    public static final int SENSOR_STAGE_ONE = 0;
-    public static final int SENSOR_STAGE_TWO = 1;
+    public static final int SENSOR_MID = 0;
+    public static final int BELT = 1;
 
     // Solenoids
     public static final int SOLENOID_HANGER = 5;

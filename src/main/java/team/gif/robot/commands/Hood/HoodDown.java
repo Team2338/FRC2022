@@ -2,21 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package team.gif.robot.commands.Solenoids;
+package team.gif.robot.commands.Hood;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class HoodUp extends CommandBase {
+/** An example command that uses an example subsystem. */
+public class HoodDown extends CommandBase {
 
-    public HoodUp() {
+    public HoodDown() {
         super();
-        addRequirements(Robot.shooter);
+        addRequirements(Robot.hood);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {Robot.hood.setHood(true);}
+    public void initialize() {
+        Robot.hood.setHoodUp(false);
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override

@@ -1,20 +1,18 @@
 package team.gif.robot.commands.climber;
 
-import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
-public class HangerManualControl extends CommandBase {
+public class ClimberManualControl extends CommandBase {
 
     //@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public static final double ClimberupGain = 1;
     public static final double ClimberdownGain = 1;
 
-    public HangerManualControl() {
+    public ClimberManualControl() {
     }
 
     // Called when the command is initially scheduled.
@@ -49,16 +47,16 @@ public class HangerManualControl extends CommandBase {
         }
     }
 
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         Robot.climber.setSpeed(0);
         SmartDashboard.putBoolean("Hang Control", false);
-    }
-
-    // Returns true when the command should end.
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 }

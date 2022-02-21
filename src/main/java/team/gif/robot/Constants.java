@@ -33,7 +33,7 @@ public final class Constants {
         public static final double kTrackWidthMeters = 1.0;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
 }
-    public static class AutoConstants {
+    public static class Auto {
         // part of trajectory but numbers are from example
         public static final double kMaxSpeedMetersPerSecond = 3.0;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3.0;

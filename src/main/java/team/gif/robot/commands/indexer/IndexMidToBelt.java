@@ -24,17 +24,17 @@ public class IndexMidToBelt extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.indexer.setStageMotorSpeed(0.5);
         Robot.indexer.setBeltMotorSpeedPercent(1);
+        Robot.indexer.setMidMotorSpeed(0.8);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(!Globals.indexerEnabled) {
-            return true;
-        } else {
+        if(Globals.indexerEnabled) {
             return Robot.indexer.getSensorBelt();
+        } else {
+            return true;
         }
     }
 

@@ -40,8 +40,8 @@ public class RobotTrajectory {
      * Creates a config for Forward trajectory
      */
     public TrajectoryConfig configForward = new TrajectoryConfig(
-        Constants.AutoConstants.kMaxSpeedMetersPerSecond, //kMaxSpeedMetersPerSecond
-        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared) //kMaxAccelerationMetersPerSecondSquared
+        Constants.Auto.kMaxSpeedMetersPerSecond, //kMaxSpeedMetersPerSecond
+        Constants.Auto.kMaxAccelerationMetersPerSecondSquared) //kMaxAccelerationMetersPerSecondSquared
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(Constants.Drivetrain.kDriveKinematics)
         //.setReversed(false)
@@ -50,8 +50,8 @@ public class RobotTrajectory {
         .addConstraint( new CentripetalAccelerationConstraint(1));
 
     public TrajectoryConfig configForwardFast = new TrajectoryConfig(
-            Constants.AutoConstants.kFastSpeedMetersPerSecond,
-            Constants.AutoConstants.kFastAccelerationMetersPerSecondSquared)
+            Constants.Auto.kFastSpeedMetersPerSecond,
+            Constants.Auto.kFastAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(Constants.Drivetrain.kDriveKinematics)
             //.setReversed(false)
@@ -59,8 +59,8 @@ public class RobotTrajectory {
             .addConstraint(autoVoltageConstraint);
 
     public TrajectoryConfig configForwardSlow = new TrajectoryConfig(
-            Constants.AutoConstants.kSlowSpeedMetersPerSecond,
-            Constants.AutoConstants.kSlowAccelerationMetersPerSecondSquared)
+            Constants.Auto.kSlowSpeedMetersPerSecond,
+            Constants.Auto.kSlowAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(Constants.Drivetrain.kDriveKinematics)
             //.setReversed(true)
@@ -111,8 +111,8 @@ public class RobotTrajectory {
      * Creates a config for Reverse trajectory
      */
     public TrajectoryConfig configReverse = new TrajectoryConfig(
-        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-        Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+        Constants.Auto.kMaxSpeedMetersPerSecond,
+        Constants.Auto.kMaxAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(Constants.Drivetrain.kDriveKinematics)
         .setReversed(true)
@@ -124,8 +124,8 @@ public class RobotTrajectory {
      * Creates a config for Reverse trajectory
      */
     public TrajectoryConfig configReverseSlow = new TrajectoryConfig(
-        Constants.AutoConstants.kSlowSpeedMetersPerSecond,
-        Constants.AutoConstants.kSlowAccelerationMetersPerSecondSquared)
+        Constants.Auto.kSlowSpeedMetersPerSecond,
+        Constants.Auto.kSlowAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(Constants.Drivetrain.kDriveKinematics)
             .setReversed(true)
@@ -137,7 +137,7 @@ public class RobotTrajectory {
     public RamseteCommand createRamseteCommand(Trajectory trajectory) {
         RamseteCommand rc = new RamseteCommand(trajectory,
             Robot.drivetrain::getPose,
-            new RamseteController(Constants.AutoConstants.kRamseteB, Constants.AutoConstants.kRamseteZeta),
+            new RamseteController(Constants.Auto.kRamseteB, Constants.Auto.kRamseteZeta),
             new SimpleMotorFeedforward(Constants.Drivetrain.ksVolts,
                 Constants.Drivetrain.kvVoltSecondsPerMeter,
                 Constants.Drivetrain.kaVoltSecondsSquaredPerMeter),

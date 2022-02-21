@@ -10,7 +10,7 @@ import team.gif.robot.RobotMap;
 
 public class Collector extends SubsystemBase
 {
-    private static final TalonSRX intakeMotor = new TalonSRX(RobotMap.INTAKE);
+    private static final TalonSRX intakeMotor = new TalonSRX(RobotMap.MOTOR_INTAKE);
 
     private static final Solenoid collectorSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_COLLECTOR);
 

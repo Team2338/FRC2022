@@ -22,15 +22,12 @@ public class ClimberMax extends CommandBase {
   }
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-      System.out.println("here .........");
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
       Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
-
   }
 
   // Returns true when the command should end.
@@ -42,8 +39,6 @@ public class ClimberMax extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-      System.out.println("here .........again");
       Robot.climber.setSpeed(0);
   }
 }

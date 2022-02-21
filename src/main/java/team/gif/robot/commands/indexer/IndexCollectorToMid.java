@@ -25,7 +25,9 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public void execute() {
         if(Globals.isCollecting) {
-            Robot.indexer.setStageMotorSpeed(0.5);
+            Robot.indexer.setMidMotorSpeed(0.8);
+        } else {
+            Robot.indexer.setMidMotorSpeed(0);
         }
     }
 
@@ -34,13 +36,15 @@ public class IndexCollectorToMid extends CommandBase {
     public boolean isFinished() {
         if(Globals.indexerEnabled) {
             return Robot.indexer.getSensorStage();
+        } else {
+            return true;
         }
-        return true;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setStageMotorSpeed(0);
+        Robot.indexer.setMidMotorSpeed(0);
+        Globals.isCollecting = false;
     }
 }

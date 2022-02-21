@@ -5,17 +5,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
-import team.gif.robot.commands.Solenoids.HoodDown;
-import team.gif.robot.commands.Solenoids.HoodUp;
+import team.gif.robot.commands.Hood.HoodDown;
+import team.gif.robot.commands.Hood.HoodUp;
 import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.climber.ClimberMax;
-import team.gif.robot.commands.climber.HangerManualControl;
+import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.Lower4Inches;
 import team.gif.robot.commands.climber.LowerClimber;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
-import team.gif.robot.commands.shooter.Fire;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
@@ -117,15 +116,14 @@ public class OI {
         dB.whenPressed(new HoodUp());
         dY.whenPressed(new HoodUp());
         dStart.whenHeld(new ReverseIndex());
-        dLStickBtn.toggleWhenActive(new ToggleIndexer());
+        dLStickBtn.toggleWhenPressed(new ToggleIndexer());
         dBack.whenHeld(new RevFlywheel());
 
         aLBump.whenHeld(new RevFlywheel());
         aRBump.whileHeld(new RapidFire());
         aLTrigger.whileHeld(new LimelightAutoAim());
-        aRTrigger.whileHeld(new Fire());
 
-        aY.toggleWhenPressed(new HangerManualControl());
+        aY.toggleWhenPressed(new ClimberManualControl());
         aDPadDown.whenPressed(new ClimberMax());
         aDPadLeft.whenPressed(new LowerClimber());
         aDPadUp.whenPressed(new Lower4Inches());

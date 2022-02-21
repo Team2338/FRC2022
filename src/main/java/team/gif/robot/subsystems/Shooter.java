@@ -14,7 +14,7 @@ import team.gif.robot.RobotMap;
 
 public class Shooter extends SubsystemBase
 {
-    private static final TalonFX shooterMotor = new TalonFX(RobotMap.SHOOTER);
+    private static final TalonFX shooterMotor = new TalonFX(RobotMap.MOTOR_SHOOTER);
 
     public Shooter() {
         super();

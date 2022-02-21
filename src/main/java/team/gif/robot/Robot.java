@@ -45,9 +45,9 @@ import team.gif.robot.subsystems.Shooter;
 public class Robot extends TimedRobot {
     public static final boolean isCompBot = true;
 
-    private Command m_autonomousCommand;
-    private RobotContainer m_robotContainer;
-    public static Pigeon m_pigeon = null;
+    private Command autonomousCommand;
+    private RobotContainer robotContainer;
+    public static Pigeon pigeon = null;
     public static Limelight limelight = null;
     public static Drivetrain drivetrain = null;
     private boolean _runAutoScheduler = true;
@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         tabsetup();
-        m_robotContainer = new RobotContainer();
+        robotContainer = new RobotContainer();
         limelight = new Limelight();
 
         drivetrain = new Drivetrain();
@@ -110,8 +110,8 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
-        m_pigeon = new Pigeon();
-        m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
+        pigeon = new Pigeon();
+        pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
         // TS: add an getEntry tab in shuffleboard
         exampleShuffleboardEntry = tab.add("Example Input",exampleShuffleboardValue )
@@ -119,8 +119,8 @@ public class Robot extends TimedRobot {
         // TS: add the example input submit button to the shuffleboard.
         tab.add("Command", exampleShuffleboardEntryCommand);
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
-        tab.addBoolean("Color Sensor 2", indexer::getSensorBelt);
-        tab.addBoolean("Color Sensor 1", indexer::getSensorStage);
+        tab.addBoolean("Belt Sensor", indexer::getSensorBelt);
+        tab.addBoolean("Mid Sensor", indexer::getSensorStage);
         tab.add(indexer);
         tab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         SmartDashboard.putData("Hanger", new ResetClimber()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
@@ -182,11 +182,11 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.schedule();
+        if (autonomousCommand != null) {
+            autonomousCommand.schedule();
         }
 
         Globals.autonomousModeActive = true;
@@ -209,9 +209,9 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         if ( _runAutoScheduler && (_elapsedTime.get() > (chosenDelay.getValue()))) {
-            if (m_autonomousCommand != null) {
+            if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
-                m_autonomousCommand.schedule();
+                autonomousCommand.schedule();
             }
             _runAutoScheduler = false;
             _elapsedTime.stop();
@@ -227,8 +227,8 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
+        if (autonomousCommand != null) {
+            autonomousCommand.cancel();
         }
         oi = new OI();
         compressor.enableDigital();
@@ -300,7 +300,7 @@ public class Robot extends TimedRobot {
     public void updateauto(){
 
         if(chosenAuto == autoMode.MOBILITY){
-            m_autonomousCommand = new Mobility();
+            autonomousCommand = new Mobility();
 //        } else if(chosenAuto == autoMode.MOBILITY_FWD){
 //            m_autonomousCommand = new MobilityFwd();
 //        } else if(chosenAuto == autoMode.SAFE_3_BALL){

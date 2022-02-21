@@ -27,12 +27,12 @@ public class ToggleIndexer extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        Globals.indexerEnabled = true;
+    public boolean isFinished() {
+        return false;
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public void end(boolean interrupted) {
+        Globals.indexerEnabled = true;
     }
 }

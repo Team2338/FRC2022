@@ -1,7 +1,6 @@
 package team.gif.robot.subsystems;
 
 import com.revrobotics.*;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
@@ -10,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Climber extends SubsystemBase {
 //    public static Hanger instance = null;
 
-    private static final CANSparkMax hangMotor = new CANSparkMax(RobotMap.HANGER, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private static final CANSparkMax hangMotor = new CANSparkMax(RobotMap.MOTOR_HANGER, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final SparkMaxPIDController hangPIDController = hangMotor.getPIDController();
     private static final RelativeEncoder hangEncoder = hangMotor.getEncoder();
     private static final SparkMaxLimitSwitch limitSwitch = hangMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
