@@ -2,7 +2,6 @@ package team.gif.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 public class IndexBeltToFlywheel extends CommandBase {
@@ -21,7 +20,7 @@ public class IndexBeltToFlywheel extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.indexer.setBeltMotorSpeed(1);
+        Robot.indexer.setBeltMotorSpeedPercent(1);
     }
 
     // Returns true when the command should end.
@@ -33,6 +32,6 @@ public class IndexBeltToFlywheel extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }
