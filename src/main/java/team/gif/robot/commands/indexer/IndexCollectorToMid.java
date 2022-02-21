@@ -37,6 +37,7 @@ public class IndexCollectorToMid extends CommandBase {
         } else {
             return true;
         }
+        return true;
     }
 
     // Called once the command ends or is interrupted.
