@@ -1,5 +1,6 @@
 package team.gif.robot.commands.collector;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 public class CollectorRun extends CommandBase
@@ -12,6 +13,7 @@ public class CollectorRun extends CommandBase
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Globals.isCollecting = true;
     }
 
     // Called every time the scheduler runs while the command is scheduled.

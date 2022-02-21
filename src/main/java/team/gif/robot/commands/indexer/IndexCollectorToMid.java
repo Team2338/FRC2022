@@ -24,17 +24,18 @@ public class IndexCollectorToMid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.indexer.setStageMotorSpeed(0.5);
+        if(Globals.isCollecting) {
+            Robot.indexer.setStageMotorSpeed(0.5);
+        }
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(!Globals.indexerEnabled) {
-            return true;
-        } else {
+        if(Globals.indexerEnabled) {
             return Robot.indexer.getSensorStage();
         }
+        return true;
     }
 
     // Called once the command ends or is interrupted.
