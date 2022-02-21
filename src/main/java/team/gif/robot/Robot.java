@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
         tab.addBoolean("Color Sensor 2", indexer::getSensorBelt);
         tab.addBoolean("Color Sensor 1", indexer::getSensorStage);
         tab.add(indexer);
-        tab.addString("Belt Velocity", indexer::addBeltVelocityShuffleBoard);
+        tab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         SmartDashboard.putData("Hanger", new ResetClimber()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
         limelight.setLEDMode(1);//force off
 
