@@ -4,11 +4,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
-import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.subsystems.Collector;
-import team.gif.robot.subsystems.Shooter;
 
 public class LimelightAutoAim extends CommandBase {
 
@@ -70,7 +67,7 @@ public class LimelightAutoAim extends CommandBase {
                     // we need to check again to make sure the robot hasn't overshot the target
                     double offset = Robot.limelight.getXOffset();
                     if (offset > -1.0 && offset < 1.0) {
-                        Robot.indexer.setBeltMotorSpeed(0.5);
+                        Robot.indexer.setBeltMotorSpeedPercent(0.5);
                         Robot.indexer.setStageMotorSpeed(0.4);
                     } else {
                         System.out.println("Offset Adjusting at: " + offset);
@@ -105,7 +102,7 @@ public class LimelightAutoAim extends CommandBase {
     public void end(boolean interrupted) {
         robotHasSettled = false;
         Robot.shooter.setSpeedPercent(0);
-        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setStageMotorSpeed(0);
 
         Drivetrain.leftTalon1.enableCurrentLimit(true);

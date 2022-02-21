@@ -19,13 +19,13 @@ public class ReverseIndex extends CommandBase {
     public void execute() {
         Robot.collector.setSpeedPercent(-0.5);
         Robot.indexer.setStageMotorSpeed(-0.6);
-        Robot.indexer.setBeltMotorSpeed(-0.5);
+        Robot.indexer.setBeltMotorSpeedPercent(-0.5);
     }
 
     @Override
     public void end(boolean interrupted) {
         Robot.collector.setSpeedPercent(0);
-        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setStageMotorSpeed(0);
         Globals.indexerEnabled = true;
     }

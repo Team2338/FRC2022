@@ -21,11 +21,9 @@ public class Shooter extends SubsystemBase
         shooterMotor.configFactoryDefault();
 
         shooterMotor.setNeutralMode(NeutralMode.Coast);
-<<<<<<< Updated upstream
+
         shooterMotor.setInverted(InvertType.InvertMotorOutput);
-=======
         shooterMotor.setInverted(TalonFXInvertType.Clockwise);
->>>>>>> Stashed changes
 
         // Configure soft and hard limits
         shooterMotor.configForwardSoftLimitEnable(false);

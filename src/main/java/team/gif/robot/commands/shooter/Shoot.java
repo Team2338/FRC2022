@@ -7,8 +7,6 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-import static team.gif.robot.Globals.shooterIsInTolerance;
-
 /** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -32,10 +30,10 @@ public class Shoot extends CommandBase {
                 && (Robot.indexer.getSensorBelt())) {
 
 //            System.out.println("Firing speed " + Robot.shooter.getVelocity());
-            Robot.indexer.setBeltMotorSpeed(1.0);
+            Robot.indexer.setBeltMotorSpeedPercent(1.0);
             // The indexer will move the remaining power cells forward. No need to move them here.
         } else {
-            Robot.indexer.setBeltMotorSpeed(0);
+            Robot.indexer.setBeltMotorSpeedPercent(0);
         }
     }
 

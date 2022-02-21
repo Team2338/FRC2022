@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.Indexer;
-import team.gif.robot.subsystems.Collector;
 
 public class RapidFire extends CommandBase {
 
@@ -25,7 +23,7 @@ public class RapidFire extends CommandBase {
         double speed = isFarShot ? Constants.Shooter.RPM_HIGH : Constants.Shooter.RPM_LOW;
 
         if ( ( Robot.shooter.getSpeed() > (speed - 20.0) )) {
-            Robot.indexer.setBeltMotorSpeed(0.5);
+            Robot.indexer.setBeltMotorSpeedPercent(0.5);
             Robot.indexer.setStageMotorSpeed(0.4);
         }
     }
@@ -37,7 +35,7 @@ public class RapidFire extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setStageMotorSpeed(0);
 
         Globals.indexerEnabled = true;

@@ -3,7 +3,6 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.Indexer;
 
 @Deprecated
 public class Fire extends CommandBase {
@@ -25,10 +24,10 @@ public class Fire extends CommandBase {
                 && (Robot.indexer.getSensorBelt())) {
 
 //            System.out.println("Firing speed " + Robot.shooter.getVelocity());
-            Robot.indexer.setBeltMotorSpeed(0.5);
+            Robot.indexer.setBeltMotorSpeedPercent(0.5);
             // The indexer will move the remaining power cells forward. No need to move them here.
         } else {
-            Robot.indexer.setBeltMotorSpeed(0);
+            Robot.indexer.setBeltMotorSpeedPercent(0);
         }
     }
 
@@ -41,6 +40,6 @@ public class Fire extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.limelight.setLEDMode(1);
-        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }

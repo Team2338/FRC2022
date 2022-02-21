@@ -25,7 +25,7 @@ public class IndexMidToBelt extends CommandBase {
     @Override
     public void execute() {
         Robot.indexer.setStageMotorSpeed(0.5);
-        Robot.indexer.setBeltMotorSpeed(1);
+        Robot.indexer.setBeltMotorSpeedPercent(1);
     }
 
     // Returns true when the command should end.
@@ -41,6 +41,6 @@ public class IndexMidToBelt extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setBeltMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }
