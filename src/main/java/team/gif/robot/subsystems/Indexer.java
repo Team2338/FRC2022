@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
