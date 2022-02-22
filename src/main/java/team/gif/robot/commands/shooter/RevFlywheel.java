@@ -16,7 +16,9 @@ public class RevFlywheel extends CommandBase {
     public void initialize() {
         Robot.limelight.setLEDMode(3);//force on
 //        if (Robot.oi != null && (Robot.oi.dBack.get() || Robot.oi.aLBump.get())) {
-//        Robot.shooter.setSpeedPID(Constants.Shooter.RPM_HIGH);
+        //Robot.shooter.setSpeedPID(Constants.Shooter.RPM_HIGH);
+        Robot.shooter.setSpeedPID(Robot.shooterRpm);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
