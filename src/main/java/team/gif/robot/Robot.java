@@ -20,7 +20,7 @@ import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
-import team.gif.robot.commands.shooter.setShooterRpmCommend;
+import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry shooterRpmGetEntry;
     public static double shooterRpm = shooter.getSpeed();
     public static double shooterRpmSync = shooterRpm;
-    public static setShooterRpmCommend shooterRpmCommand;
+    public static setShooterRpmCommand shooterRpmCommand;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
-        shooterRpmCommand = new setShooterRpmCommend();
+        shooterRpmCommand = new setShooterRpmCommand();
 
         m_pigeon = new Pigeon();
         m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");

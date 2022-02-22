@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class setShooterRpmCommend extends CommandBase {
-    public setShooterRpmCommend(){}
+public class setShooterRpmCommand extends CommandBase {
+    public setShooterRpmCommand(){}
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {

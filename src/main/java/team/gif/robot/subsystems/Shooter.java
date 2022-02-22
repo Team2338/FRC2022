@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
+import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
 public class Shooter extends SubsystemBase
@@ -58,7 +59,7 @@ public class Shooter extends SubsystemBase
     public String getVelocity_Shuffleboard(){ return String.format("%12.0f",getSpeed());}
 
     public boolean isInToleranceHigh() {
-        return Math.abs(getSpeed() - Constants.Shooter.RPM_HIGH) < 2000;
+        return Math.abs(getSpeed() - Robot.shooterRpm) < 2000;
     }
 
     public boolean isInToleranceLow() {
