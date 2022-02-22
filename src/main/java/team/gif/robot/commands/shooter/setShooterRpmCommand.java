@@ -11,9 +11,8 @@ public class setShooterRpmCommand extends CommandBase {
     @Override
     public void initialize() {
         // ts: getEntry RPM
-        ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 (Shooter)");
-        Robot.shooterRpmGetEntry = tab.add("Shooter Speed",Robot.shooterRpm).getEntry();
         Robot.shooterRpm = Robot.shooterRpmGetEntry.getDouble(Robot.shooterRpm);
+        Robot.shooterRpmSync = Robot.shooterRpm;
         Robot.shooterRpmGetEntry.setDouble(Robot.shooterRpmSync);
     }
 

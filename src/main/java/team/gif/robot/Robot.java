@@ -83,9 +83,9 @@ public class Robot extends TimedRobot {
 
     // ts: varibles to getEntry RPM
     public static NetworkTableEntry shooterRpmGetEntry;
-    public static double shooterRpm = shooter.getSpeed();
-    public static double shooterRpmSync = shooterRpm;
-    public static setShooterRpmCommand shooterRpmCommand;
+    public static double shooterRpm;
+    public static double shooterRpmSync;
+    public setShooterRpmCommand shooterRpmCommand;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -117,10 +117,13 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
+        shooterRpm = shooter.getSpeed();
+        shooterRpmSync = shooterRpm;
+        shooterRpmGetEntry = tab.add("Target RPM",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
 
-        m_pigeon = new Pigeon();
-        m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
+        pigeon = new Pigeon();
+        pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
         // TS: add an getEntry tab in shuffleboard
         exampleShuffleboardEntry = tab.add("Example Input",exampleShuffleboardValue )
