@@ -20,6 +20,7 @@ import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.commands.shooter.setShooterRpmCommend;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
@@ -81,9 +82,10 @@ public class Robot extends TimedRobot {
     public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
 
     // ts: varibles to getEntry RPM
-    public static NetworkTableEntry rpmGetEntry;
-    public static double rpmValue = shooter.getSpeed();
-    public static double rpmValueSync = rpmValue;
+    public static NetworkTableEntry shooterRpmGetEntry;
+    public static double shooterRpm = shooter.getSpeed();
+    public static double shooterRpmSync = shooterRpm;
+    public static setShooterRpmCommend shooterRpmCommand;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -115,6 +117,8 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
+        shooterRpmCommand = new setShooterRpmCommend();
+
         m_pigeon = new Pigeon();
         m_pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
@@ -139,10 +143,8 @@ public class Robot extends TimedRobot {
         tab.add("Tank Drive", new DriveTank());
         tab.add("Arcade Drive", new DriveArcade());
 
-        // ts: getEntry RPM
-        rpmGetEntry = tab.add("Shooter Speed",rpmValue).getEntry();
-        rpmValue = rpmGetEntry.getDouble(rpmValue);
-        rpmGetEntry.setDouble(rpmValueSync);
+        // ts: command to getEntry RPM
+        tab.add("Set RPM", shooterRpmCommand);
     }
 
     /**
