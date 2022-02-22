@@ -80,6 +80,11 @@ public class Robot extends TimedRobot {
     // TS: the value is getting the getEntry number
     public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
 
+    // ts: varibles to getEntry RPM
+    public static NetworkTableEntry rpmGetEntry;
+    public static double rpmValue = shooter.getSpeed();
+    public static double rpmValueSync = rpmValue;
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -133,6 +138,11 @@ public class Robot extends TimedRobot {
         //ts: switching drives mode
         tab.add("Tank Drive", new DriveTank());
         tab.add("Arcade Drive", new DriveArcade());
+
+        // ts: getEntry RPM
+        rpmGetEntry = tab.add("Shooter Speed",rpmValue).getEntry();
+        rpmValue = rpmGetEntry.getDouble(rpmValue);
+        rpmGetEntry.setDouble(rpmValueSync);
     }
 
     /**
