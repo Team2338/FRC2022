@@ -116,6 +116,6 @@ public class Indexer extends SubsystemBase {
     }
 
     public double getBeltMotorSpeed() {
-        return beltMotor.getEncoder().getVelocity();
+        return beltMotor.getSelectedSensorVelocity();
     }
 }
