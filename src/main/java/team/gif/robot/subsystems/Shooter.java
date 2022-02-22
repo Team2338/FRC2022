@@ -39,6 +39,9 @@ public class Shooter extends SubsystemBase
         shooterMotor.config_kD(0, Constants.Shooter.kD);
         shooterMotor.config_kF(0, Constants.Shooter.kF);
 
+        shooterMotor.configClosedloopRamp(1.0);
+        shooterMotor.configOpenloopRamp(1.0);
+
         shooterMotor.selectProfileSlot(0, 0);
     }
 
@@ -58,11 +61,13 @@ public class Shooter extends SubsystemBase
     public String getVelocity_Shuffleboard(){ return String.format("%12.0f",getSpeed());}
 
     public boolean isInToleranceHigh() {
-        return Math.abs(getSpeed() - Constants.Shooter.RPM_HIGH) < 2000;
+        return true;//Math.abs(getSpeed() - Constants.Shooter.RPM_HIGH) < 2000;
     }
 
     public boolean isInToleranceLow() {
         return Math.abs(getSpeed() - Constants.Shooter.RPM_LOW) < 2000;
     }
+
+    public void setToNeutral(){ shooterMotor.neutralOutput();}
 
 }

@@ -111,10 +111,10 @@ public class OI {
         dRTrigger.whileHeld(new RapidFire());
 
         dA.whenHeld(new Shoot());
-        dX.whenPressed(new HoodDown());
+        aX.whenPressed(new HoodDown());
         dB.whenHeld(new ShootShort());
-        dB.whenPressed(new HoodUp());
-        dY.whenPressed(new HoodUp());
+        aB.whenPressed(new HoodUp());
+        aY.whenPressed(new HoodUp());
         dStart.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
         dBack.whenHeld(new RevFlywheel());

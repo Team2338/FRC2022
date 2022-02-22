@@ -33,7 +33,7 @@ public class Indexer extends SubsystemBase {
         wheelMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
-        wheelMotor.setInverted(false);
+        wheelMotor.setInverted(true);
     }
 
     public boolean getSensorStage() {
