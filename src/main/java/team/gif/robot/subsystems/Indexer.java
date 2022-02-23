@@ -21,6 +21,7 @@ public class Indexer extends SubsystemBase {
 
     private static final DigitalInput sensorWheel = new DigitalInput(RobotMap.SENSOR_MID);
     private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.BELT);
+    private static final DigitalInput entrySensor = new DigitalInput(RobotMap.sensorEntry);
 
     public Indexer() {
         super();
@@ -42,6 +43,10 @@ public class Indexer extends SubsystemBase {
 
     public boolean getSensorBelt() {
         return sensorBelt.get();
+    }
+
+    public boolean getEntrySensor(){
+        return entrySensor.get();
     }
 
     public void setMidMotorSpeed(double percent) {

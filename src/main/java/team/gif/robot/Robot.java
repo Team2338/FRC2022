@@ -132,6 +132,7 @@ public class Robot extends TimedRobot {
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorStage);
+        shuffleboardTab.addBoolean("Entry Sensor",indexer::getEntrySensor);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Hanger", new ResetClimber());
