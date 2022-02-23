@@ -3,6 +3,7 @@ package team.gif.robot.subsystems;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
+import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,7 +30,7 @@ public class Climber extends SubsystemBase {
         //TODO: DISABLE HARD & SOFT LIMITS
 
         hangMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        SmartDashboard.putBoolean("Hang Control", false);
+        Robot.shuffleboardTab.add("Hang Control", false);
 
         //TODO: REPLACE SMARTDASHBOARD WITH NETWORKENTRY
         //TODO: ADD DEFAULT COMMAND FOR CLIMBER

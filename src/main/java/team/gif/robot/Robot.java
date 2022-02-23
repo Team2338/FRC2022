@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
@@ -74,7 +73,7 @@ public class Robot extends TimedRobot {
     public static DriveTank tankDrive;
 
     // T.S: Creating an new tab in shuffleboard.
-    ShuffleboardTab tab = Shuffleboard.getTab("FRC2022 test");
+    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
     public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
     // TS: the value of the something what is changing,(Example PID control).
     public static double exampleShuffleboardEntrySyncValue;
@@ -119,35 +118,35 @@ public class Robot extends TimedRobot {
 
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
-        shooterRpmGetEntry = tab.add("Target RPM",shooterRpm).getEntry();
+        shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
 
         pigeon = new Pigeon();
         pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
         // TS: add an getEntry tab in shuffleboard
-        exampleShuffleboardEntry = tab.add("Example Input",exampleShuffleboardValue )
+        exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
                 .getEntry();
         // TS: add the example input submit button to the shuffleboard.
-        tab.add("Command", exampleShuffleboardEntryCommand);
+        shuffleboardTab.add("Command", exampleShuffleboardEntryCommand);
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
-        tab.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        tab.addBoolean("Mid Sensor", indexer::getSensorStage);
-        tab.add(indexer);
-        tab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
-        SmartDashboard.putData("Hanger", new ResetClimber()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
+        shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
+        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorStage);
+        shuffleboardTab.add(indexer);
+        shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
+        shuffleboardTab.add("Hanger", new ResetClimber()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
         limelight.setLEDMode(1);//force off
 
-        SmartDashboard.putData("ResetHead", new ResetHeading()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
+        shuffleboardTab.add("ResetHead", new ResetHeading()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
 
-        tab.addNumber("Shooter Speed", shooter::getSpeed);
+        shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
 
         //ts: switching drives mode
-        tab.add("Tank Drive", new DriveTank());
-        tab.add("Arcade Drive", new DriveArcade());
+        shuffleboardTab.add("Tank Drive", new DriveTank());
+        shuffleboardTab.add("Arcade Drive", new DriveArcade());
 
         // ts: command to getEntry RPM
-        tab.add("Set RPM", shooterRpmCommand);
+        shuffleboardTab.add("Set RPM", shooterRpmCommand);
     }
 
     /**
@@ -168,21 +167,21 @@ public class Robot extends TimedRobot {
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
 
-        SmartDashboard.putBoolean("Belt", indexer.getSensorBelt());
-        SmartDashboard.putBoolean("Stage", indexer.getSensorStage());
+        shuffleboardTab.add("Belt", indexer.getSensorBelt());
+        shuffleboardTab.add("Stage", indexer.getSensorStage());
 
 //    SmartDashboard.putNumber("tx",limelight.getXOffset());
 //    SmartDashboard.putNumber("ty",limelight.getYOffset());
 
-        SmartDashboard.putString("RPM", shooter.getVelocity_Shuffleboard());
+        shuffleboardTab.add("RPM", shooter.getVelocity_Shuffleboard());
 //    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
 
         // pneumatics
 //    SmartDashboard.putBoolean("Pressure", compressor.getPressureSwitchValue());
-        SmartDashboard.putBoolean("Enable Indexer", Globals.indexerEnabled);
+        shuffleboardTab.add("Enable Indexer", Globals.indexerEnabled);
 
         // Hanger
-        SmartDashboard.putString("Hang Position", Robot.climber.getPosition_Shuffleboard());
+        shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
     }
 
     /** This function is called once each time the robot enters Disabled mode. */

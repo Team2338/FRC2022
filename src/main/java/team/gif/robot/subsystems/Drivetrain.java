@@ -180,8 +180,8 @@ public class Drivetrain extends SubsystemBase {
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        SmartDashboard.putNumber("Left", leftVolts);
-        SmartDashboard.putNumber("Right", rightVolts);
+        Robot.shuffleboardTab.add("Left", leftVolts);
+        Robot.shuffleboardTab.add("Right", rightVolts);
 //        System.out.format("LV: %.2f   RV: %.2f\n", leftVolts,rightVolts);
         leftMotors.setVoltage(leftVolts);
         rightMotors.setVoltage(-rightVolts);

@@ -18,7 +18,7 @@ public class ClimberManualControl extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        SmartDashboard.putBoolean("Hang Control", true);
+        Robot.shuffleboardTab.add("Hang Control", true);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -57,6 +57,6 @@ public class ClimberManualControl extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.climber.setSpeed(0);
-        SmartDashboard.putBoolean("Hang Control", false);
+        Robot.shuffleboardTab.add("Hang Control", false);
     }
 }
