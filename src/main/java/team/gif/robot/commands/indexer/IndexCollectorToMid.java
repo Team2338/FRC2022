@@ -24,11 +24,7 @@ public class IndexCollectorToMid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(Globals.isCollecting) {
-            Robot.indexer.setMidMotorSpeed(0.8);
-        } else {
-            Robot.indexer.setMidMotorSpeed(0);
-        }
+        Robot.indexer.setMidMotorSpeed(0.8);
     }
 
     // Returns true when the command should end.
@@ -45,6 +41,5 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.indexer.setMidMotorSpeed(0);
-        Globals.isCollecting = false;
     }
 }

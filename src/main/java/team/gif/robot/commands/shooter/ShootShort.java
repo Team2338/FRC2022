@@ -3,8 +3,6 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-import static team.gif.robot.Globals.shooterIsInTolerance;
-
 public class ShootShort extends CommandBase {
     public ShootShort() {
         super();
@@ -41,6 +39,5 @@ public class ShootShort extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.shooter.setSpeedPercent(0);
-        shooterIsInTolerance = false;
     }
 }

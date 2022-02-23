@@ -32,7 +32,6 @@ public class Climber extends SubsystemBase {
         hangMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         Robot.shuffleboardTab.add("Hang Control", false);
 
-        //TODO: REPLACE SMARTDASHBOARD WITH NETWORKENTRY
         //TODO: ADD DEFAULT COMMAND FOR CLIMBER
     }
 

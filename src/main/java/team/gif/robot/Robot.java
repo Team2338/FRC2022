@@ -134,10 +134,10 @@ public class Robot extends TimedRobot {
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorStage);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
-        shuffleboardTab.add("Hanger", new ResetClimber()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
+        shuffleboardTab.add("Hanger", new ResetClimber());
         limelight.setLEDMode(1);//force off
 
-        shuffleboardTab.add("ResetHead", new ResetHeading()); //TODO: ADD NETWORK ENTRY TABLE INSTEAD OF SMARTDASHBOARD
+        shuffleboardTab.add("ResetHead", new ResetHeading());
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
 
