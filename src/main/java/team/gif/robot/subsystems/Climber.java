@@ -30,7 +30,8 @@ public class Climber extends SubsystemBase {
         //TODO: DISABLE HARD & SOFT LIMITS
 
         hangMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        Robot.shuffleboardTab.add("Hang Control", false);
+        // TODO: can't call multiple times or we crash
+//        Robot.shuffleboardTab.add("Hang Control", false);
 
         //TODO: ADD DEFAULT COMMAND FOR CLIMBER
     }

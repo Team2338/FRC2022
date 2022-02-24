@@ -46,13 +46,13 @@ public final class Constants {
     }
 
     public static class Shooter {
-        public static final double kP = 0;
+        public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kF = 0.015;
+        public static final double kF = 0.056;
 
         public static final double RPM_LOW = Robot.isCompBot ? 14000 : 14000;
-        public static final double RPM_HIGH =7500;
+        public static final double RPM_HIGH = 7500;
     }
 
     public static class Indexer {

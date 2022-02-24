@@ -148,6 +148,17 @@ public class Robot extends TimedRobot {
 
         // ts: command to getEntry RPM
         shuffleboardTab.add("Set RPM", shooterRpmCommand);
+
+        // Indexer logging
+        shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
+        shuffleboardTab.addBoolean("Stage", indexer::getSensorMid);
+
+        shuffleboardTab.addNumber("RPM", shooter::getSpeed);
+
+        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
+
+        // Hanger
+        //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
     }
 
     /**
@@ -168,21 +179,11 @@ public class Robot extends TimedRobot {
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
 
-        shuffleboardTab.add("Belt", indexer.getSensorBelt());
-        shuffleboardTab.add("Stage", indexer.getSensorMid());
-
 //    SmartDashboard.putNumber("tx",limelight.getXOffset());
 //    SmartDashboard.putNumber("ty",limelight.getYOffset());
-
-        shuffleboardTab.add("RPM", shooter.getVelocity_Shuffleboard());
-//    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
-
         // pneumatics
 //    SmartDashboard.putBoolean("Pressure", compressor.getPressureSwitchValue());
-        shuffleboardTab.add("Enable Indexer", Globals.indexerEnabled);
-
-        // Hanger
-        shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
+//    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
