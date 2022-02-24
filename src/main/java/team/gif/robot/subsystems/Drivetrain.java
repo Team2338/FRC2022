@@ -1,5 +1,6 @@
 package team.gif.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -14,6 +15,9 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 import team.gif.robot.subsystems.drivers.Pigeon;
+
+import static com.ctre.phoenix.motorcontrol.ControlMode.Velocity;
+import static java.lang.Math.abs;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -173,6 +177,7 @@ public class Drivetrain extends SubsystemBase {
                                                 rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
+
     /**
      * Controls the left and right sides of the drive directly with voltages.
      *
@@ -187,6 +192,25 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.setVoltage(-rightVolts);
     }
 
+    public void pivot(double targetYaw){
+        double error = ((targetYaw - pigeon.getCompassHeading())/targetYaw);
+        while(Math.abs(error) > 0.1 && Math.abs(error) < 1.0){
+            setSpeed(error, - error);
+            error = ((targetYaw - pigeon.getCompassHeading())/targetYaw) * 100;
+        }
+        drive.tankDrive(0,0);
+    }
+/*
+    public void rotateToAngle(double targetAngle){
+        double error = (targetAngle - pigeon.get180Heading());
+        double integral =
+        error = setpoint - pigeon.get180Heading();// Error = Target - Actual
+        integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
+        derivative = (error - this.previous_error) / .02;
+        double rcw = dP*error + dI*this.integral + dD*derivative;
+    }
+
+ */
     public void resetEncoders() {
         leftEncoderTalon.setSelectedSensorPosition(0);
         rightEncoderTalon.setSelectedSensorPosition(0);
