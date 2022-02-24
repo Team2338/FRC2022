@@ -207,18 +207,19 @@ public class Drivetrain extends SubsystemBase {
         rightMotors.setVoltage(-rightVolts);
     }
 
-    public void pivot(double targetYaw){
-        double error = ((targetYaw - pigeon.getCompassHeading())/targetYaw);
+    public void pivot(double setpoint){
+        double error = ((setpoint - pigeon.getCompassHeading())/setpoint);
         while(Math.abs(error) > 0.1 && Math.abs(error) < 1.0){
             setSpeed(error, - error);
-            error = ((targetYaw - pigeon.getCompassHeading())/targetYaw) * 100;
+            error = ((setpoint - pigeon.getCompassHeading())/setpoint) * 100;
         }
         drive.tankDrive(0,0);
     }
 /*
-    public void rotateToAngle(double targetAngle){
-        double error = (targetAngle - pigeon.get180Heading());
-        double integral =
+    public void rotateToAngle(double setpoint){
+        double error = (setpoint - pigeon.get180Heading());
+        double integral = 0;
+        double derivative = 0;
         error = setpoint - pigeon.get180Heading();// Error = Target - Actual
         integral += (error*.02); // Integral is increased by the error*time (which is .02 seconds using normal IterativeRobot)
         derivative = (error - this.previous_error) / .02;
