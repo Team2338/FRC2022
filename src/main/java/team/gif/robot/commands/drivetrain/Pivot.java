@@ -31,7 +31,7 @@ public class Pivot extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return error == 0;
+        return !(error == 0);
     }
 
     @Override
