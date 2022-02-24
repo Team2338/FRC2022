@@ -131,8 +131,8 @@ public class Robot extends TimedRobot {
         shuffleboardTab.add("Command", exampleShuffleboardEntryCommand);
         exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorStage);
-        shuffleboardTab.addBoolean("Entry Sensor",indexer::getEntrySensor);
+        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
+        shuffleboardTab.addBoolean("Entry Sensor",collector::getEntrySensor);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Hanger", new ResetClimber());
@@ -169,7 +169,7 @@ public class Robot extends TimedRobot {
         chosenDelay = delayChooser.getSelected();
 
         shuffleboardTab.add("Belt", indexer.getSensorBelt());
-        shuffleboardTab.add("Stage", indexer.getSensorStage());
+        shuffleboardTab.add("Stage", indexer.getSensorMid());
 
 //    SmartDashboard.putNumber("tx",limelight.getXOffset());
 //    SmartDashboard.putNumber("ty",limelight.getYOffset());

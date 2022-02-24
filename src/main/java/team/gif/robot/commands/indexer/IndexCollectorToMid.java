@@ -31,7 +31,7 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public boolean isFinished() {
         if(Globals.indexerEnabled) {
-            return Robot.indexer.getSensorStage();
+            return Robot.indexer.getSensorMid() && Robot.collector.getEntrySensor();
         } else {
             return true;
         }

@@ -14,12 +14,12 @@ public abstract class RobotMap {
     public static final int MOTOR_BELT = 2;
     public static final int MOTOR_SHOOTER = 13;
     public static final int MOTOR_HANGER = 15; //TODO
-    public static final int MOTOR_HELPER = 16;
+    public static final int MOTOR_ENTRY = 16;
 
     // Sensors
     public static final int SENSOR_MID = 0;
-    public static final int BELT = 1;
-    public static final int sensorEntry = 2;
+    public static final int SENSOR_BELT = 1;
+    public static final int SENSOR_ENTRY = 2;
 
     // Solenoids
     public static final int SOLENOID_HANGER = 5;
