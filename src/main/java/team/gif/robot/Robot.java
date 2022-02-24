@@ -1,21 +1,22 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
 package team.gif.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.lib.Logger;
 import team.gif.robot.subsystems.Intake;
 import team.gif.robot.commands.drivetrain.Drive;
 import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.util.Logger;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
+ *
  */
 
 public class Robot extends TimedRobot {
@@ -41,7 +42,7 @@ public class Robot extends TimedRobot {
 
         drivetrain = new Drivetrain();
         driveCommand = new Drive();
-        Logger.info("Robot started");
+
     }
 
     /**
@@ -58,18 +59,21 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        Logger.flush();
+
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
-        Logger.info("Entering Disabled");
+
     }
 
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+        Logger.info("Robot is disabled");
+        Logger.flush();
+    }
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
@@ -80,12 +84,17 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
-        Logger.info("Entering Autonomous");
+
+        Globals.logger_info= 2;
+
     }
 
     /** This function is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        Logger.info("Robot is in auto");
+        Logger.flush();
+    }
 
     @Override
     public void teleopInit() {
@@ -97,7 +106,8 @@ public class Robot extends TimedRobot {
             m_autonomousCommand.cancel();
         }
 
-        Logger.info("Entering Teleop");
+        Globals.logger_info = 1;
+
 
         oi = new OI();
         driveCommand.schedule();
@@ -109,6 +119,9 @@ public class Robot extends TimedRobot {
         double timeLeft = DriverStation.getMatchTime();
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
                      (timeLeft <=  5.0 && timeLeft >=  3.0));
+
+        Logger.info("Robot is in Teleop");
+        Logger.flush();
     }
 
     @Override
