@@ -5,6 +5,7 @@ import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.Hood.HoodUp;
+import team.gif.robot.commands.drivetrain.Pivot;
 import team.gif.robot.commands.shooter.Shoot;
 import team.gif.robot.commands.shooter.ShootShort;
 import team.gif.robot.subsystems.Drivetrain;
@@ -40,8 +41,7 @@ public class LimelightAutoAimbutCooler extends CommandBase {
         //double targetSpeed = Constants.Shooter.RPM_LOW;
 
         if(Math.abs(Robot.limelight.getXOffset()) > 1) {
-            Robot.drivetrain.pivot(Robot.pigeon.get180Heading() - Robot.limelight.getXOffset());
-
+            new Pivot(Robot.pigeon.get180Heading() - Robot.limelight.getXOffset());
         }
         //shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 1000 ;
 
