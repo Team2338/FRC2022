@@ -23,7 +23,6 @@ import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
-import team.gif.robot.subsystems.drivers.Pigeon;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -47,7 +46,6 @@ public class Robot extends TimedRobot {
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
-    public static Pigeon pigeon = null;
     public static Limelight limelight = null;
     public static Drivetrain drivetrain = null;
     private boolean _runAutoScheduler = true;
@@ -120,9 +118,6 @@ public class Robot extends TimedRobot {
         shooterRpmSync = shooterRpm;
         shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
-
-        pigeon = new Pigeon();
-        pigeon.addToShuffleboard("Shuffleboard", "Pigeon");
 
         // TS: add an getEntry tab in shuffleboard
         exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )

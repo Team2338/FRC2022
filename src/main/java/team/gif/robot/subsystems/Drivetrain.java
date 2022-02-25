@@ -33,6 +33,7 @@ public class Drivetrain extends SubsystemBase {
     public static WPI_TalonSRX rightEncoderTalon;
     public static DifferentialDriveOdometry odometry;
     private static Pigeon pigeon;
+    private static int pigeonErrorCount;
 
     private static int maxCurrentAmps = 15;
 
@@ -94,9 +95,10 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        pigeon = Robot.isCompBot ? new Pigeon(leftTalon2) : new Pigeon(leftTalon2);
+        pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(leftTalon2);
 
         pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
+        pigeon.addToShuffleboard("SmartDashboard","Heading2");
 
         resetEncoders();
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
@@ -150,7 +152,10 @@ public class Drivetrain extends SubsystemBase {
                 getLeftEncoderPos_Meters(),
                 getRightEncoderPos_Meters());
         } else {
-//            System.out.println("Cannot set robot odometry. Pigeon hello is not in ready state.");
+            if(++pigeonErrorCount >= 100) { // only print every 2 seconds
+                System.out.println("***   WARNING      \n***\n*** Cannot set robot odometry. Pigeon hello is not in ready state.\n***\n***");
+                pigeonErrorCount = 0;
+            }
         }
     }
 
