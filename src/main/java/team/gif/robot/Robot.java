@@ -128,8 +128,9 @@ public class Robot extends TimedRobot {
         exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
                 .getEntry();
         // TS: add the example input submit button to the shuffleboard.
-        shuffleboardTab.add("Command", exampleShuffleboardEntryCommand);
-        exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
+        //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
+        //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
+
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
         shuffleboardTab.addBoolean("Entry Sensor",collector::getEntrySensor);
@@ -151,7 +152,7 @@ public class Robot extends TimedRobot {
 
         // Indexer logging
         shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
-        shuffleboardTab.addBoolean("Stage", indexer::getSensorMid);
+        //shuffleboardTab.addBoolean("Stage", indexer::getSensorMid); // TODO: Cleanup this line
 
         shuffleboardTab.addNumber("RPM", shooter::getSpeed);
 

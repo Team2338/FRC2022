@@ -22,6 +22,7 @@ public class Collector extends SubsystemBase {
         super();
         intakeMotor.setInverted(true);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
+        entryMotor.setInverted(true);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00

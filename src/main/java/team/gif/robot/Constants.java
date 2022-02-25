@@ -51,8 +51,13 @@ public final class Constants {
         public static final double kD = 0;
         public static final double kF = 0.056;
 
-        public static final double RPM_LOW = Robot.isCompBot ? 14000 : 14000;
+        public static final double RPM_LOW = 2100;
         public static final double RPM_HIGH = 7500;
+        public static final double RPM_LAUNCHPAD = 8300;
+        public static final double RPM_PIN_SHOT = 6325; //6325 for close shot
+        public static final double RPM_FAR_COURT = 10300;
+
+        public static final double FLYWHEEL_TOLERANCE = 150;
     }
 
     public static class Indexer {
