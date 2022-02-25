@@ -95,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        pigeon = Robot.isCompBot ? new Pigeon(leftTalon2) : new Pigeon(leftTalon2);
+        pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(leftTalon2);
 
         pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
         pigeon.addToShuffleboard("SmartDashboard","Heading2");
