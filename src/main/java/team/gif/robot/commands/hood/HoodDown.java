@@ -18,7 +18,7 @@ public class HoodDown extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.hood.setHoodUp(false);
+        Robot.hood.setHoodDown();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

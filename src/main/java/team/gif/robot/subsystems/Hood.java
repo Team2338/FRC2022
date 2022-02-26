@@ -12,7 +12,11 @@ public class Hood extends SubsystemBase {
 		hood.set(false);
 	}
 
-	public void setHoodUp(boolean isUp) {
-		hood.set(isUp);
+	public void setHoodUp() {
+		hood.set(true);
+	}
+
+	public void setHoodDown() {
+		hood.set(false);
 	}
 }

@@ -21,6 +21,7 @@ import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
+import team.gif.robot.subsystems.CollectorPneumatic;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -48,7 +49,7 @@ public class Robot extends TimedRobot {
     private RobotContainer robotContainer;
     public static Limelight limelight = null;
     public static Drivetrain drivetrain = null;
-    private boolean _runAutoScheduler = true;
+    private boolean runAutoScheduler = true;
     public static OI oi;
 
     private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
@@ -56,9 +57,10 @@ public class Robot extends TimedRobot {
 
     private autoMode chosenAuto;
     private delay chosenDelay;
-    private Timer _elapsedTime = new Timer();
+    private Timer elapsedTime = new Timer();
 
     public static Hood hood = null;
+    public static CollectorPneumatic collectorPneumatic = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
@@ -104,6 +106,7 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
         shooter = new Shooter();
         hood = new Hood();
+        collectorPneumatic = new CollectorPneumatic();
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
@@ -131,7 +134,7 @@ public class Robot extends TimedRobot {
         shuffleboardTab.addBoolean("Entry Sensor",collector::getEntrySensor);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
-        shuffleboardTab.add("Hanger", new ResetClimber());
+        shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
 
         shuffleboardTab.add("ResetHead", new ResetHeading());
@@ -203,8 +206,8 @@ public class Robot extends TimedRobot {
 
         Globals.autonomousModeActive = true;
         // used for delaying the start of autonomous
-        _elapsedTime.reset();
-        _elapsedTime.start();
+        elapsedTime.reset();
+        elapsedTime.start();
 
         drivetrain.resetEncoders();
         drivetrain.resetPose();
@@ -213,20 +216,20 @@ public class Robot extends TimedRobot {
 
         compressor.disable();
 
-        _runAutoScheduler = true;
+        runAutoScheduler = true;
         updateauto();
     }
 
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        if ( _runAutoScheduler && (_elapsedTime.get() > (chosenDelay.getValue()))) {
+        if ( runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
             }
-            _runAutoScheduler = false;
-            _elapsedTime.stop();
+            runAutoScheduler = false;
+            elapsedTime.stop();
         }
     }
 

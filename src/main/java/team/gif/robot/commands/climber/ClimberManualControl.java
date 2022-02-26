@@ -19,7 +19,6 @@ public class ClimberManualControl extends CommandBase {
     @Override
     public void initialize() {
         // TODO: can't call multiple times or we crash
-//        Robot.shuffleboardTab.add("Hang Control", true);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
