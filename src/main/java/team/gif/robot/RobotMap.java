@@ -30,7 +30,6 @@ public abstract class RobotMap {
     public static final int SOLENOID_COLLECTOR_REVERSE = 3; // 5;
     public static final int SOLENOID_ENTRY = 5;
 
-
     // Compressors //
     public static final int COMPRESSOR_HOOD = 0; // todo rename
 

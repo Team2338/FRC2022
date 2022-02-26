@@ -62,6 +62,10 @@ public class Indexer extends SubsystemBase {
         return sensorEntry.get();
     }
 
+    public boolean getEntrySensor(){
+        return sensorEntry.get();
+    }
+
     public boolean getSensorMid() {
         return sensorMid.get();
     }
