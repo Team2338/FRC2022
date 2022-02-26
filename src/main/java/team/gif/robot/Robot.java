@@ -8,9 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
@@ -34,6 +32,8 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+
+import java.util.Map;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -72,6 +72,11 @@ public class Robot extends TimedRobot {
 
     // T.S: Creating an new tab in shuffleboard.
     public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
+    public static ShuffleboardLayout shuffleboardTabSensor = shuffleboardTab
+            .getLayout("Sensors", BuiltInLayouts.kGrid)
+            .withSize(1,3) // make the widget 2x1
+            .withProperties(Map.of("Label","HIDDEN")); //place it in the top-left cornor
+
     public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
     // TS: the value of the something what is changing,(Example PID control).
     public static double exampleShuffleboardEntrySyncValue;
@@ -113,22 +118,24 @@ public class Robot extends TimedRobot {
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
-
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
-        shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
+        shooterRpmGetEntry = shuffleboardTab.add("Set Shoot Speed",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
+        // ts: command to getEntry RPM
+        shuffleboardTab.add("Set RPM", shooterRpmCommand);
 
+        // TODO: Cleanup the exampleShuffleboardEntry
         // TS: add an getEntry tab in shuffleboard
-        exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
-                .getEntry();
+        //exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
+                //.getEntry();
         // TS: add the example input submit button to the shuffleboard.
-        //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
+        //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand);
         //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
 
-        shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",collector::getEntrySensor);
+        shuffleboardTabSensor.addBoolean("Belt Sensor", indexer::getSensorBelt);
+        shuffleboardTabSensor.addBoolean("Mid Sensor", indexer::getSensorMid);
+        shuffleboardTabSensor.addBoolean("Entry Sensor",collector::getEntrySensor);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Hanger", new ResetClimber());
@@ -137,13 +144,11 @@ public class Robot extends TimedRobot {
         shuffleboardTab.add("ResetHead", new ResetHeading());
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
+        shuffleboardTab.addNumber("Shooter Graph", shooter::getSpeed);
 
         //ts: switching drives mode
         shuffleboardTab.add("Tank Drive", new DriveTank());
         shuffleboardTab.add("Arcade Drive", new DriveArcade());
-
-        // ts: command to getEntry RPM
-        shuffleboardTab.add("Set RPM", shooterRpmCommand);
 
         // Indexer logging
         shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
