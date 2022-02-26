@@ -18,7 +18,6 @@ public class ReverseIndex extends CommandBase {
     @Override
     public void execute() {
         Robot.collector.setSpeedPercent(-0.8);
-        Robot.collector.getEntrySensor(); // Tharun: TODO: I don't know what goes under the parentheses
         Robot.indexer.setMidMotorSpeed(-0.6);
         Robot.indexer.setBeltMotorSpeedPercent(-0.6);
     }
