@@ -19,7 +19,7 @@ public class CollectorDown extends CommandBase {
     }
 
     @Override
-    public boolean isFinished() { return true; }
+    public boolean isFinished() { return false; }
 
     @Override
     public void end(boolean interrupted) {
