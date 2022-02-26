@@ -153,7 +153,7 @@ public class Drivetrain extends SubsystemBase {
                 getRightEncoderPos_Meters());
         } else {
             if(++pigeonErrorCount >= 100) { // only print every 2 seconds
-                System.out.println("***   WARNING      \n***\n*** Cannot set robot odometry. Pigeon hello is not in ready state.\n***\n***");
+                System.out.println("***   WARNING      \n***\n*** Cannot set robot odometry. Pigeon is not in ready state.\n***\n***");
                 pigeonErrorCount = 0;
             }
         }
