@@ -24,15 +24,16 @@ public class Drivetrain extends SubsystemBase {
     public static WPI_TalonSRX rightTalon1;
     public static WPI_TalonSRX rightTalon2;
 
-    public static MotorControllerGroup m_leftMotors;
-    public static MotorControllerGroup m_rightMotors;
-    public static DifferentialDrive m_drive;
+    public static MotorControllerGroup leftMotors;
+    public static MotorControllerGroup rightMotors;
+    public static DifferentialDrive drive;
 
     // ------------ Variables for Trajectory ---------------
-    public static WPI_TalonSRX _leftEncoderTalon;
-    public static WPI_TalonSRX _rightEncoderTalon;
-    public static DifferentialDriveOdometry m_odometry;
-    private static Pigeon m_pigeon;
+    public static WPI_TalonSRX leftEncoderTalon;
+    public static WPI_TalonSRX rightEncoderTalon;
+    public static DifferentialDriveOdometry odometry;
+    private static Pigeon pigeon;
+    private static int pigeonErrorCount;
 
     private static int maxCurrentAmps = 15;
 
@@ -53,36 +54,36 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         super();
-        leftTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_ONE);
-        leftTalon2 = new WPI_TalonSRX(RobotMap.DRIVE_LEFT_TWO);
-        rightTalon1 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_ONE);
-        rightTalon2 = new WPI_TalonSRX(RobotMap.DRIVE_RIGHT_TWO);
+        leftTalon1 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_LEFT_ONE);
+        leftTalon2 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_LEFT_TWO);
+        rightTalon1 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_RIGHT_ONE);
+        rightTalon2 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_RIGHT_TWO);
 
         leftTalon1.setNeutralMode(NeutralMode.Brake);
         leftTalon2.setNeutralMode(NeutralMode.Brake);
         rightTalon1.setNeutralMode(NeutralMode.Brake);
         rightTalon2.setNeutralMode(NeutralMode.Brake);
 
-        m_leftMotors = new MotorControllerGroup(leftTalon1, leftTalon2);
-        m_rightMotors = new MotorControllerGroup(rightTalon1, rightTalon2);
-        m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+        leftMotors = new MotorControllerGroup(leftTalon1, leftTalon2);
+        rightMotors = new MotorControllerGroup(rightTalon1, rightTalon2);
+        drive = new DifferentialDrive(leftMotors, rightMotors);
 
         // turn off the drive train watchdog - otherwise it outputs unnecessary errors on the console
-        m_drive.setSafetyEnabled(false);
+        drive.setSafetyEnabled(false);
 
         // any input to the motors less than this number will be converted to 0
         // any input about this number will scale from 0 to 1.0
-        m_drive.setDeadband(Robot.isCompBot ? .02 : .05);
+        drive.setDeadband(Robot.isCompBot ? .02 : .05);
 
         // ------------  Trajectory Functionality ----------
-        _leftEncoderTalon = leftTalon1;
-        _rightEncoderTalon = rightTalon1;
+        leftEncoderTalon = leftTalon1;
+        rightEncoderTalon = rightTalon1;
 
-        _leftEncoderTalon.setSelectedSensorPosition(0);
-        _rightEncoderTalon.setSelectedSensorPosition(0);
+        leftEncoderTalon.setSelectedSensorPosition(0);
+        rightEncoderTalon.setSelectedSensorPosition(0);
 
         // left sensor needs to be inverted to match the drive train
-        _leftEncoderTalon.setSensorPhase(true);
+        leftEncoderTalon.setSensorPhase(true);
 
         currentLimitingSetup();
         currentLimitingEnable(true);
@@ -94,12 +95,13 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        m_pigeon = Robot.isCompBot ? new Pigeon(leftTalon2) : new Pigeon(leftTalon2);
+        pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(leftTalon2);
 
-        m_pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
+        pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
+        pigeon.addToShuffleboard("SmartDashboard","Heading2");
 
         resetEncoders();
-        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
         resetPose();
     }
 
@@ -126,17 +128,17 @@ public class Drivetrain extends SubsystemBase {
 
     // -------------- Teleop Driving -----------------------
     public void driveArcade(double speed, double rotation){
-        m_drive.arcadeDrive(speed,rotation);
+        drive.arcadeDrive(speed,rotation);
     }
 
     // -------------- Teleop Driving -----------------------
     public void driveCurvature(double speed, double rotation, boolean isQuick){
-        m_drive.curvatureDrive(speed,rotation,isQuick);
+        drive.curvatureDrive(speed,rotation,isQuick);
     }
 
     // ---------- Previous Auto Driving & Tank Drive -------
     public void setSpeed(double leftPercent, double rightPercent) {
-        m_drive.tankDrive(leftPercent,rightPercent);
+        drive.tankDrive(leftPercent,rightPercent);
     }
 
 
@@ -145,12 +147,15 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() {
         // Update the odometry
 
-        if (m_pigeon.isActive()) {
-            m_odometry.update( Rotation2d.fromDegrees(m_pigeon.get180Heading()),
+        if (pigeon.isActive()) {
+            odometry.update( Rotation2d.fromDegrees(pigeon.get180Heading()),
                 getLeftEncoderPos_Meters(),
                 getRightEncoderPos_Meters());
         } else {
-            System.out.println("Cannot set robot odometry. Pigeon is not in ready state.");
+            if(++pigeonErrorCount >= 100) { // only print every 2 seconds
+                System.out.println("***   WARNING      \n***\n*** Cannot set robot odometry. Pigeon is not in ready state.\n***\n***");
+                pigeonErrorCount = 0;
+            }
         }
     }
 
@@ -160,7 +165,7 @@ public class Drivetrain extends SubsystemBase {
      * @return The pose.
      */
     public Pose2d getPose() {
-        return m_odometry.getPoseMeters();
+        return odometry.getPoseMeters();
     }
 
     /**
@@ -169,8 +174,8 @@ public class Drivetrain extends SubsystemBase {
      * @return The current wheel speeds.
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-        return new DifferentialDriveWheelSpeeds(_leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.drivetrain.WHEEL_CIRCUMFERENCE,
-                                                _rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.drivetrain.WHEEL_CIRCUMFERENCE);
+        return new DifferentialDriveWheelSpeeds(leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE,
+                                                rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
     /**
@@ -180,45 +185,46 @@ public class Drivetrain extends SubsystemBase {
      * @param rightVolts the commanded right output
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
+        // TODO
         SmartDashboard.putNumber("Left", leftVolts);
         SmartDashboard.putNumber("Right", rightVolts);
 //        System.out.format("LV: %.2f   RV: %.2f\n", leftVolts,rightVolts);
-        m_leftMotors.setVoltage(leftVolts);
-        m_rightMotors.setVoltage(-rightVolts);
+        leftMotors.setVoltage(leftVolts);
+        rightMotors.setVoltage(-rightVolts);
     }
 
     public void resetEncoders() {
-        _leftEncoderTalon.setSelectedSensorPosition(0);
-        _rightEncoderTalon.setSelectedSensorPosition(0);
+        leftEncoderTalon.setSelectedSensorPosition(0);
+        rightEncoderTalon.setSelectedSensorPosition(0);
     }
 
     public void resetPose(){
-        m_odometry.resetPosition(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), Rotation2d.fromDegrees(0));
+        odometry.resetPosition(new Pose2d(0, 0, Rotation2d.fromDegrees(0)), Rotation2d.fromDegrees(0));
     }
 
     public void resetPigeon() {
-        m_pigeon.resetPigeonPosition();
+        pigeon.resetPigeonPosition();
     }
 
     //encoder positions in Ticks
     public double getLeftEncoderPos_Ticks() {
-        return _leftEncoderTalon.getSelectedSensorPosition();
+        return leftEncoderTalon.getSelectedSensorPosition();
     }
 
     public double getRightEncoderPos_Ticks() {
-        return _rightEncoderTalon.getSelectedSensorPosition();
+        return rightEncoderTalon.getSelectedSensorPosition();
     }
 
     //encoder positions in Meters
     public double getLeftEncoderPos_Meters() {
-        return _leftEncoderTalon.getSelectedSensorPosition() / Constants.drivetrain.TICKS_TO_METERS_LEFT;
+        return leftEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_LEFT;
     }
 
     public double getRightEncoderPos_Meters() {
-        return _rightEncoderTalon.getSelectedSensorPosition() / Constants.drivetrain.TICKS_TO_METERS_RIGHT;
+        return rightEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_RIGHT;
     }
 
     public double Ticks2Feet(double ticks) {
-        return ticks / Constants.drivetrain.TICKS_TO_METERS * 3.28084; // 3.28084 = feet to meters
+        return ticks / Constants.Drivetrain.TICKS_TO_METERS * 3.28084; // 3.28084 = feet to meters
     }
 }

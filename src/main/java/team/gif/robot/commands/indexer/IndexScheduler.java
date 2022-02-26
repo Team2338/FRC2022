@@ -33,11 +33,11 @@ public class IndexScheduler extends CommandBase {
             currCommand = null;
         }
         if(currCommand == null && Globals.indexerEnabled) {
-            if(!Robot.indexer.getSensorBelt() && Robot.indexer.getSensorWheel()) {
+            if(!Robot.indexer.getSensorBelt() && Robot.indexer.getSensorMid()) {
                 currCommand = new IndexMidToBelt();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
-            if(!Robot.indexer.getSensorWheel() && Robot.indexer.getSensorCollector()) {
+            if(!Robot.indexer.getSensorMid() && Robot.collector.getEntrySensor()) {
                 currCommand = new IndexCollectorToMid();
                 CommandScheduler.getInstance().schedule(currCommand);
             }
@@ -47,12 +47,12 @@ public class IndexScheduler extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return !Robot.indexer.getSensorCollector() || Robot.indexer.getSensorWheel();
+        return false;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setIndexMotorSpeed(0);
+        Robot.indexer.setMidMotorSpeed(0);
     }
 }

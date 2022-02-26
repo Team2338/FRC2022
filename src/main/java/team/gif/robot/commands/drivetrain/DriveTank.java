@@ -1,20 +1,14 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
-package team.gif.robot.commands.shooter;
+package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.ExampleSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ShooterIdle extends CommandBase {
+public class DriveTank extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-    public ShooterIdle() {
+    public DriveTank() {
         super();
-        addRequirements(Robot.shooter);
+        addRequirements(Robot.drivetrain);
     }
 
     // Called when the command is initially scheduled.
@@ -24,8 +18,16 @@ public class ShooterIdle extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // Robot.shooter.setSpeedPercent(0);
-        Robot.shooter.setToNeutral();
+        /*
+         * True Tank Drive
+         */
+        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
+        double currR = -Robot.oi.driver.getRightY();
+        if(Robot.isCompBot) {
+            Robot.drivetrain.setSpeed(currL, -currR);
+        } else {
+            Robot.drivetrain.setSpeed(currL, currR);
+        }
     }
 
     // Returns true when the command should end.

@@ -1,37 +1,39 @@
-package team.gif.robot.commands.collector;
+package team.gif.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-public class CollectorReverse extends CommandBase
-{
-    public CollectorReverse(){
-        super();
-        addRequirements(Robot.collector);
+public class ResetClimber extends CommandBase {
+    //@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+    public ResetClimber() {
+        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.climber.zeroEncoder();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.collector.setSpeedPercent(-0.5);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collector.setSpeedPercent(0);
     }
 
+    @Override
+    public boolean runsWhenDisabled() {
+        return true;
+    }
 }
-

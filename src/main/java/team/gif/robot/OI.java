@@ -5,9 +5,22 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
-import team.gif.robot.commands.shooter.ShooterShoots;
+import team.gif.robot.commands.hood.HoodDown;
+import team.gif.robot.commands.hood.HoodUp;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
+import team.gif.robot.commands.climber.ClimberMax;
+import team.gif.robot.commands.climber.ClimberManualControl;
+import team.gif.robot.commands.climber.Lower4Inches;
+import team.gif.robot.commands.climber.LowerClimber;
+import team.gif.robot.commands.collector.CollectorDown;
+import team.gif.robot.commands.indexer.ReverseIndex;
+import team.gif.robot.commands.indexer.ToggleIndexer;
+import team.gif.robot.commands.shooter.RapidFire;
+import team.gif.robot.commands.shooter.RevFlywheel;
+import team.gif.robot.commands.shooter.Shoot;
 import team.gif.robot.commands.collector.CollectorReverse;
 import team.gif.robot.commands.collector.CollectorRun;
+import team.gif.robot.commands.shooter.ShootShort;
 
 
 public class OI {
@@ -93,9 +106,27 @@ public class OI {
 //        dLT.whileHeld(new Pivot());
         dLBump.whenHeld(new CollectorReverse());
         dRBump.whenHeld(new CollectorRun());
-        dA.whenHeld(new ShooterShoots());
+        dRBump.whenPressed(new CollectorDown()); //TODO: CREATE SOLENOID CLASS
+        dLTrigger.whileHeld(new LimelightAutoAim());
+        dRTrigger.whileHeld(new RapidFire());
 
+        dA.whenHeld(new Shoot());
+        aX.whenPressed(new HoodDown());
+        dB.whenHeld(new ShootShort());
+        aB.whenPressed(new HoodUp());
+        aY.whenPressed(new HoodUp());
+        dStart.whenHeld(new ReverseIndex());
+        dLStickBtn.toggleWhenPressed(new ToggleIndexer());
+        dBack.whenHeld(new RevFlywheel());
 
+        aLBump.whenHeld(new RevFlywheel());
+        aRBump.whileHeld(new RapidFire());
+        aLTrigger.whileHeld(new LimelightAutoAim());
+
+        aY.toggleWhenPressed(new ClimberManualControl());
+        aDPadDown.whenPressed(new ClimberMax());
+        aDPadLeft.whenPressed(new LowerClimber());
+        aDPadUp.whenPressed(new Lower4Inches());
     }
 
     public void setRumble(boolean rumble) {

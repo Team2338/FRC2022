@@ -2,31 +2,25 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package team.gif.robot.commands.shooter;
+package team.gif.robot.commands.hood;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.ExampleSubsystem;
 
-/** An example command that uses an example subsystem. */
-public class ShooterIdle extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class HoodUp extends CommandBase {
 
-    public ShooterIdle() {
+    public HoodUp() {
         super();
-        addRequirements(Robot.shooter);
+        addRequirements(Robot.hood);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {Robot.hood.setHoodUp(true);}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-        // Robot.shooter.setSpeedPercent(0);
-        Robot.shooter.setToNeutral();
-    }
+    public void execute() {}
 
     // Returns true when the command should end.
     @Override

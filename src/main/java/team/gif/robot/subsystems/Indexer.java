@@ -2,51 +2,56 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
-import team.gif.robot.commands.indexer.IndexScheduler;
-import team.gif.robot.commands.indexer.IndexerIdle;
 
 
 public class Indexer extends SubsystemBase {
     //Hardware config
-    private static final TalonSRX wheelMotor = new TalonSRX(RobotMap.WHEEL_INDEX);
-    private static final TalonSRX beltMotor = new TalonSRX(RobotMap.BELT);
+    private static final TalonSRX beltMotor = new TalonSRX(RobotMap.MOTOR_BELT);
+    private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private static final SparkMaxPIDController midPIDControl = midMotor.getPIDController();
 
-    private static final DigitalInput sensorCollector = new DigitalInput(RobotMap.SENSOR_STAGE_ONE);
-    private static final DigitalInput sensorWheel = new DigitalInput(RobotMap.SENSOR_STAGE_TWO);
-    private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.SENSOR_STAGE_THREE);
+    private static final DigitalInput sensorMid = new DigitalInput(RobotMap.SENSOR_MID);
+    private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.SENSOR_BELT);
 
     public Indexer() {
         super();
-        wheelMotor.setNeutralMode(NeutralMode.Brake);
+        beltMotor.configFactoryDefault();
+        midMotor.restoreFactoryDefaults();
+
+        beltMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
+
         beltMotor.setNeutralMode(NeutralMode.Brake);
+        midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
-        wheelMotor.setInverted(false); // subject to change based on design feats I don't remember
-        beltMotor.setInverted(false);
+        beltMotor.setInverted(false); // subject to change based on design feats I don't remember
+        midMotor.setInverted(true);
     }
 
-    public boolean getSensorCollector() {
-        return sensorCollector.get();
-    }
-
-    public boolean getSensorWheel() {
-        return sensorWheel.get();
+    public boolean getSensorMid() {
+        return sensorMid.get();
     }
 
     public boolean getSensorBelt() {
         return sensorBelt.get();
     }
 
-    public void setIndexMotorSpeed(double percent) {
-        wheelMotor.set(ControlMode.PercentOutput, percent);
+    public void setMidMotorSpeed(double percent) {
+        midMotor.set(percent);
     }
 
-    public void setBeltMotorSpeed(double percent) {
-        wheelMotor.set(ControlMode.PercentOutput, percent);
+    public void setBeltMotorSpeedPercent(double percent) {
+        beltMotor.set(ControlMode.PercentOutput, percent);
     }
 
+    public double getBeltMotorSpeed() {
+        return beltMotor.getSelectedSensorVelocity();
+    }
 }

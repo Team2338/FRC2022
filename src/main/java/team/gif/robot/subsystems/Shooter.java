@@ -1,21 +1,30 @@
 package team.gif.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.*;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
+import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
 public class Shooter extends SubsystemBase
 {
-    private static final TalonSRX shooterMotor = new TalonSRX(RobotMap.INTAKE);
+    private static final TalonFX shooterMotor = new TalonFX(RobotMap.MOTOR_SHOOTER);
 
     public Shooter() {
         super();
         shooterMotor.configFactoryDefault();
 
-        shooterMotor.setNeutralMode(NeutralMode.Brake);
+        shooterMotor.setNeutralMode(NeutralMode.Coast);
+
         shooterMotor.setInverted(InvertType.InvertMotorOutput);
+        shooterMotor.setInverted(TalonFXInvertType.Clockwise);
 
         // Configure soft and hard limits
         shooterMotor.configForwardSoftLimitEnable(false);
@@ -24,13 +33,15 @@ public class Shooter extends SubsystemBase
         shooterMotor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
 
         // Configure the sensor
-        shooterMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
-        shooterMotor.setSensorPhase(true);
+        shooterMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
 
-        shooterMotor.config_kP(0, Constants.shooter.kP);
-        shooterMotor.config_kI(0, Constants.shooter.kI);
-        shooterMotor.config_kD(0, Constants.shooter.kD);
-        shooterMotor.config_kF(0, Constants.shooter.kF);
+        shooterMotor.config_kP(0, Constants.Shooter.kP);
+        shooterMotor.config_kI(0, Constants.Shooter.kI);
+        shooterMotor.config_kD(0, Constants.Shooter.kD);
+        shooterMotor.config_kF(0, Constants.Shooter.kF);
+
+        shooterMotor.configClosedloopRamp(1.0);
+        shooterMotor.configOpenloopRamp(1.0);
 
         shooterMotor.selectProfileSlot(0, 0);
     }
@@ -44,5 +55,20 @@ public class Shooter extends SubsystemBase
         shooterMotor.set(ControlMode.Velocity, setPoint);
     }
 
+    public double getSpeed(){
+        return shooterMotor.getSelectedSensorVelocity();
+    }
+
+    public String getVelocity_Shuffleboard(){ return String.format("%12.0f",getSpeed());}
+
+    public boolean isInToleranceHigh() {
+        return Math.abs(getSpeed() - Robot.shooterRpm) < Constants.Shooter.FLYWHEEL_TOLERANCE;
+    }
+
+    public boolean isInToleranceLow() {
+        return Math.abs(getSpeed() - Constants.Shooter.RPM_LOW) < Constants.Shooter.FLYWHEEL_TOLERANCE;
+    }
+
+    public void setToNeutral(){ shooterMotor.neutralOutput();}
 
 }
