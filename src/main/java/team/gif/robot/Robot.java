@@ -16,9 +16,11 @@ import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.climber.ResetClimber;
+import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
+import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.CollectorPneumatic;
@@ -112,6 +114,8 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
+        collectorPneumatic.setDefaultCommand(new CollectorUp());
+        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
         // TS: getting the submit button when you click the commend.
