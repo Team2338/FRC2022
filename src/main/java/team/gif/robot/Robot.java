@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
 
     // T.S: Creating an new tab in shuffleboard.
     public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
-    public static ShuffleboardLayout shuffleboardTabSensor = shuffleboardTab
+    public static ShuffleboardLayout shuffleboardSensorLayout = shuffleboardTab
             .getLayout("Sensors", BuiltInLayouts.kGrid)
             .withSize(1,3) // make the widget 2x1
             .withProperties(Map.of("Label","HIDDEN")); //place it in the top-left cornor
@@ -133,9 +133,9 @@ public class Robot extends TimedRobot {
         //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand);
         //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
 
-        shuffleboardTabSensor.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        shuffleboardTabSensor.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTabSensor.addBoolean("Entry Sensor",collector::getEntrySensor);
+        shuffleboardSensorLayout.addBoolean("Belt Sensor", indexer::getSensorBelt);
+        shuffleboardSensorLayout.addBoolean("Mid Sensor", indexer::getSensorMid);
+        shuffleboardSensorLayout.addBoolean("Entry Sensor",collector::getEntrySensor);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Hanger", new ResetClimber());
