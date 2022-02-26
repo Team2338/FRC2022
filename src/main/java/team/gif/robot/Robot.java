@@ -23,7 +23,7 @@ import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
-import team.gif.robot.subsystems.CollectorPneumatic;
+import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     private Timer elapsedTime = new Timer();
 
     public static Hood hood = null;
-    public static CollectorPneumatic collectorPneumatic = null;
+    public static CollectorPneumatics collectorPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
@@ -108,13 +108,13 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
         shooter = new Shooter();
         hood = new Hood();
-        collectorPneumatic = new CollectorPneumatic();
+        collectorPneumatics = new CollectorPneumatics();
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-        collectorPneumatic.setDefaultCommand(new CollectorUp());
+        collectorPneumatics.setDefaultCommand(new CollectorUp());
         hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
@@ -135,7 +135,7 @@ public class Robot extends TimedRobot {
 
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",collector::getEntrySensor);
+        shuffleboardTab.addBoolean("Entry Sensor",indexer::getEntrySensor);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());

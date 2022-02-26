@@ -11,7 +11,7 @@ public class CollectorUp extends CommandBase {
 
     @Override
     public void initialize() {
-        Robot.collectorPneumatic.raise();
+        Robot.collectorPneumatics.raise();
     }
 
     @Override
