@@ -14,6 +14,7 @@ import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.Lower4Inches;
 import team.gif.robot.commands.climber.LowerClimber;
 import team.gif.robot.commands.collector.CollectorDown;
+import team.gif.robot.commands.drivetrain.Pivot;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
 import team.gif.robot.commands.shooter.RapidFire;
