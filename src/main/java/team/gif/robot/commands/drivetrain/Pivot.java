@@ -20,18 +20,16 @@ public class Pivot extends CommandBase {
 
     @Override
     public void execute() {
-        error = ((setpoint - pigeon.getCompassHeading())/setpoint);
-        while(Math.abs(error) > 0.1 && Math.abs(error) < 1.0){
-            Robot.drivetrain.setSpeed(error, - error);
-            error = ((setpoint - pigeon.getCompassHeading())/setpoint) * 100;
-        }
+        error = ((setpoint - pigeon.getCompassHeading()) / setpoint);
 
+            Robot.drivetrain.setSpeed(error, -error);
+            error = ((setpoint - pigeon.getCompassHeading()) / setpoint);
     }
 
 
     @Override
     public boolean isFinished() {
-        return !(error == 0);
+        return ! (error < .1);
     }
 
     @Override

@@ -13,6 +13,7 @@ import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.Lower4Inches;
 import team.gif.robot.commands.climber.LowerClimber;
 import team.gif.robot.commands.collector.CollectorDown;
+import team.gif.robot.commands.drivetrain.Pivot;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
 import team.gif.robot.commands.shooter.RapidFire;
@@ -107,7 +108,8 @@ public class OI {
         dLBump.whenHeld(new CollectorReverse());
         dRBump.whenHeld(new CollectorRun());
         dRBump.whenPressed(new CollectorDown()); //TODO: CREATE SOLENOID CLASS
-        dLTrigger.whileHeld(new LimelightAutoAim());
+        //dLTrigger.whileHeld(new LimelightAutoAim());
+        dLTrigger.whileHeld(new Pivot(25));
         dRTrigger.whileHeld(new RapidFire());
 
         dA.whenHeld(new Shoot());
@@ -122,6 +124,7 @@ public class OI {
         aLBump.whenHeld(new RevFlywheel());
         aRBump.whileHeld(new RapidFire());
         aLTrigger.whileHeld(new LimelightAutoAim());
+
 
         aY.toggleWhenPressed(new ClimberManualControl());
         aDPadDown.whenPressed(new ClimberMax());
