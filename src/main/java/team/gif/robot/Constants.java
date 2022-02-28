@@ -5,6 +5,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -15,6 +16,11 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static class GameConstants {
+        public static final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
+        public static final Color kRedTarget = new Color(0.561, 0.232, 0.114);
+    }
+
     public static class Drivetrain {
         public static double WHEEL_DIAMETER = 0.127; // IN METERS
         public static double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * 3.14159; // IN METERS
