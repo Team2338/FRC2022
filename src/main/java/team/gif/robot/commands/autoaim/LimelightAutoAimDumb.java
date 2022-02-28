@@ -113,5 +113,19 @@ public class LimelightAutoAimDumb extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        robotHasSettled = false;
+        Robot.shooter.setSpeedPercent(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
+        Robot.indexer.setMidMotorSpeed(0);
+
+        Drivetrain.leftTalon1.enableCurrentLimit(true);
+        Drivetrain.leftTalon2.enableCurrentLimit(true);
+        Drivetrain.rightTalon1.enableCurrentLimit(true);
+        Drivetrain.rightTalon2.enableCurrentLimit(true);
+
+        System.out.println("Auto Aim Finished");
+        Robot.limelight.setLEDMode(1);
+
+        Globals.indexerEnabled = true;}
 }
