@@ -2,33 +2,33 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package team.gif.robot.commands.shooter;
+package team.gif.robot.commands.collector;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
-public class Shoot extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+public class CollectorNeutral extends CommandBase {
 
-    public Shoot() {
+    /**
+     * Creates a new ExampleCommand.
+     *
+     * @param subsystem The subsystem used by this command.
+     */
+    public CollectorNeutral() {
         super();
+        addRequirements(Robot.collectorPneumatics);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        Robot.collectorPneumatics.neutral();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-        if (Robot.shooter.isInToleranceHigh() && Robot.indexer.getSensorBelt()) {
-            Robot.indexer.setBeltMotorSpeedPercent(1.0);
-            //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
-        } else {
-            Robot.indexer.setBeltMotorSpeedPercent(0);
-        }
-    }
+    public void execute() {}
 
     // Returns true when the command should end.
     @Override
@@ -38,7 +38,5 @@ public class Shoot extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-        Robot.indexer.setBeltMotorSpeedPercent(0);
-    }
+    public void end(boolean interrupted) {}
 }

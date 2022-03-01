@@ -62,7 +62,7 @@ public class Shooter extends SubsystemBase
     public String getVelocity_Shuffleboard(){ return String.format("%12.0f",getSpeed());}
 
     public boolean isInToleranceHigh() {
-        return Math.abs(getSpeed() - Robot.shooterRpm) < Constants.Shooter.FLYWHEEL_TOLERANCE;
+        return Math.abs(getSpeed() - Constants.Shooter.RPM_LAUNCHPAD) < Constants.Shooter.FLYWHEEL_TOLERANCE;
     }
 
     public boolean isInToleranceLow() {

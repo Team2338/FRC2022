@@ -18,7 +18,8 @@ public class CollectorReverse extends CommandBase
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.collector.setSpeedPercent(-0.5);
+        Robot.collector.setSpeedPercentCollector(-0.5);
+        Robot.collector.setSpeedPercentEntry(-0.5);
     }
 
     // Returns true when the command should end.
@@ -30,7 +31,8 @@ public class CollectorReverse extends CommandBase
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collector.setSpeedPercent(0);
+        Robot.collector.setSpeedPercentCollector(0);
+        Robot.collector.setSpeedPercentEntry(0);
     }
 
 }

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
+import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.autoaim.LimelightAutoAim;
@@ -20,7 +21,6 @@ import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
 import team.gif.robot.commands.collector.CollectorReverse;
 import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.shooter.ShootShort;
 
 
 public class OI {
@@ -111,19 +111,18 @@ public class OI {
         dRTrigger.whileHeld(new RapidFire());
 
         dA.whenHeld(new Shoot());
-        aX.whenPressed(new HoodDown());
-        dB.whenHeld(new ShootShort());
-        aB.whenPressed(new HoodUp());
-        aY.whenPressed(new HoodUp());
         dStart.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
-        dBack.whenHeld(new RevFlywheel());
+        dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
 
-        aLBump.whenHeld(new RevFlywheel());
-        aRBump.whileHeld(new RapidFire());
-        aLTrigger.whileHeld(new LimelightAutoAim());
-
-        aY.toggleWhenPressed(new ClimberManualControl());
+        aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        aLTrigger.whenHeld(new CollectorRun());
+        aRBump.whenHeld(new Shoot());
+        aRTrigger.whenHeld(new CollectorReverse());
+        aX.whenPressed(new HoodDown());
+        aY.whenPressed(new HoodUp());
+        aA.whenHeld(new CollectorDown());
+        aB.whenHeld(new CollectorUp());
         aDPadDown.whenPressed(new ClimberMax());
         aDPadLeft.whenPressed(new LowerClimber());
         aDPadUp.whenPressed(new Lower4Inches());

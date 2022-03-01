@@ -17,7 +17,8 @@ public class ReverseIndex extends CommandBase {
 
     @Override
     public void execute() {
-        Robot.collector.setSpeedPercent(-0.8);
+        Robot.collector.setSpeedPercentCollector(-0.8);
+        Robot.collector.setSpeedPercentEntry(-0.8);
         Robot.indexer.setMidMotorSpeed(-0.6);
         Robot.indexer.setBeltMotorSpeedPercent(-0.6);
     }
@@ -29,8 +30,8 @@ public class ReverseIndex extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        Robot.collector.setSpeedPercent(0);
-        Robot.collector.getEntrySensor(); // Tharun: something as the line #21
+        Robot.collector.setSpeedPercentCollector(0);
+        Robot.collector.setSpeedPercentEntry(0);
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
         Globals.indexerEnabled = true;

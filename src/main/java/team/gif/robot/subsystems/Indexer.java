@@ -18,6 +18,7 @@ public class Indexer extends SubsystemBase {
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final SparkMaxPIDController midPIDControl = midMotor.getPIDController();
 
+    private static final DigitalInput sensorEntry = new DigitalInput(RobotMap.SENSOR_ENTRY);
     private static final DigitalInput sensorMid = new DigitalInput(RobotMap.SENSOR_MID);
     private static final DigitalInput sensorBelt = new DigitalInput(RobotMap.SENSOR_BELT);
 
@@ -33,6 +34,10 @@ public class Indexer extends SubsystemBase {
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
         midMotor.setInverted(true);
+    }
+
+    public boolean getEntrySensor(){
+        return sensorEntry.get();
     }
 
     public boolean getSensorMid() {
