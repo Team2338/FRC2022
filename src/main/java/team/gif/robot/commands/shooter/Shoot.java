@@ -17,15 +17,11 @@ public class Shoot extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        //Robot.shooter.setSpeedPID(20000);
-
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 1000 ;
         if (Robot.shooter.isInToleranceHigh() && Robot.indexer.getSensorBelt()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
             //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
@@ -43,7 +39,6 @@ public class Shoot extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-//        Robot.shooter.setSpeedPercent(0);
-//        shooterIsInTolerance = false;
+        Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }

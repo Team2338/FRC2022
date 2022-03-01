@@ -6,16 +6,18 @@ import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Shooter;
 
 public class RevFlywheel extends CommandBase {
+    private final double setpoint;
 
-    public RevFlywheel() {
+    public RevFlywheel(double setpoint) {
         addRequirements(Robot.shooter);
+        this.setpoint = setpoint;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         Robot.limelight.setLEDMode(3);
-        Robot.shooter.setSpeedPID(Robot.shooterRpm);
+        Robot.shooter.setSpeedPID(setpoint);
 
     }
 

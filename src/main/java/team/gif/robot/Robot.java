@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -37,6 +38,7 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -70,6 +72,7 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
+    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
@@ -121,10 +124,13 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
+        myPigeon = new Pigeon(Drivetrain.rightTalon2);
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
         shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
+
+        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
 
         // TS: add an getEntry tab in shuffleboard
         exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
@@ -140,7 +146,6 @@ public class Robot extends TimedRobot {
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
-
         shuffleboardTab.add("ResetHead", new ResetHeading());
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);

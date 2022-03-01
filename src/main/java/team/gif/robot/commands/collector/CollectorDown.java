@@ -6,7 +6,7 @@ import team.gif.robot.Robot;
 public class CollectorDown extends CommandBase {
 
     public CollectorDown() {
-        //addRequirements(intake);
+        addRequirements(Robot.collectorPneumatics);
     }
 
     @Override

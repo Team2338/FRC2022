@@ -9,7 +9,6 @@
         "showGrid": true,
         "hgap": 8.0,
         "vgap": 8.0,
-        "titleType": 0,
         "tiles": {
           "0,0": {
             "size": [
@@ -69,7 +68,7 @@
               ]
             }
           },
-          "10,0": {
+          "9,0": {
             "size": [
               2,
               3
@@ -117,21 +116,6 @@
               "_source0": "network_table:///SmartDashboard/Climber",
               "_title": "/SmartDashboard/Climber"
             }
-          },
-          "8,0": {
-            "size": [
-              2,
-              3
-            ],
-            "content": {
-              "_type": "Gyro",
-              "_source0": "network_table:///Shuffleboard/SmartDashboard/Heading2",
-              "_title": "Heading",
-              "Visuals/Major tick spacing": 45.0,
-              "Visuals/Starting angle": 180.0,
-              "Visuals/Show tick mark ring": true,
-              "Visuals/Counter clockwise": false
-            }
           }
         }
       }
@@ -141,6 +125,6 @@
     "x": -6.400000095367432,
     "y": 1.600000023841858,
     "width": 1548.800048828125,
-    "height": 640.0
+    "height": 641.5999755859375
   }
 }

@@ -54,5 +54,6 @@ public class IndexScheduler extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.indexer.setMidMotorSpeed(0);
+        Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }
