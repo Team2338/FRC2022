@@ -58,6 +58,10 @@ public final class Constants {
         public static final double RPM_FAR_COURT = 10300;
 
         public static final double FLYWHEEL_TOLERANCE = 150;
+
+        public static final double LIMELIGHT_ANGLE = 0.0;
+        public static final double LIMELIGHT_HEIGHT = 20.0;
+        public static final double UPPER_HUB_HEIGHT = 96.0;
     }
 
     public static class Indexer {
