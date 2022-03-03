@@ -150,6 +150,8 @@ public class Robot extends TimedRobot {
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
 
+        shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
+
         //ts: switching drives mode
         shuffleboardTab.add("Tank Drive", new DriveTank());
         shuffleboardTab.add("Arcade Drive", new DriveArcade());

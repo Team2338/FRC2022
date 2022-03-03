@@ -44,11 +44,14 @@ public class Mobility extends SequentialCommandGroup {
 
         addCommands(
             new PrintCommand("Auto: Mobility Started"),
+            new ParallelCommandGroup(
                 reverse(),
-                new CollectorRun().withTimeout(4),
+                new HoodUp().withTimeout(0.1),
+                new CollectorRun().withTimeout(3),
+                new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD).withTimeout(3)
+            ),
                 //new CollectorDown(),
             new ParallelCommandGroup(
-                    new HoodUp().withTimeout(2),
                     new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD),
                     new Shoot()
 
