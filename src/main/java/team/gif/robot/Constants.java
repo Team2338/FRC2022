@@ -37,8 +37,8 @@ public final class Constants {
         // part of trajectory but numbers are from example
         public static final double kMaxSpeedMetersPerSecond = 3.0;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3.0;
-        public static final double kSlowSpeedMetersPerSecond = 1.5;
-        public static final double kSlowAccelerationMetersPerSecondSquared = 1.5;
+        public static final double kSlowSpeedMetersPerSecond = 1.5;//1.5
+        public static final double kSlowAccelerationMetersPerSecondSquared = 1.5;//1.5
         public static final double kFastSpeedMetersPerSecond = 4.0;
         public static final double kFastAccelerationMetersPerSecondSquared = 4.0;
         public static final double kRamseteB = 2;

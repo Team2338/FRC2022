@@ -223,7 +223,7 @@ public class Robot extends TimedRobot {
 
         limelight.setLEDMode(1);//turn off
 
-        compressor.disable();
+        //compressor.disable();
 
         runAutoScheduler = true;
         updateauto();
