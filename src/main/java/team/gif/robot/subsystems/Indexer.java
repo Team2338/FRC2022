@@ -14,6 +14,7 @@ public class Indexer extends SubsystemBase {
 //    private static final TalonSRX beltMotor = new TalonSRX(RobotMap.MOTOR_BELT);
     private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
+//+    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final SparkMaxPIDController midPIDControl = midMotor.getPIDController();
 
     private static final DigitalInput sensorEntry = new DigitalInput(RobotMap.SENSOR_ENTRY);
@@ -25,15 +26,18 @@ public class Indexer extends SubsystemBase {
 //        beltMotor.configFactoryDefault();
         beltMotor.restoreFactoryDefaults();
         midMotor.restoreFactoryDefaults();
+//+        entryMotor.restoreFactoryDefaults();
 
 //        beltMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
 
 //        beltMotor.setNeutralMode(NeutralMode.Brake);
         beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+//+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
         midMotor.setInverted(!Robot.isCompBot);
+//+        entryMotor.setInverted(!Robot.isCompBot);
     }
 
     public boolean getSensorEntry(){
@@ -51,6 +55,10 @@ public class Indexer extends SubsystemBase {
     public void setMidMotorSpeed(double percent) {
         midMotor.set(percent);
     }
+
+//+    public void setEntryMotorSpeed(double percent) {
+//        entryMotor.set(percent);
+//    }
 
     public void setBeltMotorSpeedPercent(double percent) {
 //        beltMotor.set(ControlMode.PercentOutput, percent);

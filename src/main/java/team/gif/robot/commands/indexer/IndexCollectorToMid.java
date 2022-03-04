@@ -25,6 +25,8 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public void execute() {
         Robot.indexer.setMidMotorSpeed(0.8);
+        Robot.collector.setSpeedPercentEntry(0.6);
+//+        Robot.indexer.setEntryMotorSpeed(0.7);
     }
 
     // Returns true when the command should end.
@@ -41,5 +43,7 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.indexer.setMidMotorSpeed(0);
+        Robot.collector.setSpeedPercentEntry(0); // this may work. It might cause a small stop in the entry motor while collecting
+//+        Robot.indexer.setEntryMotorSpeed(0);
     }
 }
