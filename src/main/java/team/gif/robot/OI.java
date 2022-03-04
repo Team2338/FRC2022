@@ -108,14 +108,13 @@ public class OI {
          */
 
         // Driver Controls
-//        dLT.whileHeld(new Pivot());
         dRBump.whenHeld(new CollectorRun());
-        //-dRBump.whenPressed(new CollectorDown()); // Forces the collector down whenever we want to run the collector
+        dRBump.whenPressed(new CollectorDown()); // Forces the collector down whenever we want to run the collector
         dLBump.whenHeld(new CollectorReverse());
         dLTrigger.whileHeld(new LimelightAutoAim());
         dRTrigger.whileHeld(new RapidFire());
         dA.whenHeld(new Shoot());
-        dStart.whenHeld(new ReverseIndex());
+        dY.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
 
 //-        dDPadDown.whenPressed(new ClimberMax()); // remove for now. don't want to accidentally run this
@@ -124,12 +123,19 @@ public class OI {
         /*
         * these are only for testing with only a driver joystick
         */
-        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
+        dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
+        dBack.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dStart.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
+        dStart.whenPressed(new HoodDown()); // hood has to be down for this shot
+
+        dDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
+        dDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
+        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
         dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
-        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
-        dDPadUp.whenPressed(new HoodDown()); // hood has to be down for this shot
-        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_KEY_UPPER_HUB));
-        dDPadDown.whenPressed(new HoodUp()); // hood has to be down for this shot
+        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
         /*
          * testing end
          */
@@ -138,16 +144,19 @@ public class OI {
         aLTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
         aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
         aLBump.whenPressed(new HoodDown()); // hood has to be down for this shot
-        aRTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-        aRTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
-        aRBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
-        aRBump.whenPressed(new HoodUp()); // hood has to be up for this shot
-
+        aDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
+        aDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
+        aDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        aDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+        aDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
         aX.whenPressed(new HoodDown());
         aY.whenPressed(new HoodUp());
         //-aDPadDown.whenPressed(new CollectorDown());
-        aDPadUp.whenPressed(new CollectorUp());
-        aStart.whenHeld(new ReverseIndex());
+        aB.whenPressed(new CollectorUp());
+        aA.whenPressed(new CollectorDown());
     }
 
     public void setRumble(boolean rumble) {

@@ -57,7 +57,7 @@ public final class Constants {
         public static final double RPM_FENDER_LOWER_HUB = 3000; // verified on wood comp bot
         public static final double RPM_FENDER_UPPER_HUB = 5900; // 5800 not good with ball in way; // verified on wood comp bot
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 4000;
-        public static final double RPM_KEY_UPPER_HUB = 6500;
+        public static final double RPM_RING_UPPER_HUB = 6500;
         public static final double RPM_LAUNCHPAD = 7500; // verified on wood comp bot
         public static final double RPM_FAR_COURT = 10500; // verified on wood comp bot - very variable
 
