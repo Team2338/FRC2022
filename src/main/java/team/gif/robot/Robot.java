@@ -47,7 +47,7 @@ import team.gif.robot.subsystems.drivers.Pigeon;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
@@ -72,7 +72,7 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
-    public static Pigeon myPigeon;
+//    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
@@ -124,13 +124,13 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
-        myPigeon = new Pigeon(Drivetrain.rightTalon2);
+//        myPigeon = new Pigeon(Drivetrain.rightTalon2);
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
         shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
 
-        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
+//        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
 
         // TS: add an getEntry tab in shuffleboard
         exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )

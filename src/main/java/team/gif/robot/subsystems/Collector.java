@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
 public class Collector extends SubsystemBase {
@@ -16,9 +17,10 @@ public class Collector extends SubsystemBase {
 
     public Collector() {
         super();
-        collectorMotor.setInverted(false);
+        collectorMotor.setInverted(Robot.isCompBot);
         collectorMotor.setNeutralMode(NeutralMode.Brake);
         entryMotor.setInverted(false);
+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00

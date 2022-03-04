@@ -53,7 +53,8 @@ public final class Constants {
 
         public static final double RPM_LOW = 2100;
         public static final double RPM_HIGH = 7500;
-        public static final double RPM_LAUNCHPAD = 8300;
+//        public static final double RPM_LAUNCHPAD = 8300;
+        public static final double RPM_LAUNCHPAD = 6325;
         public static final double RPM_FENDER_SHOT = 6325; //6325 for close shot
         public static final double RPM_FAR_COURT = 10300;
 

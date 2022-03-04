@@ -22,10 +22,11 @@ public abstract class RobotMap {
     public static final int SENSOR_ENTRY = 2;
 
     // Solenoids
-    public static final int SOLENOID_HANGER = 5;
-    public static final int SOLENOID_HOOD = 4;
-    public static final int SOLENOID_COLLECTOR_FORWARD = 3; //TODO
-    public static final int SOLENOID_COLLECTOR_REVERSE = 6;
+    public static final int SOLENOID_HANGER = 5; //todo
+    public static final int SOLENOID_HOOD_UP = 7;
+    public static final int SOLENOID_HOOD_DOWN = 6;
+    public static final int SOLENOID_COLLECTOR_FORWARD = 4;
+    public static final int SOLENOID_COLLECTOR_REVERSE = 5;
 
     // Compressors //
     public static final int COMPRESSOR_HOOD = 0; // todo rename
