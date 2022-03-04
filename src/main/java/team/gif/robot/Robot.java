@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -38,7 +37,6 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
-import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -141,7 +139,7 @@ public class Robot extends TimedRobot {
 
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",indexer::getEntrySensor);
+        shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
@@ -227,7 +225,7 @@ public class Robot extends TimedRobot {
 
         limelight.setLEDMode(1);//turn off
 
-        //compressor.disable();
+        compressor.disable();
 
         runAutoScheduler = true;
         updateauto();

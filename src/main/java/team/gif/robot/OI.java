@@ -100,32 +100,42 @@ public class OI {
          * leftTrigger.whenPressed(new CollectCommand());
          * rightTrigger.whileHeld(new EjectCommand());
          *
+         *
+         *  whenPressed Init->Execute repeats until IsFinished = true->End, will not start again at Init if still held down
+         *  whenHeld    Init->Execute repeats until IsFinished = true or button released->End, will not start again at Init if still held down
+         *  whileHeld   Init->Execute repeats until IsFinished = true or button released->End, will start again at Init if still held down
+         *
          */
 
         // Driver Controls
 //        dLT.whileHeld(new Pivot());
-        dLBump.whenHeld(new CollectorReverse());
         dRBump.whenHeld(new CollectorRun());
-        dRBump.whenPressed(new CollectorDown()); //TODO: CREATE SOLENOID CLASS
+        dRBump.whenPressed(new CollectorDown()); // Forces the collector down whenever we want to run the collector
+        dLBump.whenHeld(new CollectorReverse());
         dLTrigger.whileHeld(new LimelightAutoAim());
         dRTrigger.whileHeld(new RapidFire());
-
         dA.whenHeld(new Shoot());
         dStart.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
-        dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+//-        dDPadDown.whenPressed(new ClimberMax()); // remove for now. don't want to accidentally run this
+//-        dDPadLeft.whenPressed(new LowerClimber()); // remove for now. don't want to accidentally run this
+//-        dDPadUp.whenPressed(new Lower4Inches()); // remove for now. don't want to accidentally run this
+        dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD)); // this is for testing with only driver joystick
 
-        aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-        aLTrigger.whenHeld(new CollectorRun());
-        aRBump.whenHeld(new Shoot());
-        aRTrigger.whenHeld(new CollectorReverse());
+        aLTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
+        aRTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
+        aLBump.whenPressed(new HoodDown()); // hood has to be down for this shot
+        aRTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        aRTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aRBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+        aRBump.whenPressed(new HoodUp()); // hood has to be up for this shot
+
         aX.whenPressed(new HoodDown());
         aY.whenPressed(new HoodUp());
-        aA.whenHeld(new CollectorDown());
-        aB.whenHeld(new CollectorUp());
-        aDPadDown.whenPressed(new ClimberMax());
-        aDPadLeft.whenPressed(new LowerClimber());
-        aDPadUp.whenPressed(new Lower4Inches());
+        aDPadDown.whenPressed(new CollectorDown());
+        aDPadUp.whenPressed(new CollectorUp());
+        aStart.whenHeld(new ReverseIndex());
     }
 
     public void setRumble(boolean rumble) {

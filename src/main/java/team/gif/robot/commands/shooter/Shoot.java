@@ -23,7 +23,7 @@ public class Shoot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Robot.shooter.isInTolerance() && Robot.indexer.getSensorBelt()) {
+        if (Robot.shooter.isInTolerance() ) { // && Robot.indexer.getSensorBelt()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
             //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
         } else {

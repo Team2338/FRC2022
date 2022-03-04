@@ -1,9 +1,5 @@
 package team.gif.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
@@ -40,7 +36,7 @@ public class Indexer extends SubsystemBase {
         midMotor.setInverted(!Robot.isCompBot);
     }
 
-    public boolean getEntrySensor(){
+    public boolean getSensorEntry(){
         return sensorEntry.get();
     }
 
@@ -64,5 +60,20 @@ public class Indexer extends SubsystemBase {
     public double getBeltMotorSpeed() {
         return beltMotor.getEncoder().getVelocity();
 //        return beltMotor.getSelectedSensorVelocity();
+    }
+
+    public int getCargoCount() {
+        int count = 0;
+
+        if( getSensorEntry() ){
+            count++;
+        }
+        if( getSensorMid() ){
+            count++;
+        }
+        if( getSensorBelt() ){
+            count++;
+        }
+        return count;
     }
 }

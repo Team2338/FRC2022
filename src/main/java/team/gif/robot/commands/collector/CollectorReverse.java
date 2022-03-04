@@ -19,7 +19,7 @@ public class CollectorReverse extends CommandBase
     @Override
     public void execute() {
         Robot.collector.setSpeedPercentCollector(-0.5);
-        Robot.collector.setSpeedPercentEntry(-0.5);
+//        Robot.collector.setSpeedPercentEntry(-0.5);
     }
 
     // Returns true when the command should end.
@@ -32,7 +32,7 @@ public class CollectorReverse extends CommandBase
     @Override
     public void end(boolean interrupted) {
         Robot.collector.setSpeedPercentCollector(0);
-        Robot.collector.setSpeedPercentEntry(0);
+//        Robot.collector.setSpeedPercentEntry(0);
     }
 
 }

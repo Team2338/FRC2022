@@ -13,13 +13,11 @@ public class Collector extends SubsystemBase {
     private static final TalonSRX collectorMotor = new TalonSRX(RobotMap.MOTOR_INTAKE);
     private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
 
-
-
     public Collector() {
         super();
         collectorMotor.setInverted(Robot.isCompBot);
         collectorMotor.setNeutralMode(NeutralMode.Brake);
-        entryMotor.setInverted(false);
+        entryMotor.setInverted(!Robot.isCompBot);
         entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 

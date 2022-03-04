@@ -6,22 +6,30 @@ import team.gif.robot.Robot;
 public class CollectorUp extends CommandBase {
 
     public CollectorUp() {
-        addRequirements(Robot.collectorPneumatics);
+        //-addRequirements(Robot.collectorPneumatics);
+        System.out.println("Command Constructor");
     }
 
     @Override
     public void initialize() {
-        Robot.collectorPneumatics.raise();
+        //-Robot.collectorPneumatics.raise();
+        System.out.println("Command Init");
     }
 
     @Override
     public void execute() {
+        System.out.println("Command Execute");
+    }
+
+    @Override
+    public boolean isFinished() {
+        System.out.println("Command isFinished true");
+        //return false;
+        return true;
     }
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Command end");
     }
-
-    @Override
-    public boolean isFinished() { return false; }
 }

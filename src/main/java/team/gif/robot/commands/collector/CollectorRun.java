@@ -17,7 +17,9 @@ public class CollectorRun extends CommandBase
 
     // Called every time the scheduler runs while the command is scheduled.
     public void execute() {
-        Robot.collector.setSpeedPercentCollector(0.6);
+        if( Robot.indexer.getCargoCount() <= 2) { // if we already have 2 cargo, do not run the collector
+            Robot.collector.setSpeedPercentCollector(0.6);
+        }
         Robot.collector.setSpeedPercentEntry(0.6);
     }
     // Returns true when the command should end.

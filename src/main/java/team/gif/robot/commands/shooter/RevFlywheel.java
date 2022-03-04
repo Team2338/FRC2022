@@ -18,7 +18,6 @@ public class RevFlywheel extends CommandBase {
     public void initialize() {
         Robot.limelight.setLEDMode(3);
         Robot.shooter.setSpeedPID(setpoint);
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -29,7 +28,9 @@ public class RevFlywheel extends CommandBase {
 
     // Returns true when the command should end.
     @Override
-    public boolean isFinished() { return false; }
+    public boolean isFinished() {
+        return false;
+    }
 
     // Called once the command ends or is interrupted.
     @Override
@@ -37,5 +38,4 @@ public class RevFlywheel extends CommandBase {
         //Robot.shooter.setSpeedPercent(0);
         Robot.limelight.setLEDMode(1);//force off
     }
-
 }

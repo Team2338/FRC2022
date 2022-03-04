@@ -8,6 +8,8 @@ import team.gif.robot.Robot;
 public class RapidFire extends CommandBase {
 
     public RapidFire() {
+//+        super();
+//+        addRequirements(Robot.indexer); // this might be another way to take control of the indexer. Test this out
     }
 
     @Override
@@ -19,10 +21,7 @@ public class RapidFire extends CommandBase {
     public void execute() {
         Robot.limelight.setLEDMode(3);
 
-        boolean isFarShot = Robot.oi != null && (Robot.oi.dStart.get() || Robot.oi.aDPadRight.get());
-        double speed = isFarShot ? Constants.Shooter.RPM_HIGH : Constants.Shooter.RPM_LOW;
-
-        if ( ( Robot.shooter.getSpeed() > (speed - 20.0) )) {
+        if ( Robot.shooter.isInTolerance() ) {
             Robot.indexer.setBeltMotorSpeedPercent(0.5);
             Robot.indexer.setMidMotorSpeed(0.4);
         }

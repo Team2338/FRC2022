@@ -72,8 +72,7 @@ public class Shooter extends SubsystemBase
         return Math.abs(shooterMotor.getClosedLoopError()) < Constants.Shooter.FLYWHEEL_TOLERANCE;
     }
 
-
-
-    public void setToNeutral(){ shooterMotor.neutralOutput();}
-
+    public void setToNeutral() {
+        shooterMotor.neutralOutput();
+    }
 }

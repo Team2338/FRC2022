@@ -44,19 +44,26 @@ public class Mobility extends SequentialCommandGroup {
 
         addCommands(
             new PrintCommand("Auto: Mobility Started"),
-            new ParallelCommandGroup(
-                new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD),
-                new SequentialCommandGroup(
-                    new ParallelCommandGroup(
-                        reverse(),
-                        new HoodUp().withTimeout(0.1),
-                        new CollectorRun().withTimeout(3)
-                    ),
-                    new Shoot()
-                )
+//-            new ParallelCommandGroup(
+//                new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD),
+//                new SequentialCommandGroup(
+//                    new ParallelCommandGroup(
+//                        reverse(),
+//                        new HoodUp().withTimeout(0.1),
+//                        new CollectorRun().withTimeout(3)
+//                    ),
+//                    new Shoot()
+//                )
                 //new CollectorDown(),
-            ),
+//-            ),
             //new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD).withTimeout(3),
+
+            // testing to see if we can pass parameters here
+            // I think this was a problem in 2020 which is why we couldn't do it
+            new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD).withTimeout(4),
+            new RevFlywheel(Constants.Shooter.RPM_FAR_COURT).withTimeout(4),
+            new RevFlywheel(Constants.Shooter.RPM_LOW).withTimeout(4),
+
             new PrintCommand("Auto: Mobility Ended")
         );
     }
