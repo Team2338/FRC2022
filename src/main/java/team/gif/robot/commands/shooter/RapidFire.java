@@ -8,13 +8,13 @@ import team.gif.robot.Robot;
 public class RapidFire extends CommandBase {
 
     public RapidFire() {
-//+        super();
-//+        addRequirements(Robot.indexer); // this might be another way to take control of the indexer. Test this out
+        super();
+        addRequirements(Robot.indexer); // this might be another way to take control of the indexer. Test this out
     }
 
     @Override
     public void initialize() {
-        Globals.indexerEnabled = false;
+        //Globals.indexerEnabled = false;
     }
 
     @Override
@@ -22,8 +22,8 @@ public class RapidFire extends CommandBase {
         Robot.limelight.setLEDMode(3);
 
         if ( Robot.shooter.isInTolerance() ) {
-            Robot.indexer.setBeltMotorSpeedPercent(0.5);
-            Robot.indexer.setMidMotorSpeed(0.4);
+            Robot.indexer.setBeltMotorSpeedPercent(1.0);
+            Robot.indexer.setMidMotorSpeed(1.0);
         }
     }
 
@@ -37,6 +37,6 @@ public class RapidFire extends CommandBase {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
 
-        Globals.indexerEnabled = true;
+        //Globals.indexerEnabled = true;
     }
 }

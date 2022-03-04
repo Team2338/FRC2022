@@ -110,20 +110,32 @@ public class OI {
         // Driver Controls
 //        dLT.whileHeld(new Pivot());
         dRBump.whenHeld(new CollectorRun());
-        dRBump.whenPressed(new CollectorDown()); // Forces the collector down whenever we want to run the collector
+        //-dRBump.whenPressed(new CollectorDown()); // Forces the collector down whenever we want to run the collector
         dLBump.whenHeld(new CollectorReverse());
         dLTrigger.whileHeld(new LimelightAutoAim());
         dRTrigger.whileHeld(new RapidFire());
         dA.whenHeld(new Shoot());
         dStart.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
+
 //-        dDPadDown.whenPressed(new ClimberMax()); // remove for now. don't want to accidentally run this
 //-        dDPadLeft.whenPressed(new LowerClimber()); // remove for now. don't want to accidentally run this
 //-        dDPadUp.whenPressed(new Lower4Inches()); // remove for now. don't want to accidentally run this
-        dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD)); // this is for testing with only driver joystick
+        /*
+        * these are only for testing with only a driver joystick
+        */
+        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
+        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
+        dDPadUp.whenPressed(new HoodDown()); // hood has to be down for this shot
+        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_KEY_UPPER_HUB));
+        dDPadDown.whenPressed(new HoodUp()); // hood has to be down for this shot
+        /*
+         * testing end
+         */
 
         aLTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
-        aRTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aLTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
         aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
         aLBump.whenPressed(new HoodDown()); // hood has to be down for this shot
         aRTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
@@ -133,7 +145,7 @@ public class OI {
 
         aX.whenPressed(new HoodDown());
         aY.whenPressed(new HoodUp());
-        aDPadDown.whenPressed(new CollectorDown());
+        //-aDPadDown.whenPressed(new CollectorDown());
         aDPadUp.whenPressed(new CollectorUp());
         aStart.whenHeld(new ReverseIndex());
     }

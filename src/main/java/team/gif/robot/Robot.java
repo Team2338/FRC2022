@@ -115,8 +115,8 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-        collectorPneumatics.setDefaultCommand(new CollectorUp());
-        hood.setDefaultCommand(new HoodDown());
+//-        collectorPneumatics.setDefaultCommand(new CollectorUp());
+//        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
         // TS: getting the submit button when you click the commend.
@@ -169,6 +169,8 @@ public class Robot extends TimedRobot {
 
         // Hanger
         //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
+
+        oi = new OI();
     }
 
     /**
@@ -256,7 +258,7 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        oi = new OI();
+//        oi = new OI();
         compressor.enableDigital();
     }
 
