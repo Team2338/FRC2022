@@ -23,11 +23,11 @@ import java.util.List;
 
 public class Mobility extends SequentialCommandGroup {
 
-    public Command reverse () {
+    public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                    new Pose2dFeet().set(0.0, 0.0, 0.0),
-                    new Pose2dFeet().set(0.0, -0.4, 180.0)
+                new Pose2dFeet().set(0.0, 0.0, 0.0),
+                new Pose2dFeet().set(0.0, -0.4, 180.0)
                 //new Pose2d(Units.feetToMeters(0.0), 0, new Rotation2d(0)),
                 //new Pose2d(Units.feetToMeters(-3.0), 0, new Rotation2d(0))
             ),
@@ -45,16 +45,16 @@ public class Mobility extends SequentialCommandGroup {
         addCommands(
             new PrintCommand("Auto: Mobility Started"),
             new ParallelCommandGroup(
-                reverse(),
-                new HoodUp().withTimeout(0.1),
-                new CollectorRun().withTimeout(3),
-                new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD).withTimeout(3)
-            ),
-                //new CollectorDown(),
-            new ParallelCommandGroup(
-                    new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD),
+                new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD),
+                new SequentialCommandGroup(
+                    new ParallelCommandGroup(
+                        reverse(),
+                        new HoodUp().withTimeout(0.1),
+                        new CollectorRun().withTimeout(3)
+                    ),
                     new Shoot()
-
+                )
+                //new CollectorDown(),
             ),
             //new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD).withTimeout(3),
             new PrintCommand("Auto: Mobility Ended")

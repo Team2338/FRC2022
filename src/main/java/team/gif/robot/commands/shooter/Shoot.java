@@ -13,6 +13,7 @@ public class Shoot extends CommandBase {
 
     public Shoot() {
         super();
+        addRequirements(Robot.indexer);
     }
 
     // Called when the command is initially scheduled.

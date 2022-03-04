@@ -159,6 +159,8 @@ public class Robot extends TimedRobot {
         // ts: command to getEntry RPM
         shuffleboardTab.add("Set RPM", shooterRpmCommand);
 
+
+
         // Indexer logging
         shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
         //shuffleboardTab.addBoolean("Stage", indexer::getSensorMid); // TODO: Cleanup this line
