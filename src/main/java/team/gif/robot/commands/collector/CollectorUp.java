@@ -5,22 +5,30 @@ import team.gif.robot.Robot;
 
 public class CollectorUp extends CommandBase {
 
+    private int count;
+    private boolean isDone;
+
     public CollectorUp() {
         addRequirements(Robot.collectorPneumatics);
     }
 
     @Override
     public void initialize() {
-        Robot.collectorPneumatics.raise();
+        Robot.collectorPneumatics.entryRaise();
+        count = 0;
     }
 
     @Override
     public void execute() {
+        if(++count >= 100) {
+            Robot.collectorPneumatics.collectorRaise();
+            isDone = true
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return isDone;
     }
 
     @Override
