@@ -22,7 +22,7 @@ public class CollectorUp extends CommandBase {
     public void execute() {
         if(++count >= 100) {
             Robot.collectorPneumatics.collectorRaise();
-            isDone = true
+            isDone = true;
         }
     }
 
