@@ -21,7 +21,7 @@ import team.gif.robot.subsystems.Hood;
 
 import java.util.List;
 
-public class Mobility extends SequentialCommandGroup {
+public class ThreeBallTerminalRight extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -38,13 +38,52 @@ public class Mobility extends SequentialCommandGroup {
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
+    public Command reverseAgain() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(0.0, -0.2, 180),
+                new Pose2dFeet().set(0.0, -0.3, 360)
+                //new Pose2d(Units.feetToMeters(0.0), 0, new Rotation2d(0)),
+                //new Pose2d(Units.feetToMeters(-3.0), 0, new Rotation2d(0))
+            ),
+            RobotTrajectory.getInstance().configReverseSlow
+        );
+        // create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
 
-    public Mobility() {
+    public ThreeBallTerminalRight() {
         System.out.println("Auto: Mobility Selected");
 
         addCommands(
             new PrintCommand("Auto: Mobility Started"),
-            reverse(),
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new ParallelCommandGroup(
+                        reverse(),
+                        new HoodUp().withTimeout(0.1),
+                        new CollectorRun().withTimeout(3)
+                    ),
+                    //align(),
+                    new RapidFire().withTimeout(3)
+                ),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+            ),
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new ParallelCommandGroup(
+                        reverseAgain(),
+                        new CollectorRun().withTimeout(3)
+                    ),
+                    //align(),
+                    new RapidFire().withTimeout(3)
+                ),
+                new RevFlywheel(Constants.Shooter.RPM_FAR_COURT)
+            ),
+
+
 
             new PrintCommand("Auto: Mobility Ended")
         );

@@ -21,13 +21,13 @@ import team.gif.robot.subsystems.Hood;
 
 import java.util.List;
 
-public class Mobility extends SequentialCommandGroup {
+public class TwoBall extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(0.0, -0.2, 180.0)
+                new Pose2dFeet().set(0.0, -0.4, 180.0)
                 //new Pose2d(Units.feetToMeters(0.0), 0, new Rotation2d(0)),
                 //new Pose2d(Units.feetToMeters(-3.0), 0, new Rotation2d(0))
             ),
@@ -39,12 +39,23 @@ public class Mobility extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Mobility() {
+    public TwoBall() {
         System.out.println("Auto: Mobility Selected");
 
         addCommands(
             new PrintCommand("Auto: Mobility Started"),
-            reverse(),
+            new ParallelDeadlineGroup(
+                new SequentialCommandGroup(
+                    new ParallelCommandGroup(
+                        reverse(),
+                        new HoodUp().withTimeout(0.1),
+                        new CollectorRun().withTimeout(3)
+                    ),
+                    new RapidFire().withTimeout(3)
+                ),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+            ),
+            //new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD).withTimeout(3),
 
             new PrintCommand("Auto: Mobility Ended")
         );

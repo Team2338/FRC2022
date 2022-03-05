@@ -3,7 +3,9 @@ package team.gif.lib;
 public enum autoMode {
 
     MOBILITY(0),
-    SHOOT_1_BALL(0);
+    TWOBALL(0),
+    THREEBALLTERMINALRIGHT(0);
+
 
     private int value;
     autoMode(int value) {

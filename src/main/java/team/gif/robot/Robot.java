@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
+import team.gif.robot.commands.autos.ThreeBallTerminalRight;
+import team.gif.robot.commands.autos.TwoBall;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.drivetrain.DriveTank;
@@ -282,8 +284,8 @@ public class Robot extends TimedRobot {
         autoTab = Shuffleboard.getTab("PreMatch");
 
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
-//        autoModeChooser.addOption("Fwd Mobility", autoMode.MOBILITY_FWD);
-//        autoModeChooser.addOption("3 Ball Auto", autoMode.SAFE_3_BALL);
+        autoModeChooser.addOption("Two Ball", autoMode.TWOBALL);
+        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREEBALLTERMINALRIGHT);
 //        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
 //        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
 ////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
@@ -329,11 +331,13 @@ public class Robot extends TimedRobot {
 
         if(chosenAuto == autoMode.MOBILITY){
             autonomousCommand = new Mobility();
-//        } else if(chosenAuto == autoMode.MOBILITY_FWD){
-//            m_autonomousCommand = new MobilityFwd();
-//        } else if(chosenAuto == autoMode.SAFE_3_BALL){
-//            m_autonomousCommand = new SafeThreeBall();
-//        } else if(chosenAuto == autoMode.SAFE_6_BALL){
+        }
+        else if(chosenAuto == autoMode.TWOBALL){
+            autonomousCommand = new TwoBall();
+        }
+      else if(chosenAuto == autoMode.THREEBALLTERMINALRIGHT){
+            autonomousCommand = new ThreeBallTerminalRight();}
+//         else if(chosenAuto == autoMode.SAFE_6_BALL){
 //            m_autonomousCommand = new SafeSixBall();
 //        } else if(chosenAuto == autoMode.OPP_5_BALL){
 //            m_autonomousCommand = new OppFiveBall();
@@ -345,7 +349,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand = new Slalom();
     } else if(chosenAuto == autoMode.BOUNCE){
       m_autonomousCommand = new Bounce(); */
-        } else if(chosenAuto ==null) {
+         else if(chosenAuto ==null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }
     }
