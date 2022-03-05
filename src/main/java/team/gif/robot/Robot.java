@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -38,7 +37,6 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
-import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -47,7 +45,7 @@ import team.gif.robot.subsystems.drivers.Pigeon;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
@@ -72,7 +70,7 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
-    public static Pigeon myPigeon;
+//    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
@@ -117,20 +115,20 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-        collectorPneumatics.setDefaultCommand(new CollectorUp());
-        hood.setDefaultCommand(new HoodDown());
+//-        collectorPneumatics.setDefaultCommand(new CollectorUp());
+//        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
-        myPigeon = new Pigeon(Drivetrain.rightTalon2);
+//        myPigeon = new Pigeon(Drivetrain.rightTalon2);
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
         shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
         shooterRpmCommand = new setShooterRpmCommand();
 
-        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
+//        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
 
         // TS: add an getEntry tab in shuffleboard
         exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
@@ -141,7 +139,7 @@ public class Robot extends TimedRobot {
 
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",indexer::getEntrySensor);
+        shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
@@ -150,12 +148,16 @@ public class Robot extends TimedRobot {
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
 
+        shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
+
         //ts: switching drives mode
         shuffleboardTab.add("Tank Drive", new DriveTank());
         shuffleboardTab.add("Arcade Drive", new DriveArcade());
 
         // ts: command to getEntry RPM
         shuffleboardTab.add("Set RPM", shooterRpmCommand);
+
+
 
         // Indexer logging
         shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
@@ -167,6 +169,8 @@ public class Robot extends TimedRobot {
 
         // Hanger
         //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
+
+        oi = new OI();
     }
 
     /**
@@ -254,7 +258,7 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        oi = new OI();
+//        oi = new OI();
         compressor.enableDigital();
     }
 
