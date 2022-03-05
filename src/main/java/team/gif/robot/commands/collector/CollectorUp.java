@@ -19,9 +19,11 @@ public class CollectorUp extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public boolean isFinished() {
+        return true;
     }
 
     @Override
-    public boolean isFinished() { return false; }
+    public void end(boolean interrupted) {
+    }
 }
