@@ -115,7 +115,12 @@ public class OI {
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
         dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
 
-        aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        // driver shooter setpoints
+        dDPadUp.whenPressed(new RevFlywheel(Constants.Shooter.RPM_FENDER_SHOT));
+        dDPadDown.whenPressed(new RevFlywheel(Constants.Shooter.RPM_LOW));
+        dDPadLeft.whenPressed(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        dDPadRight.whenPressed(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+
         aLTrigger.whenHeld(new CollectorRun());
         aRBump.whenHeld(new Shoot());
         aRTrigger.whenHeld(new CollectorReverse());
