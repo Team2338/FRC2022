@@ -43,7 +43,7 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.indexer.setMidMotorSpeed(0);
-        Robot.collector.setSpeedPercentEntry(0); // this may work. It might cause a small stop in the entry motor while collecting
+        Robot.collector.setSpeedPercentEntry(0);
 //+        Robot.indexer.setEntryMotorSpeed(0);
     }
 }

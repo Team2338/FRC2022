@@ -25,6 +25,5 @@ public class CollectorUp extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Command end");
     }
 }
