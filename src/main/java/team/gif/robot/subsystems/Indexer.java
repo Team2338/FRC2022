@@ -9,6 +9,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
+import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
 
@@ -34,6 +36,9 @@ public class Indexer extends SubsystemBase {
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
         midMotor.setInverted(true);
+        beltMotor.config_kP(0,Constants.Indexer.kPBelt);
+        beltMotor.config_kP(0,Constants.Indexer.kIBelt);
+        beltMotor.config_kP(0,Constants.Indexer.kDBelt);
     }
 
     public boolean getEntrySensor(){
@@ -56,7 +61,12 @@ public class Indexer extends SubsystemBase {
         beltMotor.set(ControlMode.PercentOutput, percent);
     }
 
+    public void setBeltMotorSpeedPID(double setpoint){
+        beltMotor.set(ControlMode.Velocity,setpoint);
+    }
+
     public double getBeltMotorSpeed() {
         return beltMotor.getSelectedSensorVelocity();
     }
+
 }

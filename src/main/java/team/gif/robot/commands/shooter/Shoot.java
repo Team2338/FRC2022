@@ -5,6 +5,7 @@
 package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
@@ -23,8 +24,8 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         if (Robot.shooter.isInToleranceHigh() && Robot.indexer.getSensorBelt()) {
-            Robot.indexer.setBeltMotorSpeedPercent(1.0);
-            //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
+            //Robot.indexer.setBeltMotorSpeedPercent(1.0);
+            Robot.indexer.setBeltMotorSpeedPID(Constants.Indexer.RPM_BELT);
         } else {
             Robot.indexer.setBeltMotorSpeedPercent(0);
         }

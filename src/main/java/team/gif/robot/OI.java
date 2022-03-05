@@ -108,7 +108,7 @@ public class OI {
         dRBump.whenHeld(new CollectorRun());
         dRBump.whenPressed(new CollectorDown()); //TODO: CREATE SOLENOID CLASS
         dLTrigger.whileHeld(new LimelightAutoAim());
-        dRTrigger.whileHeld(new RapidFire());
+        //dRTrigger.whileHeld(new RapidFire());
 
         dA.whenHeld(new Shoot());
         dStart.whenHeld(new ReverseIndex());
@@ -116,10 +116,10 @@ public class OI {
         dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
 
         // driver shooter setpoints
-        dDPadUp.whenPressed(new RevFlywheel(Constants.Shooter.RPM_FENDER_SHOT));
-        dDPadDown.whenPressed(new RevFlywheel(Constants.Shooter.RPM_LOW));
-        dDPadLeft.whenPressed(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-        dDPadRight.whenPressed(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+        aDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_SHOT));
+        aDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LOW));
+        aDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        aDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
 
         aLTrigger.whenHeld(new CollectorRun());
         aRBump.whenHeld(new Shoot());

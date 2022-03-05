@@ -53,7 +53,7 @@ public class IndexScheduler extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.setMidMotorSpeed(0);
-        Robot.indexer.setBeltMotorSpeedPercent(0);
+        //Robot.indexer.setMidMotorSpeed(0);
+        //Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }

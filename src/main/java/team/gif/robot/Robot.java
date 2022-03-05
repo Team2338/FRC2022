@@ -187,6 +187,8 @@ public class Robot extends TimedRobot {
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
 
+        //shuffleboardTab.add("Belt motor", indexer.getBeltMotorSpeed());
+
 //    SmartDashboard.putNumber("tx",limelight.getXOffset());
 //    SmartDashboard.putNumber("ty",limelight.getYOffset());
         // pneumatics
