@@ -11,7 +11,8 @@ public abstract class RobotMap {
     // Other Motors
     public static final int MOTOR_INTAKE = 3;
     public static final int MOTOR_MID_INDEX = 10;
-    public static final int MOTOR_BELT = 2;
+    public static final int MOTOR_BELT_PRACTICE = 31; //2
+    public static final int MOTOR_BELT_COMPBOT = 2;
     public static final int MOTOR_SHOOTER = 13;
     public static final int MOTOR_HANGER = 15; //TODO
     public static final int MOTOR_ENTRY = 16;
