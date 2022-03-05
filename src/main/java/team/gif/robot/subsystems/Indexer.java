@@ -1,5 +1,9 @@
 package team.gif.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
@@ -11,8 +15,8 @@ import team.gif.robot.RobotMap;
 
 public class Indexer extends SubsystemBase {
     //Hardware config
-//    private static final TalonSRX beltMotor = new TalonSRX(RobotMap.MOTOR_BELT);
-    private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor
+    private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT_COMPBOT, CANSparkMaxLowLevel.MotorType.kBrushless); // CompBot motor
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
 //+    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final SparkMaxPIDController midPIDControl = midMotor.getPIDController();
@@ -23,14 +27,14 @@ public class Indexer extends SubsystemBase {
 
     public Indexer() {
         super();
-//        beltMotor.configFactoryDefault();
+        beltMotor1.configFactoryDefault();
         beltMotor.restoreFactoryDefaults();
         midMotor.restoreFactoryDefaults();
 //+        entryMotor.restoreFactoryDefaults();
 
-//        beltMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
+        beltMotor1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
 
-//        beltMotor.setNeutralMode(NeutralMode.Brake);
+        beltMotor1.setNeutralMode(NeutralMode.Brake);
         beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 //+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -61,13 +65,16 @@ public class Indexer extends SubsystemBase {
 //    }
 
     public void setBeltMotorSpeedPercent(double percent) {
-//        beltMotor.set(ControlMode.PercentOutput, percent);
+        beltMotor1.set(ControlMode.PercentOutput, percent);
         beltMotor.set(percent);
     }
 
     public double getBeltMotorSpeed() {
-        return beltMotor.getEncoder().getVelocity();
-//        return beltMotor.getSelectedSensorVelocity();
+        if (Robot.isCompBot == true){
+            return beltMotor.getEncoder().getVelocity();
+        } else{
+            return beltMotor1.getSelectedSensorVelocity();
+        }
     }
 
     public int getCargoCount() {
