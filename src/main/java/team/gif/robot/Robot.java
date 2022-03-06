@@ -18,11 +18,9 @@ import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBall;
 import team.gif.robot.commands.climber.ResetClimber;
-import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
-import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.CollectorPneumatics;
@@ -284,8 +282,8 @@ public class Robot extends TimedRobot {
         autoTab = Shuffleboard.getTab("PreMatch");
 
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
-        autoModeChooser.addOption("Two Ball", autoMode.TWOBALL);
-        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREEBALLTERMINALRIGHT);
+        autoModeChooser.addOption("Two Ball", autoMode.TWO_BALL);
+        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
 //        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
 //        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
 ////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
@@ -332,10 +330,10 @@ public class Robot extends TimedRobot {
         if(chosenAuto == autoMode.MOBILITY){
             autonomousCommand = new Mobility();
         }
-        else if(chosenAuto == autoMode.TWOBALL){
+        else if(chosenAuto == autoMode.TWO_BALL){
             autonomousCommand = new TwoBall();
         }
-      else if(chosenAuto == autoMode.THREEBALLTERMINALRIGHT){
+      else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
             autonomousCommand = new ThreeBallTerminalRight();}
 //         else if(chosenAuto == autoMode.SAFE_6_BALL){
 //            m_autonomousCommand = new SafeSixBall();
