@@ -15,7 +15,7 @@ public class Collector extends SubsystemBase {
 
     public Collector() {
         super();
-        collectorMotor.setInverted(Robot.isCompBot);
+        collectorMotor.setInverted(!Robot.isCompBot);
         collectorMotor.setNeutralMode(NeutralMode.Brake);
         entryMotor.setInverted(!Robot.isCompBot);
         entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
