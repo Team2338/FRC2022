@@ -1,6 +1,8 @@
 package team.gif.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -76,8 +78,11 @@ public class Drivetrain extends SubsystemBase {
         drive.setDeadband(Robot.isCompBot ? .02 : .05);
 
         // ------------  Trajectory Functionality ----------
-        leftEncoderTalon = leftTalon1;
-        rightEncoderTalon = rightTalon1;
+        leftEncoderTalon = leftTalon2;
+        rightEncoderTalon = rightTalon2;
+
+        //leftEncoderTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        //rightEncoderTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 
         leftEncoderTalon.setSelectedSensorPosition(0);
         rightEncoderTalon.setSelectedSensorPosition(0);
