@@ -45,7 +45,7 @@ import team.gif.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = false;
+    public static final boolean isCompBot = true;
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
