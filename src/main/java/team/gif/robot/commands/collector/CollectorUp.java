@@ -16,11 +16,12 @@ public class CollectorUp extends CommandBase {
     public void initialize() {
         Robot.collectorPneumatics.entryRaise();
         count = 0;
+        isDone = false;
     }
 
     @Override
     public void execute() {
-        if(++count >= 100) {
+        if(++count >= 0) { // no need for a delay but leave code here in case we change our minds
             Robot.collectorPneumatics.collectorRaise();
             isDone = true;
         }
