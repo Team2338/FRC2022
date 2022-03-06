@@ -35,7 +35,7 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static int maxCurrentAmps = 15;
+    private static int maxCurrentAmps = 10;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -112,10 +112,10 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.configContinuousCurrentLimit(maxCurrentAmps);
         rightTalon2.configContinuousCurrentLimit(maxCurrentAmps);
 
-        leftTalon1.configPeakCurrentLimit(maxCurrentAmps);
-        leftTalon2.configPeakCurrentLimit(maxCurrentAmps);
-        rightTalon1.configPeakCurrentLimit(maxCurrentAmps);
-        rightTalon2.configPeakCurrentLimit(maxCurrentAmps);
+        leftTalon1.configPeakCurrentLimit(0);
+        leftTalon2.configPeakCurrentLimit(0);
+        rightTalon1.configPeakCurrentLimit(0);
+        rightTalon2.configPeakCurrentLimit(0);
 
     }
 
