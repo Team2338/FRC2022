@@ -93,6 +93,11 @@ public class Drivetrain extends SubsystemBase {
         currentLimitingSetup();
         currentLimitingEnable(true);
 
+        leftTalon1.configOpenloopRamp(0.1);
+        leftTalon2.configOpenloopRamp(0.1);
+        rightTalon1.configOpenloopRamp(0.1);
+        rightTalon2.configOpenloopRamp(0.1);
+
         // Per WPILib, motor outputs for the right side are negated
         // within the differentialDrive class. No need to negate them again.
         leftTalon1.setInverted(false);

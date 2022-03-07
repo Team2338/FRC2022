@@ -27,7 +27,7 @@ public class Mobility extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(0.0, -0.2, 180.0)
+                new Pose2dFeet().set(-5.0, 0.0, 0.0)
                 //new Pose2d(Units.feetToMeters(0.0), 0, new Rotation2d(0)),
                 //new Pose2d(Units.feetToMeters(-3.0), 0, new Rotation2d(0))
             ),
