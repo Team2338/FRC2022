@@ -1,6 +1,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
@@ -124,36 +125,36 @@ public class OI {
         * these are only for testing with only a driver joystick
         */
         dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
-        dBack.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dBack.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); //HoodUp()); // hood has to be up for this shot
         dStart.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
-        dStart.whenPressed(new HoodDown()); // hood has to be down for this shot
+        dStart.whenPressed(new InstantCommand(Robot.hood::setHoodDown,Robot.hood)); //new HoodDown()); // hood has to be down for this shot
 
         dDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
-        dDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadRight.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
-        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadUp.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadLeft.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
-        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
+        dDPadDown.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         /*
          * testing end
          */
 
         aLTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
-        aLTrigger.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aLTrigger.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         aLBump.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
-        aLBump.whenPressed(new HoodDown()); // hood has to be down for this shot
+        aLBump.whenPressed(new InstantCommand(Robot.hood::setHoodDown,Robot.hood)); // HoodDown()); // hood has to be down for this shot
         aDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
-        aDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aDPadRight.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         aDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
-        aDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aDPadUp.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         aDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-        aDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
+        aDPadLeft.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
         aDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
-        aDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
-        aX.whenPressed(new HoodDown());
-        aY.whenPressed(new HoodUp());
+        aDPadDown.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp()); // hood has to be up for this shot
+        aX.whenPressed(new InstantCommand(Robot.hood::setHoodDown,Robot.hood)); // HoodDown());
+        aY.whenPressed(new InstantCommand(Robot.hood::setHoodUp,Robot.hood)); // HoodUp());
         //-aDPadDown.whenPressed(new CollectorDown());
         aB.whenPressed(new CollectorUp());
         aA.whenPressed(new CollectorDown());
