@@ -2,12 +2,12 @@ package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
-
-import static team.gif.robot.Robot.pigeon;
+import team.gif.robot.subsystems.drivers.Pigeon;
 
 public class Pivot extends CommandBase {
     double setpoint;
     double error;
+    Pigeon pigeon;
     public Pivot(double setpoint){
         super();
         addRequirements(Robot.drivetrain);

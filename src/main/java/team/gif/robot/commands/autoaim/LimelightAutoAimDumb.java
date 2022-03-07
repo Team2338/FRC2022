@@ -63,7 +63,7 @@ public class LimelightAutoAimDumb extends CommandBase {
                 //inches
                 distanceFromHub = (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) /
                         Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset()));
-
+                System.out.println(distanceFromHub);
                 double tgSpeed = (distanceFromHub > 200 && distanceFromHub < 205) ? Constants.Shooter.RPM_LAUNCHPAD : (distanceFromHub >= 205) ? Constants.Shooter.RPM_FAR_COURT : Constants.Shooter.RPM_FENDER_SHOT;
 
                 if(tgSpeed >= Constants.Shooter.RPM_HIGH) {
@@ -87,7 +87,7 @@ public class LimelightAutoAimDumb extends CommandBase {
                 }
             } else {
                 double offset = Robot.limelight.getXOffset();
-                if (offset > -1.0 && offset < 1.0) {
+                if (offset > -0.5 && offset < 0.5) {
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else {

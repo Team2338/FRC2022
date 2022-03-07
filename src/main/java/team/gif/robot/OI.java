@@ -1,16 +1,16 @@
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
-import edu.wpi.first.wpilibj.GenericHID;
-import team.gif.robot.commands.collector.CollectorUp;
-import team.gif.robot.commands.hood.HoodDown;
-import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.autoaim.LimelightAutoAim;
+import team.gif.robot.commands.autoaim.LimelightAutoAimDumb;
+import team.gif.robot.commands.drivetrain.Pivot;
+import team.gif.robot.commands.hood.HoodUp;
+import team.gif.robot.commands.autoaim.LimelightAutoAimbutCooler;
 import team.gif.robot.commands.climber.ClimberMax;
-import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.Lower4Inches;
 import team.gif.robot.commands.climber.LowerClimber;
 import team.gif.robot.commands.collector.CollectorDown;
@@ -20,9 +20,7 @@ import team.gif.robot.commands.indexer.ToggleIndexer;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
-import team.gif.robot.commands.collector.CollectorReverse;
-import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.shooter.ShootShort;
+
 
 
 public class OI {
