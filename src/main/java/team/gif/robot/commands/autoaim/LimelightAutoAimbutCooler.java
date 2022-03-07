@@ -1,16 +1,13 @@
 package team.gif.robot.commands.autoaim;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.Constants;
-import team.gif.robot.Globals;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.Hood.HoodUp;
 import team.gif.robot.commands.drivetrain.Pivot;
 import team.gif.robot.commands.shooter.Shoot;
-import team.gif.robot.commands.shooter.ShootShort;
+//import team.gif.robot.commands.shooter.ShootShort;
 import team.gif.robot.subsystems.Drivetrain;
 
-import static team.gif.robot.Globals.shooterIsInTolerance;
+//import static team.gif.robot.Globals.shooterIsInTolerance;
 
 public class LimelightAutoAimbutCooler extends CommandBase {
 
@@ -40,16 +37,20 @@ public class LimelightAutoAimbutCooler extends CommandBase {
         if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
         //double targetSpeed = Constants.Shooter.RPM_LOW;
 
-        if(Math.abs(Robot.limelight.getXOffset()) > 1) {
-            new Pivot(Robot.pigeon.get180Heading() - Robot.limelight.getXOffset());
+        if(Math.abs(Robot.limelight.getXOffset()) > 0.1) {
+            Drivetrain.drive.arcadeDrive(0, Robot.limelight.getXOffset() * 0.01);
+
+        }
+        else{
+            Drivetrain.drive.arcadeDrive(0, 0);
         }
         //shooterIsInTolerance = Math.abs(Robot.shooter.getSpeed() - 20000) < 1000 ;
 
         if(Robot.limelight.getYOffset() < 10){
-            new ShootShort();
+            //new ShootShort();
         }
         else{
-            Robot.hood.setHoodUp(true);
+            //Robot.hood.setHoodUp(true);
             new Shoot();
         }
         //Robot.shooter.setSpeedPID(targetSpeed);
@@ -61,7 +62,7 @@ public class LimelightAutoAimbutCooler extends CommandBase {
         Robot.shooter.setSpeedPercent(0);
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
-        Robot.hood.setHoodUp(false);
+        //Robot.hood.setHoodUp(false);
 
         /*
         Drivetrain.leftTalon1.enableCurrentLimit(true);

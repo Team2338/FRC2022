@@ -1,4 +1,4 @@
-        return false;
+
 package team.gif.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
