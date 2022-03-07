@@ -48,7 +48,7 @@ public class TwoBall extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     new ParallelCommandGroup(
                         reverse(),
-                        new HoodUp().withTimeout(0.1),
+                        new HoodUp(),
                         new CollectorRun().withTimeout(3)
                     ),
                     new RapidFire().withTimeout(3)

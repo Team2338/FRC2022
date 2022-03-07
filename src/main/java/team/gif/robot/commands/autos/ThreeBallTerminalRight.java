@@ -63,7 +63,7 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
                 new SequentialCommandGroup(
                     new ParallelCommandGroup(
                         reverse(),
-                        new HoodUp().withTimeout(0.1),
+                        new HoodUp(),
                         new CollectorRun().withTimeout(3)
                     ),
                     //align(),
@@ -82,8 +82,6 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
                 ),
                 new RevFlywheel(Constants.Shooter.RPM_FAR_COURT)
             ),
-
-
 
             new PrintCommand("Auto: Mobility Ended")
         );
