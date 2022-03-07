@@ -1,6 +1,8 @@
 package team.gif.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -35,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static int maxCurrentAmps = 15;
+    private static int maxCurrentAmps = 10;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -76,8 +78,11 @@ public class Drivetrain extends SubsystemBase {
         drive.setDeadband(Robot.isCompBot ? .02 : .05);
 
         // ------------  Trajectory Functionality ----------
-        leftEncoderTalon = leftTalon1;
-        rightEncoderTalon = rightTalon1;
+        leftEncoderTalon = leftTalon2;
+        rightEncoderTalon = rightTalon2;
+
+        //leftEncoderTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+        //rightEncoderTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 
         leftEncoderTalon.setSelectedSensorPosition(0);
         rightEncoderTalon.setSelectedSensorPosition(0);
@@ -87,6 +92,11 @@ public class Drivetrain extends SubsystemBase {
 
         currentLimitingSetup();
         currentLimitingEnable(true);
+
+        leftTalon1.configOpenloopRamp(0.1);
+        leftTalon2.configOpenloopRamp(0.1);
+        rightTalon1.configOpenloopRamp(0.1);
+        rightTalon2.configOpenloopRamp(0.1);
 
         // Per WPILib, motor outputs for the right side are negated
         // within the differentialDrive class. No need to negate them again.
@@ -112,10 +122,10 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.configContinuousCurrentLimit(maxCurrentAmps);
         rightTalon2.configContinuousCurrentLimit(maxCurrentAmps);
 
-        leftTalon1.configPeakCurrentLimit(maxCurrentAmps);
-        leftTalon2.configPeakCurrentLimit(maxCurrentAmps);
-        rightTalon1.configPeakCurrentLimit(maxCurrentAmps);
-        rightTalon2.configPeakCurrentLimit(maxCurrentAmps);
+        leftTalon1.configPeakCurrentLimit(0);
+        leftTalon2.configPeakCurrentLimit(0);
+        rightTalon1.configPeakCurrentLimit(0);
+        rightTalon2.configPeakCurrentLimit(0);
 
     }
 

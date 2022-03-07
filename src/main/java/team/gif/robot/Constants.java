@@ -25,9 +25,9 @@ public final class Constants {
 
         // trajectory
         // from FRC Characterization Tool
-        public static final double ksVolts = 1.37;
-        public static final double kvVoltSecondsPerMeter = 2.46;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.773;
+        public static final double ksVolts = 1.2596;//1.37;
+        public static final double kvVoltSecondsPerMeter = 2.5664;//2.46;
+        public static final double kaVoltSecondsSquaredPerMeter = 1.0142;//0.773;
         public static final double kPDriveVelLeft = 10.0;
         public static final double kPDriveVelRight = kPDriveVelLeft;
         public static final double kTrackWidthMeters = 1.0;
