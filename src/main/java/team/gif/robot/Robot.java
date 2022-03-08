@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
@@ -169,6 +170,7 @@ public class Robot extends TimedRobot {
 
         // Hanger
         //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
+
     }
 
     /**
@@ -189,8 +191,8 @@ public class Robot extends TimedRobot {
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
 
-//    SmartDashboard.putNumber("tx",limelight.getXOffset());
-//    SmartDashboard.putNumber("ty",limelight.getYOffset());
+    SmartDashboard.putNumber("tx",limelight.getXOffset());
+    SmartDashboard.putNumber("ty",limelight.getYOffset());
         // pneumatics
 //    SmartDashboard.putBoolean("Pressure", compressor.getPressureSwitchValue());
 //    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
@@ -199,7 +201,9 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {
+
         limelight.setLEDMode(1);//force off
+
     }
 
     @Override

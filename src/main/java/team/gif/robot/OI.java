@@ -110,7 +110,7 @@ public class OI {
         dLBump.whenHeld(new CollectorReverse());
         dRBump.whenHeld(new CollectorRun());
         dRBump.whenPressed(new CollectorDown()); //TODO: CREATE SOLENOID CLASS
-        dLTrigger.whileHeld(new LimelightAutoAim());
+        dLTrigger.whenHeld(new LimelightAutoAim());
         dRTrigger.whileHeld(new RapidFire());
 
         dA.whenHeld(new Shoot());
