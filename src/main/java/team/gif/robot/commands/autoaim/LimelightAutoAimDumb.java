@@ -64,7 +64,11 @@ public class LimelightAutoAimDumb extends CommandBase {
                 distanceFromHub = (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) /
                         Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset()));
                 System.out.println(distanceFromHub);
+
+
                 double tgSpeed = (distanceFromHub > 200 && distanceFromHub < 205) ? Constants.Shooter.RPM_LAUNCHPAD : (distanceFromHub >= 205) ? Constants.Shooter.RPM_FAR_COURT : Constants.Shooter.RPM_FENDER_SHOT;
+                System.out.println(tgSpeed);
+
 
                 if(tgSpeed >= Constants.Shooter.RPM_HIGH) {
                     Robot.hood.setHoodUp();
@@ -92,6 +96,22 @@ public class LimelightAutoAimDumb extends CommandBase {
                     targetLocked = true;
                 } else {
                     double pivVolts = ((offset / 10) / MAX_PIVOT_VOLTS > 1) ? (offset / 10) / MAX_PIVOT_VOLTS : 1;
+                    if (offset > -1.0 && offset < 1.0) {
+                        Robot.drivetrain.tankDriveVolts(0, 0);
+                        targetLocked = true;
+                    } else {
+                        if (offset < 0) {
+                            Robot.drivetrain.tankDriveVolts(pivVolts, pivVolts);
+
+                        } else {
+                            Robot.drivetrain.tankDriveVolts(-pivVolts, -pivVolts);
+
+                        }
+                    }
+
+
+
+                    /*
                     if (offset < 0) {
                         Robot.drivetrain.tankDriveVolts(-pivVolts, pivVolts);
 
@@ -99,6 +119,7 @@ public class LimelightAutoAimDumb extends CommandBase {
                         Robot.drivetrain.tankDriveVolts(pivVolts, -pivVolts);
 
                     }
+                     */
                     targetLocked = false;
                 }
             }
