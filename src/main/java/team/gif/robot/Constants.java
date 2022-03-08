@@ -49,7 +49,7 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kF = 0.056;
+        public static final double kF = 0.056; //.056
 
         public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
 //        public static final double RPM_LAUNCHPAD = 8300;
@@ -65,12 +65,12 @@ public final class Constants {
     }
 
     public static class Indexer {
-        public static final double kPBelt = 0;
+        public static final double kPBelt = 0.037;
         public static final double kIBelt = 0;
         public static final double kDBelt = 0;
-        public static final double kFFBelt = 0;
+        public static final double kFFBelt = 0.04;
         public static final double kIZoneBelt = 0;
-        public static final double RPM_BELT = 57000;
+        public static final double RPM_BELT = 120000;
     }
 
     public static class Climber {

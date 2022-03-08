@@ -9,13 +9,14 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
 
 public class Indexer extends SubsystemBase {
     //Hardware config
-    private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor
+    private static final TalonSRX beltMotorPBot = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICEBOT); //PracticeBot motor
     private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT_COMPBOT, CANSparkMaxLowLevel.MotorType.kBrushless); // CompBot motor
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
 //+    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -27,23 +28,30 @@ public class Indexer extends SubsystemBase {
 
     public Indexer() {
         super();
-        beltMotor1.configFactoryDefault();
+        beltMotorPBot.configFactoryDefault();
         beltMotor.restoreFactoryDefaults();
         midMotor.restoreFactoryDefaults();
 //+        entryMotor.restoreFactoryDefaults();
 
-        beltMotor1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
+        beltMotorPBot.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
 
-        beltMotor1.setNeutralMode(NeutralMode.Brake);
+        beltMotorPBot.setNeutralMode(NeutralMode.Brake);
         beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 //+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
         midMotor.setInverted(true);
-        beltMotor.config_kP(0,Constants.Indexer.kPBelt);
-        beltMotor.config_kP(0,Constants.Indexer.kIBelt);
-        beltMotor.config_kP(0,Constants.Indexer.kDBelt);
+
+        // PracticeBot Motor functions
+        beltMotorPBot.config_kP(0, Constants.Indexer.kPBelt);
+        beltMotorPBot.config_kF(0,Constants.Indexer.kFFBelt);
+
+        // CompBot Different Functions
+        //beltMotor.config_kP(0,Constants.Indexer.kPBelt);
+        //beltMotor.config_kP(0,Constants.Indexer.kIBelt);
+        //beltMotor.config_kP(0,Constants.Indexer.kDBelt);
+
         midMotor.setInverted(!Robot.isCompBot);
 //+        entryMotor.setInverted(!Robot.isCompBot);
     }
@@ -69,19 +77,20 @@ public class Indexer extends SubsystemBase {
 //    }
 
     public void setBeltMotorSpeedPercent(double percent) {
-        beltMotor1.set(ControlMode.PercentOutput, percent);
+        beltMotorPBot.set(ControlMode.PercentOutput, percent);
         beltMotor.set(percent);
     }
 
     public void setBeltMotorSpeedPID(double setpoint){
-        beltMotor.set(ControlMode.Velocity,setpoint);
+        beltMotorPBot.set(ControlMode.Velocity,setpoint); //PracticeBot
+//        beltMotor.set(ControlMode.Velocity,setpoint); CompBot
     }
 
     public double getBeltMotorSpeed() {
         if (Robot.isCompBot == true){
             return beltMotor.getEncoder().getVelocity();
         } else{
-            return beltMotor1.getSelectedSensorVelocity();
+            return beltMotorPBot.getSelectedSensorVelocity();
         }
     }
 
@@ -98,5 +107,9 @@ public class Indexer extends SubsystemBase {
             count++;
         }
         return count;
+    }
+
+    public boolean beltIsInTolerance() {
+        return beltMotorPBot.getSelectedSensorVelocity() > Constants.Indexer.RPM_BELT;
     }
 }

@@ -21,7 +21,7 @@ public class RapidFire extends CommandBase {
         Robot.limelight.setLEDMode(3);
 
         if ( Robot.shooter.isInTolerance() ) {
-            Robot.indexer.setBeltMotorSpeedPercent(1.0);
+            Robot.indexer.setBeltMotorSpeedPID(Constants.Indexer.RPM_BELT);
             Robot.indexer.setMidMotorSpeed(1.0);
         }
     }
