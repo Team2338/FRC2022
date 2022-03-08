@@ -2,7 +2,10 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
@@ -14,11 +17,14 @@ public class Climber extends SubsystemBase {
 
     public Climber() {
         super();
-        hangMotor.setInverted(false);
+        hangMotor.setInverted(true);
+        hangMotor.setSensorPhase(true);
         hangMotor.configFactoryDefault();
 
         // Soft Limits
         hangMotor.enableCurrentLimit(false);
+        hangMotor.configRemoteFeedbackFilter(RobotMap.MOTOR_INTAKE, RemoteSensorSource.TalonSRX_SelectedSensor, 0);
+        hangMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.RemoteSensor0, 0, 0);
 
 
         hangMotor.setNeutralMode(NeutralMode.Brake);

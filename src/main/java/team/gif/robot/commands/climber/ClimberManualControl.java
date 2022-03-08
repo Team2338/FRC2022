@@ -13,6 +13,7 @@ public class ClimberManualControl extends CommandBase {
     public static final double ClimberdownGain = 1;
 
     public ClimberManualControl() {
+        addRequirements(Robot.climber);
     }
 
     // Called when the command is initially scheduled.

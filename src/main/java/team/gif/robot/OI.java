@@ -5,8 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
-import team.gif.robot.commands.climber.FangsBack;
-import team.gif.robot.commands.climber.FangsForward;
+import team.gif.robot.commands.climber.*;
 import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.hood.HoodUp;
@@ -115,9 +114,9 @@ public class OI {
         dY.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
 
-//-        dDPadDown.whenPressed(new ClimberMax()); // remove for now. don't want to accidentally run this
-//-        dDPadLeft.whenPressed(new LowerClimber()); // remove for now. don't want to accidentally run this
-//-        dDPadUp.whenPressed(new Lower4Inches()); // remove for now. don't want to accidentally run this
+        dDPadDown.whenPressed(new ClimberMax()); // remove for now. don't want to accidentally run this
+        dDPadLeft.whenPressed(new LowerClimber()); // remove for now. don't want to accidentally run this
+        dDPadUp.whenPressed(new Lower4Inches()); // remove for now. don't want to accidentally run this
         /*
         * these are only for testing with only a driver joystick
         */
@@ -128,12 +127,12 @@ public class OI {
 
         dDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
         dDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
-        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
-        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
-        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
-        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
-        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
+//        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
+//        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
+//        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+//        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
+//        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+//        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
         /*
          * testing end
          */

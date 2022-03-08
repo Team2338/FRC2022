@@ -106,8 +106,8 @@ public class Robot extends TimedRobot {
 
         drivetrain = new Drivetrain();
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
-        climber = new Climber();
         collector = new Collector();
+        climber = new Climber();
         indexer = new Indexer();
         shooter = new Shooter();
         hood = new Hood();
@@ -150,6 +150,7 @@ public class Robot extends TimedRobot {
         shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
         shuffleboardTab.add("ResetHead", new ResetHeading());
+        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
 

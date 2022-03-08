@@ -82,9 +82,9 @@ public final class Constants {
 
         public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
-        public static final double MAX_POSITION = 500000;
-        public static final double ASCEND_POSITION = 15000;
-        public static final double FALL_POSITION = 250000;
+        public static final double MAX_POSITION = 24000;
+        public static final double ASCEND_POSITION = 1000;
+        public static final double FALL_POSITION = 14000;
 
         public static final double UP_UNLOADED_VOLTAGE = 0.8;
         public static final double DOWN_LOADED_VOLTAGE = -0.8;
