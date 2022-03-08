@@ -23,7 +23,8 @@ public abstract class RobotMap {
     public static final int SENSOR_ENTRY = 2;
 
     // Solenoids
-    public static final int SOLENOID_HANGER = 5; //todo
+    public static final int SOLENOID_HANGER_ONE = 9; //todo
+    public static final int SOLENOID_HANGER_TWO = 8;
     public static final int SOLENOID_HOOD_UP = 2;
     public static final int SOLENOID_HOOD_DOWN = 5; // 6;
     public static final int SOLENOID_COLLECTOR_FORWARD = 4; // 4;

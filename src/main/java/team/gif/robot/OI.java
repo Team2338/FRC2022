@@ -5,14 +5,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
 import edu.wpi.first.wpilibj.GenericHID;
+import team.gif.robot.commands.climber.FangsBack;
+import team.gif.robot.commands.climber.FangsForward;
 import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.autoaim.LimelightAutoAim;
-import team.gif.robot.commands.climber.ClimberMax;
-import team.gif.robot.commands.climber.ClimberManualControl;
-import team.gif.robot.commands.climber.Lower4Inches;
-import team.gif.robot.commands.climber.LowerClimber;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
@@ -157,6 +155,8 @@ public class OI {
         //-aDPadDown.whenPressed(new CollectorDown());
         aB.whenPressed(new CollectorUp());
         aA.whenPressed(new CollectorDown());
+        aBack.whenPressed(new FangsForward());
+        aStart.whenPressed(new FangsBack());
     }
 
     public void setRumble(boolean rumble) {

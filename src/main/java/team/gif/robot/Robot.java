@@ -24,6 +24,7 @@ import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
+import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
@@ -64,6 +65,7 @@ public class Robot extends TimedRobot {
 
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
+    public static ClimberPneumatics climberPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
     public static Shooter shooter = null;
@@ -103,7 +105,6 @@ public class Robot extends TimedRobot {
         limelight = new Limelight();
 
         drivetrain = new Drivetrain();
-
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
         climber = new Climber();
         collector = new Collector();
@@ -111,6 +112,8 @@ public class Robot extends TimedRobot {
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
+        climberPneumatics = new ClimberPneumatics();
+
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
