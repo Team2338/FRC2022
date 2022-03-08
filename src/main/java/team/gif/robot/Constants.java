@@ -49,10 +49,9 @@ public final class Constants {
         public static final double kP = 0.2;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kF = 0.056;
+        public static final double kF = 0.056; //.056
 
         public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
-        public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
 //        public static final double RPM_LAUNCHPAD = 8300;
         public static final double RPM_FENDER_LOWER_HUB = 3000; // verified on wood comp bot
         public static final double RPM_FENDER_UPPER_HUB = 5900; // 5800 not good with ball in way; // verified on wood comp bot
@@ -60,16 +59,18 @@ public final class Constants {
         public static final double RPM_RING_UPPER_HUB = 6500;
         public static final double RPM_LAUNCHPAD = 7500; // verified on wood comp bot
         public static final double RPM_FAR_COURT = 10500; // verified on wood comp bot - very variable
+        public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
 
         public static final double FLYWHEEL_TOLERANCE = 150;
     }
 
     public static class Indexer {
-        public static final double kPBelt = 0;
+        public static final double kPBelt = 0.037;
         public static final double kIBelt = 0;
         public static final double kDBelt = 0;
-        public static final double kFFBelt = 0;
+        public static final double kFFBelt = 0.04;
         public static final double kIZoneBelt = 0;
+        public static final double RPM_BELT = 120000;
     }
 
     public static class Climber {

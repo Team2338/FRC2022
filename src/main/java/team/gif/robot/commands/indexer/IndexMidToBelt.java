@@ -5,6 +5,7 @@
 package team.gif.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
@@ -24,7 +25,7 @@ public class IndexMidToBelt extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.indexer.setBeltMotorSpeedPercent(1);
+        Robot.indexer.setBeltMotorSpeedPID(Constants.Indexer.RPM_BELT);
         Robot.indexer.setMidMotorSpeed(0.8);
     }
 
