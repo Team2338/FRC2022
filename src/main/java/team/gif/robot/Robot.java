@@ -268,6 +268,11 @@ public class Robot extends TimedRobot {
         double timeLeft = DriverStation.getMatchTime();
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
                      (timeLeft <=  5.0 && timeLeft >=  3.0));
+
+        if ( indexer.getCargoCount() == 2 ){
+            collectorPneumatics.entryRaise();
+            collectorPneumatics.collectorRaise();
+        }
     }
 
     @Override
