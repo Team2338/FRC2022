@@ -35,8 +35,8 @@ public final class Constants {
 }
     public static class Auto {
         // part of trajectory but numbers are from example
-        public static final double kMaxSpeedMetersPerSecond = 3.0;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3.0;
+        public static final double kStdSpeedMetersPerSecond = 3.8;
+        public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
         public static final double kSlowSpeedMetersPerSecond = 1.5;//1.5
         public static final double kSlowAccelerationMetersPerSecondSquared = 1.5;//1.5
         public static final double kFastSpeedMetersPerSecond = 4.0;
@@ -46,10 +46,10 @@ public final class Constants {
     }
 
     public static class Shooter {
-        public static final double kP = 0.2;
+        public static final double kP = 0.1; // 0.2
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kF = 0.056;
+        public static final double kF = 0.055; //0.065
 
         public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
         public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
@@ -57,8 +57,9 @@ public final class Constants {
         public static final double RPM_FENDER_LOWER_HUB = 3000; // verified on wood comp bot
         public static final double RPM_FENDER_UPPER_HUB = 5900; // 5800 not good with ball in way; // verified on wood comp bot
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 4000;
-        public static final double RPM_RING_UPPER_HUB = 6500;
-        public static final double RPM_LAUNCHPAD = 7500; // verified on wood comp bot
+        public static final double RPM_RING_UPPER_HUB = 7600;
+        public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
+        public static final double RPM_LAUNCHPAD = 9000; // verified on wood comp bot
         public static final double RPM_FAR_COURT = 10500; // verified on wood comp bot - very variable
 
         public static final double FLYWHEEL_TOLERANCE = 150;
