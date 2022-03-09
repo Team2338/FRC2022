@@ -15,8 +15,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalRight;
-import team.gif.robot.commands.autos.TwoBall;
+import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
+import team.gif.robot.commands.autos.TwoBallLeft;
+import team.gif.robot.commands.autos.TwoBallRight;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
@@ -65,6 +66,7 @@ public class Robot extends TimedRobot {
     public static CollectorPneumatics collectorPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
+    public static Command indexCommand = null;
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
@@ -107,13 +109,14 @@ public class Robot extends TimedRobot {
         climber = new Climber();
         collector = new Collector();
         indexer = new Indexer();
+        indexCommand = new IndexScheduler();
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
-        indexer.setDefaultCommand(new IndexScheduler());
+        indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
 //-        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
@@ -218,6 +221,7 @@ public class Robot extends TimedRobot {
         }
 
         Globals.autonomousModeActive = true;
+        indexCommand.schedule();
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
@@ -260,6 +264,7 @@ public class Robot extends TimedRobot {
         }
 //        oi = new OI();
         compressor.enableDigital();
+        indexCommand.schedule();
     }
 
     /** This function is called periodically during operator control. */
@@ -268,6 +273,11 @@ public class Robot extends TimedRobot {
         double timeLeft = DriverStation.getMatchTime();
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
                      (timeLeft <=  5.0 && timeLeft >=  3.0));
+
+        if ( indexer.getCargoCount() == 2 ){
+            collectorPneumatics.entryRaise();
+            collectorPneumatics.collectorRaise();
+        }
     }
 
     @Override
@@ -282,8 +292,9 @@ public class Robot extends TimedRobot {
         autoTab = Shuffleboard.getTab("PreMatch");
 
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
-        autoModeChooser.addOption("Two Ball", autoMode.TWO_BALL);
-        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
+        autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
+        autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
+        autoModeChooser.addOption("Three Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
 //        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
 //        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
 ////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
@@ -329,25 +340,13 @@ public class Robot extends TimedRobot {
 
         if(chosenAuto == autoMode.MOBILITY){
             autonomousCommand = new Mobility();
-        }
-        else if(chosenAuto == autoMode.TWO_BALL){
-            autonomousCommand = new TwoBall();
-        }
-      else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new ThreeBallTerminalRight();}
-//         else if(chosenAuto == autoMode.SAFE_6_BALL){
-//            m_autonomousCommand = new SafeSixBall();
-//        } else if(chosenAuto == autoMode.OPP_5_BALL){
-//            m_autonomousCommand = new OppFiveBall();
-//        } else if(chosenAuto == autoMode.SAFE_8_BALL){
-//            m_autonomousCommand = new SafeEightBall();
-/*    } else if (chosenAuto == autoMode.BARREL_RACING){
-      m_autonomousCommand = new BarrelRacing();
-    } else if(chosenAuto == autoMode.SLALOM) {
-      m_autonomousCommand = new Slalom();
-    } else if(chosenAuto == autoMode.BOUNCE){
-      m_autonomousCommand = new Bounce(); */
-         else if(chosenAuto ==null) {
+        } else if(chosenAuto == autoMode.TWO_BALL_LEFT){
+            autonomousCommand = new TwoBallLeft();
+        } else if(chosenAuto == autoMode.TWO_BALL_RIGHT){
+            autonomousCommand = new TwoBallRight();
+        } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
+            autonomousCommand = new ThreeBallTerminalMiddle();
+        } else if(chosenAuto ==null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }
     }
