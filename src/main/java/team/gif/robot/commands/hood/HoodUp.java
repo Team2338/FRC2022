@@ -33,4 +33,3 @@ public class HoodUp extends CommandBase {
     public void end(boolean interrupted) {}
 }
 
-}

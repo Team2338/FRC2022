@@ -66,7 +66,7 @@ public class LimelightAutoAimDumb extends CommandBase {
                 System.out.println(distanceFromHub);
 
 
-                double tgSpeed = (distanceFromHub > 200 && distanceFromHub < 205) ? Constants.Shooter.RPM_LAUNCHPAD : (distanceFromHub >= 205) ? Constants.Shooter.RPM_FAR_COURT : Constants.Shooter.RPM_FENDER_SHOT;
+                double tgSpeed = (distanceFromHub > 200 && distanceFromHub < 205) ? Constants.Shooter.RPM_LAUNCHPAD : (distanceFromHub >= 205) ? Constants.Shooter.RPM_FAR_COURT : Constants.Shooter.RPM_FENDER_UPPER_HUB;
                 System.out.println(tgSpeed);
 
 

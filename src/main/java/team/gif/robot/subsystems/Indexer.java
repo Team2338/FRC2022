@@ -15,17 +15,13 @@ import team.gif.robot.RobotMap;
 
 public class Indexer extends SubsystemBase {
     //Hardware config
-<<<<<<< refs/remotes/origin/main
+
     private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor
     private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT_COMPBOT, CANSparkMaxLowLevel.MotorType.kBrushless); // CompBot motor
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
-//+    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final SparkMaxPIDController midPIDControl = midMotor.getPIDController();
-=======
-    private static final TalonSRX wheelMotor = new TalonSRX(RobotMap.WHEEL_INDEX);
-    private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.BELT, CANSparkMaxLowLevel.MotorType.kBrushless);
-    private static final SparkMaxPIDController beltPIDControl = beltMotor.getPIDController();
->>>>>>> Belt Motor PID Command & Belt Motor to NEO
+
 
     private static final DigitalInput sensorEntry = new DigitalInput(RobotMap.SENSOR_ENTRY);
     private static final DigitalInput sensorMid = new DigitalInput(RobotMap.SENSOR_MID);
@@ -33,29 +29,23 @@ public class Indexer extends SubsystemBase {
 
     public Indexer() {
         super();
-<<<<<<< refs/remotes/origin/main
+
         beltMotor1.configFactoryDefault();
         beltMotor.restoreFactoryDefaults();
         midMotor.restoreFactoryDefaults();
-//+        entryMotor.restoreFactoryDefaults();
-=======
-        wheelMotor.configFactoryDefault();
-        beltMotor.restoreFactoryDefaults();
+        entryMotor.restoreFactoryDefaults();
 
-        wheelMotor.setNeutralMode(NeutralMode.Brake);
-        beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
->>>>>>> Belt Motor PID Command & Belt Motor to NEO
 
         beltMotor1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
 
         beltMotor1.setNeutralMode(NeutralMode.Brake);
         beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-//+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
         midMotor.setInverted(!Robot.isCompBot);
-//+        entryMotor.setInverted(!Robot.isCompBot);
+        entryMotor.setInverted(!Robot.isCompBot);
     }
 
     public boolean getSensorEntry(){
@@ -78,22 +68,14 @@ public class Indexer extends SubsystemBase {
         midMotor.set(percent);
     }
 
-<<<<<<< refs/remotes/origin/main
-//+    public void setEntryMotorSpeed(double percent) {
-//        entryMotor.set(percent);
-//    }
+
+    public void setEntryMotorSpeed(double percent) {
+        entryMotor.set(percent);
+    }
 
     public void setBeltMotorSpeedPercent(double percent) {
         beltMotor1.set(ControlMode.PercentOutput, percent);
         beltMotor.set(percent);
-    }
-
-    public double getBeltMotorSpeed() {
-        if (Robot.isCompBot == true){
-            return beltMotor.getEncoder().getVelocity();
-        } else{
-            return beltMotor1.getSelectedSensorVelocity();
-        }
     }
 
     public int getCargoCount() {
@@ -109,17 +91,6 @@ public class Indexer extends SubsystemBase {
             count++;
         }
         return count;
-=======
-    public void setBeltMotorSpeedPercent(double percent) {
-        beltMotor.set(percent);
-    }
 
-    public void setBeltMotorSpeedPID(double setPoint) {
-        beltPIDControl.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
->>>>>>> Belt Motor PID Command & Belt Motor to NEO
-    }
-
-    public double getBeltMotorSpeed() {
-        return beltMotor.getSelectedSensorVelocity();
     }
 }

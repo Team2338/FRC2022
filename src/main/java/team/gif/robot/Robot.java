@@ -19,11 +19,9 @@ import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBall;
 import team.gif.robot.commands.climber.ResetClimber;
-import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
-import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.CollectorPneumatics;
@@ -146,7 +144,7 @@ public class Robot extends TimedRobot {
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
         shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
         shuffleboardTab.add(indexer);
-        shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
+        //shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
         shuffleboardTab.add("ResetHead", new ResetHeading());

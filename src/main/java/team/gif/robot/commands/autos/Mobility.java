@@ -1,23 +1,11 @@
 package team.gif.robot.commands.autos;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.*;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
-import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.collector.CollectorDown;
-import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.hood.HoodUp;
-import team.gif.robot.commands.shooter.RapidFire;
-import team.gif.robot.commands.shooter.RevFlywheel;
-import team.gif.robot.commands.shooter.Shoot;
-import team.gif.robot.subsystems.Drivetrain;
-import team.gif.robot.subsystems.Hood;
 
 import java.util.List;
 
