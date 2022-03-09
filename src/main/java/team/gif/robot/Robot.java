@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
+import team.gif.lib.logging.FileLogger;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
 import team.gif.robot.commands.autos.TwoBallLeft;
@@ -39,6 +40,8 @@ import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
 
+import java.io.IOException;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -54,13 +57,14 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
+    private static FileLogger logger;
 
-    private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    private SendableChooser<delay> delayChooser = new SendableChooser<>();
+    private final SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
+    private final SendableChooser<delay> delayChooser = new SendableChooser<>();
 
     private autoMode chosenAuto;
     private delay chosenDelay;
-    private Timer elapsedTime = new Timer();
+    private final Timer elapsedTime = new Timer();
 
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
@@ -77,15 +81,14 @@ public class Robot extends TimedRobot {
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
 
-    // T.S: Creating an new tab in shuffleboard.
-    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
+    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test"); // Create a new tab in shuffleboard.
     public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
     // TS: the value of the something what is changing,(Example PID control).
     public static double exampleShuffleboardEntrySyncValue;
     // TS: the value is getting the getEntry number
     public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
 
-    // ts: varibles to getEntry RPM
+    // ts: variables to getEntry RPM
     public static NetworkTableEntry shooterRpmGetEntry;
     public static double shooterRpm;
     public static double shooterRpmSync;
@@ -105,7 +108,7 @@ public class Robot extends TimedRobot {
 
         drivetrain = new Drivetrain();
 
-        compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
+        compressor = new Compressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
         climber = new Climber();
         collector = new Collector();
         indexer = new Indexer();
@@ -118,7 +121,7 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-//-        collectorPneumatics.setDefaultCommand(new CollectorUp());
+//        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
@@ -140,40 +143,71 @@ public class Robot extends TimedRobot {
         //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
         //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
 
+        // Indexer logging
+        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
         shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
-        limelight.setLEDMode(1);//force off
         shuffleboardTab.add("ResetHead", new ResetHeading());
 
+        // Shooter
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
-
         shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
 
         //ts: switching drives mode
         shuffleboardTab.add("Tank Drive", new DriveTank());
         shuffleboardTab.add("Arcade Drive", new DriveArcade());
 
-        // ts: command to getEntry RPM
-        shuffleboardTab.add("Set RPM", shooterRpmCommand);
-
-
-
-        // Indexer logging
-        shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
-        //shuffleboardTab.addBoolean("Stage", indexer::getSensorMid); // TODO: Cleanup this line
-
-        shuffleboardTab.addNumber("RPM", shooter::getSpeed);
-
-        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
-
-        // Hanger
-        //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
-
+        limelight.setLEDMode(1); // Force off
         oi = new OI();
+        
+        try {
+            logger = new FileLogger();
+            
+            // Shooter
+            logger.addMetric("shooter_vel", shooter::getSpeed);
+            logger.addMetric("shooter_acc", shooter::getAcceleration);
+            logger.addMetric("shooter_percent", shooter::getOutputPercent);
+            
+            // Left 1 drive motor
+            logger.addMetric("DL1_vin", drivetrain::getInputVoltageL1);
+            logger.addMetric("DL1_vout", drivetrain::getOutputVoltageL1);
+            logger.addMetric("DL1_cin", drivetrain::getInputCurrentL1);
+            logger.addMetric("DL1_cout", drivetrain::getOutputCurrentL1);
+            logger.addMetric("DL1_pout", drivetrain::getOutputPercentL1);
+            logger.addMetric("DL1_vel", drivetrain::getLeftEncoderVelocity_Ticks);
+            
+            // Left 2 drive motor
+            logger.addMetric("DL2_vin", drivetrain::getInputVoltageL2);
+            logger.addMetric("DL2_vout", drivetrain::getOutputVoltageL2);
+            logger.addMetric("DL2_cin", drivetrain::getInputCurrentL2);
+            logger.addMetric("DL2_cout", drivetrain::getOutputCurrentL2);
+            logger.addMetric("DL2_pout", drivetrain::getOutputPercentL2);
+            
+            // Right 1 drive motor
+            logger.addMetric("DR1_vin", drivetrain::getInputVoltageR1);
+            logger.addMetric("DR1_vout", drivetrain::getOutputVoltageR1);
+            logger.addMetric("DR1_cin", drivetrain::getInputCurrentR1);
+            logger.addMetric("DR1_cout", drivetrain::getOutputCurrentR1);
+            logger.addMetric("DR1_pout", drivetrain::getOutputPercentR1);
+            logger.addMetric("DR1_vel", drivetrain::getRightEncoderVelocity_Ticks);
+            
+            // Right 2 drive motor
+            logger.addMetric("DR2_vin", drivetrain::getInputVoltageR2);
+            logger.addMetric("DR2_vout", drivetrain::getOutputVoltageR2);
+            logger.addMetric("DR2_cin", drivetrain::getInputCurrentR2);
+            logger.addMetric("DR2_cout", drivetrain::getOutputCurrentR2);
+            logger.addMetric("DR2_pout", drivetrain::getOutputPercentR2);
+            
+            logger.init();
+        } catch (IOException e) {
+            System.err.println("Failed to initialize logger");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -190,27 +224,34 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        //System.out.println("robot periodic");
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
-
-//    SmartDashboard.putNumber("tx",limelight.getXOffset());
-//    SmartDashboard.putNumber("ty",limelight.getYOffset());
-        // pneumatics
-//    SmartDashboard.putBoolean("Pressure", compressor.getPressureSwitchValue());
-//    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
+        
+        if (logger != null) {
+            try {
+                logger.run();
+            } catch (IOException e) {
+                System.err.println("Failed to run logger");
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
-    /** This function is called once each time the robot enters Disabled mode. */
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     */
     @Override
     public void disabledInit() {
-        limelight.setLEDMode(1);//force off
+        limelight.setLEDMode(1); // Force off
     }
 
     @Override
     public void disabledPeriodic() {}
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+    /**
+     * This runs the autonomous command selected by your {@link RobotContainer} class.
+     */
     @Override
     public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();
@@ -222,6 +263,7 @@ public class Robot extends TimedRobot {
 
         Globals.autonomousModeActive = true;
         indexCommand.schedule();
+        
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
@@ -229,15 +271,17 @@ public class Robot extends TimedRobot {
         drivetrain.resetEncoders();
         drivetrain.resetPose();
 
-        limelight.setLEDMode(1);//turn off
+        limelight.setLEDMode(1); // Turn off
 
         compressor.disable();
 
         runAutoScheduler = true;
-        updateauto();
+        updateAuto();
     }
 
-    /** This function is called periodically during autonomous. */
+    /**
+     * This function is called periodically during autonomous.
+     */
     @Override
     public void autonomousPeriodic() {
         if ( runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
@@ -267,7 +311,9 @@ public class Robot extends TimedRobot {
         indexCommand.schedule();
     }
 
-    /** This function is called periodically during operator control. */
+    /**
+     * This function is called periodically during operator control.
+     */
     @Override
     public void teleopPeriodic() {
         double timeLeft = DriverStation.getMatchTime();
@@ -283,7 +329,9 @@ public class Robot extends TimedRobot {
     @Override
     public void testInit() {}
 
-    /** This function is called periodically during test mode. */
+    /**
+     * This function is called periodically during test mode.
+     */
     @Override
     public void testPeriodic() {}
 
@@ -336,7 +384,7 @@ public class Robot extends TimedRobot {
 //    Shuffleboard.getTab("Calibration").add("Blue",0);   // adds the Blue text box, persists over power down
     }
 
-    public void updateauto(){
+    public void updateAuto() {
 
         if(chosenAuto == autoMode.MOBILITY){
             autonomousCommand = new Mobility();
