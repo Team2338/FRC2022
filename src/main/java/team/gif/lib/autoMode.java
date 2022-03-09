@@ -7,7 +7,7 @@ public enum autoMode {
     THREE_BALL_TERMINAL_RIGHT(0);
 
 
-    private int value;
+    private final int value;
     autoMode(int value) {
         this.value = value;
     }

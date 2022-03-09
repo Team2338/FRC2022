@@ -64,5 +64,5 @@ public class Climber extends SubsystemBase {
         return String.format("%11.2f",hangEncoder.getPosition());
     }
 
-    public void enableLowerSoftLimit(boolean engage){hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, engage);};
+    public void enableLowerSoftLimit(boolean engage){hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, engage);}
 }

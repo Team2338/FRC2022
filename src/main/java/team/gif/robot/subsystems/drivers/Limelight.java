@@ -7,7 +7,7 @@ public class Limelight {
 
     private static Limelight instance;
 
-    private NetworkTable table;
+    private final NetworkTable table;
 
     /**
      * Create a new limelight object.

@@ -22,7 +22,7 @@ import static java.lang.Math.abs;
 
 public class Drivetrain extends SubsystemBase {
 
-    private static Drivetrain instance = null;
+    private static final Drivetrain instance = null;
 
     public static WPI_TalonSRX leftTalon1;
     public static WPI_TalonSRX leftTalon2;
@@ -40,7 +40,7 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static int maxCurrentAmps = 10;
+    private static final int maxCurrentAmps = 10;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -206,7 +206,7 @@ public class Drivetrain extends SubsystemBase {
         leftMotors.setVoltage(leftVolts);
         rightMotors.setVoltage(-rightVolts);
     }
-
+/*
     public void pivot(double setpoint){
         double error = ((setpoint - pigeon.getCompassHeading())/setpoint);
         while(Math.abs(error) > 0.1 && Math.abs(error) < 1.0){
@@ -215,7 +215,7 @@ public class Drivetrain extends SubsystemBase {
         }
         drive.tankDrive(0,0);
     }
-/*
+
     public void rotateToAngle(double setpoint){
         double error = (setpoint - pigeon.get180Heading());
         double integral = 0;

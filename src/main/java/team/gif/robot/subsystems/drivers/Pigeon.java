@@ -12,7 +12,7 @@ public class Pigeon {
 
     private static Pigeon instance = null;
 
-    private PigeonIMU.GeneralStatus _pigeonGenStatus = new PigeonIMU.GeneralStatus();
+    private final PigeonIMU.GeneralStatus _pigeonGenStatus = new PigeonIMU.GeneralStatus();
 
     public static Pigeon getInstance() {
         if (instance == null) {

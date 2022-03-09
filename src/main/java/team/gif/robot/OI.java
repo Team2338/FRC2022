@@ -25,7 +25,7 @@ import team.gif.robot.commands.shooter.Shoot;
 
 
 public class OI {
-    private static OI instance = null;
+    private static final OI instance = null;
 
     /*
      * TODO: Instantiate all joysticks/controllers and their buttons here

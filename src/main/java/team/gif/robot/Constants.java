@@ -51,8 +51,8 @@ public final class Constants {
         public static final double kD = 0;
         public static final double kF = 0.056;
 
-        public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
-        public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
+        //public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
+        //public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
 //        public static final double RPM_LAUNCHPAD = 8300;
         public static final double RPM_FENDER_LOWER_HUB = 3000; // verified on wood comp bot
         public static final double RPM_FENDER_UPPER_HUB = 5900; // 5800 not good with ball in way; // verified on wood comp bot
@@ -63,9 +63,11 @@ public final class Constants {
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 
-        public static final double LIMELIGHT_ANGLE = 0.0;
+        public static final double LIMELIGHT_ANGLE = 15.0;
         public static final double LIMELIGHT_HEIGHT = 20.0;
         public static final double UPPER_HUB_HEIGHT = 96.0;
+
+        public static final double MAX_PIVOT_VOLTS = 4.0;
     }
 
     public static class Indexer {

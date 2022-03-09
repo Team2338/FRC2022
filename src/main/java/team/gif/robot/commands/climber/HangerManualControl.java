@@ -38,11 +38,7 @@ public class HangerManualControl extends CommandBase {
             // This prevents the elevator for overrunning in normal condition
             // but allows us to reset the 0 position when the robot is turned on
             // and the elevator is not in the starting position
-            if (Robot.oi.aux.getAButton()) {
-                Robot.climber.enableLowerSoftLimit(false);
-            } else {
-                Robot.climber.enableLowerSoftLimit(true);
-            }
+            Robot.climber.enableLowerSoftLimit(!Robot.oi.aux.getAButton());
 
             // run the elevator either up or down
             Robot.climber.setSpeed(speed);

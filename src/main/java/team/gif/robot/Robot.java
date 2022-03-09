@@ -57,12 +57,12 @@ public class Robot extends TimedRobot {
     private boolean runAutoScheduler = true;
     public static OI oi;
 
-    private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    private SendableChooser<delay> delayChooser = new SendableChooser<>();
+    private final SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
+    private final SendableChooser<delay> delayChooser = new SendableChooser<>();
 
     private autoMode chosenAuto;
     private delay chosenDelay;
-    private Timer elapsedTime = new Timer();
+    private final Timer elapsedTime = new Timer();
 
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
