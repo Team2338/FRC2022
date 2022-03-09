@@ -40,8 +40,8 @@ public class RobotTrajectory {
      * Creates a config for Forward trajectory
      */
     public TrajectoryConfig configForward = new TrajectoryConfig(
-        Constants.Auto.kMaxSpeedMetersPerSecond, //kMaxSpeedMetersPerSecond
-        Constants.Auto.kMaxAccelerationMetersPerSecondSquared) //kMaxAccelerationMetersPerSecondSquared
+        Constants.Auto.kStdSpeedMetersPerSecond, //kMaxSpeedMetersPerSecond
+        Constants.Auto.kStdAccelerationMetersPerSecondSquared) //kMaxAccelerationMetersPerSecondSquared
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(Constants.Drivetrain.kDriveKinematics)
         //.setReversed(false)
@@ -56,7 +56,8 @@ public class RobotTrajectory {
             .setKinematics(Constants.Drivetrain.kDriveKinematics)
             //.setReversed(false)
             // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
+            .addConstraint(autoVoltageConstraint)
+            .addConstraint( new CentripetalAccelerationConstraint(1));
 
     public TrajectoryConfig configForwardSlow = new TrajectoryConfig(
             Constants.Auto.kSlowSpeedMetersPerSecond,
@@ -67,52 +68,13 @@ public class RobotTrajectory {
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
 
-    public TrajectoryConfig configForwardIRFast = new TrajectoryConfig(
-        6.0,
-        5.0)
-        // Add kinematics to ensure max speed is actually obeyed
-        .setKinematics(Constants.Drivetrain.kDriveKinematics)
-        //.setReversed(false)
-        // Apply the voltage constraint
-        .addConstraint(autoVoltageConstraint)
-        .addConstraint( new CentripetalAccelerationConstraint(1.25));
-
-    public TrajectoryConfig configReverseIRFast = new TrajectoryConfig(
-            6.0,
-            5.0)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.Drivetrain.kDriveKinematics)
-            .setReversed(true)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint)
-            .addConstraint( new CentripetalAccelerationConstraint(1.25));
-
-    public TrajectoryConfig configForwardIRSlow = new TrajectoryConfig(
-            2.5,
-            2.5)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.Drivetrain.kDriveKinematics)
-            //.setReversed(false)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint)
-            .addConstraint( new CentripetalAccelerationConstraint(1.0));
-
-    public TrajectoryConfig configReverseIRSlow = new TrajectoryConfig(
-            2.5,
-            2.5)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.Drivetrain.kDriveKinematics)
-            .setReversed(true)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint)
-            .addConstraint( new CentripetalAccelerationConstraint(1.0));
 
     /**
      * Creates a config for Reverse trajectory
      */
     public TrajectoryConfig configReverse = new TrajectoryConfig(
-        Constants.Auto.kMaxSpeedMetersPerSecond,
-        Constants.Auto.kMaxAccelerationMetersPerSecondSquared)
+        Constants.Auto.kStdSpeedMetersPerSecond,
+        Constants.Auto.kStdAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(Constants.Drivetrain.kDriveKinematics)
         .setReversed(true)
@@ -131,6 +93,18 @@ public class RobotTrajectory {
             .setReversed(true)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
+    /**
+     * Creates a config for Reverse trajectory
+     */
+    public TrajectoryConfig configReverseFast = new TrajectoryConfig(
+        Constants.Auto.kFastSpeedMetersPerSecond,
+        Constants.Auto.kFastAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(Constants.Drivetrain.kDriveKinematics)
+        .setReversed(true)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint);
+
     /**
      * Creates a Ramsete command given the defined trajectory
      */

@@ -9,18 +9,19 @@ public class RapidFire extends CommandBase {
 
     public RapidFire() {
         super();
-        addRequirements(Robot.indexer);
+        //addRequirements(Robot.indexer);
     }
 
     @Override
     public void initialize() {
+        Globals.indexerEnabled = false;
     }
 
     @Override
     public void execute() {
         Robot.limelight.setLEDMode(3);
 
-        if ( Robot.shooter.isInTolerance() ) {
+        if ( Robot.shooter.isInTolerance()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
             Robot.indexer.setMidMotorSpeed(1.0);
         }
@@ -28,12 +29,17 @@ public class RapidFire extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        // only run if the shooter is running
+        // without this, the belt runs regardless of the shooter state and
+        // could possibly jam a ball between the running belt
+        // and the stopped shooter.
+        return !Globals.shooterRunning;
     }
 
     @Override
     public void end(boolean interrupted) {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
+        Globals.indexerEnabled = true;
     }
 }
