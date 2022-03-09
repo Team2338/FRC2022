@@ -14,12 +14,9 @@ public class LimelightAutoAim extends CommandBase {
     }
 
     private boolean targetLocked, robotHasSettled = false;
+    private double distanceFromHub, tgSpeed;
     private final double velocitycap = .5;
     private int delayCounter;
-    private double distanceFromHub, tgSpeed;
-
-
-    // amount of voltage we want to apply to the motors for this test
 
     @Override
     public void initialize() {
@@ -53,21 +50,26 @@ public class LimelightAutoAim extends CommandBase {
                 robotHasSettled = true;
                 System.out.println("AutoFire: Robot has settled");
             }
+
+
         } else if (targetLocked) {
 
             //inches
             distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
 
-
+                //Far Shot
             if (distanceFromHub >= 700) {
                 Robot.hood.setHoodUp();
                 tgSpeed = Constants.Shooter.RPM_FAR_COURT;
                 System.out.println("distanceFromHubT: " + distanceFromHub);
 
+                //LaunchPad
             } else if (distanceFromHub > 500 && distanceFromHub < 700) {
                 Robot.hood.setHoodUp();
                 tgSpeed = Constants.Shooter.RPM_LAUNCHPAD;
                 System.out.println("distanceFromHubL: " + distanceFromHub);
+
+                //Close
             } else {
                 tgSpeed = Constants.Shooter.RPM_FENDER_UPPER_HUB;
                 System.out.println("distanceFromHubF: " + distanceFromHub);
@@ -106,9 +108,9 @@ public class LimelightAutoAim extends CommandBase {
             }
             /*
             if(Math.abs(Robot.limelight.getXOffset()) > 0.1) {
-            Drivetrain.drive.arcadeDrive(0, Robot.limelight.getXOffset() * 0.01);
+                Drivetrain.drive.arcadeDrive(0, Robot.limelight.getXOffset() * 0.01);
             }else{
-            Drivetrain.drive.arcadeDrive(0, 0);
+                Drivetrain.drive.arcadeDrive(0, 0);
             }
             */
         }
@@ -136,7 +138,5 @@ public class LimelightAutoAim extends CommandBase {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
-    }
+    public boolean isFinished() {return false;}
 }
