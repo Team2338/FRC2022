@@ -5,7 +5,11 @@ import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.commands.hood.HoodDown;
+import team.gif.robot.commands.hood.HoodUp;
+import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.subsystems.Hood;
 
 public class LimelightAutoAim extends CommandBase {
     public LimelightAutoAim(){
