@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
  */
 public class FileLogger {
 	
-	private static final int ITERATIONS_BETWEEN_FLUSHES = 100;
+	// Flush every 5 seconds (20ms per iteration * 250 iterations)
+	private static final int ITERATIONS_BETWEEN_FLUSHES = 250;
 	
 	private final FileWriter fw;
 	private final LinkedList<String> names = new LinkedList<>();
