@@ -7,6 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot {
     private delay chosenDelay;
     private final Timer elapsedTime = new Timer();
 
+    private static PowerDistribution pdp = null;
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
     public static Collector collector = null;
@@ -106,6 +108,7 @@ public class Robot extends TimedRobot {
         robotContainer = new RobotContainer();
         limelight = new Limelight();
 
+        pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
 
         compressor = new Compressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
@@ -168,39 +171,43 @@ public class Robot extends TimedRobot {
             logger = new FileLogger();
             
             // Shooter
-            logger.addMetric("shooter_vel", shooter::getSpeed);
-            logger.addMetric("shooter_acc", shooter::getAcceleration);
-            logger.addMetric("shooter_percent", shooter::getOutputPercent);
+            logger.addMetric("Shooter_Velocity", shooter::getSpeed);
+            logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
+            logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
             
-            // Left 1 drive motor
-            logger.addMetric("DL1_vin", drivetrain::getInputVoltageL1);
-            logger.addMetric("DL1_vout", drivetrain::getOutputVoltageL1);
-            logger.addMetric("DL1_cin", drivetrain::getInputCurrentL1);
-            logger.addMetric("DL1_cout", drivetrain::getOutputCurrentL1);
-            logger.addMetric("DL1_pout", drivetrain::getOutputPercentL1);
-            logger.addMetric("DL1_vel", drivetrain::getLeftEncoderVelocity_Ticks);
+            // Drivetrain
+            logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
+            logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
+            logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
+            logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
             
-            // Left 2 drive motor
-            logger.addMetric("DL2_vin", drivetrain::getInputVoltageL2);
-            logger.addMetric("DL2_vout", drivetrain::getOutputVoltageL2);
-            logger.addMetric("DL2_cin", drivetrain::getInputCurrentL2);
-            logger.addMetric("DL2_cout", drivetrain::getOutputCurrentL2);
-            logger.addMetric("DL2_pout", drivetrain::getOutputPercentL2);
+            logger.addMetric("DriveLeft1_Voltage_Out", drivetrain::getOutputVoltageL1);
+            logger.addMetric("DriveLeft2_Voltage_Out", drivetrain::getOutputVoltageL2);
+            logger.addMetric("DriveRight1_Voltage_Out", drivetrain::getOutputVoltageR1);
+            logger.addMetric("DriveRight2_Voltage_Out", drivetrain::getOutputVoltageR2);
             
-            // Right 1 drive motor
-            logger.addMetric("DR1_vin", drivetrain::getInputVoltageR1);
-            logger.addMetric("DR1_vout", drivetrain::getOutputVoltageR1);
-            logger.addMetric("DR1_cin", drivetrain::getInputCurrentR1);
-            logger.addMetric("DR1_cout", drivetrain::getOutputCurrentR1);
-            logger.addMetric("DR1_pout", drivetrain::getOutputPercentR1);
-            logger.addMetric("DR1_vel", drivetrain::getRightEncoderVelocity_Ticks);
+            logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
+            logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
+            logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
+            logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
             
-            // Right 2 drive motor
-            logger.addMetric("DR2_vin", drivetrain::getInputVoltageR2);
-            logger.addMetric("DR2_vout", drivetrain::getOutputVoltageR2);
-            logger.addMetric("DR2_cin", drivetrain::getInputCurrentR2);
-            logger.addMetric("DR2_cout", drivetrain::getOutputCurrentR2);
-            logger.addMetric("DR2_pout", drivetrain::getOutputPercentR2);
+            logger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
+            logger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
+            logger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
+            logger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
+            
+            logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
+            logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
+            logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
+            logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
+            logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
+            logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
+            
+            // PDP and Compressor
+            logger.addMetric("PDP_Voltage", pdp::getVoltage);
+            logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
+            logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
+            logger.addMetric("Compressor_Current", compressor::getCurrent);
             
             logger.init();
         } catch (IOException e) {
