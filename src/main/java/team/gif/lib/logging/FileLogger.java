@@ -2,7 +2,9 @@ package team.gif.lib.logging;
 
 import edu.wpi.first.wpilibj.Timer;
 
+import java.io.Closeable;
 import java.io.FileWriter;
+import java.io.Flushable;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
  * @author Patrick Ubelhor
  * @since 3/9/2022
  */
-public class FileLogger {
+public class FileLogger implements Closeable, Flushable {
 	
 	// Flush every 5 seconds (20ms per iteration * 250 iterations)
 	private static final int ITERATIONS_BETWEEN_FLUSHES = 250;
@@ -73,6 +75,10 @@ public class FileLogger {
 	 * Initializes this FileLogger. MUST be called before {@link FileLogger#run()}.
 	 */
 	public void init() {
+		if (fw == null) {
+			return;
+		}
+		
 		initTime = Timer.getFPGATimestamp();
 		counter = 0;
 		String header = String.join(",", names);
@@ -131,6 +137,7 @@ public class FileLogger {
 	 * expensive action, and should not be done on every control loop. The buffer
 	 * may flush itself at any time.
 	 */
+	@Override
 	public void flush() {
 		if (fw == null) {
 			return;
@@ -149,11 +156,20 @@ public class FileLogger {
 	 * Closes the logger, flushing it first. Once the logger has been closed,
 	 * further {@link FileLogger#run()} or {@link FileLogger#flush()} invocations will
 	 * cause an IOException to be thrown. Closing a previously closed logger has no effect.
-	 *
-	 * @throws IOException
 	 */
-	public void close() throws IOException {
-		fw.close();
+	@Override
+	public void close() {
+		if (fw == null) {
+			return;
+		}
+		
+		try {
+			fw.close();
+		} catch (IOException e) {
+			System.err.println("Failed to close logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 }
