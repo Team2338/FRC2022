@@ -167,54 +167,48 @@ public class Robot extends TimedRobot {
         limelight.setLEDMode(1); // Force off
         oi = new OI();
         
-        try {
-            logger = new FileLogger();
-            
-            // Shooter
-            logger.addMetric("Shooter_Velocity", shooter::getSpeed);
-            logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
-            logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
-            
-            // Drivetrain
-            logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
-            logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
-            logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
-            logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
-            
-            logger.addMetric("DriveLeft1_Voltage_Out", drivetrain::getOutputVoltageL1);
-            logger.addMetric("DriveLeft2_Voltage_Out", drivetrain::getOutputVoltageL2);
-            logger.addMetric("DriveRight1_Voltage_Out", drivetrain::getOutputVoltageR1);
-            logger.addMetric("DriveRight2_Voltage_Out", drivetrain::getOutputVoltageR2);
-            
-            logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
-            logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
-            logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
-            logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
-            
-            logger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
-            logger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
-            logger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
-            logger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
-            
-            logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
-            logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
-            logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
-            logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
-            logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
-            logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
-            
-            // PDP and Compressor
-            logger.addMetric("PDP_Voltage", pdp::getVoltage);
-            logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
-            logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
-            logger.addMetric("Compressor_Current", compressor::getCurrent);
-            
-            logger.init();
-        } catch (IOException e) {
-            System.err.println("Failed to initialize logger");
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
+        logger = new FileLogger();
+        
+        // Shooter
+        logger.addMetric("Shooter_Velocity", shooter::getSpeed);
+        logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
+        logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
+        
+        // Drivetrain
+        logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
+        logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
+        logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
+        logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
+        
+        logger.addMetric("DriveLeft1_Voltage_Out", drivetrain::getOutputVoltageL1);
+        logger.addMetric("DriveLeft2_Voltage_Out", drivetrain::getOutputVoltageL2);
+        logger.addMetric("DriveRight1_Voltage_Out", drivetrain::getOutputVoltageR1);
+        logger.addMetric("DriveRight2_Voltage_Out", drivetrain::getOutputVoltageR2);
+        
+        logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
+        logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
+        logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
+        logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
+        
+        logger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
+        logger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
+        logger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
+        logger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
+        
+        logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
+        logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
+        logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
+        logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
+        logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
+        logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
+        
+        // PDP and Compressor
+        logger.addMetric("PDP_Voltage", pdp::getVoltage);
+        logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
+        logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
+        logger.addMetric("Compressor_Current", compressor::getCurrent);
+        
+        logger.init();
     }
 
     /**
@@ -306,16 +300,6 @@ public class Robot extends TimedRobot {
 //        oi = new OI();
         compressor.enableDigital();
         indexCommand.schedule();
-
-        if (logger != null) {
-            try {
-                logger.addEvent("TELEOP_START");
-            } catch (IOException e) {
-                System.err.println("Failed to run logger");
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -332,15 +316,7 @@ public class Robot extends TimedRobot {
             collectorPneumatics.collectorRaise();
         }
 
-        if (logger != null) {
-            try {
-                logger.run();
-            } catch (IOException e) {
-                System.err.println("Failed to run logger");
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
+        logger.run();
     }
 
     @Override

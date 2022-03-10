@@ -31,12 +31,20 @@ public class FileLogger {
 	
 	/**
 	 * Constructs a <code>FileLogger</code>.
-	 *
-	 * @throws IOException If the log file already exists but is a directory rather than a regular file,
-	 * does not exist but cannot be created, or cannot be opened for any other reason
 	 */
-	public FileLogger() throws IOException {
-		fw = new FileWriter("/logs/ViperLog.csv");
+	public FileLogger() {
+		FileWriter fw;
+		try {
+			fw = new FileWriter("/logs/ViperLog.csv");
+		} catch (IOException e) {
+			System.err.println("Failed to create logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+			
+			fw = null;
+		}
+		
+		this.fw = fw;
 		addMetric("Time", () -> Timer.getFPGATimestamp() - initTime);
 	}
 	
@@ -60,20 +68,22 @@ public class FileLogger {
 		names.addLast(name);
 		suppliers.addLast(supplier);
 	}
-
-    public void addEvent(String label) throws IOException {
-        fw.append(label).append("\n");
-    }
 	
 	/**
 	 * Initializes this FileLogger. MUST be called before {@link FileLogger#run()}.
-	 *
-	 * @throws IOException If an IO error occurs
 	 */
-	public void init() throws IOException {
+	public void init() {
 		initTime = Timer.getFPGATimestamp();
+		counter = 0;
 		String header = String.join(",", names);
-		fw.append(header).append("\n");
+		
+		try {
+			fw.append(header).append("\n");
+		} catch (IOException e) {
+			System.err.println("Failed to initialize logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -87,20 +97,29 @@ public class FileLogger {
 	 * in the buffer will be lost. However, flushing the buffer is a <i>potentially</i>
 	 * expensive action, and should not be done on every control loop. The buffer
 	 * may flush itself at any time.
-	 *
-	 * @throws IOException If an IO error occurs
 	 */
-	public void run() throws IOException {
+	public void run() {
+		if (fw == null) {
+			return;
+		}
+		
 		List<String> values = suppliers.stream()
 				.map(Supplier::get)
 				.collect(Collectors.toList());
 		String line = String.join(",", values);
-		fw.append(line).append("\n");
 		
-		counter++;
-		if (counter == ITERATIONS_BETWEEN_FLUSHES) {
-			flush();
-			counter = 0;
+		try {
+			fw.append(line).append("\n");
+			
+			counter++;
+			if (counter == ITERATIONS_BETWEEN_FLUSHES) {
+				flush();
+				counter = 0;
+			}
+		} catch (IOException e) {
+			System.err.println("Failed to run logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -111,11 +130,19 @@ public class FileLogger {
 	 * in the buffer will be lost. However, flushing the buffer is a <i>potentially</i>
 	 * expensive action, and should not be done on every control loop. The buffer
 	 * may flush itself at any time.
-	 *
-	 * @throws IOException If an IO error occurs
 	 */
-	public void flush() throws IOException {
-		fw.flush();
+	public void flush() {
+		if (fw == null) {
+			return;
+		}
+		
+		try {
+			fw.flush();
+		} catch (IOException e) {
+			System.err.println("Failed to flush logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
