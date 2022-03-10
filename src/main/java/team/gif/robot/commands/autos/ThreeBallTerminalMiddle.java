@@ -10,7 +10,6 @@ import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.hood.HoodUp;
-import team.gif.robot.commands.indexer.IndexScheduler;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
@@ -77,14 +76,12 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         addCommands(
             new ParallelDeadlineGroup(
                 reverse(),
-                new IndexScheduler(),
                 new CollectorDown(),
                 new CollectorRun(),
                 new HoodUp()
             ),
             new ParallelDeadlineGroup(
                 reverseAgain(),
-                new IndexScheduler(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
@@ -93,14 +90,10 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
             new ParallelDeadlineGroup(
                 reverseAgainTwo(),
-                new IndexScheduler(),
                 new CollectorRun()
             ),
             new CollectorRun().withTimeout(0.5),
-            new ParallelDeadlineGroup(
-                forward(),
-                new IndexScheduler()
-            ),
+            forward(),
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
                 new RapidFire()

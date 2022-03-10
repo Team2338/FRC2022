@@ -109,13 +109,14 @@ public class Robot extends TimedRobot {
         climber = new Climber();
         collector = new Collector();
         indexer = new Indexer();
+        indexCommand = new IndexScheduler();
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
-        indexer.setDefaultCommand(new IndexScheduler());
+        indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
 //-        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
@@ -220,6 +221,7 @@ public class Robot extends TimedRobot {
         }
 
         Globals.autonomousModeActive = true;
+        indexCommand.schedule();
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
@@ -262,6 +264,7 @@ public class Robot extends TimedRobot {
         }
 //        oi = new OI();
         compressor.enableDigital();
+        indexCommand.schedule();
     }
 
     /** This function is called periodically during operator control. */
