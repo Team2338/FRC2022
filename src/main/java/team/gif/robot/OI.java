@@ -114,9 +114,9 @@ public class OI {
         dY.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
 
-        dDPadDown.whenPressed(new ClimberMax()); // remove for now. don't want to accidentally run this
-        dDPadLeft.whenPressed(new LowerClimber()); // remove for now. don't want to accidentally run this
-        dDPadUp.whenPressed(new Lower4Inches()); // remove for now. don't want to accidentally run this
+        dDPadDown.whenPressed(new ClimberMaxUp()); // remove for now. don't want to accidentally run this
+        dDPadLeft.whenPressed(new RobotUp()); // remove for now. don't want to accidentally run this
+        dDPadUp.whenPressed(new RobotDownToRelease()); // remove for now. don't want to accidentally run this
         /*
         * these are only for testing with only a driver joystick
         */

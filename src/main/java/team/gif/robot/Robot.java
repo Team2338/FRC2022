@@ -18,6 +18,7 @@ import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
 import team.gif.robot.commands.autos.TwoBallLeft;
 import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
