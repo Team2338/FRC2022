@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
+import static team.gif.robot.Robot.indexer;
+
 
 public class Indexer extends SubsystemBase {
     //Hardware config

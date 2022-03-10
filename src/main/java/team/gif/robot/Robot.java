@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,14 +13,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
+import team.gif.robot.commands.ShuffleboardEntrys;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBall;
-import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
-import team.gif.robot.commands.drivetrain.ResetHeading;
-import team.gif.robot.commands.exampleShuffleboardEntryCommand;
-import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
@@ -68,26 +64,15 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
-    public static NetworkTableEntry exampleShuffleboardEntry;
-    public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
 //    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
+    public static ShuffleboardEntrys shuffleboardEntrys;
 
-    // T.S: Creating an new tab in shuffleboard.
-    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
-    public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
-    // TS: the value of the something what is changing,(Example PID control).
-    public static double exampleShuffleboardEntrySyncValue;
-    // TS: the value is getting the getEntry number
-    public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
-
-    // ts: varibles to getEntry RPM
-    public static NetworkTableEntry shooterRpmGetEntry;
-    public static double shooterRpm;
-    public static double shooterRpmSync;
-    public setShooterRpmCommand shooterRpmCommand;
+    // Creating an new tab in shuffleboard.
+    public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
+    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022 Shuffleboard");
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -103,6 +88,8 @@ public class Robot extends TimedRobot {
 
         drivetrain = new Drivetrain();
 
+        new ShuffleboardEntrys();
+
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
         climber = new Climber();
         collector = new Collector();
@@ -115,60 +102,14 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-//-        collectorPneumatics.setDefaultCommand(new CollectorUp());
+//        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
-        // TS: getting the submit button when you click the commend.
-        exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
+//        myPigeon = new Pigeon(Drivetrain.rig
+//        htTalon2);
 
-//        myPigeon = new Pigeon(Drivetrain.rightTalon2);
-        shooterRpm = shooter.getSpeed();
-        shooterRpmSync = shooterRpm;
-        shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
-        shooterRpmCommand = new setShooterRpmCommand();
-
-//        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
-
-        // TS: add an getEntry tab in shuffleboard
-        exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
-                .getEntry();
-        // TS: add the example input submit button to the shuffleboard.
-        //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
-        //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
-
-        shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
-        shuffleboardTab.add(indexer);
-        shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
-        shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
-        shuffleboardTab.add("ResetHead", new ResetHeading());
-
-        shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
-
-        shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
-
-        //ts: switching drives mode
-        shuffleboardTab.add("Tank Drive", new DriveTank());
-        shuffleboardTab.add("Arcade Drive", new DriveArcade());
-
-        // ts: command to getEntry RPM
-        shuffleboardTab.add("Set RPM", shooterRpmCommand);
-
-
-
-        // Indexer logging
-        shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
-        //shuffleboardTab.addBoolean("Stage", indexer::getSensorMid); // TODO: Cleanup this line
-
-        shuffleboardTab.addNumber("RPM", shooter::getSpeed);
-
-        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
-
-        // Hanger
-        //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
 
         oi = new OI();
     }
