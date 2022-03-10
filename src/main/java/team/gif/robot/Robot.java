@@ -226,16 +226,6 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
-        
-        if (logger != null) {
-            try {
-                logger.run();
-            } catch (IOException e) {
-                System.err.println("Failed to run logger");
-                System.err.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
     }
 
     /**
@@ -309,6 +299,16 @@ public class Robot extends TimedRobot {
 //        oi = new OI();
         compressor.enableDigital();
         indexCommand.schedule();
+
+        if (logger != null) {
+            try {
+                logger.addEvent("TELEOP_START");
+            } catch (IOException e) {
+                System.err.println("Failed to run logger");
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -323,6 +323,16 @@ public class Robot extends TimedRobot {
         if ( indexer.getCargoCount() == 2 ){
             collectorPneumatics.entryRaise();
             collectorPneumatics.collectorRaise();
+        }
+
+        if (logger != null) {
+            try {
+                logger.run();
+            } catch (IOException e) {
+                System.err.println("Failed to run logger");
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 

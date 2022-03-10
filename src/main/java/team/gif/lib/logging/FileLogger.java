@@ -36,7 +36,7 @@ public class FileLogger {
 	 * does not exist but cannot be created, or cannot be opened for any other reason
 	 */
 	public FileLogger() throws IOException {
-		fw = new FileWriter("ViperLog.csv");
+		fw = new FileWriter("/logs/ViperLog.csv");
 		addMetric("Time", () -> Timer.getFPGATimestamp() - initTime);
 	}
 	
@@ -60,6 +60,10 @@ public class FileLogger {
 		names.addLast(name);
 		suppliers.addLast(supplier);
 	}
+
+    public void addEvent(String label) throws IOException {
+        fw.append(label).append("\n");
+    }
 	
 	/**
 	 * Initializes this FileLogger. MUST be called before {@link FileLogger#run()}.
