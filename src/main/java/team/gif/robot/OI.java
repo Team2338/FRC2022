@@ -114,6 +114,7 @@ public class OI {
         dLBump.whenHeld(new CollectorReverse());
         dLTrigger.whileHeld(new LimelightAutoAim());
         dRTrigger.whileHeld(new RapidFire());
+        dX.whileHeld(new HoodDown());
         dA.whenHeld(new Shoot());
         dY.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
@@ -137,6 +138,7 @@ public class OI {
         dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
         dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
         dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
+
         /*
          * testing end
          */

@@ -13,13 +13,13 @@ import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
 
-public class Indexer extends SubsystemBase {
+public class
+Indexer extends SubsystemBase {
     //Hardware config
 
     private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor
     private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT_COMPBOT, CANSparkMaxLowLevel.MotorType.kBrushless); // CompBot motor
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
-    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
     private static final SparkMaxPIDController midPIDControl = midMotor.getPIDController();
 
 
@@ -33,7 +33,7 @@ public class Indexer extends SubsystemBase {
         beltMotor1.configFactoryDefault();
         beltMotor.restoreFactoryDefaults();
         midMotor.restoreFactoryDefaults();
-        entryMotor.restoreFactoryDefaults();
+        //entryMotor.restoreFactoryDefaults();
 
 
         beltMotor1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
@@ -41,11 +41,11 @@ public class Indexer extends SubsystemBase {
         beltMotor1.setNeutralMode(NeutralMode.Brake);
         beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        //entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         beltMotor.setInverted(false); // subject to change based on design feats I don't remember
         midMotor.setInverted(!Robot.isCompBot);
-        entryMotor.setInverted(!Robot.isCompBot);
+        //entryMotor.setInverted(!Robot.isCompBot);
     }
 
     public boolean getSensorEntry(){
@@ -68,11 +68,11 @@ public class Indexer extends SubsystemBase {
         midMotor.set(percent);
     }
 
-
+    /*
     public void setEntryMotorSpeed(double percent) {
         entryMotor.set(percent);
     }
-
+    */
     public void setBeltMotorSpeedPercent(double percent) {
         beltMotor1.set(ControlMode.PercentOutput, percent);
         beltMotor.set(percent);

@@ -57,35 +57,43 @@ public class LimelightAutoAim extends CommandBase {
             //inches
             distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
 
+            //distance zones //more accurate than rohan (TM)
                 //Far Shot
-            if (distanceFromHub >= 700) {
+            if (distanceFromHub >= 200) {
                 Robot.hood.setHoodUp();
                 tgSpeed = Constants.Shooter.RPM_FAR_COURT;
-                System.out.println("distanceFromHubT: " + distanceFromHub);
+                //System.out.println("distanceFromHubT: " + distanceFromHub);
 
                 //LaunchPad
-            } else if (distanceFromHub > 500 && distanceFromHub < 700) {
+            } else if (distanceFromHub >= 160 && distanceFromHub < 200) {
                 Robot.hood.setHoodUp();
                 tgSpeed = Constants.Shooter.RPM_LAUNCHPAD;
-                System.out.println("distanceFromHubL: " + distanceFromHub);
+                //System.out.println("distanceFromHubL: " + distanceFromHub);
 
                 //Close
-            } else {
-                tgSpeed = Constants.Shooter.RPM_FENDER_UPPER_HUB;
+            } else if(distanceFromHub > 50 && distanceFromHub < 160){
+                Robot.hood.setHoodUp();
+                tgSpeed = Constants.Shooter.RPM_RING_UPPER_HUB;
+                //System.out.println("distanceFromHubR: " + distanceFromHub);
+            } /*
+            else {
+                tgSpeed = Constants.Shooter.RPM_FENDER_LOWER_HUB;
                 System.out.println("distanceFromHubF: " + distanceFromHub);
+                */
             }
+
             Robot.shooter.setSpeedPID(tgSpeed);
             System.out.println(tgSpeed);
             //System.out.println(Robot.shooter.getVelocity());
 
             //shoot
-            if ((Robot.shooter.getSpeed() > (tgSpeed - 20.0))) {
+            if (Robot.shooter.isInTolerance()&& targetLocked) {
                 Robot.indexer.setBeltMotorSpeedPercent(0.5);
                 Robot.indexer.setMidMotorSpeed(0.4);
             }
 
             // we need to check again to make sure the robot hasn't overshot the target
-            if (Robot.shooter.getSpeed() > tgSpeed - 20.0) {
+            if (Robot.shooter.isInTolerance()&& targetLocked) {
                 if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
                     Robot.indexer.setBeltMotorSpeedPercent(0.5);
                     Robot.indexer.setMidMotorSpeed(0.4);
@@ -96,7 +104,6 @@ public class LimelightAutoAim extends CommandBase {
                     targetLocked = false;
                     robotHasSettled = false;
                 }
-            }
         } else {
             if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
                 Robot.drivetrain.tankDriveVolts(0, 0);
@@ -106,13 +113,6 @@ public class LimelightAutoAim extends CommandBase {
             } else {
                 Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
             }
-            /*
-            if(Math.abs(Robot.limelight.getXOffset()) > 0.1) {
-                Drivetrain.drive.arcadeDrive(0, Robot.limelight.getXOffset() * 0.01);
-            }else{
-                Drivetrain.drive.arcadeDrive(0, 0);
-            }
-            */
         }
     }
 
