@@ -14,10 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
-import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
-import team.gif.robot.commands.autos.TwoBallLeft;
-import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.robot.commands.autos.*;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
@@ -38,6 +35,7 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -213,6 +211,10 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
+        drivetrain.resetPigeon();
+        drivetrain.resetEncoders();
+        drivetrain.resetPose();
+
         autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -225,9 +227,6 @@ public class Robot extends TimedRobot {
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
-
-        drivetrain.resetEncoders();
-        drivetrain.resetPose();
 
         limelight.setLEDMode(1);//turn off
 
@@ -295,6 +294,7 @@ public class Robot extends TimedRobot {
         autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
         autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
         autoModeChooser.addOption("Three Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
+        autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
 //        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
 //        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
 ////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
@@ -346,7 +346,9 @@ public class Robot extends TimedRobot {
             autonomousCommand = new TwoBallRight();
         } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
             autonomousCommand = new ThreeBallTerminalMiddle();
-        } else if(chosenAuto ==null) {
+        } else if(chosenAuto == autoMode.FOUR_BALL_TERMINAL_RIGHT){
+            autonomousCommand = new FourBallTerminalRight();
+        }else if(chosenAuto ==null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }
     }
