@@ -40,7 +40,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-2, 8.0, 95.0), //4.5 original
                 new Pose2dFeet().set(-5.5,20.5,54.0)
             ),
-            RobotTrajectory.getInstance().configReverseSlow
+            RobotTrajectory.getInstance().configReverse
         );
         // create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -73,7 +73,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(2),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(1.5),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),
