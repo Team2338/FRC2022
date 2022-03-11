@@ -3,19 +3,19 @@ package team.gif.robot.commands.autoaim;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
 public class LimelightAutoAim extends CommandBase {
+    public LimelightAutoAim(){
+        super();
+        addRequirements(Robot.hood, Robot.drivetrain, Robot.shooter,Robot.indexer);
+    }
 
     private boolean targetLocked = false;
     private boolean robotHasSettled = false;
-    private double velocitycap = .5;
+    private final double velocityCap = 0.5;
     private int delayCounter;
-
-    // amount of voltage we want to apply to the motors for this test
-    private double motorVolts = 3.50;
 
     @Override
     public void initialize() {
@@ -28,67 +28,84 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon1.enableCurrentLimit(false);
         Drivetrain.rightTalon2.enableCurrentLimit(false);
 
-        targetLocked = false;
+        Robot.hood.setHoodDown();
 
-        Globals.indexerEnabled = false;
+        targetLocked = false;
 
         delayCounter = 0;
     }
 
     @Override
     public void execute() {
+        double distanceFromHub;
 
         if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
-        double targetSpeed = Constants.Shooter.RPM_LOW;
-
-        if (Robot.oi != null && (Robot.oi.dStart.get() || Robot.oi.aDPadRight.get())) {
-            targetSpeed = Constants.Shooter.RPM_HIGH;
-        }
-
-        if ( Math.abs (Robot.limelight.getXOffset()) < 5 ) {
-            Robot.shooter.setSpeedPID(targetSpeed);
-        }
-
         // bot must not be moving anymore
-        if ( !robotHasSettled ) {
+        if (!robotHasSettled) {
             DifferentialDriveWheelSpeeds wheelSpeeds = Robot.drivetrain.getWheelSpeeds();
-            if ( Math.abs(wheelSpeeds.leftMetersPerSecond) < velocitycap && Math.abs(wheelSpeeds.rightMetersPerSecond)< velocitycap ){
+            if (Math.abs(wheelSpeeds.leftMetersPerSecond) < velocityCap && Math.abs(wheelSpeeds.rightMetersPerSecond) < velocityCap) {
                 robotHasSettled = true;
                 System.out.println("AutoFire: Robot has settled");
             }
         }
-
-        if ( robotHasSettled ) {
+        if(robotHasSettled){
             if (targetLocked) {
-                //System.out.println(Robot.shooter.getVelocity());
-                if (Robot.shooter.getSpeed() > (targetSpeed - 20.0)) {
+                //inches
+                distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
 
-                    // we need to check again to make sure the robot hasn't overshot the target
-                    double offset = Robot.limelight.getXOffset();
-                    if (offset > -1.0 && offset < 1.0) {
-                        Robot.indexer.setBeltMotorSpeedPercent(0.5);
-                        Robot.indexer.setMidMotorSpeed(0.4);
-                    } else {
-                        System.out.println("Offset Adjusting at: " + offset);
-                        // need to relock
-                        targetLocked = false;
-                        robotHasSettled = false;
-                    }
+                //distance zones //more accurate than rohan (TM)
+                //Far Shot
+                if (distanceFromHub >= 200) {
+                    Robot.hood.setHoodUp();
+                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
+                    System.out.println("distanceFromHubT: " + distanceFromHub);
+
+                    //LaunchPad
+                } else if (distanceFromHub >= 100) {
+                    Robot.hood.setHoodUp();
+                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
+                    System.out.println("distanceFromHubL: " + distanceFromHub);
+
+                    //Close
+                } else if (distanceFromHub >= 50) {
+                    Robot.hood.setHoodUp();
+                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_RING_UPPER_HUB);
+                    System.out.println("distanceFromHubR: " + distanceFromHub);
+                } else {
+                    Robot.hood.setHoodDown();
+                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
+                    //System.out.println("distanceFromHubF: " + distanceFromHub);
+                }
+            }
+
+            //shoot
+            if (Robot.shooter.isInTolerance() && targetLocked) {
+                Robot.indexer.setBeltMotorSpeedPercent(1.0);
+                Robot.indexer.setMidMotorSpeed(1.0);
+            }
+
+            // we need to check again to make sure the robot hasn't overshot the target
+            if (Robot.shooter.isInTolerance() && targetLocked) {
+                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
+                    Robot.indexer.setBeltMotorSpeedPercent(1.0);
+                    Robot.indexer.setMidMotorSpeed(1.0);
+
+                } else {
+                    System.out.println("Offset Adjusting at: " + Robot.limelight.getXOffset());
+                    // need to relock
+                    targetLocked = false;
+                    robotHasSettled = false;
                 }
             } else {
-                double offset = Robot.limelight.getXOffset();
-                if (offset > -1.0 && offset < 1.0) {
+                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
+                } else if (Robot.limelight.getXOffset() < 0) {
+                    Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
+                    targetLocked = false;
                 } else {
-                    if (offset < 0) {
-                        Robot.drivetrain.tankDriveVolts(-motorVolts, motorVolts);
-
-                    } else {
-                        Robot.drivetrain.tankDriveVolts(motorVolts, -motorVolts);
-
-                    }
+                    Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 }
             }
@@ -113,11 +130,9 @@ public class LimelightAutoAim extends CommandBase {
         System.out.println("Auto Aim Finished");
         Robot.limelight.setLEDMode(1);
 
-        Globals.indexerEnabled = true;
+//-        Globals.indexerEnabled = true;
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
-    }
+    public boolean isFinished() {return false;}
 }
