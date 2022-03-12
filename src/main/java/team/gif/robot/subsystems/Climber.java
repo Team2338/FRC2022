@@ -3,9 +3,9 @@ package team.gif.robot.subsystems;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
-import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.function.Supplier;
 
 public class Climber extends SubsystemBase {
 //    public static Hanger instance = null;

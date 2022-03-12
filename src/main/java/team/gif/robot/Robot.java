@@ -7,15 +7,17 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalRight;
-import team.gif.robot.commands.autos.TwoBall;
+import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
+import team.gif.robot.commands.autos.TwoBallLeft;
+import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.robot.commands.climber.ResetClimber;
+//import team.gif.robot.commands.autos.ThreeBallTerminalRight;
+//import team.gif.robot.commands.autos.TwoBall;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.CollectorPneumatics;
@@ -32,6 +34,9 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.Pigeon;
+
+import java.util.Map;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -50,9 +55,6 @@ public class Robot extends TimedRobot {
     public static OI oi;
     public static UI ui;
 
-    private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    private SendableChooser<delay> delayChooser = new SendableChooser<>();
-
     private autoMode chosenAuto;
     private delay chosenDelay;
     private Timer elapsedTime = new Timer();
@@ -61,10 +63,11 @@ public class Robot extends TimedRobot {
     public static CollectorPneumatics collectorPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
+    public static Command indexCommand = null;
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
-//    public static Pigeon myPigeon;
+    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
@@ -72,6 +75,10 @@ public class Robot extends TimedRobot {
     // Creating an new tab in shuffleboard.
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
     public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022 Shuffleboard");
+    public static ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
+            .getLayout("Sensors", BuiltInLayouts.kGrid)
+            .withSize(1,3) // make the widget 2x1
+            .withProperties(Map.of("Label","HIDDEN")); //place it in the top-left cornor
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -103,8 +110,7 @@ public class Robot extends TimedRobot {
 //        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
 
-//        myPigeon = new Pigeon(Drivetrain.rig
-//        htTalon2);
+        myPigeon = new Pigeon(Drivetrain.rightTalon2);
 
         limelight.setLEDMode(1);//force off
 
@@ -127,8 +133,8 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         //System.out.println("robot periodic");
-        chosenAuto = autoModeChooser.getSelected();
-        chosenDelay = delayChooser.getSelected();
+        chosenAuto = UI.autoModeChooser.getSelected();
+        chosenDelay = UI.delayChooser.getSelected();
 
 //    SmartDashboard.putNumber("tx",limelight.getXOffset());
 //    SmartDashboard.putNumber("ty",limelight.getYOffset());
@@ -207,6 +213,11 @@ public class Robot extends TimedRobot {
         double timeLeft = DriverStation.getMatchTime();
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
                      (timeLeft <=  5.0 && timeLeft >=  3.0));
+
+        if ( indexer.getCargoCount() == 2 ){
+            collectorPneumatics.entryRaise();
+            collectorPneumatics.collectorRaise();
+        }
     }
 
     @Override
@@ -217,69 +228,19 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {}
 
     public void tabsetup(){
-
-        autoTab = Shuffleboard.getTab("PreMatch");
-
-        autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
-        autoModeChooser.addOption("Two Ball", autoMode.TWO_BALL);
-        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
-//        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
-//        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
-////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
-////    autoModeChooser.addOption("Slalom", autoMode.SLALOM);
-////    autoModeChooser.addOption("Bounce", autoMode.BOUNCE);
-//        autoModeChooser.setDefaultOption("6 Ball Auto", autoMode.SAFE_6_BALL);
-
-        autoTab.add("Auto Select",autoModeChooser)
-                .withWidget(BuiltInWidgets.kComboBoxChooser)
-                .withPosition(1,0)
-                .withSize(2,1);
-
-        delayChooser.setDefaultOption("0", delay.DELAY_0);
-        delayChooser.addOption("1", delay.DELAY_1);
-        delayChooser.addOption("2", delay.DELAY_2);
-        delayChooser.addOption("3", delay.DELAY_3);
-        delayChooser.addOption("4", delay.DELAY_4);
-        delayChooser.addOption("5", delay.DELAY_5);
-        delayChooser.addOption("6", delay.DELAY_6);
-        delayChooser.addOption("7", delay.DELAY_7);
-        delayChooser.addOption("8", delay.DELAY_8);
-        delayChooser.addOption("9", delay.DELAY_9);
-        delayChooser.addOption("10", delay.DELAY_10);
-        delayChooser.addOption("11", delay.DELAY_11);
-        delayChooser.addOption("12", delay.DELAY_12);
-        delayChooser.addOption("13", delay.DELAY_13);
-        delayChooser.addOption("14", delay.DELAY_14);
-        delayChooser.addOption("15", delay.DELAY_15);
-
-        autoTab.add("Delay", delayChooser)
-                .withPosition(0,0)
-                .withSize(1,1);
     }
 
     public void updateauto(){
 
         if(chosenAuto == autoMode.MOBILITY){
             autonomousCommand = new Mobility();
-        }
-        else if(chosenAuto == autoMode.TWO_BALL){
-            autonomousCommand = new TwoBall();
-        }
-      else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new ThreeBallTerminalRight();}
-//         else if(chosenAuto == autoMode.SAFE_6_BALL){
-//            m_autonomousCommand = new SafeSixBall();
-//        } else if(chosenAuto == autoMode.OPP_5_BALL){
-//            m_autonomousCommand = new OppFiveBall();
-//        } else if(chosenAuto == autoMode.SAFE_8_BALL){
-//            m_autonomousCommand = new SafeEightBall();
-/*    } else if (chosenAuto == autoMode.BARREL_RACING){
-      m_autonomousCommand = new BarrelRacing();
-    } else if(chosenAuto == autoMode.SLALOM) {
-      m_autonomousCommand = new Slalom();
-    } else if(chosenAuto == autoMode.BOUNCE){
-      m_autonomousCommand = new Bounce(); */
-         else if(chosenAuto ==null) {
+        } else if(chosenAuto == autoMode.TWO_BALL_LEFT){
+            autonomousCommand = new TwoBallLeft();
+        } else if(chosenAuto == autoMode.TWO_BALL_RIGHT){
+            autonomousCommand = new TwoBallRight();
+        } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
+            autonomousCommand = new ThreeBallTerminalMiddle();
+        } else if(chosenAuto ==null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }
     }

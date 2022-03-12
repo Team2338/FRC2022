@@ -17,7 +17,7 @@ import static team.gif.robot.Robot.indexer;
 
 public class Indexer extends SubsystemBase {
     //Hardware config
-    private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor
+//--    private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor
     private static final CANSparkMax beltMotor = new CANSparkMax(RobotMap.MOTOR_BELT_COMPBOT, CANSparkMaxLowLevel.MotorType.kBrushless); // CompBot motor
     private static final CANSparkMax midMotor = new CANSparkMax(RobotMap.MOTOR_MID_INDEX, CANSparkMaxLowLevel.MotorType.kBrushless);
 //+    private static final CANSparkMax entryMotor = new CANSparkMax(RobotMap.MOTOR_ENTRY, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -29,14 +29,14 @@ public class Indexer extends SubsystemBase {
 
     public Indexer() {
         super();
-        beltMotor1.configFactoryDefault();
+//--        beltMotor1.configFactoryDefault();
         beltMotor.restoreFactoryDefaults();
         midMotor.restoreFactoryDefaults();
 //+        entryMotor.restoreFactoryDefaults();
 
-        beltMotor1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
+//--        beltMotor1.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
 
-        beltMotor1.setNeutralMode(NeutralMode.Brake);
+//--        beltMotor1.setNeutralMode(NeutralMode.Brake);
         beltMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
         midMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 //+        entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -67,16 +67,16 @@ public class Indexer extends SubsystemBase {
 //    }
 
     public void setBeltMotorSpeedPercent(double percent) {
-        beltMotor1.set(ControlMode.PercentOutput, percent);
+//--        beltMotor1.set(ControlMode.PercentOutput, percent);
         beltMotor.set(percent);
     }
 
     public double getBeltMotorSpeed() {
-        if (Robot.isCompBot == true){
+//--        if (Robot.isCompBot == true){
             return beltMotor.getEncoder().getVelocity();
-        } else{
-            return beltMotor1.getSelectedSensorVelocity();
-        }
+//--        } else{
+//--            return beltMotor1.getSelectedSensorVelocity();
+//--        }
     }
 
     public int getCargoCount() {

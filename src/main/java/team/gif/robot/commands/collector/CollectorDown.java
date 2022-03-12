@@ -21,7 +21,7 @@ public class CollectorDown extends CommandBase {
 
     @Override
     public void execute() {
-        if(++count >= 30) { // 0.5 second delay
+        if(++count >= 75) { // 0.5 second delay //TODO: Auto is different than Teleop
             Robot.collectorPneumatics.entryLower();
             isDone = true;
         }

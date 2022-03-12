@@ -14,6 +14,7 @@ public class IndexScheduler extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     private CommandBase currCommand = null;
+
     public IndexScheduler() {
         super();
         // Use addRequirements() here to declare subsystem dependencies.
