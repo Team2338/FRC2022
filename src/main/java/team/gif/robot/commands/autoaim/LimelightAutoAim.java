@@ -33,6 +33,8 @@ public class LimelightAutoAim extends CommandBase {
         targetLocked = false;
         
         Globals.indexerEnabled = false;
+        
+        Globals.indexerEnabled = false;
 
         delayCounter = 0;
     }
