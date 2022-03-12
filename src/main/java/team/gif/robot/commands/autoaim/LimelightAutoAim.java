@@ -3,6 +3,7 @@ package team.gif.robot.commands.autoaim;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
@@ -28,7 +29,7 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon1.enableCurrentLimit(false);
         Drivetrain.rightTalon2.enableCurrentLimit(false);
 
-        Robot.hood.setHoodDown();
+        Globals.indexerEnabled = false;
 
         targetLocked = false;
 
@@ -67,11 +68,12 @@ public class LimelightAutoAim extends CommandBase {
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
                     System.out.println("distanceFromHubL: " + distanceFromHub);
 
-                    //Close
+                    //Ring
                 } else if (distanceFromHub >= 50) {
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_RING_UPPER_HUB);
                     System.out.println("distanceFromHubR: " + distanceFromHub);
+                    //
                 } else {
                     Robot.hood.setHoodDown();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
@@ -102,10 +104,10 @@ public class LimelightAutoAim extends CommandBase {
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else if (Robot.limelight.getXOffset() < 0) {
-                    Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
+                    Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 } else {
-                    Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
+                    Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 }
             }
@@ -128,9 +130,9 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
-        Robot.limelight.setLEDMode(1);
+        Robot.limelight.setLEDMode(3);
 
-//-        Globals.indexerEnabled = true;
+        Globals.indexerEnabled = true;
     }
 
     @Override
