@@ -14,8 +14,11 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
+import team.gif.robot.commands.autos.FiveBallTerminalRight;
+import team.gif.robot.commands.autos.FourBallTerminalRight;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
+import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBallLeft;
 import team.gif.robot.commands.autos.TwoBallRight;
 import team.gif.robot.commands.climber.ClimberManualControl;
@@ -363,7 +366,7 @@ public class Robot extends TimedRobot {
             autonomousCommand = new FourBallTerminalRight();
         }else if(chosenAuto == autoMode.FIVE_BALL_TERMINAL_RIGHT){
             autonomousCommand = new FiveBallTerminalRight();
-        }else if(chosenAuto ==null) {
+        }else if(chosenAuto == null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }
     }
