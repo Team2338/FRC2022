@@ -86,6 +86,8 @@ public class LimelightAutoAim extends CommandBase {
                 Robot.indexer.setBeltMotorSpeedPercent(1.0);
                 Robot.indexer.setMidMotorSpeed(1.0);
             }
+            
+            double offset = Robot.limelight.getXOffset();
 
             // we need to check again to make sure the robot hasn't overshot the target
             if (Robot.shooter.isInTolerance() && targetLocked) {
