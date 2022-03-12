@@ -296,7 +296,7 @@ public class Robot extends TimedRobot {
         autoModeChooser.addOption("Three Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
-
+        autoModeChooser.addOption("Five Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
 //        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
 //        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
 ////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
@@ -348,10 +348,12 @@ public class Robot extends TimedRobot {
             autonomousCommand = new TwoBallRight();
         } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
             autonomousCommand = new ThreeBallTerminalMiddle();
-        } else if(chosenAuto == autoMode.FOUR_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new FourBallTerminalRight();
         }else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
             autonomousCommand = new ThreeBallTerminalRight();
+        } else if(chosenAuto == autoMode.FOUR_BALL_TERMINAL_RIGHT){
+            autonomousCommand = new FourBallTerminalRight();
+        }else if(chosenAuto == autoMode.FIVE_BALL_TERMINAL_RIGHT){
+            autonomousCommand = new FiveBallTerminalRight();
         }else if(chosenAuto ==null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }

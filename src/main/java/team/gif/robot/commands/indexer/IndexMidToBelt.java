@@ -25,7 +25,7 @@ public class IndexMidToBelt extends CommandBase {
     @Override
     public void execute() {
         Robot.indexer.setBeltMotorSpeedPercent(1);
-        Robot.indexer.setMidMotorSpeed(0.8);
+        Robot.indexer.setMidMotorSpeed(1.0);
     }
 
     // Returns true when the command should end.
