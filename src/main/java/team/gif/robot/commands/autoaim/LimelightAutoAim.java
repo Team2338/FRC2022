@@ -88,6 +88,8 @@ public class LimelightAutoAim extends CommandBase {
             }
             
             double offset = Robot.limelight.getXOffset();
+            
+            double offset = Robot.limelight.getXOffset();
 
             // we need to check again to make sure the robot hasn't overshot the target
             if (Robot.shooter.isInTolerance() && targetLocked) {
