@@ -9,33 +9,21 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
+import team.gif.robot.commands.collector.CollectorUp;
+import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
+public class FiveBallTerminalRight extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-4.5, 0, 0.0)
-            ),
-            RobotTrajectory.getInstance().configReverseSlow
-        );
-        // create the command using the trajectory
-        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
-        // Run path following command, then stop at the end.
-        //return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
-        return rc;
-    }
-    public Command reverseAgain() {
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-4.5, 0, 0),
-                new Pose2dFeet().set(-6.5, 0, -10)
+                new Pose2dFeet().set(-3.4, 0.0, 0.0) //4.5 original
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -44,13 +32,28 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
-    public Command reverseAgainTwo() {
+
+    public Command pickUpNext() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-6.5, 0, -10),
-                new Pose2dFeet().set(-17.0, 4, 0)
+                new Pose2dFeet().set(-3.4, 0.0, 0.0),
+                new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
+                new Pose2dFeet().set(-2.5, 8.0, 20.0) // 1st cargo location
             ),
             RobotTrajectory.getInstance().configReverse
+        );
+        // create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+    public Command pickupTerminal() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-1.5, 8.0, 15.0),
+                new Pose2dFeet().set(-2.5,21,45.0) // 2nd cargo (terminal) location
+            ),
+            RobotTrajectory.getInstance().configReverseFast
         );
         // create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -61,8 +64,8 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-17.0, 4, 0),
-                new Pose2dFeet().set(-6.0, 2, -5) // I don't know why this is -25, should be -10
+                new Pose2dFeet().set(-5.5, 20.5, 54.0),
+                new Pose2dFeet().set(0.0, 11.0, 75.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
@@ -72,28 +75,42 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public ThreeBallTerminalMiddle() {
+
+    public FiveBallTerminalRight() {
+
         addCommands(
             new ParallelDeadlineGroup(
                 reverse(),
                 new CollectorDown(),
                 new CollectorRun(),
-                new HoodUp()
+                new HoodUp(),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
-                reverseAgain(),
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
-            ),
-            new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB).withTimeout(2),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(1.2),
+                new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),
             new ParallelDeadlineGroup(
-                reverseAgainTwo(),
-                new CollectorRun()
+                pickUpNext(),
+                new WaitCommand(0.5).andThen(new CollectorDown()),
+                new WaitCommand(1.5).andThen(new CollectorRun())
             ),
-            new CollectorRun().withTimeout(0.5),
-            forward(),
+            new ParallelDeadlineGroup(
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(1.1),
+                new HoodUp(),
+                new CollectorRun().withTimeout(1),
+                new RapidFire()
+            ),
+            new ParallelDeadlineGroup(
+                pickupTerminal(),
+                new WaitCommand(2.5).andThen(new CollectorRun())
+            ),
+            new ParallelDeadlineGroup(
+                forward(),
+                new CollectorRun().withTimeout(2),
+                new WaitCommand(3).andThen( new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB))
+            ),
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
                 new RapidFire()

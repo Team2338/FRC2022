@@ -8,9 +8,7 @@ import team.gif.robot.RobotMap;
 
 public class CollectorPneumatics extends SubsystemBase {
 	private static final DoubleSolenoid collectorSolenoidForward = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_COLLECTOR_FORWARD, RobotMap.SOLENOID_COLLECTOR_REVERSE);
-//    private static final Solenoid entrySolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_ENTRY);
-    private static final Solenoid entrySolenoid = new Solenoid(1,PneumaticsModuleType.CTREPCM,RobotMap.SOLENOID_ENTRY);
-	//private static final Solenoid collectorSolenoidReverse = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_COLLECTOR_REVERSE);
+    private static final Solenoid entrySolenoid = new Solenoid(1, PneumaticsModuleType.CTREPCM,RobotMap.SOLENOID_ENTRY);
 
 	public void collectorLower() {
 		collectorSolenoidForward.set(DoubleSolenoid.Value.kForward);

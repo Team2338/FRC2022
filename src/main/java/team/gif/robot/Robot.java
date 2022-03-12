@@ -16,16 +16,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.lib.logging.FileLogger;
+import team.gif.robot.commands.autos.FiveBallTerminalRight;
+import team.gif.robot.commands.autos.FourBallTerminalRight;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
+import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBallLeft;
 import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
+import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
@@ -40,6 +45,7 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -68,6 +74,7 @@ public class Robot extends TimedRobot {
     private static PowerDistribution pdp = null;
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
+    public static ClimberPneumatics climberPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
     public static Command indexCommand = null;
@@ -110,20 +117,24 @@ public class Robot extends TimedRobot {
         drivetrain = new Drivetrain();
 
         compressor = new Compressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
-        climber = new Climber();
         collector = new Collector();
+        climber = new Climber();
         indexer = new Indexer();
+        indexCommand = new IndexScheduler();
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
+        climberPneumatics = new ClimberPneumatics();
+
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
-        indexer.setDefaultCommand(new IndexScheduler());
+        indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
 //        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
+        climber.setDefaultCommand(new ClimberManualControl());
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
@@ -152,6 +163,7 @@ public class Robot extends TimedRobot {
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
         shuffleboardTab.add("ResetHead", new ResetHeading());
+        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
 
         // Shooter
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
@@ -242,6 +254,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        drivetrain.resetPigeon();
+        drivetrain.resetEncoders();
+        drivetrain.resetPose();
+
         autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -250,15 +266,13 @@ public class Robot extends TimedRobot {
         }
 
         Globals.autonomousModeActive = true;
+        indexCommand.schedule();
         
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
 
-        drivetrain.resetEncoders();
-        drivetrain.resetPose();
-
-        limelight.setLEDMode(1); // Turn off
+        limelight.setLEDMode(1);//turn off
 
         compressor.disable();
 
@@ -295,6 +309,7 @@ public class Robot extends TimedRobot {
         }
 //        oi = new OI();
         compressor.enableDigital();
+        indexCommand.schedule();
     }
 
     /**
@@ -331,6 +346,9 @@ public class Robot extends TimedRobot {
         autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
         autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
         autoModeChooser.addOption("Three Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
+        autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
+        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
+        autoModeChooser.addOption("Five Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
 //        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
 //        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
 ////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
@@ -376,13 +394,19 @@ public class Robot extends TimedRobot {
 
         if(chosenAuto == autoMode.MOBILITY){
             autonomousCommand = new Mobility();
-        } else if(chosenAuto == autoMode.TWO_BALL_LEFT){
+        } else if (chosenAuto == autoMode.TWO_BALL_LEFT){
             autonomousCommand = new TwoBallLeft();
-        } else if(chosenAuto == autoMode.TWO_BALL_RIGHT){
+        } else if (chosenAuto == autoMode.TWO_BALL_RIGHT){
             autonomousCommand = new TwoBallRight();
-        } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
+        } else if (chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
             autonomousCommand = new ThreeBallTerminalMiddle();
-        } else if(chosenAuto ==null) {
+        } else if (chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
+            autonomousCommand = new ThreeBallTerminalRight();
+        } else if (chosenAuto == autoMode.FOUR_BALL_TERMINAL_RIGHT){
+            autonomousCommand = new FourBallTerminalRight();
+        } else if (chosenAuto == autoMode.FIVE_BALL_TERMINAL_RIGHT){
+            autonomousCommand = new FiveBallTerminalRight();
+        } else if (chosenAuto == null) {
             System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
         }
     }

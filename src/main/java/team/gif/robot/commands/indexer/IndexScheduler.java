@@ -36,11 +36,11 @@ public class IndexScheduler extends CommandBase {
         if(currCommand == null && Globals.indexerEnabled) {
             if(!Robot.indexer.getSensorBelt() && Robot.indexer.getSensorMid()) {
                 currCommand = new IndexMidToBelt();
-                CommandScheduler.getInstance().schedule(currCommand);
+                currCommand.schedule();
             }
             if(!Robot.indexer.getSensorMid() && Robot.indexer.getSensorEntry()) {
                 currCommand = new IndexCollectorToMid();
-                CommandScheduler.getInstance().schedule(currCommand);
+                currCommand.schedule();;
             }
         }
     }
