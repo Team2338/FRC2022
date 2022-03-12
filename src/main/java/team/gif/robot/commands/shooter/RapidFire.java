@@ -9,12 +9,11 @@ public class RapidFire extends CommandBase {
 
     public RapidFire() {
         super();
-        //addRequirements(Robot.indexer);
+        addRequirements(Robot.indexer);
     }
 
     @Override
     public void initialize() {
-        Globals.indexerEnabled = false;
     }
 
     @Override
@@ -40,6 +39,5 @@ public class RapidFire extends CommandBase {
     public void end(boolean interrupted) {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
-        Globals.indexerEnabled = true;
     }
 }

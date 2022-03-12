@@ -41,8 +41,6 @@ import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
 
-import java.io.IOException;
-
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -115,14 +113,13 @@ public class Robot extends TimedRobot {
         climber = new Climber();
         collector = new Collector();
         indexer = new Indexer();
-        indexCommand = new IndexScheduler();
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
-        indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
+        indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
 //        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
@@ -253,7 +250,6 @@ public class Robot extends TimedRobot {
         }
 
         Globals.autonomousModeActive = true;
-        indexCommand.schedule();
         
         // used for delaying the start of autonomous
         elapsedTime.reset();
@@ -299,7 +295,6 @@ public class Robot extends TimedRobot {
         }
 //        oi = new OI();
         compressor.enableDigital();
-        indexCommand.schedule();
     }
 
     /**
