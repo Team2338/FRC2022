@@ -31,6 +31,8 @@ public class LimelightAutoAim extends CommandBase {
         Robot.hood.setHoodDown();
 
         targetLocked = false;
+        
+        Globals.indexerEnabled = false;
 
         delayCounter = 0;
     }
