@@ -3,6 +3,7 @@ package team.gif.robot.commands.autoaim;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
@@ -30,10 +31,6 @@ public class LimelightAutoAim extends CommandBase {
 
 
         targetLocked = false;
-        
-        Globals.indexerEnabled = false;
-        
-        Globals.indexerEnabled = false;
         
         Globals.indexerEnabled = false;
 
@@ -64,19 +61,21 @@ public class LimelightAutoAim extends CommandBase {
                 if (distanceFromHub >= 200) {
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
-                    System.out.println("distanceFromHubT: " + distanceFromHub);
+                    //System.out.println("distanceFromHubT: " + distanceFromHub);
 
                     //LaunchPad
                 } else if (distanceFromHub >= 100) {
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
-                    System.out.println("distanceFromHubL: " + distanceFromHub);
+                    //System.out.println("distanceFromHubL: " + distanceFromHub);
 
-                    //Close
+                    //ring
                 } else if (distanceFromHub >= 50) {
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_RING_UPPER_HUB);
-                    System.out.println("distanceFromHubR: " + distanceFromHub);
+                    //System.out.println("distanceFromHubR: " + distanceFromHub);
+
+                    //fender
                 } else {
                     Robot.hood.setHoodDown();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
@@ -91,12 +90,10 @@ public class LimelightAutoAim extends CommandBase {
             }
             
             double offset = Robot.limelight.getXOffset();
-            
-            double offset = Robot.limelight.getXOffset();
 
             // we need to check again to make sure the robot hasn't overshot the target
             if (Robot.shooter.isInTolerance() && targetLocked) {
-                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
+                if (offset > -1.0 && offset < 1.0) {
                     Robot.indexer.setBeltMotorSpeedPercent(1.0);
                     Robot.indexer.setMidMotorSpeed(1.0);
 
@@ -137,7 +134,7 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
-        Robot.limelight.setLEDMode(1);
+        Robot.limelight.setLEDMode(3);
 
         Globals.indexerEnabled = true;
     }
