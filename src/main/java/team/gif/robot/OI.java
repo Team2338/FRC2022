@@ -1,6 +1,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
@@ -114,9 +115,9 @@ public class OI {
         dY.whenHeld(new ReverseIndex());
         dLStickBtn.toggleWhenPressed(new ToggleIndexer());
 
-        dDPadDown.whenPressed(new ClimberMaxUp()); // remove for now. don't want to accidentally run this
-        dDPadLeft.whenPressed(new RobotUp()); // remove for now. don't want to accidentally run this
-        dDPadUp.whenPressed(new RobotDownToRelease()); // remove for now. don't want to accidentally run this
+        dDPadDown.whenPressed(new ClimberMaxUp());
+        dDPadLeft.whenPressed(new RobotUp());
+        dDPadUp.whenPressed(new RobotDownToRelease());
         /*
         * these are only for testing with only a driver joystick
         */

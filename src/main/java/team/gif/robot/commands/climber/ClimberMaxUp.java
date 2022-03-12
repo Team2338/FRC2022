@@ -18,7 +18,7 @@ public class ClimberMaxUp extends CommandBase {
 
     public ClimberMaxUp() {
         super();
-        addRequirements(Robot.climber);
+        addRequirements(Robot.climber,Robot.climberPneumatics);
     }
 
     // Called when the command is initially scheduled.
@@ -29,6 +29,10 @@ public class ClimberMaxUp extends CommandBase {
     @Override
     public void execute() {
         Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
+
+        if(Robot.climber.getPosition() > 1000){
+            Robot.climberPneumatics.setFangsForward();
+        }
     }
 
     // Returns true when the command should end.

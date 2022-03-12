@@ -85,7 +85,7 @@ public final class Constants {
 
         public static final double MAX_POSITION = 24000;
         public static final double ROBOT_UP_POSITION = 1000;
-        public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 14000;
+        public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 18000;
 
         public static final double UP_UNLOADED_VOLTAGE = 0.8;
         public static final double DOWN_LOADED_VOLTAGE = -0.8;
