@@ -28,7 +28,6 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon1.enableCurrentLimit(false);
         Drivetrain.rightTalon2.enableCurrentLimit(false);
 
-        Robot.hood.setHoodDown();
 
         targetLocked = false;
         
