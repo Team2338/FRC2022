@@ -14,13 +14,18 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
-import team.gif.robot.commands.autos.*;
+import team.gif.robot.commands.autos.Mobility;
+import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
+import team.gif.robot.commands.autos.TwoBallLeft;
+import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.exampleShuffleboardEntryCommand;
 import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
+import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
@@ -62,6 +67,7 @@ public class Robot extends TimedRobot {
 
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
+    public static ClimberPneumatics climberPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
     public static Command indexCommand = null;
@@ -102,15 +108,16 @@ public class Robot extends TimedRobot {
         limelight = new Limelight();
 
         drivetrain = new Drivetrain();
-
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
-        climber = new Climber();
         collector = new Collector();
+        climber = new Climber();
         indexer = new Indexer();
         indexCommand = new IndexScheduler();
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
+        climberPneumatics = new ClimberPneumatics();
+
         tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
@@ -119,6 +126,7 @@ public class Robot extends TimedRobot {
 //-        collectorPneumatics.setDefaultCommand(new CollectorUp());
 //        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
+        climber.setDefaultCommand(new ClimberManualControl());
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
@@ -146,6 +154,7 @@ public class Robot extends TimedRobot {
         shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
         shuffleboardTab.add("ResetHead", new ResetHeading());
+        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
 
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
 
