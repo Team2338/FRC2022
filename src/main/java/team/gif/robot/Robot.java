@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
-import team.gif.robot.commands.ShuffleboardEntrys;
 import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBall;
@@ -49,6 +48,7 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
+    public static UI ui;
 
     private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
     private SendableChooser<delay> delayChooser = new SendableChooser<>();
@@ -68,7 +68,6 @@ public class Robot extends TimedRobot {
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
-    public static ShuffleboardEntrys shuffleboardEntrys;
 
     // Creating an new tab in shuffleboard.
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
@@ -87,8 +86,6 @@ public class Robot extends TimedRobot {
         limelight = new Limelight();
 
         drivetrain = new Drivetrain();
-
-        new ShuffleboardEntrys();
 
         compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
         climber = new Climber();
@@ -112,6 +109,7 @@ public class Robot extends TimedRobot {
         limelight.setLEDMode(1);//force off
 
         oi = new OI();
+        ui = new UI(); // Calling it like how OI does.
     }
 
     /**
@@ -257,13 +255,6 @@ public class Robot extends TimedRobot {
         autoTab.add("Delay", delayChooser)
                 .withPosition(0,0)
                 .withSize(1,1);
-
-        // calibration information
-        // RGB_Shuffleboard
-//    calibrationTab = Shuffleboard.getTab("Calibration");          // adds the calibration tab to the shuffleboard (getTab creates if not exist)
-//    Shuffleboard.getTab("Calibration").add("Red",0);    // adds the Red text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Green",0);  // adds the Green text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Blue",0);   // adds the Blue text box, persists over power down
     }
 
     public void updateauto(){
