@@ -138,7 +138,7 @@ public class LimelightAutoAim extends CommandBase {
         System.out.println("Auto Aim Finished");
         Robot.limelight.setLEDMode(1);
 
-//-        Globals.indexerEnabled = true;
+        Globals.indexerEnabled = true;
     }
 
     @Override
