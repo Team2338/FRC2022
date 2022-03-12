@@ -36,9 +36,9 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
                         new Pose2dFeet().set(-3.4, 0.0, 0.0),
-                        //new Pose2dFeet().set(-3.4, 2.0, 95.0), //4.5 original
-                        //new Pose2dFeet().set(-2, 8.0, 95.0), //4.5 original
-                        new Pose2dFeet().set(-5.5,20.5,54.0)
+                        new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
+                        new Pose2dFeet().set(-5.0, 8.0, 70.0), // 1st cargo location
+                        new Pose2dFeet().set(-5.5,20.5,54.0) // 2nd cargo (terminal) location
                 ),
                 RobotTrajectory.getInstance().configReverse
         );
@@ -52,7 +52,7 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
                         new Pose2dFeet().set(-5.5, 20.5, 54.0),
-                        new Pose2dFeet().set(0.0, 11.0, 50.0) //4.5 original
+                        new Pose2dFeet().set(4.0, 11.0, 85.0) //4.5 original
                 ),
                 RobotTrajectory.getInstance().configForwardFast
         );
