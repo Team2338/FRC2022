@@ -61,13 +61,14 @@ public class FileLogger implements Closeable, Flushable {
 		
 		int max = 0;
 		for (String logname : lognames) {
-			String rawNumber = logname.substring(EVENT_LOG_PREFIX.length());
+			String withoutExtension = logname.substring(0, logname.length() - FILE_EXTENSION.length());
+			String rawNumber = withoutExtension.substring(EVENT_LOG_PREFIX.length());
 			int number = Integer.parseInt(rawNumber);
 			
 			max = Math.max(max, number);
 		}
 		
-		return max;
+		return max + 1;
 	}
 	
 	private FileWriter createFileWriter(String filename) {
@@ -104,6 +105,14 @@ public class FileLogger implements Closeable, Flushable {
 			eventFileWriter.append(line).append("\n");
 		} catch (IOException e) {
 			System.err.println("Failed to run event logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+		try {
+			eventFileWriter.flush();
+		} catch (IOException e) {
+			System.err.println("Failed to flush event logger");
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}

@@ -53,7 +53,7 @@ import team.gif.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
-    public static final boolean isCompBot = true;
+    public static final boolean isCompBot = false;
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
@@ -105,10 +105,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
         tabsetup();
-        robotContainer = new RobotContainer();
         limelight = new Limelight();
 
         pdp = new PowerDistribution();
@@ -161,7 +158,7 @@ public class Robot extends TimedRobot {
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
         shuffleboardTab.add("ResetHead", new ResetHeading());
-        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
+//        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
 
         // Shooter
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
@@ -224,6 +221,12 @@ public class Robot extends TimedRobot {
         logger.addMetric("Climber_Velocity", climber::getVelocity);
         
         logger.init();
+
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.
+        logger.addEvent("INIT", "Start building container");
+        robotContainer = new RobotContainer();
+        logger.addEvent("INIT", "End building container");
     }
 
     /**
@@ -266,15 +269,8 @@ public class Robot extends TimedRobot {
         drivetrain.resetPose();
         logger.addEvent("AUTO", "Reset sensors");
 
-        // Why are we doing this
-        autonomousCommand = robotContainer.getAutonomousCommand();
+        autonomousCommand = robotContainer.getAutonomousCommand(chosenAuto);
         logger.addEvent("AUTO", "Got command from container");
-
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-            autonomousCommand.schedule();
-            logger.addEvent("AUTO", "Scheduled dummy auto command");
-        }
 
         Globals.autonomousModeActive = true;
         indexCommand.schedule();
@@ -288,7 +284,6 @@ public class Robot extends TimedRobot {
         compressor.disable();
 
         runAutoScheduler = true;
-        updateAuto();
     }
 
     /**
@@ -300,7 +295,7 @@ public class Robot extends TimedRobot {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
-                logger.addEvent("AUTO", "Scheduled actual auto command");
+                logger.addEvent("AUTO", "Scheduled auto command");
             }
             runAutoScheduler = false;
             elapsedTime.stop();
@@ -393,33 +388,5 @@ public class Robot extends TimedRobot {
         autoTab.add("Delay", delayChooser)
                 .withPosition(0,0)
                 .withSize(1,1);
-
-        // calibration information
-        // RGB_Shuffleboard
-//    calibrationTab = Shuffleboard.getTab("Calibration");          // adds the calibration tab to the shuffleboard (getTab creates if not exist)
-//    Shuffleboard.getTab("Calibration").add("Red",0);    // adds the Red text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Green",0);  // adds the Green text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Blue",0);   // adds the Blue text box, persists over power down
-    }
-
-    public void updateAuto() {
-
-        if(chosenAuto == autoMode.MOBILITY){
-            autonomousCommand = new Mobility();
-        } else if (chosenAuto == autoMode.TWO_BALL_LEFT){
-            autonomousCommand = new TwoBallLeft();
-        } else if (chosenAuto == autoMode.TWO_BALL_RIGHT){
-            autonomousCommand = new TwoBallRight();
-        } else if (chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
-            autonomousCommand = new ThreeBallTerminalMiddle();
-        } else if (chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new ThreeBallTerminalRight();
-        } else if (chosenAuto == autoMode.FOUR_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new FourBallTerminalRight();
-        } else if (chosenAuto == autoMode.FIVE_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new FiveBallTerminalRight();
-        } else if (chosenAuto == null) {
-            System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
-        }
     }
 }

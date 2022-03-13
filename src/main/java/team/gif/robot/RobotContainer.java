@@ -6,9 +6,13 @@ package team.gif.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import team.gif.lib.autoMode;
 import team.gif.robot.commands.ExampleCommand;
+import team.gif.robot.commands.autos.*;
 import team.gif.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import java.util.HashMap;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,15 +21,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 
-    private final ExampleCommand autoCommand = new ExampleCommand(exampleSubsystem);
+    private HashMap<autoMode, Command> autoCommands = new HashMap<>();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
+        buildAutoCommands();
     }
 
     /**
@@ -36,13 +39,28 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {}
 
+    private void buildAutoCommands() {
+        autoCommands.put(autoMode.MOBILITY, new Mobility());
+        autoCommands.put(autoMode.TWO_BALL_LEFT, new TwoBallLeft());
+        autoCommands.put(autoMode.TWO_BALL_RIGHT, new TwoBallRight());
+        autoCommands.put(autoMode.THREE_BALL_TERMINAL_MIDDLE, new ThreeBallTerminalMiddle());
+        autoCommands.put(autoMode.THREE_BALL_TERMINAL_RIGHT, new ThreeBallTerminalRight());
+        autoCommands.put(autoMode.FOUR_BALL_TERMINAL_RIGHT, new FourBallTerminalRight());
+        autoCommands.put(autoMode.FIVE_BALL_TERMINAL_RIGHT, new FiveBallTerminalRight());
+    }
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
-    public Command getAutonomousCommand() {
-        // An ExampleCommand will run in autonomous
-        return autoCommand;
+    public Command getAutonomousCommand(autoMode chosenAuto) {
+        Command autonomousCommand = autoCommands.get(chosenAuto);
+
+        if (chosenAuto == null) {
+            System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
+        }
+
+        return autonomousCommand;
     }
 }
