@@ -6,11 +6,15 @@ package team.gif.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import team.gif.lib.autoMode;
-import team.gif.robot.commands.ExampleCommand;
-import team.gif.robot.commands.autos.*;
-import team.gif.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.lib.autoMode;
+import team.gif.robot.commands.autos.FiveBallTerminalRight;
+import team.gif.robot.commands.autos.FourBallTerminalRight;
+import team.gif.robot.commands.autos.Mobility;
+import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
+import team.gif.robot.commands.autos.ThreeBallTerminalRight;
+import team.gif.robot.commands.autos.TwoBallLeft;
+import team.gif.robot.commands.autos.TwoBallRight;
 
 import java.util.HashMap;
 

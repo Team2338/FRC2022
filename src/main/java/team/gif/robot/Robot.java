@@ -16,13 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.lib.logging.FileLogger;
-import team.gif.robot.commands.autos.FiveBallTerminalRight;
-import team.gif.robot.commands.autos.FourBallTerminalRight;
-import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
-import team.gif.robot.commands.autos.ThreeBallTerminalRight;
-import team.gif.robot.commands.autos.TwoBallLeft;
-import team.gif.robot.commands.autos.TwoBallRight;
 import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
@@ -134,7 +127,6 @@ public class Robot extends TimedRobot {
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
-//        myPigeon = new Pigeon(Drivetrain.rightTalon2);
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
         shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
@@ -172,54 +164,7 @@ public class Robot extends TimedRobot {
         oi = new OI();
         
         logger = new FileLogger();
-        
-        // Shooter
-        logger.addMetric("Shooter_Velocity", shooter::getSpeed);
-        logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
-        logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
-        
-        // Drivetrain
-        logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
-        logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
-        logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
-        logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
-        
-        logger.addMetric("DriveLeft1_Voltage_Out", drivetrain::getOutputVoltageL1);
-        logger.addMetric("DriveLeft2_Voltage_Out", drivetrain::getOutputVoltageL2);
-        logger.addMetric("DriveRight1_Voltage_Out", drivetrain::getOutputVoltageR1);
-        logger.addMetric("DriveRight2_Voltage_Out", drivetrain::getOutputVoltageR2);
-        
-        logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
-        logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
-        logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
-        logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
-        
-        logger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
-        logger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
-        logger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
-        logger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
-        
-        logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
-        logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
-        logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
-        logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
-        logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
-        logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
-        
-        // PDP and Compressor
-        logger.addMetric("PDP_Voltage", pdp::getVoltage);
-        logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
-        logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
-        logger.addMetric("Compressor_Current", compressor::getCurrent);
-        
-        // Climber
-        logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
-        logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
-        logger.addMetric("Climber_Current_In", climber::getInputCurrent);
-        logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
-        logger.addMetric("Climber_Percent", climber::getOutputPercent);
-        logger.addMetric("Climber_Velocity", climber::getVelocity);
-        
+        addMetricsToLogger();
         logger.init();
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -344,6 +289,45 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {}
+    
+    public void addMetricsToLogger() {
+        // Shooter
+        logger.addMetric("Shooter_Velocity", shooter::getSpeed);
+        logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
+        logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
+    
+        // Drivetrain
+        logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
+        logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
+        logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
+        logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
+    
+        logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
+        logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
+        logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
+        logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
+    
+        logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
+        logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
+        logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
+        logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
+    
+        logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
+        logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
+    
+        // PDP and Compressor
+        logger.addMetric("PDP_Voltage", pdp::getVoltage);
+        logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
+        logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
+    
+        // Climber
+        logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
+        logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
+        logger.addMetric("Climber_Current_In", climber::getInputCurrent);
+        logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
+        logger.addMetric("Climber_Percent", climber::getOutputPercent);
+        logger.addMetric("Climber_Velocity", climber::getVelocity);
+    }
 
     public void tabsetup(){
 
@@ -356,12 +340,6 @@ public class Robot extends TimedRobot {
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Five Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
-//        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
-//        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
-////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
-////    autoModeChooser.addOption("Slalom", autoMode.SLALOM);
-////    autoModeChooser.addOption("Bounce", autoMode.BOUNCE);
-//        autoModeChooser.setDefaultOption("6 Ball Auto", autoMode.SAFE_6_BALL);
 
         autoTab.add("Auto Select",autoModeChooser)
                 .withWidget(BuiltInWidgets.kComboBoxChooser)
