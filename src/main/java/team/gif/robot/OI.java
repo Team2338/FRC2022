@@ -1,7 +1,6 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
@@ -155,8 +154,8 @@ public class OI {
         //-aDPadDown.whenPressed(new CollectorDown());
         aB.whenPressed(new CollectorUp());
         aA.whenPressed(new CollectorDown());
-        aBack.whenPressed(new FangsForward());
-        aStart.whenPressed(new FangsBack());
+        aBack.whenPressed(new FangsOut());
+        aStart.whenPressed(new FangsIn());
     }
 
     public void setRumble(boolean rumble) {

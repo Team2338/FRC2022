@@ -304,17 +304,11 @@ public class Robot extends TimedRobot {
 
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
-        autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
-        autoModeChooser.addOption("Three Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
+        autoModeChooser.setDefaultOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
+        autoModeChooser.addOption("Three+ Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
+        autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Three Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Five Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
-//        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
-//        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
-////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
-////    autoModeChooser.addOption("Slalom", autoMode.SLALOM);
-////    autoModeChooser.addOption("Bounce", autoMode.BOUNCE);
-//        autoModeChooser.setDefaultOption("6 Ball Auto", autoMode.SAFE_6_BALL);
 
         autoTab.add("Auto Select",autoModeChooser)
                 .withWidget(BuiltInWidgets.kComboBoxChooser)

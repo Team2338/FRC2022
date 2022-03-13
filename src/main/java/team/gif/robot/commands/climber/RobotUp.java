@@ -33,16 +33,16 @@ public class RobotUp extends CommandBase {
     @Override
     public void execute() {
         double climberPos = Robot.climber.getPosition();
-        if( climberPos < Constants.Climber.ROBOT_UP_POSITION) {
+        if( climberPos < Constants.Climber.ROBOT_UP_POSITION) { // robot is near bar and hanging. Need to apply small voltage to overcome gravity.
             isHoldState = true;
         }
 
-        if( climberPos < 100 ) {
+        if( climberPos < 100 ) { // don't allow the climber to go below 100 ticks
             Robot.climber.setSpeed(0);
             return;
         }
 
-        if( isHoldState ) {
+        if( isHoldState ) { // robot is near bar and hanging. Need to apply small voltage to overcome gravity.
             Robot.climber.setSpeed(Constants.Climber.HOLD_LOADED_VOLTAGE);
             return;
         }

@@ -21,7 +21,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-4.5, 0, 0.0)
+                new Pose2dFeet().set(-4.5, 0, 0.0) // 1st cargo location
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -35,7 +35,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-4.5, 0, 0),
-                new Pose2dFeet().set(-6.5, 0, -10)
+                new Pose2dFeet().set(-6.5, 0, -10) // shooting position
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -48,7 +48,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-6.5, 0, -10),
-                new Pose2dFeet().set(-17.0, 4, 0)
+                new Pose2dFeet().set(-17.0, 4, 0) // 2nd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverse
         );
@@ -62,7 +62,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-17.0, 4, 0),
-                new Pose2dFeet().set(-6.0, 2, -5) // I don't know why this is -25, should be -10
+                new Pose2dFeet().set(-6.0, 2, -5) // shooting position
             ),
             RobotTrajectory.getInstance().configForwardFast
         );

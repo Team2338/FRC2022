@@ -9,11 +9,14 @@ public class RapidFire extends CommandBase {
 
     public RapidFire() {
         super();
+        // can't use addRequirements here because in auto, once rapid fire runs, it will
+        // take over the indexer, and then the indexer doesn't run again
         //addRequirements(Robot.indexer);
     }
 
     @Override
     public void initialize() {
+        // turn off indexer with flag (doesn't kill indexer, simply disables it during RapidFire
         Globals.indexerEnabled = false;
     }
 

@@ -10,11 +10,11 @@ public class ClimberPneumatics extends SubsystemBase {
 
 	private static final DoubleSolenoid fangs = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_FANG_FORWARD, RobotMap.SOLENOID_FANG_REVERSE);
 
-	public void setFangsForward() {
+	public void setFangsOut() {
 		fangs.set(DoubleSolenoid.Value.kForward);
 	}
 
-	public void setFangsBack() {
+	public void setFangsIn() {
 		fangs.set(DoubleSolenoid.Value.kReverse);
 	}
 }

@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
-public class FangsBack extends CommandBase {
+public class FangsOut extends CommandBase {
 
-    public FangsBack() {
+    public FangsOut() {
         super();
         addRequirements(Robot.climberPneumatics);
     }
@@ -18,7 +18,7 @@ public class FangsBack extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.climberPneumatics.setFangsBack();
+        Robot.climberPneumatics.setFangsOut();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

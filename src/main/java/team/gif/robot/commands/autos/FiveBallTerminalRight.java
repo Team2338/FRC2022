@@ -23,7 +23,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-3.4, 0.0, 0.0) //4.5 original
+                new Pose2dFeet().set(-3.4, 0.0, 0.0) // 1st cargo location
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -38,7 +38,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
             List.of(
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
                 new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
-                new Pose2dFeet().set(-2.5, 8.0, 20.0) // 1st cargo location
+                new Pose2dFeet().set(-2.5, 8.0, 20.0) // 2nd cargo location
             ),
             RobotTrajectory.getInstance().configReverse
         );
@@ -51,7 +51,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-1.5, 8.0, 15.0),
-                new Pose2dFeet().set(-2.5,21,45.0) // 2nd cargo (terminal) location
+                new Pose2dFeet().set(-2.5,21,45.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverseFast
         );

@@ -14,7 +14,6 @@ public class Climber extends SubsystemBase {
 
     private static final TalonSRX hangMotor = new TalonSRX(RobotMap.MOTOR_HANGER);
 
-
     public Climber() {
         super();
         hangMotor.setInverted(true);

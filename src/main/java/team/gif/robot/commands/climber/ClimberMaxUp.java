@@ -32,8 +32,8 @@ public class ClimberMaxUp extends CommandBase {
     public void execute() {
         Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
 
-        if(Robot.climber.getPosition() > 3000){
-            Robot.climberPneumatics.setFangsForward();
+        if(Robot.climber.getPosition() > Constants.Climber.RELEASE_FANGS_POSITION){
+            Robot.climberPneumatics.setFangsOut();
         }
     }
 
