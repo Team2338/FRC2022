@@ -3,6 +3,7 @@ package team.gif.lib.logging;
 import edu.wpi.first.wpilibj.Timer;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.Flushable;
 import java.io.IOException;
@@ -24,8 +25,12 @@ public class FileLogger implements Closeable, Flushable {
 	
 	// Flush every 5 seconds (20ms per iteration * 250 iterations)
 	private static final int ITERATIONS_BETWEEN_FLUSHES = 250;
+	private static final String LOG_DIR = "/logs";
+	private static final String EVENT_LOG_PREFIX = "events";
+	private static final String FILE_EXTENSION = ".csv";
 	
 	private final FileWriter fw;
+	private final FileWriter eventFileWriter;
 	private final LinkedList<String> names = new LinkedList<>();
 	private final LinkedList<Supplier<String>> suppliers = new LinkedList<>();
 	private double initTime = 0;
@@ -35,19 +40,63 @@ public class FileLogger implements Closeable, Flushable {
 	 * Constructs a <code>FileLogger</code>.
 	 */
 	public FileLogger() {
+		int nextFileNumber = getNextFileNumber();
+		
+		String nextEventFileName = EVENT_LOG_PREFIX + nextFileNumber + FILE_EXTENSION;
+		this.eventFileWriter = createFileWriter(nextEventFileName);
+		
+		this.fw = createFileWriter("ViperLog.csv");
+		
+		addMetric("Time", () -> Timer.getFPGATimestamp() - initTime);
+	}
+	
+	private int getNextFileNumber() {
+		File logDir = new File(LOG_DIR);
+		String[] lognames = logDir.list((File dir, String name) -> name.startsWith(EVENT_LOG_PREFIX));
+		
+		if (lognames == null) {
+			System.err.println("Failed to read log directory");
+			return 0;
+		}
+		
+		int max = 0;
+		for (String logname : lognames) {
+			String rawNumber = logname.substring(EVENT_LOG_PREFIX.length());
+			int number = Integer.parseInt(rawNumber);
+			
+			max = Math.max(max, number);
+		}
+		
+		return max;
+	}
+	
+	private FileWriter createFileWriter(String filename) {
 		FileWriter fw;
 		try {
-			fw = new FileWriter("/logs/ViperLog.csv");
+			fw = new FileWriter(LOG_DIR + "/" + filename);
 		} catch (IOException e) {
-			System.err.println("Failed to create logger");
+			System.err.println("Failed to create " + filename);
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			
 			fw = null;
 		}
 		
-		this.fw = fw;
-		addMetric("Time", () -> Timer.getFPGATimestamp() - initTime);
+		return fw;
+	}
+	
+	public void addEvent(String event) {
+		if (eventFileWriter == null) {
+			return;
+		}
+		
+		try {
+			eventFileWriter.append(event).append("\n");
+		} catch (IOException e) {
+			System.err.println("Failed to run event logger");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
