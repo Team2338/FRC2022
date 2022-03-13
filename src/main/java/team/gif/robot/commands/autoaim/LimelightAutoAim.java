@@ -41,6 +41,31 @@ public class LimelightAutoAim extends CommandBase {
         double distanceFromHub;
 
         if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
+        //inches
+        distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+
+        //distance zones //more accurate than rohan (TM)
+        //we want the shooter to start revving up so as soon as robot settles, it can shoot.
+        if (distanceFromHub >= 200) { // Far Shot
+            Robot.hood.setHoodUp();
+            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
+            System.out.println("Distance - Far: " + distanceFromHub);
+
+        } else if (distanceFromHub >= 100) { // LaunchPad shot
+            Robot.hood.setHoodUp();
+            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
+            System.out.println("Distance - Launch: " + distanceFromHub);
+
+        } else if (distanceFromHub >= 50) { // Ring shot
+            Robot.hood.setHoodUp();
+            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_RING_UPPER_HUB);
+            System.out.println("Distance - Ring: " + distanceFromHub);
+
+        } else {
+            Robot.hood.setHoodDown(); // fender shot
+            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
+            System.out.println("Distance - Fender: " + distanceFromHub);
+        }
 
         // bot must not be moving anymore
         if (!robotHasSettled) {
@@ -50,32 +75,8 @@ public class LimelightAutoAim extends CommandBase {
                 System.out.println("AutoFire: Robot has settled");
             }
         }
-        if(robotHasSettled){ // Noe: can't combine this using else because robotHasSettled can be set to true in the above section
+        if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
             if (targetLocked) {
-                //inches
-                distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
-
-                //distance zones //more accurate than rohan (TM)
-                if (distanceFromHub >= 200) { // Far Shot
-                    Robot.hood.setHoodUp();
-                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
-                    System.out.println("Distance - Far: " + distanceFromHub);
-
-                } else if (distanceFromHub >= 100) { // LaunchPad shot
-                    Robot.hood.setHoodUp();
-                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
-                    System.out.println("Distance - Launch: " + distanceFromHub);
-
-                } else if (distanceFromHub >= 50) { // Ring shot
-                    Robot.hood.setHoodUp();
-                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_RING_UPPER_HUB);
-                    System.out.println("Distance - Ring: " + distanceFromHub);
-
-                } else {
-                    Robot.hood.setHoodDown(); // fender shot
-                    Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
-                    System.out.println("Distance - Fender: " + distanceFromHub);
-                }
             }
 
             //shoot
