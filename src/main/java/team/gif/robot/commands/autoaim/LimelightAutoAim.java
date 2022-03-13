@@ -42,7 +42,6 @@ public class LimelightAutoAim extends CommandBase {
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
         // distance zones //more accurate than rohan (TM)
-        // inches
         double distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
         if (distanceFromHub >= feetToInches(16,8)) { // Far Shot
             Robot.hood.setHoodUp();
@@ -134,7 +133,7 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public boolean isFinished() {return false;}
 
-    public double feetToInches(double feet, double inches){
+    private double feetToInches(double feet, double inches){
         return feet*12 + inches;
     }
 }
