@@ -40,7 +40,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
                 new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
                 new Pose2dFeet().set(-1.5, 8.0, 100.0), // 2nd cargo location
-                new Pose2dFeet().set(-1.5,10.0,33.0)
+                new Pose2dFeet().set(-1.5,13.0,55.0)
             ),
             RobotTrajectory.getInstance().configReverse
         );
@@ -52,8 +52,8 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command pickupTerminal() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-9.75,6.0,-5.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-1.5, 13.0, 55.0),
+                new Pose2dFeet().set(-5.5,21.0,43.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverseFast
         );
@@ -66,8 +66,8 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-9.75, 6.0, -5.0),
-                new Pose2dFeet().set(0.0, 4.0, -10.0) // shooting location
+                new Pose2dFeet().set(-5.5, 21.0, 43.0),
+                new Pose2dFeet().set(0.0, 13.0, 55.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
@@ -99,12 +99,11 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new WaitCommand(1.75).andThen(new CollectorRun())
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB+500).withTimeout(1.0),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB+700).withTimeout(1.2),
                 new HoodUp(),
                 new CollectorRun().withTimeout(0.5),
                 new RapidFire()
             ),
-            new ResetHeading(),
             new ParallelDeadlineGroup(
                 pickupTerminal(),
                 new WaitCommand(2.5).andThen(new CollectorRun())
