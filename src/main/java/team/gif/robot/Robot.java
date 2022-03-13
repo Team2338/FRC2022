@@ -20,6 +20,7 @@ import team.gif.robot.commands.autos.Mobility;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBallLeft;
+import team.gif.robot.commands.autos.TwoBallMiddle;
 import team.gif.robot.commands.autos.TwoBallRight;
 import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.ResetClimber;
@@ -305,10 +306,11 @@ public class Robot extends TimedRobot {
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
         autoModeChooser.setDefaultOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
+        autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);
         autoModeChooser.addOption("Three+ Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
         autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Five Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
+        autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
 
         autoTab.add("Auto Select",autoModeChooser)
                 .withWidget(BuiltInWidgets.kComboBoxChooser)
@@ -352,7 +354,9 @@ public class Robot extends TimedRobot {
             autonomousCommand = new TwoBallLeft();
         } else if(chosenAuto == autoMode.TWO_BALL_RIGHT){
             autonomousCommand = new TwoBallRight();
-        } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
+        } else if(chosenAuto == autoMode.TWO_BALL_MIDDLE){
+            autonomousCommand = new TwoBallMiddle();
+        }else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
             autonomousCommand = new ThreeBallTerminalMiddle();
         }else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
             autonomousCommand = new ThreeBallTerminalRight();
