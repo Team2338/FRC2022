@@ -63,7 +63,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
     }
 
     public FourBallTerminalRight() {
-
+        Robot.logger.addEvent("AUTO", "Began constructing 4 ball auto");
         addCommands(
             new CollectorDown(),
             new ParallelDeadlineGroup(
@@ -92,5 +92,6 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 new RapidFire()
             )
         );
+        Robot.logger.addEvent("AUTO", "Finished constructing 4 ball auto");
     }
 }

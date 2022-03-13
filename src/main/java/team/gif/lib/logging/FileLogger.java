@@ -47,7 +47,7 @@ public class FileLogger implements Closeable, Flushable {
 		
 		this.fw = createFileWriter("ViperLog.csv");
 		
-		addMetric("Time", () -> Timer.getFPGATimestamp() - initTime);
+		addMetric("Time", this::getCurrentTime);
 	}
 	
 	private int getNextFileNumber() {
@@ -85,13 +85,23 @@ public class FileLogger implements Closeable, Flushable {
 		return fw;
 	}
 	
-	public void addEvent(String event) {
+	private double getCurrentTime() {
+		return Timer.getFPGATimestamp() - initTime;
+	}
+	
+	private String formatDouble(double number) {
+		return String.format("%.2f", number);
+	}
+	
+	public void addEvent(String mode, String event) {
 		if (eventFileWriter == null) {
 			return;
 		}
 		
+		String line = String.format("[%s] %s - %s", mode, getCurrentTime(), event);
+		
 		try {
-			eventFileWriter.append(event).append("\n");
+			eventFileWriter.append(line).append("\n");
 		} catch (IOException e) {
 			System.err.println("Failed to run event logger");
 			System.err.println(e.getMessage());
@@ -106,7 +116,7 @@ public class FileLogger implements Closeable, Flushable {
 	 * @param supplier A function to retrieve the metric value
 	 */
 	public void addMetric(String name, DoubleSupplier supplier) {
-		addMetric(name, () -> String.format("%.2f", supplier.getAsDouble()));
+		addMetric(name, () -> this.formatDouble(supplier.getAsDouble()));
 	}
 	
 	/**

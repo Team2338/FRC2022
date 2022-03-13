@@ -45,7 +45,6 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
-import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -62,7 +61,7 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
-    private static FileLogger logger;
+    public static FileLogger logger;
 
     private final SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
     private final SendableChooser<delay> delayChooser = new SendableChooser<>();
@@ -83,7 +82,6 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
-//    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
@@ -262,15 +260,20 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        logger.addEvent("AUTO", "Auto Init");
         drivetrain.resetPigeon();
         drivetrain.resetEncoders();
         drivetrain.resetPose();
+        logger.addEvent("AUTO", "Reset sensors");
 
+        // Why are we doing this
         autonomousCommand = robotContainer.getAutonomousCommand();
+        logger.addEvent("AUTO", "Got command from container");
 
         // schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
+            logger.addEvent("AUTO", "Scheduled dummy auto command");
         }
 
         Globals.autonomousModeActive = true;
@@ -297,6 +300,7 @@ public class Robot extends TimedRobot {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
+                logger.addEvent("AUTO", "Scheduled actual auto command");
             }
             runAutoScheduler = false;
             elapsedTime.stop();
