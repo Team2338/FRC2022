@@ -75,16 +75,10 @@ public class LimelightAutoAim extends CommandBase {
                 System.out.println("AutoFire: Robot has settled");
             }
         }
+
         if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
             if (targetLocked) {
-            }
 
-            //shoot
-            if (Robot.shooter.isInTolerance() && targetLocked) {
-                Robot.indexer.setBeltMotorSpeedPercent(1.0);
-                Robot.indexer.setMidMotorSpeed(1.0);
-            }
-            
             double offset = Robot.limelight.getXOffset();
 
             // we need to check again to make sure the robot hasn't overshot the target
