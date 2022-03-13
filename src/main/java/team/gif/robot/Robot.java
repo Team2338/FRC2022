@@ -217,6 +217,14 @@ public class Robot extends TimedRobot {
         logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
         logger.addMetric("Compressor_Current", compressor::getCurrent);
         
+        // Climber
+        logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
+        logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
+        logger.addMetric("Climber_Current_In", climber::getInputCurrent);
+        logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
+        logger.addMetric("Climber_Percent", climber::getOutputPercent);
+        logger.addMetric("Climber_Velocity", climber::getVelocity);
+        
         logger.init();
     }
 
