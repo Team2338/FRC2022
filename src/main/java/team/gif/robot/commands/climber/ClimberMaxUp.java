@@ -23,14 +23,16 @@ public class ClimberMaxUp extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        Robot.collectorPneumatics.collectorLower();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
 
-        if(Robot.climber.getPosition() > 1000){
+        if(Robot.climber.getPosition() > 3000){
             Robot.climberPneumatics.setFangsForward();
         }
     }

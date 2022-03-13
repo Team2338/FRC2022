@@ -38,7 +38,7 @@ public class RevFlywheel extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         //Robot.shooter.setSpeedPercent(0);
-        Robot.limelight.setLEDMode(1);//force off
+        Robot.limelight.setLEDMode(0);//force off
 
         // this is used to inform RapidFire to stop running the belt
         // otherwise, RapidFire will continue to run the belt after the
