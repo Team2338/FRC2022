@@ -29,7 +29,6 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon1.enableCurrentLimit(false);
         Drivetrain.rightTalon2.enableCurrentLimit(false);
 
-
         targetLocked = false;
         
         Globals.indexerEnabled = false;
@@ -51,35 +50,31 @@ public class LimelightAutoAim extends CommandBase {
                 System.out.println("AutoFire: Robot has settled");
             }
         }
-        if(robotHasSettled){
+        if(robotHasSettled){ // Noe: can't combine this using else because robotHasSettled can be set to true in the above section
             if (targetLocked) {
                 //inches
                 distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
 
                 //distance zones //more accurate than rohan (TM)
-                //Far Shot
-                if (distanceFromHub >= 200) {
+                if (distanceFromHub >= 200) { // Far Shot
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
-                    //System.out.println("distanceFromHubT: " + distanceFromHub);
+                    System.out.println("Distance - Far: " + distanceFromHub);
 
-                    //LaunchPad
-                } else if (distanceFromHub >= 100) {
+                } else if (distanceFromHub >= 100) { // LaunchPad shot
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
-                    //System.out.println("distanceFromHubL: " + distanceFromHub);
+                    System.out.println("Distance - Launch: " + distanceFromHub);
 
-                    //ring
-                } else if (distanceFromHub >= 50) {
+                } else if (distanceFromHub >= 50) { // Ring shot
                     Robot.hood.setHoodUp();
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_RING_UPPER_HUB);
-                    //System.out.println("distanceFromHubR: " + distanceFromHub);
+                    System.out.println("Distance - Ring: " + distanceFromHub);
 
-                    //fender
                 } else {
-                    Robot.hood.setHoodDown();
+                    Robot.hood.setHoodDown(); // fender shot
                     Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
-                    //System.out.println("distanceFromHubF: " + distanceFromHub);
+                    System.out.println("Distance - Fender: " + distanceFromHub);
                 }
             }
 
@@ -98,19 +93,19 @@ public class LimelightAutoAim extends CommandBase {
                     Robot.indexer.setMidMotorSpeed(1.0);
 
                 } else {
-                    System.out.println("Offset Adjusting at: " + Robot.limelight.getXOffset());
+                    System.out.println("Offset Adjusting at: " + offset);
                     // need to relock
                     targetLocked = false;
                     robotHasSettled = false;
                 }
             } else {
-                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
+                if (offset > -1.0 && offset < 1.0) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
-                } else if (Robot.limelight.getXOffset() < 0) {
+                } else if (offset < 0) { // still not in tolerance, need to rotate
                     Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
-                } else {
+                } else { // still not in tolerance, need to rotate
                     Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 }
