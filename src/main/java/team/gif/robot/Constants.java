@@ -68,7 +68,7 @@ public final class Constants {
         public static final double LIMELIGHT_HEIGHT = 36.5 ;
         public static final double UPPER_HUB_HEIGHT = 96.0;
 
-        public static final double MAX_PIVOT_VOLTS = 3.3;
+        public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
     }
 
     public static class Indexer {
@@ -89,8 +89,8 @@ public final class Constants {
 
         public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
-        public static final double MAX_POSITION = 24000;
-        public static final double ROBOT_UP_POSITION = 1000;
+        public static final double MAX_POSITION = 23500; //24000;
+        public static final double ROBOT_UP_POSITION = 500;
         public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 18000;
         public static final double RELEASE_FANGS_POSITION = 3000;
 

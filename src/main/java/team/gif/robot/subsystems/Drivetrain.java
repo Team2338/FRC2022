@@ -1,8 +1,6 @@
 package team.gif.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -37,7 +35,8 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static int maxCurrentAmps = 10;
+    private static final int maxContinuousCurrentAmps = 15;
+    private static final int maxPeakCurrentAmps = 20;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -117,15 +116,15 @@ public class Drivetrain extends SubsystemBase {
 
     public void currentLimitingSetup(){
 
-        leftTalon1.configContinuousCurrentLimit(maxCurrentAmps);
-        leftTalon2.configContinuousCurrentLimit(maxCurrentAmps);
-        rightTalon1.configContinuousCurrentLimit(maxCurrentAmps);
-        rightTalon2.configContinuousCurrentLimit(maxCurrentAmps);
+        leftTalon1.configContinuousCurrentLimit(maxContinuousCurrentAmps);
+        leftTalon2.configContinuousCurrentLimit(maxContinuousCurrentAmps);
+        rightTalon1.configContinuousCurrentLimit(maxContinuousCurrentAmps);
+        rightTalon2.configContinuousCurrentLimit(maxContinuousCurrentAmps);
 
-        leftTalon1.configPeakCurrentLimit(0);
-        leftTalon2.configPeakCurrentLimit(0);
-        rightTalon1.configPeakCurrentLimit(0);
-        rightTalon2.configPeakCurrentLimit(0);
+        leftTalon1.configPeakCurrentLimit(maxPeakCurrentAmps);
+        leftTalon2.configPeakCurrentLimit(maxPeakCurrentAmps);
+        rightTalon1.configPeakCurrentLimit(maxPeakCurrentAmps);
+        rightTalon2.configPeakCurrentLimit(maxPeakCurrentAmps);
 
     }
 

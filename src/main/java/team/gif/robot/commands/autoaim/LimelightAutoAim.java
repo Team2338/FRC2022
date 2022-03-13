@@ -48,7 +48,7 @@ public class LimelightAutoAim extends CommandBase {
             Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
             System.out.println("Distance - Far: " + distanceFromHub);
 
-        } else if (distanceFromHub >= 100) { // LaunchPad shot
+        } else if (distanceFromHub >= 130) { // LaunchPad shot
             Robot.hood.setHoodUp();
             Robot.shooter.setSpeedPID(Constants.Shooter.RPM_LAUNCHPAD);
             System.out.println("Distance - Launch: " + distanceFromHub);
@@ -99,10 +99,10 @@ public class LimelightAutoAim extends CommandBase {
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else if (offset < 0) { // still not in tolerance, need to rotate
-                    Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
+                    Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 } else { // still not in tolerance, need to rotate
-                    Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
+                    Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 }
             }

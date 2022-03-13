@@ -31,4 +31,8 @@ public class Collector extends SubsystemBase {
     public void setSpeedPercentEntry(double percent) {
         entryMotor.set(percent);
     }
+
+    public void zeroEncoder() {
+        collectorMotor.setSelectedSensorPosition(0);
+    }
 }
