@@ -24,7 +24,7 @@ public class IndexCollectorToMid extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.indexer.setMidMotorSpeed(0.8);
+        Robot.indexer.setMidMotorSpeed(1.0);
         Robot.collector.setSpeedPercentEntry(0.6);
 //+        Robot.indexer.setEntryMotorSpeed(0.7);
     }
