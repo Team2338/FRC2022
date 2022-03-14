@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
 
     public static DriveArcade arcadeDrive;
-    public static DriveTank tankDrive;
+//    public static DriveTank tankDrive;
 
     // Creating a new tab in shuffleboard.
     public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022");
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
         collectorPneumatics = new CollectorPneumatics();
         climberPneumatics = new ClimberPneumatics();
 
-        tankDrive = new DriveTank();
+//        tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
         indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
