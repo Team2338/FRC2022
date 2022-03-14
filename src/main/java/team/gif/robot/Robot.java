@@ -4,24 +4,16 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.lib.logging.FileLogger;
 import team.gif.robot.commands.climber.ClimberManualControl;
-import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
-import team.gif.robot.commands.drivetrain.ResetHeading;
-import team.gif.robot.commands.exampleShuffleboardEntryCommand;
-import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
@@ -39,6 +31,8 @@ import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
 
+import java.util.Map;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -54,10 +48,8 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
+    public static UI ui;
     public static FileLogger logger;
-
-    private final SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    private final SendableChooser<delay> delayChooser = new SendableChooser<>();
 
     private autoMode chosenAuto;
     private delay chosenDelay;
@@ -73,24 +65,16 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
-    public static NetworkTableEntry exampleShuffleboardEntry;
-    public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
 
-    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test"); // Create a new tab in shuffleboard.
-    public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
-    // TS: the value of the something what is changing,(Example PID control).
-    public static double exampleShuffleboardEntrySyncValue;
-    // TS: the value is getting the getEntry number
-    public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
-
-    // ts: variables to getEntry RPM
-    public static NetworkTableEntry shooterRpmGetEntry;
-    public static double shooterRpm;
-    public static double shooterRpmSync;
-    public setShooterRpmCommand shooterRpmCommand;
+    // Creating a new tab in shuffleboard.
+    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022");
+    public static ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
+            .getLayout("Sensors", BuiltInLayouts.kGrid)
+            .withSize(1,3) // make the widget 2x1
+            .withProperties(Map.of("Label","HIDDEN")); //place it in the top-left cornor
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -98,7 +82,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        tabsetup();
         limelight = new Limelight();
 
         pdp = new PowerDistribution();
@@ -121,45 +104,10 @@ public class Robot extends TimedRobot {
         drivetrain.setDefaultCommand(arcadeDrive);
         climber.setDefaultCommand(new ClimberManualControl());
 
-        // TS: getting the submit button when you click the commend.
-        exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
+        limelight.setLEDMode(1);//force off
 
-        shooterRpm = shooter.getSpeed();
-        shooterRpmSync = shooterRpm;
-        shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
-        shooterRpmCommand = new setShooterRpmCommand();
-
-//        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
-
-        // TS: add an getEntry tab in shuffleboard
-        exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
-                .getEntry();
-        // TS: add the example input submit button to the shuffleboard.
-        //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
-        //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
-
-        // Indexer logging
-        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
-        shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
-        shuffleboardTab.add(indexer);
-        shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
-        shuffleboardTab.add("Climber", new ResetClimber());
-        shuffleboardTab.add("ResetHead", new ResetHeading());
-//        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
-
-        // Shooter
-        shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
-        shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
-
-        //ts: switching drives mode
-        shuffleboardTab.add("Tank Drive", new DriveTank());
-        shuffleboardTab.add("Arcade Drive", new DriveArcade());
-
-        limelight.setLEDMode(1); // Force off
         oi = new OI();
-        
+        ui = new UI();
         logger = new FileLogger();
         addMetricsToLogger();
         logger.init();
@@ -185,8 +133,9 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        chosenAuto = autoModeChooser.getSelected();
-        chosenDelay = delayChooser.getSelected();
+
+        chosenAuto = ui.autoModeChooser.getSelected();
+        chosenDelay = ui.delayChooser.getSelected();
     }
 
     /**
@@ -256,7 +205,6 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-//        oi = new OI();
         compressor.enableDigital();
         indexCommand.schedule();
     }
@@ -324,45 +272,5 @@ public class Robot extends TimedRobot {
         logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
         logger.addMetric("Climber_Percent", climber::getOutputPercent);
         logger.addMetric("Climber_Velocity", climber::getVelocity);
-    }
-
-    public void tabsetup(){
-
-        autoTab = Shuffleboard.getTab("PreMatch");
-
-        autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
-        autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
-        autoModeChooser.setDefaultOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
-        autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);
-        autoModeChooser.addOption("Three+ Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
-        autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
-
-        autoTab.add("Auto Select",autoModeChooser)
-                .withWidget(BuiltInWidgets.kComboBoxChooser)
-                .withPosition(1,0)
-                .withSize(2,1);
-
-        delayChooser.setDefaultOption("0", delay.DELAY_0);
-        delayChooser.addOption("1", delay.DELAY_1);
-        delayChooser.addOption("2", delay.DELAY_2);
-        delayChooser.addOption("3", delay.DELAY_3);
-        delayChooser.addOption("4", delay.DELAY_4);
-        delayChooser.addOption("5", delay.DELAY_5);
-        delayChooser.addOption("6", delay.DELAY_6);
-        delayChooser.addOption("7", delay.DELAY_7);
-        delayChooser.addOption("8", delay.DELAY_8);
-        delayChooser.addOption("9", delay.DELAY_9);
-        delayChooser.addOption("10", delay.DELAY_10);
-        delayChooser.addOption("11", delay.DELAY_11);
-        delayChooser.addOption("12", delay.DELAY_12);
-        delayChooser.addOption("13", delay.DELAY_13);
-        delayChooser.addOption("14", delay.DELAY_14);
-        delayChooser.addOption("15", delay.DELAY_15);
-
-        autoTab.add("Delay", delayChooser)
-                .withPosition(0,0)
-                .withSize(1,1);
     }
 }
