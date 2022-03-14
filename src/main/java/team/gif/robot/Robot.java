@@ -7,6 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -14,14 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
-import team.gif.robot.commands.autos.FiveBallTerminalRight;
-import team.gif.robot.commands.autos.FourBallTerminalRight;
-import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
-import team.gif.robot.commands.autos.ThreeBallTerminalRight;
-import team.gif.robot.commands.autos.TwoBallLeft;
-import team.gif.robot.commands.autos.TwoBallMiddle;
-import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.lib.logging.FileLogger;
 import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveTank;
@@ -44,7 +38,6 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
-import team.gif.robot.subsystems.drivers.Pigeon;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -61,14 +54,16 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
+    public static FileLogger logger;
 
-    private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    private SendableChooser<delay> delayChooser = new SendableChooser<>();
+    private final SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
+    private final SendableChooser<delay> delayChooser = new SendableChooser<>();
 
     private autoMode chosenAuto;
     private delay chosenDelay;
-    private Timer elapsedTime = new Timer();
+    private final Timer elapsedTime = new Timer();
 
+    private static PowerDistribution pdp = null;
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
     public static ClimberPneumatics climberPneumatics = null;
@@ -80,20 +75,18 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
     public static NetworkTableEntry exampleShuffleboardEntry;
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
-//    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
     public static DriveTank tankDrive;
 
-    // T.S: Creating an new tab in shuffleboard.
-    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
+    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test"); // Create a new tab in shuffleboard.
     public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
     // TS: the value of the something what is changing,(Example PID control).
     public static double exampleShuffleboardEntrySyncValue;
     // TS: the value is getting the getEntry number
     public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
 
-    // ts: varibles to getEntry RPM
+    // ts: variables to getEntry RPM
     public static NetworkTableEntry shooterRpmGetEntry;
     public static double shooterRpm;
     public static double shooterRpmSync;
@@ -105,14 +98,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
         tabsetup();
-        robotContainer = new RobotContainer();
         limelight = new Limelight();
 
+        pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
-        compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
+        compressor = new Compressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
         collector = new Collector();
         climber = new Climber();
         indexer = new Indexer();
@@ -127,15 +118,12 @@ public class Robot extends TimedRobot {
 
         indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-//-        collectorPneumatics.setDefaultCommand(new CollectorUp());
-//        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
         climber.setDefaultCommand(new ClimberManualControl());
 
         // TS: getting the submit button when you click the commend.
         exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
 
-//        myPigeon = new Pigeon(Drivetrain.rightTalon2);
         shooterRpm = shooter.getSpeed();
         shooterRpmSync = shooterRpm;
         shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
@@ -150,41 +138,37 @@ public class Robot extends TimedRobot {
         //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
         //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
 
+        // Indexer logging
+        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
         shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
         shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
         shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
         shuffleboardTab.add(indexer);
         shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
         shuffleboardTab.add("Climber", new ResetClimber());
-        limelight.setLEDMode(1);//force off
         shuffleboardTab.add("ResetHead", new ResetHeading());
-        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
+//        shuffleboardTab.addNumber("Climber Pos", climber::getPosition);
 
+        // Shooter
         shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
-
         shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
 
         //ts: switching drives mode
         shuffleboardTab.add("Tank Drive", new DriveTank());
         shuffleboardTab.add("Arcade Drive", new DriveArcade());
 
-        // ts: command to getEntry RPM
-        shuffleboardTab.add("Set RPM", shooterRpmCommand);
-
-
-
-        // Indexer logging
-        shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
-        //shuffleboardTab.addBoolean("Stage", indexer::getSensorMid); // TODO: Cleanup this line
-
-        shuffleboardTab.addNumber("RPM", shooter::getSpeed);
-
-        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
-
-        // Hanger
-        //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
-
+        limelight.setLEDMode(1); // Force off
         oi = new OI();
+        
+        logger = new FileLogger();
+        addMetricsToLogger();
+        logger.init();
+
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.
+        logger.addEvent("INIT", "Start building container");
+        robotContainer = new RobotContainer();
+        logger.addEvent("INIT", "End building container");
     }
 
     /**
@@ -201,42 +185,38 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        //System.out.println("robot periodic");
         chosenAuto = autoModeChooser.getSelected();
         chosenDelay = delayChooser.getSelected();
-
-//    SmartDashboard.putNumber("tx",limelight.getXOffset());
-//    SmartDashboard.putNumber("ty",limelight.getYOffset());
-        // pneumatics
-//    SmartDashboard.putBoolean("Pressure", compressor.getPressureSwitchValue());
-//    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
     }
 
-    /** This function is called once each time the robot enters Disabled mode. */
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     */
     @Override
     public void disabledInit() {
-        limelight.setLEDMode(1);//force off
+        limelight.setLEDMode(1); // Force off
     }
 
     @Override
     public void disabledPeriodic() {}
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+    /**
+     * This runs the autonomous command selected by your {@link RobotContainer} class.
+     */
     @Override
     public void autonomousInit() {
+        logger.addEvent("AUTO", "Auto Init");
         drivetrain.resetPigeon();
         drivetrain.resetEncoders();
         drivetrain.resetPose();
+        logger.addEvent("AUTO", "Reset sensors");
 
-        autonomousCommand = robotContainer.getAutonomousCommand();
-
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-            autonomousCommand.schedule();
-        }
+        autonomousCommand = robotContainer.getAutonomousCommand(chosenAuto);
+        logger.addEvent("AUTO", "Got command from container");
 
         Globals.autonomousModeActive = true;
         indexCommand.schedule();
+        
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
@@ -246,16 +226,18 @@ public class Robot extends TimedRobot {
         compressor.disable();
 
         runAutoScheduler = true;
-        updateauto();
     }
 
-    /** This function is called periodically during autonomous. */
+    /**
+     * This function is called periodically during autonomous.
+     */
     @Override
     public void autonomousPeriodic() {
         if ( runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
+                logger.addEvent("AUTO", "Scheduled auto command");
             }
             runAutoScheduler = false;
             elapsedTime.stop();
@@ -279,7 +261,9 @@ public class Robot extends TimedRobot {
         indexCommand.schedule();
     }
 
-    /** This function is called periodically during operator control. */
+    /**
+     * This function is called periodically during operator control.
+     */
     @Override
     public void teleopPeriodic() {
         double timeLeft = DriverStation.getMatchTime();
@@ -290,14 +274,57 @@ public class Robot extends TimedRobot {
             collectorPneumatics.entryRaise();
             collectorPneumatics.collectorRaise();
         }
+
+        logger.run();
     }
 
     @Override
     public void testInit() {}
 
-    /** This function is called periodically during test mode. */
+    /**
+     * This function is called periodically during test mode.
+     */
     @Override
     public void testPeriodic() {}
+    
+    public void addMetricsToLogger() {
+        // Shooter
+        logger.addMetric("Shooter_Velocity", shooter::getSpeed);
+        logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
+        logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
+    
+        // Drivetrain
+        logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
+        logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
+        logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
+        logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
+    
+        logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
+        logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
+        logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
+        logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
+    
+        logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
+        logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
+        logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
+        logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
+    
+        logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
+        logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
+    
+        // PDP and Compressor
+        logger.addMetric("PDP_Voltage", pdp::getVoltage);
+        logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
+        logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
+    
+        // Climber
+        logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
+        logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
+        logger.addMetric("Climber_Current_In", climber::getInputCurrent);
+        logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
+        logger.addMetric("Climber_Percent", climber::getOutputPercent);
+        logger.addMetric("Climber_Velocity", climber::getVelocity);
+    }
 
     public void tabsetup(){
 
@@ -337,35 +364,5 @@ public class Robot extends TimedRobot {
         autoTab.add("Delay", delayChooser)
                 .withPosition(0,0)
                 .withSize(1,1);
-
-        // calibration information
-        // RGB_Shuffleboard
-//    calibrationTab = Shuffleboard.getTab("Calibration");          // adds the calibration tab to the shuffleboard (getTab creates if not exist)
-//    Shuffleboard.getTab("Calibration").add("Red",0);    // adds the Red text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Green",0);  // adds the Green text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Blue",0);   // adds the Blue text box, persists over power down
-    }
-
-    public void updateauto(){
-
-        if(chosenAuto == autoMode.MOBILITY){
-            autonomousCommand = new Mobility();
-        } else if(chosenAuto == autoMode.TWO_BALL_LEFT){
-            autonomousCommand = new TwoBallLeft();
-        } else if(chosenAuto == autoMode.TWO_BALL_RIGHT){
-            autonomousCommand = new TwoBallRight();
-        } else if(chosenAuto == autoMode.TWO_BALL_MIDDLE){
-            autonomousCommand = new TwoBallMiddle();
-        }else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
-            autonomousCommand = new ThreeBallTerminalMiddle();
-        }else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new ThreeBallTerminalRight();
-        } else if(chosenAuto == autoMode.FOUR_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new FourBallTerminalRight();
-        }else if(chosenAuto == autoMode.FIVE_BALL_TERMINAL_RIGHT){
-            autonomousCommand = new FiveBallTerminalRight();
-        }else if(chosenAuto == null) {
-            System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
-        }
     }
 }
