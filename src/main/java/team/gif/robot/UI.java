@@ -29,26 +29,21 @@ public class UI {
         Robot.shuffleboardLayoutSensor.addBoolean("Belt Sensor", indexer::getSensorBelt);
         Robot.shuffleboardLayoutSensor.addBoolean("Mid Sensor", indexer::getSensorMid);
         Robot.shuffleboardLayoutSensor.addBoolean("Entry Sensor",indexer::getSensorEntry);
+        Robot.shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
 
-        // Shooter Shuffleboard Entrys
+        // Shooter
         Robot.shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
-        // Robot.shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
 
         // Climber
         Robot.shuffleboardTab.addString("Climber Position", () -> climber.getPosition_Shuffleboard());
-
-        // Reset heading
-        Robot.shuffleboardTab.add("ResetHead", new ResetHeading());
-
-        // Reset Climber
         Robot.shuffleboardTab.add("Climber", new ResetClimber());
 
-        Robot.shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
 
-        // pigion heading
+        // Pigeon
         Robot.shuffleboardTab.add("BotHead",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);});
+        Robot.shuffleboardTab.add("ResetHead", new ResetHeading());
 
-        // auto
+        // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
         autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
@@ -63,6 +58,7 @@ public class UI {
                 .withPosition(1,0)
                 .withSize(2,1);
 
+        //Auto delay
         delayChooser.setDefaultOption("0", delay.DELAY_0);
         delayChooser.addOption("1", delay.DELAY_1);
         delayChooser.addOption("2", delay.DELAY_2);
