@@ -31,23 +31,15 @@ public abstract class RobotMap {
     public static final int SOLENOID_COLLECTOR_REVERSE = 0; // 5;
     public static final int SOLENOID_ENTRY = 5;
 
-    // Compressors //
-    public static final int COMPRESSOR_HOOD = 0; // todo rename
-
-    // Color Sensor
-    public static final int COLOR_SENSOR = 0;
+    // Compressors
+    public static final int COMPRESSOR = 0;
 
     // Controllers
     public static final int DRIVER_CONTROLLER_ID = 0;
     public static final int AUX_CONTROLLER_ID = 1;
     public static final int TEST_CONTROLLER_ID = 2;
 
-    //pigeon
+    // Pigeon
     public static final int PIGEON_CAN = 5;
-    /*
-    public static final int SOLENOID_ZERO = 0;
-    public static final int SOLENOID_ONE = 1;
-    public static final int SOLENOID_TWO = 2;
-    */
 
 }

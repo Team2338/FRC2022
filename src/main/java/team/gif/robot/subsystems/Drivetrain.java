@@ -17,8 +17,6 @@ import team.gif.robot.subsystems.drivers.Pigeon;
 
 public class Drivetrain extends SubsystemBase {
 
-    private static Drivetrain instance = null;
-
     public static WPI_TalonSRX leftTalon1;
     public static WPI_TalonSRX leftTalon2;
     public static WPI_TalonSRX rightTalon1;
@@ -44,14 +42,6 @@ public class Drivetrain extends SubsystemBase {
     public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(Constants.drivetrain.kTrackwidthMeters);
 */
     // ------------ Variables for Trajectory End) ----------
-
-    /*public static Drivetrain getInstance() {
-        if (instance == null) {
-            System.out.println("drivetrain init");
-            instance = new Drivetrain();
-        }
-        return instance;
-    }*/
 
     public Drivetrain() {
         super();
@@ -104,7 +94,7 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(leftTalon2);
+        pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(rightTalon2);
 
         pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
         pigeon.addToShuffleboard("SmartDashboard","Heading2");
@@ -215,7 +205,7 @@ public class Drivetrain extends SubsystemBase {
         pigeon.resetPigeonPosition();
     }
 
-    //encoder positions in Ticks
+    // Encoder positions in Ticks
     public double getLeftEncoderPos_Ticks() {
         return leftEncoderTalon.getSelectedSensorPosition();
     }
@@ -223,14 +213,102 @@ public class Drivetrain extends SubsystemBase {
     public double getRightEncoderPos_Ticks() {
         return rightEncoderTalon.getSelectedSensorPosition();
     }
+    
+    public double getLeftEncoderVelocity_Ticks() {
+        return leftEncoderTalon.getSelectedSensorVelocity();
+    }
+    
+    public double getRightEncoderVelocity_Ticks() {
+        return rightEncoderTalon.getSelectedSensorVelocity();
+    }
 
-    //encoder positions in Meters
+    // Encoder positions in Meters
     public double getLeftEncoderPos_Meters() {
         return leftEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_LEFT;
     }
 
     public double getRightEncoderPos_Meters() {
         return rightEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_RIGHT;
+    }
+    
+    public double getInputVoltageL1() {
+        return leftTalon1.getBusVoltage();
+    }
+    
+    public double getInputVoltageL2() {
+        return leftTalon2.getBusVoltage();
+    }
+    
+    public double getInputVoltageR1() {
+        return rightTalon1.getBusVoltage();
+    }
+    
+    public double getInputVoltageR2() {
+        return rightTalon2.getBusVoltage();
+    }
+    
+    public double getOutputVoltageL1() {
+        return leftTalon1.getMotorOutputVoltage();
+    }
+    
+    public double getOutputVoltageL2() {
+        return leftTalon2.getMotorOutputVoltage();
+    }
+    
+    public double getOutputVoltageR1() {
+        return rightTalon1.getMotorOutputVoltage();
+    }
+    
+    public double getOutputVoltageR2() {
+        return rightTalon2.getMotorOutputVoltage();
+    }
+    
+    public double getOutputPercentL1() {
+        return leftTalon1.getMotorOutputPercent();
+    }
+    
+    public double getOutputPercentL2() {
+        return leftTalon2.getMotorOutputPercent();
+    }
+    
+    public double getOutputPercentR1() {
+        return rightTalon1.getMotorOutputPercent();
+    }
+    
+    public double getOutputPercentR2() {
+        return rightTalon2.getMotorOutputPercent();
+    }
+    
+    public double getInputCurrentL1() {
+        return leftTalon1.getSupplyCurrent();
+    }
+    
+    public double getInputCurrentL2() {
+        return leftTalon2.getSupplyCurrent();
+    }
+    
+    public double getInputCurrentR1() {
+        return rightTalon1.getSupplyCurrent();
+    }
+    
+    public double getInputCurrentR2() {
+        return rightTalon2.getSupplyCurrent();
+    }
+    
+    public double getOutputCurrentL1() {
+        return leftTalon1.getStatorCurrent();
+    }
+    
+    public double getOutputCurrentL2() {
+        return leftTalon2.getStatorCurrent();
+    }
+    
+    public double getOutputCurrentR1() {
+        return rightTalon1.getStatorCurrent();
+    }
+    
+    public double getOutputCurrentR2() {
+        return rightTalon2.getStatorCurrent();
     }
 
     public double Ticks2Feet(double ticks) {

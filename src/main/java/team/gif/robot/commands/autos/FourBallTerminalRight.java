@@ -63,7 +63,6 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
     }
 
     public FourBallTerminalRight() {
-
         addCommands(
             new CollectorDown(),
             new ParallelDeadlineGroup(
