@@ -29,19 +29,29 @@ public class UI {
         Robot.shuffleboardLayoutSensor.addBoolean("Belt Sensor", indexer::getSensorBelt);
         Robot.shuffleboardLayoutSensor.addBoolean("Mid Sensor", indexer::getSensorMid);
         Robot.shuffleboardLayoutSensor.addBoolean("Entry Sensor",indexer::getSensorEntry);
-        Robot.shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
+        Robot.shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled)
+            .withPosition(7,0)
+            .withSize(1,1);
+        ;
 
         // Shooter
-        Robot.shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
+        Robot.shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed)
+            .withPosition(7,1);
 
         // Climber
-        Robot.shuffleboardTab.addString("Climber Position", () -> climber.getPosition_Shuffleboard());
-        Robot.shuffleboardTab.add("Climber", new ResetClimber());
+        Robot.shuffleboardTab.addString("Climber Position", () -> climber.getPosition_Shuffleboard())
+            .withPosition(8,0);
+        Robot.shuffleboardTab.add("Climber", new ResetClimber())
+            .withPosition(8,1);
 
 
         // Pigeon
-        Robot.shuffleboardTab.add("BotHead",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);});
-        Robot.shuffleboardTab.add("ResetHead", new ResetHeading());
+        Robot.shuffleboardTab.add("Heading",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);})
+            .withPosition(4,0)
+            .withSize(2,2);
+        Robot.shuffleboardTab.add("Reset", new ResetHeading())
+            .withPosition(4,2)
+            .withSize(2,1);
 
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
@@ -55,7 +65,7 @@ public class UI {
 
         Robot.shuffleboardTab.add("Auto Select",autoModeChooser)
                 .withWidget(BuiltInWidgets.kComboBoxChooser)
-                .withPosition(1,0)
+                .withPosition(8,2)
                 .withSize(2,1);
 
         //Auto delay
@@ -77,7 +87,7 @@ public class UI {
         delayChooser.addOption("15", delay.DELAY_15);
 
         Robot.shuffleboardTab.add("Delay", delayChooser)
-                .withPosition(0,0)
+                .withPosition(7,2)
                 .withSize(1,1);
     }
 }

@@ -73,9 +73,14 @@ public class Robot extends TimedRobot {
     public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022");
     public static ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
             .getLayout("Sensors", BuiltInLayouts.kGrid)
-            .withSize(1,3) // make the widget 2x1
-            .withProperties(Map.of("Label","HIDDEN")); //place it in the top-left cornor
-
+            .withPosition(6,0)
+            .withSize(1,3)
+            .withProperties(Map.of("Label","HIDDEN"));
+/*    public static ShuffleboardLayout shuffleboardLayoutHeading = shuffleboardTab
+        .getLayout("BotHeading", BuiltInLayouts.kGrid)
+        .withSize(2,3)
+        .withProperties(Map.of("Label", "HIDDEN"));
+*/
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
