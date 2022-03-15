@@ -212,6 +212,7 @@ public class Robot extends TimedRobot {
         }
         compressor.enableDigital();
         indexCommand.schedule();
+        climber.releaseClimberBrake();
     }
 
     /**
