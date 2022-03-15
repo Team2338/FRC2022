@@ -4,26 +4,18 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.shuffleboard.*;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
-import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
-import team.gif.robot.commands.autos.TwoBallLeft;
-import team.gif.robot.commands.autos.TwoBallRight;
-import team.gif.robot.commands.climber.ResetClimber;
+import team.gif.lib.logging.FileLogger;
+import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.commands.drivetrain.DriveTank;
-import team.gif.robot.commands.drivetrain.ResetHeading;
-import team.gif.robot.commands.exampleShuffleboardEntryCommand;
-import team.gif.robot.commands.shooter.setShooterRpmCommand;
 import team.gif.robot.subsystems.Climber;
+import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
@@ -38,6 +30,8 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+
+import java.util.Map;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -54,125 +48,80 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
-
-    private SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    private SendableChooser<delay> delayChooser = new SendableChooser<>();
+    public static UI ui;
+    public static FileLogger logger;
 
     private autoMode chosenAuto;
     private delay chosenDelay;
-    private Timer elapsedTime = new Timer();
+    private final Timer elapsedTime = new Timer();
 
+    private static PowerDistribution pdp = null;
     public static Hood hood = null;
     public static CollectorPneumatics collectorPneumatics = null;
+    public static ClimberPneumatics climberPneumatics = null;
     public static Collector collector = null;
     public static Indexer indexer = null;
     public static Command indexCommand = null;
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
-    public static NetworkTableEntry exampleShuffleboardEntry;
-    public static ShuffleboardTab autoTab = Shuffleboard.getTab("PreMatch");
-//    public static Pigeon myPigeon;
 
     public static DriveArcade arcadeDrive;
-    public static DriveTank tankDrive;
+//    public static DriveTank tankDrive;
 
-    // T.S: Creating an new tab in shuffleboard.
-    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022 test");
-    public exampleShuffleboardEntryCommand exampleShuffleboardEntryCommand;
-    // TS: the value of the something what is changing,(Example PID control).
-    public static double exampleShuffleboardEntrySyncValue;
-    // TS: the value is getting the getEntry number
-    public static double exampleShuffleboardValue  = exampleShuffleboardEntrySyncValue;
-
-    // ts: varibles to getEntry RPM
-    public static NetworkTableEntry shooterRpmGetEntry;
-    public static double shooterRpm;
-    public static double shooterRpmSync;
-    public setShooterRpmCommand shooterRpmCommand;
-
+    // Creating a new tab in shuffleboard.
+    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022");
+    public static ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
+            .getLayout("Sensors", BuiltInLayouts.kGrid)
+            .withPosition(6,0)
+            .withSize(1,3)
+            .withProperties(Map.of("Label","HIDDEN"));
+/*    public static ShuffleboardLayout shuffleboardLayoutHeading = shuffleboardTab
+        .getLayout("BotHeading", BuiltInLayouts.kGrid)
+        .withSize(2,3)
+        .withProperties(Map.of("Label", "HIDDEN"));
+*/
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
      */
     @Override
     public void robotInit() {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
-        tabsetup();
-        robotContainer = new RobotContainer();
         limelight = new Limelight();
 
+        pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
-
-        compressor = new Compressor(RobotMap.COMPRESSOR_HOOD, PneumaticsModuleType.CTREPCM);
-        climber = new Climber();
+        compressor = new Compressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
         collector = new Collector();
+        climber = new Climber();
         indexer = new Indexer();
+        indexCommand = new IndexScheduler();
         shooter = new Shooter();
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
-        tankDrive = new DriveTank();
+        climberPneumatics = new ClimberPneumatics();
+
+//        tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
-        indexer.setDefaultCommand(new IndexScheduler());
+        indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
-//-        collectorPneumatics.setDefaultCommand(new CollectorUp());
-//        hood.setDefaultCommand(new HoodDown());
         drivetrain.setDefaultCommand(arcadeDrive);
+        climber.setDefaultCommand(new ClimberManualControl());
 
-        // TS: getting the submit button when you click the commend.
-        exampleShuffleboardEntryCommand = new exampleShuffleboardEntryCommand();
-
-//        myPigeon = new Pigeon(Drivetrain.rightTalon2);
-        shooterRpm = shooter.getSpeed();
-        shooterRpmSync = shooterRpm;
-        shooterRpmGetEntry = shuffleboardTab.add("Target RPM",shooterRpm).getEntry();
-        shooterRpmCommand = new setShooterRpmCommand();
-
-//        shuffleboardTab.add("BotHeating",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("value",()->myPigeon.getCompassHeading(),null);});
-
-        // TS: add an getEntry tab in shuffleboard
-        exampleShuffleboardEntry = shuffleboardTab.add("Example Input",exampleShuffleboardValue )
-                .getEntry();
-        // TS: add the example input submit button to the shuffleboard.
-        //shuffleboardTab.add("Command", exampleShuffleboardEntryCommand); // TODO: Cleanup the exampleShuffleboardEntry
-        //exampleShuffleboardEntry.setDouble(exampleShuffleboardEntrySyncValue);
-
-        shuffleboardTab.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        shuffleboardTab.addBoolean("Mid Sensor", indexer::getSensorMid);
-        shuffleboardTab.addBoolean("Entry Sensor",indexer::getSensorEntry);
-        shuffleboardTab.add(indexer);
-        shuffleboardTab.addNumber("Belt Velocity", indexer::getBeltMotorSpeed);
-        shuffleboardTab.add("Climber", new ResetClimber());
         limelight.setLEDMode(1);//force off
-        shuffleboardTab.add("ResetHead", new ResetHeading());
-
-        shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed);
-
-        shuffleboardTab.addNumber("Shooter Acceleration", shooter::getAcceleration);
-
-        //ts: switching drives mode
-        shuffleboardTab.add("Tank Drive", new DriveTank());
-        shuffleboardTab.add("Arcade Drive", new DriveArcade());
-
-        // ts: command to getEntry RPM
-        shuffleboardTab.add("Set RPM", shooterRpmCommand);
-
-
-
-        // Indexer logging
-        shuffleboardTab.addBoolean("Belt", indexer::getSensorBelt);
-        //shuffleboardTab.addBoolean("Stage", indexer::getSensorMid); // TODO: Cleanup this line
-
-        shuffleboardTab.addNumber("RPM", shooter::getSpeed);
-
-        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled);
-
-        // Hanger
-        //shuffleboardTab.add("Hang Position", Robot.climber.getPosition_Shuffleboard());
 
         oi = new OI();
+        ui = new UI();
+        logger = new FileLogger();
+        addMetricsToLogger();
+        logger.init();
+
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.
+        logger.addEvent("INIT", "Start building container");
+        robotContainer = new RobotContainer();
+        logger.addEvent("INIT", "End building container");
     }
 
     /**
@@ -189,59 +138,60 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        //System.out.println("robot periodic");
-        chosenAuto = autoModeChooser.getSelected();
-        chosenDelay = delayChooser.getSelected();
 
-//    SmartDashboard.putNumber("tx",limelight.getXOffset());
-//    SmartDashboard.putNumber("ty",limelight.getYOffset());
-        // pneumatics
-//    SmartDashboard.putBoolean("Pressure", compressor.getPressureSwitchValue());
-//    SmartDashboard.putBoolean("hastarget",limelight.hasTarget());
+        chosenAuto = ui.autoModeChooser.getSelected();
+        chosenDelay = ui.delayChooser.getSelected();
     }
 
-    /** This function is called once each time the robot enters Disabled mode. */
+    /**
+     * This function is called once each time the robot enters Disabled mode.
+     */
     @Override
     public void disabledInit() {
-        limelight.setLEDMode(1);//force off
+        limelight.setLEDMode(1); // Force off
     }
 
     @Override
     public void disabledPeriodic() {}
 
-    /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+    /**
+     * This runs the autonomous command selected by your {@link RobotContainer} class.
+     */
     @Override
     public void autonomousInit() {
-        autonomousCommand = robotContainer.getAutonomousCommand();
+        logger.addEvent("AUTO", "Auto Init");
+        drivetrain.resetPigeon();
+        drivetrain.resetEncoders();
+        drivetrain.resetPose();
+        logger.addEvent("AUTO", "Reset sensors");
 
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-            autonomousCommand.schedule();
-        }
+        autonomousCommand = robotContainer.getAutonomousCommand(chosenAuto);
+        logger.addEvent("AUTO", "Got command from container");
 
         Globals.autonomousModeActive = true;
+        indexCommand.schedule();
+        
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
-
-        drivetrain.resetEncoders();
-        drivetrain.resetPose();
 
         limelight.setLEDMode(1);//turn off
 
         compressor.disable();
 
         runAutoScheduler = true;
-        updateauto();
     }
 
-    /** This function is called periodically during autonomous. */
+    /**
+     * This function is called periodically during autonomous.
+     */
     @Override
     public void autonomousPeriodic() {
         if ( runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
+                logger.addEvent("AUTO", "Scheduled auto command");
             }
             runAutoScheduler = false;
             elapsedTime.stop();
@@ -252,7 +202,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
 
         Globals.autonomousModeActive = false;
-        limelight.setLEDMode(1);//force off
+        limelight.setLEDMode(3);//force off
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -260,11 +210,14 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-//        oi = new OI();
         compressor.enableDigital();
+        indexCommand.schedule();
+        climber.releaseClimberBrake();
     }
 
-    /** This function is called periodically during operator control. */
+    /**
+     * This function is called periodically during operator control.
+     */
     @Override
     public void teleopPeriodic() {
         double timeLeft = DriverStation.getMatchTime();
@@ -275,76 +228,55 @@ public class Robot extends TimedRobot {
             collectorPneumatics.entryRaise();
             collectorPneumatics.collectorRaise();
         }
+
+        logger.run();
     }
 
     @Override
     public void testInit() {}
 
-    /** This function is called periodically during test mode. */
+    /**
+     * This function is called periodically during test mode.
+     */
     @Override
     public void testPeriodic() {}
-
-    public void tabsetup(){
-
-        autoTab = Shuffleboard.getTab("PreMatch");
-
-        autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
-        autoModeChooser.addOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
-        autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
-        autoModeChooser.addOption("Three Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
-//        autoModeChooser.addOption("Opp 5 Ball Auto", autoMode.OPP_5_BALL);
-//        autoModeChooser.addOption("8 Ball Auto", autoMode.SAFE_8_BALL);
-////    autoModeChooser.addOption("Barrel Racing", autoMode.BARREL_RACING);
-////    autoModeChooser.addOption("Slalom", autoMode.SLALOM);
-////    autoModeChooser.addOption("Bounce", autoMode.BOUNCE);
-//        autoModeChooser.setDefaultOption("6 Ball Auto", autoMode.SAFE_6_BALL);
-
-        autoTab.add("Auto Select",autoModeChooser)
-                .withWidget(BuiltInWidgets.kComboBoxChooser)
-                .withPosition(1,0)
-                .withSize(2,1);
-
-        delayChooser.setDefaultOption("0", delay.DELAY_0);
-        delayChooser.addOption("1", delay.DELAY_1);
-        delayChooser.addOption("2", delay.DELAY_2);
-        delayChooser.addOption("3", delay.DELAY_3);
-        delayChooser.addOption("4", delay.DELAY_4);
-        delayChooser.addOption("5", delay.DELAY_5);
-        delayChooser.addOption("6", delay.DELAY_6);
-        delayChooser.addOption("7", delay.DELAY_7);
-        delayChooser.addOption("8", delay.DELAY_8);
-        delayChooser.addOption("9", delay.DELAY_9);
-        delayChooser.addOption("10", delay.DELAY_10);
-        delayChooser.addOption("11", delay.DELAY_11);
-        delayChooser.addOption("12", delay.DELAY_12);
-        delayChooser.addOption("13", delay.DELAY_13);
-        delayChooser.addOption("14", delay.DELAY_14);
-        delayChooser.addOption("15", delay.DELAY_15);
-
-        autoTab.add("Delay", delayChooser)
-                .withPosition(0,0)
-                .withSize(1,1);
-
-        // calibration information
-        // RGB_Shuffleboard
-//    calibrationTab = Shuffleboard.getTab("Calibration");          // adds the calibration tab to the shuffleboard (getTab creates if not exist)
-//    Shuffleboard.getTab("Calibration").add("Red",0);    // adds the Red text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Green",0);  // adds the Green text box, persists over power down
-//    Shuffleboard.getTab("Calibration").add("Blue",0);   // adds the Blue text box, persists over power down
-    }
-
-    public void updateauto(){
-
-        if(chosenAuto == autoMode.MOBILITY){
-            autonomousCommand = new Mobility();
-        } else if(chosenAuto == autoMode.TWO_BALL_LEFT){
-            autonomousCommand = new TwoBallLeft();
-        } else if(chosenAuto == autoMode.TWO_BALL_RIGHT){
-            autonomousCommand = new TwoBallRight();
-        } else if(chosenAuto == autoMode.THREE_BALL_TERMINAL_MIDDLE){
-            autonomousCommand = new ThreeBallTerminalMiddle();
-        } else if(chosenAuto ==null) {
-            System.out.println("Autonomous selection is null. Robot will do nothing in auto :(");
-        }
+    
+    public void addMetricsToLogger() {
+        // Shooter
+        logger.addMetric("Shooter_Velocity", shooter::getSpeed);
+        logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
+        logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
+    
+        // Drivetrain
+        logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
+        logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
+        logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
+        logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
+    
+        logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
+        logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
+        logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
+        logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
+    
+        logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
+        logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
+        logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
+        logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
+    
+        logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
+        logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
+    
+        // PDP and Compressor
+        logger.addMetric("PDP_Voltage", pdp::getVoltage);
+        logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
+        logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
+    
+        // Climber
+        logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
+        logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
+        logger.addMetric("Climber_Current_In", climber::getInputCurrent);
+        logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
+        logger.addMetric("Climber_Percent", climber::getOutputPercent);
+        logger.addMetric("Climber_Velocity", climber::getVelocity);
     }
 }

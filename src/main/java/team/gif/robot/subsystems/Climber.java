@@ -1,68 +1,99 @@
 package team.gif.robot.subsystems;
 
-import com.revrobotics.*;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
-import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
-//    public static Hanger instance = null;
 
-    private static final CANSparkMax hangMotor = new CANSparkMax(RobotMap.MOTOR_HANGER, CANSparkMaxLowLevel.MotorType.kBrushless);
-    private static final SparkMaxPIDController hangPIDController = hangMotor.getPIDController();
-    private static final RelativeEncoder hangEncoder = hangMotor.getEncoder();
-    private static final SparkMaxLimitSwitch limitSwitch = hangMotor.getReverseLimitSwitch(SparkMaxLimitSwitch.Type.kNormallyOpen);
-
+    private static final TalonSRX hangMotor = new TalonSRX(RobotMap.MOTOR_HANGER);
+    private static final Solenoid hangBrake = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_CLIMBER_BRAKE);
 
     public Climber() {
         super();
-        hangMotor.setInverted(false);
-        hangMotor.restoreFactoryDefaults();
+        hangMotor.setInverted(true);
+        hangMotor.setSensorPhase(true);
+        hangMotor.configFactoryDefault();
 
-        // Limit Switch
-        limitSwitch.enableLimitSwitch(true);
         // Soft Limits
-        hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
-        hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
+        hangMotor.enableCurrentLimit(false);
+        hangMotor.configRemoteFeedbackFilter(RobotMap.MOTOR_INTAKE, RemoteSensorSource.TalonSRX_SelectedSensor, 0);
+        hangMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.RemoteSensor0, 0, 0);
 
-        //TODO: DISABLE HARD & SOFT LIMITS
 
-        hangMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        // TODO: can't call multiple times or we crash
-//        Robot.shuffleboardTab.add("Hang Control", false);
+        hangMotor.setNeutralMode(NeutralMode.Brake);
 
-        //TODO: ADD DEFAULT COMMAND FOR CLIMBER
+        releaseClimberBrake();
     }
 
     public void zeroEncoder() {
-        hangEncoder.setPosition(0);
+        hangMotor.setSelectedSensorPosition(0);
     }
 
     public void setVoltage(double speed){
-        hangMotor.setVoltage(speed);
+        hangMotor.set(ControlMode.Current, speed);
     }
 
     public void setSpeed(double speed) {
-        hangMotor.set(speed);
+        hangMotor.set(ControlMode.PercentOutput, speed);
     }
 
     public void setF() {
-        hangPIDController.setFF(Constants.Climber.F);
+        hangMotor.config_kF(0, Constants.Climber.F);
     }
 
     public void setFGravity() {
-        hangPIDController.setFF(Constants.Climber.GRAV_FEED_FORWARD);
+        hangMotor.config_kF(0, Constants.Climber.GRAV_FEED_FORWARD);
     }
 
     public double getPosition() {
-        return hangEncoder.getPosition();
+        return hangMotor.getSelectedSensorPosition();
     }
 
     public String getPosition_Shuffleboard() {
-        return String.format("%11.2f",hangEncoder.getPosition());
+        return String.format("%11.2f",hangMotor.getSelectedSensorPosition());
+    }
+    
+    public double getInputVoltage() {
+        return hangMotor.getBusVoltage();
+    }
+    
+    public double getOutputVoltage() {
+        return hangMotor.getMotorOutputVoltage();
+    }
+    
+    public double getInputCurrent() {
+        return hangMotor.getSupplyCurrent();
+    }
+    
+    public double getOutputCurrent() {
+        return hangMotor.getStatorCurrent();
+    }
+    
+    public double getOutputPercent() {
+        return hangMotor.getMotorOutputPercent();
+    }
+    
+    public double getVelocity() {
+        return hangMotor.getSelectedSensorVelocity();
     }
 
-    public void enableLowerSoftLimit(boolean engage){hangMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, engage);};
+    public void enableLowerSoftLimit(boolean engage){
+        hangMotor.enableCurrentLimit(engage);
+    }
+
+    public void setClimberBrake() {
+        hangBrake.set(false);
+    }
+
+    public void releaseClimberBrake() {
+        hangBrake.set(true);
+    }
 }

@@ -10,7 +10,6 @@ import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.hood.HoodUp;
-import team.gif.robot.commands.indexer.IndexScheduler;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
@@ -38,7 +37,6 @@ public class TwoBallRight extends SequentialCommandGroup {
             new CollectorDown(),
             new ParallelDeadlineGroup(
                 reverse(),
-                new IndexScheduler(),
                 new CollectorRun(),
                 new HoodUp(),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)

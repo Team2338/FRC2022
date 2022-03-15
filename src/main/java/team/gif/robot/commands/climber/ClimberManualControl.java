@@ -13,6 +13,7 @@ public class ClimberManualControl extends CommandBase {
     public static final double ClimberdownGain = 1;
 
     public ClimberManualControl() {
+        addRequirements(Robot.climber);
     }
 
     // Called when the command is initially scheduled.
@@ -30,17 +31,7 @@ public class ClimberManualControl extends CommandBase {
             speed = 0;
         }
 
-        if (!Globals.climberMotorEnabled) {
-            // do not allow the elevator to go below the lowest point
-            // overrides if the Aux A button is pressed
-            // This prevents the elevator for overrunning in normal condition
-            // but allows us to reset the 0 position when the robot is turned on
-            // and the elevator is not in the starting position
-            if (Robot.oi.aux.getAButton()) {
-                Robot.climber.enableLowerSoftLimit(false);
-            } else {
-                Robot.climber.enableLowerSoftLimit(true);
-            }
+        if (Globals.climberMotorEnabled) {
 
             // run the elevator either up or down
             Robot.climber.setSpeed(speed);

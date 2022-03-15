@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
-
 public class Indexer extends SubsystemBase {
     //Hardware config
 //--    private static final TalonSRX beltMotor1 = new TalonSRX(RobotMap.MOTOR_BELT_PRACTICE); //PracticeBot motor

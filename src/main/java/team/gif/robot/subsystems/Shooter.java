@@ -5,21 +5,23 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
-import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 
-public class Shooter extends SubsystemBase
-{
+public class Shooter extends SubsystemBase {
     private static final TalonFX shooterMotor = new TalonFX(RobotMap.MOTOR_SHOOTER);
 
     public Shooter() {
         super();
         shooterMotor.configFactoryDefault();
+        
+        shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 20);
 
         shooterMotor.setNeutralMode(NeutralMode.Coast);
 
@@ -46,7 +48,7 @@ public class Shooter extends SubsystemBase
         shooterMotor.selectProfileSlot(0, 0);
     }
 
-    //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
+    // Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
     public void setSpeedPercent(double percent) {
         shooterMotor.set(ControlMode.PercentOutput, percent);
     }
@@ -55,17 +57,19 @@ public class Shooter extends SubsystemBase
         shooterMotor.set(ControlMode.Velocity, setPoint);
     }
 
-    public double getSpeed(){
+    public double getSpeed() {
         return shooterMotor.getSelectedSensorVelocity();
     }
-
-    public String getVelocity_Shuffleboard(){ return String.format("%12.0f",getSpeed());}
 
     public double getAcceleration(){
         if (shooterMotor.getControlMode() == ControlMode.Velocity){
             return shooterMotor.getErrorDerivative();
         }
         return 0;
+    }
+    
+    public double getOutputPercent() {
+        return shooterMotor.getMotorOutputPercent();
     }
 
     public boolean isInTolerance() {

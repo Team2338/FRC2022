@@ -15,13 +15,27 @@ import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class TwoBallLeft extends SequentialCommandGroup {
+public class TwoBallMiddle extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-4.5, 0.0, 0.0)
+                new Pose2dFeet().set(-4.5, 0, 0.0) // 1st cargo location
+            ),
+            RobotTrajectory.getInstance().configReverseSlow
+        );
+        // create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        //return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+        return rc;
+    }
+    public Command reverseAgain() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-4.5, 0, 0),
+                new Pose2dFeet().set(-6.5, 0, -10) // shooting position
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -31,19 +45,21 @@ public class TwoBallLeft extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public TwoBallLeft() {
-
+    public TwoBallMiddle() {
         addCommands(
-            new CollectorDown(),
             new ParallelDeadlineGroup(
                 reverse(),
+                new CollectorDown(),
                 new CollectorRun(),
-                new HoodUp(),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                new HoodUp()
             ),
             new ParallelDeadlineGroup(
-                new RapidFire().withTimeout(4),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                reverseAgain(),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
+            ),
+            new ParallelDeadlineGroup(
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB).withTimeout(2),
+                new RapidFire()
             )
         );
     }

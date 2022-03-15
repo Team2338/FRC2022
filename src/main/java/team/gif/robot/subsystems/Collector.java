@@ -2,6 +2,7 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -19,6 +20,7 @@ public class Collector extends SubsystemBase {
         collectorMotor.setNeutralMode(NeutralMode.Brake);
         entryMotor.setInverted(!Robot.isCompBot);
         entryMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        collectorMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
     }
 
     //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
@@ -28,5 +30,9 @@ public class Collector extends SubsystemBase {
 
     public void setSpeedPercentEntry(double percent) {
         entryMotor.set(percent);
+    }
+
+    public void zeroEncoder() {
+        collectorMotor.setSelectedSensorPosition(0);
     }
 }

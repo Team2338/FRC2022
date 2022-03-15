@@ -13,7 +13,7 @@
         "tiles": {
           "0,0": {
             "size": [
-              7,
+              6,
               4
             ],
             "content": {
@@ -30,18 +30,7 @@
               "imageHeight": 0
             }
           },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/RPM",
-              "_title": "RPM"
-            }
-          },
-          "7,5": {
+          "0,4": {
             "size": [
               1,
               1
@@ -68,62 +57,13 @@
                 }
               ]
             }
-          },
-          "8,0": {
-            "size": [
-              2,
-              3
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Heading",
-              "Layout/Label position": "HIDDEN",
-              "_children": [
-                {
-                  "_type": "Gyro",
-                  "_source0": "network_table:///Shuffleboard/SmartDashboard/BotHead",
-                  "_title": "Gyro",
-                  "Visuals/Major tick spacing": 45.0,
-                  "Visuals/Starting angle": 180.0,
-                  "Visuals/Show tick mark ring": true,
-                  "Visuals/Counter clockwise": false
-                },
-                {
-                  "_type": "Command",
-                  "_source0": "network_table:///SmartDashboard/ResetHead",
-                  "_title": "ResetHead"
-                }
-              ]
-            }
-          },
-          "10,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Climber Position",
-              "_title": "/SmartDashboard/Climber Position"
-            }
-          },
-          "11,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Climber",
-              "_title": "/SmartDashboard/Climber"
-            }
           }
         }
       }
     }
   ],
   "windowGeometry": {
-    "x": -7.199999809265137,
+    "x": -8.0,
     "y": 0.0,
     "width": 1548.800048828125,
     "height": 641.5999755859375
