@@ -43,10 +43,12 @@ public class UI {
         Robot.shuffleboardTab.addString("Climber Position", () -> climber.getPosition_Shuffleboard())
             .withPosition(8,0);
         Robot.shuffleboardTab.add("Climber", new ResetClimber())
-            .withPosition(9,0);
-
-        Robot.shuffleboardTab.add("LED", new LimelightLED())
             .withPosition(8,1)
+            .withSize(1,1);
+
+        // Limelight Toggle
+        Robot.shuffleboardTab.add("LED", new LimelightLED())
+            .withPosition(9,0)
             .withSize(1,1);
 
 //        Robot.shuffleboardTab.addCamera("limelight","limelight","mjpg:http://10.23.38.95:5800")
