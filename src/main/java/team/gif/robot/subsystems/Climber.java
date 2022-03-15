@@ -5,7 +5,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
@@ -13,6 +14,7 @@ import team.gif.robot.RobotMap;
 public class Climber extends SubsystemBase {
 
     private static final TalonSRX hangMotor = new TalonSRX(RobotMap.MOTOR_HANGER);
+    private static final Solenoid hangSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.BRAKE);
 
     public Climber() {
         super();
@@ -27,6 +29,7 @@ public class Climber extends SubsystemBase {
 
 
         hangMotor.setNeutralMode(NeutralMode.Brake);
+        hangSolenoid.set(false);
         // TODO: can't call multiple times or we crash
 
         //TODO: ADD DEFAULT COMMAND FOR CLIMBER
@@ -86,5 +89,9 @@ public class Climber extends SubsystemBase {
 
     public void enableLowerSoftLimit(boolean engage){
         hangMotor.enableCurrentLimit(engage);
+    }
+
+    public void setBrake(boolean isOn) {
+        hangSolenoid.set(isOn);
     }
 }
