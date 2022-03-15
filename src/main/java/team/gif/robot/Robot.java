@@ -199,8 +199,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
-        Globals.autonomousModeActive = false;
         limelight.setLEDMode(3); // turn LED on for entire teleop
+
+        Globals.autonomousModeActive = false;
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -209,7 +210,6 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
         }
         compressor.enableDigital();
-        indexCommand.schedule();
         climber.releaseClimberBrake();
     }
 
