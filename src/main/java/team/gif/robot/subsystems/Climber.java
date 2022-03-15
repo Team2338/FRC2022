@@ -30,7 +30,7 @@ public class Climber extends SubsystemBase {
 
         hangMotor.setNeutralMode(NeutralMode.Brake);
 
-        releaseCLimberBrake();
+        releaseClimberBrake();
     }
 
     public void zeroEncoder() {
