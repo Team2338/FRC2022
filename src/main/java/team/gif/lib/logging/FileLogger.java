@@ -27,6 +27,7 @@ public class FileLogger implements Closeable, Flushable {
 	private static final int ITERATIONS_BETWEEN_FLUSHES = 250;
 	private static final String LOG_DIR = "/logs";
 	private static final String EVENT_LOG_PREFIX = "events";
+	private static final String TELEMETRY_LOG_PREFIX = "telemetry";
 	private static final String FILE_EXTENSION = ".csv";
 	
 	private final FileWriter fw;
@@ -45,7 +46,8 @@ public class FileLogger implements Closeable, Flushable {
 		String nextEventFileName = EVENT_LOG_PREFIX + nextFileNumber + FILE_EXTENSION;
 		this.eventFileWriter = createFileWriter(nextEventFileName);
 		
-		this.fw = createFileWriter("ViperLog.csv");
+		String nextTelemetryFileName = TELEMETRY_LOG_PREFIX + nextFileNumber + FILE_EXTENSION;
+		this.fw = createFileWriter(nextTelemetryFileName);
 		
 		addMetric("Time", this::getCurrentTime);
 	}
