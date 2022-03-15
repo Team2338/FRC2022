@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -20,7 +19,7 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         super();
         shooterMotor.configFactoryDefault();
-        
+
         shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 20);
 
         shooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -61,13 +60,13 @@ public class Shooter extends SubsystemBase {
         return shooterMotor.getSelectedSensorVelocity();
     }
 
-    public double getAcceleration(){
-        if (shooterMotor.getControlMode() == ControlMode.Velocity){
+    public double getAcceleration() {
+        if (shooterMotor.getControlMode() == ControlMode.Velocity) {
             return shooterMotor.getErrorDerivative();
         }
         return 0;
     }
-    
+
     public double getOutputPercent() {
         return shooterMotor.getMotorOutputPercent();
     }
@@ -76,10 +75,10 @@ public class Shooter extends SubsystemBase {
         //return Math.abs(shooterMotor.getClosedLoopError()) < Constants.Shooter.FLYWHEEL_TOLERANCE &&
         // ^^ Get the wheel to speed, press shooter button, end flywheel, release shooter button ... press shooter button, start flywheel ... belt moves
         // immediately and does not wait for the flywheel to get to speed. Changed it to the below
-        if ( shooterMotor.getControlMode() == ControlMode.Disabled )
+        if (shooterMotor.getControlMode() == ControlMode.Disabled)
             return false;
 
-        return (Math.abs( shooterMotor.getClosedLoopTarget() - getSpeed() ) < Constants.Shooter.FLYWHEEL_TOLERANCE) &&
+        return (Math.abs(shooterMotor.getClosedLoopTarget() - getSpeed()) < Constants.Shooter.FLYWHEEL_TOLERANCE) &&
             shooterMotor.getClosedLoopTarget() != 0;
     }
 

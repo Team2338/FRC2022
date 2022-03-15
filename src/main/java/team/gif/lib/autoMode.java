@@ -11,11 +11,13 @@ public enum autoMode {
     FOUR_BALL_TERMINAL_RIGHT(0),
     FIVE_BALL_TERMINAL_RIGHT(0);
 
-    private int value;
+    private final int value;
+
     autoMode(int value) {
         this.value = value;
     }
-    public int getValue(){
+
+    public int getValue() {
         return this.value;
     }
 }

@@ -5,31 +5,34 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.*;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.lib.LimelightLedMode;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
 import team.gif.lib.logging.FileLogger;
 import team.gif.robot.commands.climber.ClimberManualControl;
-import team.gif.robot.commands.drivetrain.DriveTank;
-import team.gif.robot.subsystems.Climber;
-import team.gif.robot.subsystems.ClimberPneumatics;
-import team.gif.robot.subsystems.CollectorPneumatics;
-import team.gif.robot.subsystems.Hood;
-import team.gif.robot.subsystems.drivers.Limelight;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.commands.indexer.IndexScheduler;
 import team.gif.robot.commands.shooter.ShooterIdle;
-import team.gif.robot.subsystems.Indexer;
+import team.gif.robot.subsystems.Climber;
+import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.Collector;
-import team.gif.robot.commands.drivetrain.DriveArcade;
+import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.subsystems.Hood;
+import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 import java.util.Map;
 
@@ -67,20 +70,21 @@ public class Robot extends TimedRobot {
     public static Compressor compressor = null;
 
     public static DriveArcade arcadeDrive;
-//    public static DriveTank tankDrive;
+    // public static DriveTank tankDrive;
 
     // Creating a new tab in shuffleboard.
     public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022");
     public static ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
-            .getLayout("Sensors", BuiltInLayouts.kGrid)
-            .withPosition(6,0)
-            .withSize(1,3)
-            .withProperties(Map.of("Label","HIDDEN"));
+        .getLayout("Sensors", BuiltInLayouts.kGrid)
+        .withPosition(6, 0)
+        .withSize(1, 3)
+        .withProperties(Map.of("Label", "HIDDEN"));
 /*    public static ShuffleboardLayout shuffleboardLayoutHeading = shuffleboardTab
         .getLayout("BotHeading", BuiltInLayouts.kGrid)
         .withSize(2,3)
         .withProperties(Map.of("Label", "HIDDEN"));
 */
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -101,15 +105,15 @@ public class Robot extends TimedRobot {
         collectorPneumatics = new CollectorPneumatics();
         climberPneumatics = new ClimberPneumatics();
 
-//        tankDrive = new DriveTank();
+        // tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
 
-        indexer.setDefaultCommand(indexCommand); //indexer.setDefaultCommand(new IndexScheduler());
+        indexer.setDefaultCommand(indexCommand); // indexer.setDefaultCommand(new IndexScheduler());
         shooter.setDefaultCommand(new ShooterIdle());
         drivetrain.setDefaultCommand(arcadeDrive);
         climber.setDefaultCommand(new ClimberManualControl());
 
-        limelight.setLEDMode(1);//force off
+        limelight.setLEDMode(LimelightLedMode.OFF); // Force off
 
         oi = new OI();
         ui = new UI();
@@ -139,8 +143,8 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
 
-        chosenAuto = ui.autoModeChooser.getSelected();
-        chosenDelay = ui.delayChooser.getSelected();
+        chosenAuto = UI.autoModeChooser.getSelected();
+        chosenDelay = UI.delayChooser.getSelected();
     }
 
     /**
@@ -148,11 +152,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        limelight.setLEDMode(1); // Force off
+        limelight.setLEDMode(LimelightLedMode.OFF); // Force off
     }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+    }
 
     /**
      * This runs the autonomous command selected by your {@link RobotContainer} class.
@@ -170,12 +175,12 @@ public class Robot extends TimedRobot {
 
         Globals.autonomousModeActive = true;
         indexCommand.schedule();
-        
-        // used for delaying the start of autonomous
+
+        // Used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
 
-        limelight.setLEDMode(1);//turn off
+        limelight.setLEDMode(LimelightLedMode.OFF); // Turn off
 
         compressor.disable();
 
@@ -187,7 +192,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        if ( runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
+        if (runAutoScheduler && (elapsedTime.get() > chosenDelay.getValue())) {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
@@ -202,7 +207,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
 
         Globals.autonomousModeActive = false;
-        limelight.setLEDMode(3);//force off
+        limelight.setLEDMode(LimelightLedMode.ON); // Force on
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -222,9 +227,9 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double timeLeft = DriverStation.getMatchTime();
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
-                     (timeLeft <=  5.0 && timeLeft >=  3.0));
+            (timeLeft <= 5.0 && timeLeft >= 3.0));
 
-        if ( indexer.getCargoCount() == 2 ){
+        if (indexer.getCargoCount() == 2) {
             collectorPneumatics.entryRaise();
             collectorPneumatics.collectorRaise();
         }
@@ -233,44 +238,46 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testInit() {}
+    public void testInit() {
+    }
 
     /**
      * This function is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {}
-    
+    public void testPeriodic() {
+    }
+
     public void addMetricsToLogger() {
         // Shooter
         logger.addMetric("Shooter_Velocity", shooter::getSpeed);
         logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
         logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
-    
+
         // Drivetrain
         logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
         logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
         logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
         logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
-    
+
         logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
         logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
         logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
         logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
-    
+
         logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
         logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
         logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
         logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
-    
+
         logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
         logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
-    
+
         // PDP and Compressor
         logger.addMetric("PDP_Voltage", pdp::getVoltage);
         logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
         logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
-    
+
         // Climber
         logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
         logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);

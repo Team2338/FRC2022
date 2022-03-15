@@ -7,10 +7,7 @@ package team.gif.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class DriveArcade extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    //private final ExampleSubsystem m_subsystem;
 
     public DriveArcade() {
         super();
@@ -29,7 +26,7 @@ public class DriveArcade extends CommandBase {
          */
         double rotation = Robot.oi.driver.getRightX();
         double currSpeed = Robot.oi.driver.getLeftY();
-        if(Robot.isCompBot) {
+        if (Robot.isCompBot) {
             Robot.drivetrain.driveArcade(rotation, -currSpeed);
         } else {
             Robot.drivetrain.driveArcade(-currSpeed, rotation);

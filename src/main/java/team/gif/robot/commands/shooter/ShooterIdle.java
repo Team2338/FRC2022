@@ -7,9 +7,10 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
+/**
+ * Neutrals the output of the flywheel
+ */
 public class ShooterIdle extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public ShooterIdle() {
         super();

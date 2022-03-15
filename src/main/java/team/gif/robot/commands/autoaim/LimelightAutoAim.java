@@ -1,14 +1,15 @@
 package team.gif.robot.commands.autoaim;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.lib.LimelightLedMode;
+import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
 public class LimelightAutoAim extends CommandBase {
-    public LimelightAutoAim(){
+    public LimelightAutoAim() {
         super();
         addRequirements(Robot.hood, Robot.drivetrain, Robot.shooter, Robot.indexer);
     }
@@ -74,34 +75,34 @@ public class LimelightAutoAim extends CommandBase {
             }
         }
 
-        if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
+        if (robotHasSettled) { // Note: can't combine this using else because robotHasSettled can be set to true in the above section
             double offset = Robot.limelight.getXOffset();
             if (targetLocked) {
-                // we need to check again to make sure the robot hasn't overshot the target
+                // We need to check again to make sure the robot hasn't overshot the target
                 if (offset > -1.0 && offset < 1.0) {
                     if (Robot.shooter.isInTolerance()) {
-                        // fire away!
+                        // Fire away!
                         System.out.println("Shooting - I hope it went in");
                         Robot.indexer.setBeltMotorSpeedPercent(1.0);
                         Robot.indexer.setMidMotorSpeed(1.0);
                     } else {
-                        // shooter is still spinning up or just can't get to the desired speed
+                        // Shooter is still spinning up or just can't get to the desired speed
                         System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
                     }
                 } else {
                     System.out.println("Offset Adjusting at: " + offset);
-                    // need to relock
+                    // Need to relock
                     targetLocked = false;
                     robotHasSettled = false;
                 }
             } else {
-                if (offset > -1.0 && offset < 1.0) { // target is locked
+                if (offset > -1.0 && offset < 1.0) { // Target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
-                } else if (offset < 0) { // still not in tolerance, need to rotate
+                } else if (offset < 0) { // Still not in tolerance, need to rotate
                     Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
-                } else { // still not in tolerance, need to rotate
+                } else { // Still not in tolerance, need to rotate
                     Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
                     targetLocked = false;
                 }
@@ -125,11 +126,13 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
-        Robot.limelight.setLEDMode(3);
+        Robot.limelight.setLEDMode(LimelightLedMode.ON);
 
         Globals.indexerEnabled = true;
     }
 
     @Override
-    public boolean isFinished() {return false;}
+    public boolean isFinished() {
+        return false;
+    }
 }

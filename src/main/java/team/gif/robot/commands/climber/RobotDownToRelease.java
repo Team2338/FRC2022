@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-/**
- * Describe the Command functionality here
- */
 public class RobotDownToRelease extends CommandBase {
 
     // Called when the command is initially scheduled.
@@ -24,14 +21,13 @@ public class RobotDownToRelease extends CommandBase {
 
     @Override
     public void initialize() {
-        //Use Robot weight to go down
+        // Use Robot weight to go down
         Robot.climber.setSpeed(Constants.Climber.LOADED_DROP_VOLTAGE);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //uses this power to stay constant
         Robot.climber.setSpeed(Constants.Climber.LOADED_DROP_VOLTAGE);
     }
 
@@ -43,5 +39,6 @@ public class RobotDownToRelease extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 }

@@ -7,9 +7,10 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
+/**
+ * Runs the belt to push a ball into the flywheel once we reach shooting tolerances
+ */
 public class Shoot extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public Shoot() {
         super();
@@ -23,7 +24,7 @@ public class Shoot extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Robot.shooter.isInTolerance() ) { // && Robot.indexer.getSensorBelt()) {
+        if (Robot.shooter.isInTolerance()) { // && Robot.indexer.getSensorBelt()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
             //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
         } else {

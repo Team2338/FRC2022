@@ -27,9 +27,11 @@ import java.util.HashMap;
  */
 public class RobotContainer {
 
-    private HashMap<autoMode, Command> autoCommands = new HashMap<>();
+    private final HashMap<autoMode, Command> autoCommands = new HashMap<>();
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
         // Configure the button bindings
         configureButtonBindings();
@@ -42,7 +44,8 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {}
+    private void configureButtonBindings() {
+    }
 
     private void buildAutoCommands() {
         autoCommands.put(autoMode.MOBILITY, new Mobility());

@@ -4,10 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 
 public class ToggleIndexer extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
-    public ToggleIndexer() {
-    }
 
     /*
      * When used with toggleWhenPressed, the command runs
@@ -23,8 +19,7 @@ public class ToggleIndexer extends CommandBase {
     }
 
     @Override
-    public void execute() {
-    }
+    public void execute() {}
 
     @Override
     public boolean isFinished() {

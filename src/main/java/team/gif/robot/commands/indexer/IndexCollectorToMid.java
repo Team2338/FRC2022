@@ -8,9 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class IndexCollectorToMid extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public IndexCollectorToMid() {
         super();
@@ -26,17 +24,16 @@ public class IndexCollectorToMid extends CommandBase {
     public void execute() {
         Robot.indexer.setMidMotorSpeed(1.0);
         Robot.collector.setSpeedPercentEntry(0.6);
-//+        Robot.indexer.setEntryMotorSpeed(0.7);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(Globals.indexerEnabled) {
-            return Robot.indexer.getSensorMid() ;
-        } else {
-            return true;
+        if (Globals.indexerEnabled) {
+            return Robot.indexer.getSensorMid();
         }
+
+        return true;
     }
 
     // Called once the command ends or is interrupted.
@@ -44,6 +41,5 @@ public class IndexCollectorToMid extends CommandBase {
     public void end(boolean interrupted) {
         Robot.indexer.setMidMotorSpeed(0);
         Robot.collector.setSpeedPercentEntry(0);
-//+        Robot.indexer.setEntryMotorSpeed(0);
     }
 }

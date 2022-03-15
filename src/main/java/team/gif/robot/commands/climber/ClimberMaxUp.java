@@ -11,14 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-/**
- * Describe the Command functionality here
- */
 public class ClimberMaxUp extends CommandBase {
 
     public ClimberMaxUp() {
         super();
-        addRequirements(Robot.climber,Robot.climberPneumatics);
+        addRequirements(Robot.climber, Robot.climberPneumatics);
     }
 
     // Called when the command is initially scheduled.
@@ -32,7 +29,7 @@ public class ClimberMaxUp extends CommandBase {
     public void execute() {
         Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
 
-        if(Robot.climber.getPosition() > Constants.Climber.RELEASE_FANGS_POSITION){
+        if (Robot.climber.getPosition() > Constants.Climber.RELEASE_FANGS_POSITION) {
             Robot.climberPneumatics.setFangsOut();
         }
     }

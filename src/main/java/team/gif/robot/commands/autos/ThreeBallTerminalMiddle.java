@@ -2,7 +2,10 @@ package team.gif.robot.commands.autos;
 
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
@@ -25,25 +28,27 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         //return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
         return rc;
     }
+
     public Command reverseAgain() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-4.5, 0, 0),
-                new Pose2dFeet().set(-6.5, 0, -10) // shooting position
+                new Pose2dFeet().set(-6.5, 0, -10) // Shooting position
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
+
     public Command reverseAgainTwo() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
@@ -52,7 +57,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
             RobotTrajectory.getInstance().configReverse
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
@@ -66,7 +71,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));

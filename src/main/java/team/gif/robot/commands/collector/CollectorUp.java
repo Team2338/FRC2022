@@ -21,7 +21,7 @@ public class CollectorUp extends CommandBase {
 
     @Override
     public void execute() {
-        if(++count >= 0) { // no need for a delay but leave code here in case we change our minds
+        if (++count >= 0) { // No need for a delay but leave code here in case we change our minds
             Robot.collectorPneumatics.collectorRaise();
             isDone = true;
         }
@@ -33,6 +33,5 @@ public class CollectorUp extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-    }
+    public void end(boolean interrupted) {}
 }

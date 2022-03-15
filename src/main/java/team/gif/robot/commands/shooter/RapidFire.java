@@ -1,7 +1,7 @@
 package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.Constants;
+import team.gif.lib.LimelightLedMode;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
@@ -16,15 +16,15 @@ public class RapidFire extends CommandBase {
 
     @Override
     public void initialize() {
-        // turn off indexer with flag (doesn't kill indexer, simply disables it during RapidFire
+        // Turn off indexer with flag (doesn't kill indexer, simply disables it during RapidFire
         Globals.indexerEnabled = false;
     }
 
     @Override
     public void execute() {
-        Robot.limelight.setLEDMode(3);
+        Robot.limelight.setLEDMode(LimelightLedMode.ON);
 
-        if ( Robot.shooter.isInTolerance()) {
+        if (Robot.shooter.isInTolerance()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
             Robot.indexer.setMidMotorSpeed(1.0);
         }

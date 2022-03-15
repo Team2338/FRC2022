@@ -2,12 +2,11 @@ package team.gif.robot.subsystems.drivers;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import team.gif.lib.LimelightLedMode;
 
 public class Limelight {
 
-    private static Limelight instance;
-
-    private NetworkTable table;
+    private final NetworkTable table;
 
     /**
      * Create a new limelight object.
@@ -17,7 +16,7 @@ public class Limelight {
     public Limelight(String key) {
         System.out.println("limelight init");
         table = NetworkTableInstance.getDefault().getTable(key);
-        setLEDMode(3);
+        setLEDMode(LimelightLedMode.ON);
     }
 
     /**
@@ -36,11 +35,8 @@ public class Limelight {
      *
      * @param mode desired LED mode
      */
-    public void setLEDMode(int mode) {
-        if (mode >= 0 && mode <= 3) {
-            table.getEntry("ledMode").setNumber(mode);
-            //System.out.println("LedMode set to mode "+mode);
-        }
+    public void setLEDMode(LimelightLedMode mode) {
+        table.getEntry("ledMode").setNumber(mode.getValue());
     }
 
     /**
@@ -53,7 +49,7 @@ public class Limelight {
     public void setCamMode(int mode) {
         if (mode >= 0 && mode <= 1) {
             table.getEntry("camMode").setNumber(mode);
-            System.out.println("cammode reset "+mode);
+            System.out.println("cammode reset " + mode);
         }
     }
 
@@ -194,17 +190,17 @@ public class Limelight {
      * @return x[0], y[1], z[2], pitch[3], yaw[4], roll[5]
      */
     public double[] getCamTran() {
-        return table.getEntry("camtran").getDoubleArray(new double[]{0,0,0,0,0,0});
+        return table.getEntry("camtran").getDoubleArray(new double[] { 0, 0, 0, 0, 0, 0 });
     }
 
     /**
      * Returns a data value from 1 of 3 raw (ungrouped) contours given a valid key.
-     *
+     * <p>
      * "tx[num]" : x position in normalized screenspace (-1 to +1)
      * "ty[num]" : y position in normalized screenspace (-1 to +1)
      * "ta[num]" : area (0 to 100)
      * "ts[num]" : skew (-90 to 0 degrees)
-     *
+     * <p>
      * Can also be used to retrieve a data value from 1 of 2 crosshairs.
      * "cx[num]" : x position in normalized screenspace (-1 to +1)
      * "cy[num]" : y position in normalized screenspace (-1 to +1)
@@ -216,15 +212,21 @@ public class Limelight {
         return table.getEntry(key).getDouble(0.0);
     }
 
-    /** Returns array of x values of each pixel coordinates*
-    * the x valuse of the 4 corners in what order sadly i dont know this must be tested
-    * */
-    public double[] getTcornx(){return table.getEntry("tcornx").getDoubleArray(new double[]{0,0,0,0});}
+    /**
+     * Returns array of x values of each pixel coordinates*
+     * the x valuse of the 4 corners in what order sadly i dont know this must be tested
+     */
+    public double[] getTcornx() {
+        return table.getEntry("tcornx").getDoubleArray(new double[] { 0, 0, 0, 0 });
+    }
 
-    /**Returns array of x values of each pixel coordinates*
+    /**
+     * Returns array of x values of each pixel coordinates*
      * the y valuse of the 4 corners in what order sadly i dont know this must be tested
-     * */
-    public double[] getTcorny(){return table.getEntry("tcorny").getDoubleArray(new double[]{0,0,0,0});}
+     */
+    public double[] getTcorny() {
+        return table.getEntry("tcorny").getDoubleArray(new double[] { 0, 0, 0, 0 });
+    }
 
 
 }

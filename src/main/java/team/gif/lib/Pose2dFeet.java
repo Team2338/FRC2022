@@ -22,15 +22,14 @@ import edu.wpi.first.math.util.Units;
 
 public class Pose2dFeet {
 
-  public Pose2dFeet () {
-  }
+    public Pose2dFeet() {}
 
-  public Pose2d set (double x, double y, double heading) {
+    public Pose2d set(double x, double y, double heading) {
 
-    // if compass heading is being used, convert to -180:180 scale
-    heading = heading>180 ? -360 + heading : heading;
+        // if compass heading is being used, convert to -180:180 scale
+        heading = heading > 180 ? -360 + heading : heading;
 
-    Pose2d pos = new Pose2d(Units.feetToMeters(x), Units.feetToMeters(y), new Rotation2d(Units.degreesToRadians(-heading)));
-    return pos;
-  }
+        Pose2d pos = new Pose2d(Units.feetToMeters(x), Units.feetToMeters(y), new Rotation2d(Units.degreesToRadians(-heading)));
+        return pos;
+    }
 }

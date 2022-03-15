@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
 public class DriveTank extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public DriveTank() {
         super();
@@ -21,9 +20,9 @@ public class DriveTank extends CommandBase {
         /*
          * True Tank Drive
          */
-        double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
+        double currL = -Robot.oi.driver.getLeftY(); // Negative due to joystick orientation
         double currR = -Robot.oi.driver.getRightY();
-        if(Robot.isCompBot) {
+        if (Robot.isCompBot) {
             Robot.drivetrain.setSpeed(currL, -currR);
         } else {
             Robot.drivetrain.setSpeed(currL, currR);

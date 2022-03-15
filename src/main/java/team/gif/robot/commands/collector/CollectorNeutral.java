@@ -7,14 +7,8 @@ package team.gif.robot.commands.collector;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class CollectorNeutral extends CommandBase {
 
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * @param subsystem The subsystem used by this command.
-     */
     public CollectorNeutral() {
         super();
         addRequirements(Robot.collectorPneumatics);

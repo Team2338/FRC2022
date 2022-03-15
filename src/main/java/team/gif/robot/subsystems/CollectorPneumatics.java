@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
 
 public class CollectorPneumatics extends SubsystemBase {
-	private static final DoubleSolenoid collectorSolenoidForward = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_COLLECTOR_FORWARD, RobotMap.SOLENOID_COLLECTOR_REVERSE);
-    private static final Solenoid entrySolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,RobotMap.SOLENOID_ENTRY);
+    private static final DoubleSolenoid collectorSolenoidForward = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_COLLECTOR_FORWARD, RobotMap.SOLENOID_COLLECTOR_REVERSE);
+    private static final Solenoid entrySolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, RobotMap.SOLENOID_ENTRY);
 
-	public void collectorLower() {
-		collectorSolenoidForward.set(DoubleSolenoid.Value.kForward);
-	}
+    public void collectorLower() {
+        collectorSolenoidForward.set(DoubleSolenoid.Value.kForward);
+    }
 
-	public void collectorRaise() {
-		collectorSolenoidForward.set(DoubleSolenoid.Value.kReverse);
-	}
+    public void collectorRaise() {
+        collectorSolenoidForward.set(DoubleSolenoid.Value.kReverse);
+    }
 
-	public void neutral() {
-		collectorSolenoidForward.set(DoubleSolenoid.Value.kOff);
-	}
+    public void neutral() {
+        collectorSolenoidForward.set(DoubleSolenoid.Value.kOff);
+    }
 
     public void entryLower() {
         entrySolenoid.set(true);

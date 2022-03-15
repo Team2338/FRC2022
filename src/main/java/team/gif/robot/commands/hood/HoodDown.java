@@ -7,7 +7,6 @@ package team.gif.robot.commands.hood;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class HoodDown extends CommandBase {
 
     public HoodDown() {

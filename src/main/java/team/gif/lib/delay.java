@@ -19,11 +19,13 @@ public enum delay {
     DELAY_14(14),
     DELAY_15(15);
 
-    private double value;
+    private final double value;
+
     delay(double value) {
         this.value = value;
     }
-    public double getValue(){
+
+    public double getValue() {
         return this.value;
     }
 }

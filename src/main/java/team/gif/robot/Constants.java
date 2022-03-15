@@ -23,8 +23,7 @@ public final class Constants {
         public static double TICKS_TO_METERS_LEFT = 10115; //10058; // Pushed bot 17 feet, recorded ticks (51816), converted to meters
         public static double TICKS_TO_METERS_RIGHT = 10005; // 9915; // 9915; // Pushed bot 17 feet, recorded ticks (51816), converted to meters
 
-        // trajectory
-        // from FRC Characterization Tool
+        // Trajectory from FRC Characterization Tool
         public static final double ksVolts = 1.2596;//1.37;
         public static final double kvVoltSecondsPerMeter = 2.5664;//2.46;
         public static final double kaVoltSecondsSquaredPerMeter = 1.0142;//0.773;
@@ -32,7 +31,8 @@ public final class Constants {
         public static final double kPDriveVelRight = kPDriveVelLeft;
         public static final double kTrackWidthMeters = 1.0;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
-}
+    }
+
     public static class Auto {
         // part of trajectory but numbers are from example
         public static final double kStdSpeedMetersPerSecond = 3.8;
@@ -49,11 +49,11 @@ public final class Constants {
         public static final double kP = 0.1; // 0.2
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kF = 0.055; //0.065
+        public static final double kF = 0.055; // 0.065
 
-        //public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
-        //public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
-//        public static final double RPM_LAUNCHPAD = 8300;
+        // public static final double RPM_LOW = 7500; // Currently only used in LimelightAutoAim
+        // public static final double RPM_HIGH = 10000; // Currently only used in LimelightAutoAim
+        // public static final double RPM_LAUNCHPAD = 8300;
         public static final double RPM_FENDER_LOWER_HUB = 3500; // no flywheel 3000; // verified on wood comp bot
         public static final double RPM_FENDER_UPPER_HUB = 6800; // no flywheel 5900; // 5800 not good with ball in way; // verified on wood comp bot
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
@@ -65,7 +65,7 @@ public final class Constants {
         public static final double FLYWHEEL_TOLERANCE = 150;
 
         public static final double LIMELIGHT_ANGLE = 30.0;
-        public static final double LIMELIGHT_HEIGHT = 36.5 ;
+        public static final double LIMELIGHT_HEIGHT = 36.5;
         public static final double UPPER_HUB_HEIGHT = 96.0;
 
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
@@ -84,12 +84,12 @@ public final class Constants {
         public static final double P = 0.0; // Connor said 4
         public static final double I = 0.0;
         public static final double D = 0.0;
-        public static final double F = 0; //0.425
+        public static final double F = 0; // 0.425
         public static final double REV_F = 0.38;
 
         public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
-        public static final double MAX_POSITION = 23500; //24000;
+        public static final double MAX_POSITION = 23500; // 24000;
         public static final double ROBOT_UP_POSITION = 500;
         public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 18000;
         public static final double RELEASE_FANGS_POSITION = 3000;

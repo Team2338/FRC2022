@@ -15,12 +15,12 @@ public class AxisButton extends Button {
 
     /**
      * Create an axis button for triggering commands.
-     *
+     * <p>
      * Returns true when the axis passes a specified threshold.
      *
-     * @param joystick {@link GenericHID} that has the axis (e.g. Joystick, KinectStick, etc)
+     * @param joystick   {@link GenericHID} that has the axis (e.g. Joystick, KinectStick, etc)
      * @param axisNumber the axis number (see {@link GenericHID#getRawAxis(int)})
-     * @param threshold the threshold to surpass
+     * @param threshold  the threshold to surpass
      */
     public AxisButton(GenericHID joystick, int axisNumber, double threshold) {
         this.joystick = joystick;

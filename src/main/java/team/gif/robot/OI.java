@@ -1,27 +1,30 @@
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import team.gif.lib.AxisButton;
-import edu.wpi.first.wpilibj.GenericHID;
-import team.gif.robot.commands.climber.*;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
+import team.gif.robot.commands.climber.ClimberMaxUp;
+import team.gif.robot.commands.climber.FangsIn;
+import team.gif.robot.commands.climber.FangsOut;
+import team.gif.robot.commands.climber.RobotDownToRelease;
+import team.gif.robot.commands.climber.RobotUp;
+import team.gif.robot.commands.collector.CollectorDown;
+import team.gif.robot.commands.collector.CollectorReverse;
+import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodDown;
 import team.gif.robot.commands.hood.HoodUp;
-import team.gif.robot.commands.autoaim.LimelightAutoAim;
-import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
-import team.gif.robot.commands.collector.CollectorReverse;
-import team.gif.robot.commands.collector.CollectorRun;
 
 
 public class OI {
-    private static OI instance = null;
 
     /*
      * TODO: Instantiate all joysticks/controllers and their buttons here
@@ -47,8 +50,8 @@ public class OI {
     public final JoystickButton dStart = new JoystickButton(driver, 8);
     public final JoystickButton dLStickBtn = new JoystickButton(driver, 9);
     public final JoystickButton dRStickBtn = new JoystickButton(driver, 10);
-    public final AxisButton dRTrigger = new AxisButton(driver,3,.05);
-    public final AxisButton dLTrigger = new AxisButton(driver,2,.05);
+    public final AxisButton dRTrigger = new AxisButton(driver, 3, .05);
+    public final AxisButton dLTrigger = new AxisButton(driver, 2, .05);
 
     public final POVButton dDPadUp = new POVButton(driver, 0);
     public final POVButton dDPadRight = new POVButton(driver, 90);
@@ -65,8 +68,8 @@ public class OI {
     public final JoystickButton aStart = new JoystickButton(aux, 8);
     public final JoystickButton aLStickBtn = new JoystickButton(aux, 9);
     public final JoystickButton aRStickBtn = new JoystickButton(aux, 10);
-    public final AxisButton aRTrigger = new AxisButton(aux,3,.05);
-    public final AxisButton aLTrigger = new AxisButton(aux,2,.05);
+    public final AxisButton aRTrigger = new AxisButton(aux, 3, .05);
+    public final AxisButton aLTrigger = new AxisButton(aux, 2, .05);
     public final POVButton aDPadUp = new POVButton(aux, 0);
     public final POVButton aDPadRight = new POVButton(aux, 90);
     public final POVButton aDPadDown = new POVButton(aux, 180);
@@ -82,8 +85,8 @@ public class OI {
     public final JoystickButton tStart = new JoystickButton(test, 8);
     public final JoystickButton tLStickBtn = new JoystickButton(test, 9);
     public final JoystickButton tRStickBtn = new JoystickButton(test, 10);
-    public final AxisButton tRTrigger = new AxisButton(test,3,.05);
-    public final AxisButton tLTrigger = new AxisButton(test,2,.05);
+    public final AxisButton tRTrigger = new AxisButton(test, 3, .05);
+    public final AxisButton tLTrigger = new AxisButton(test, 2, .05);
     public final POVButton tDPadUp = new POVButton(test, 0);
     public final POVButton tDPadRight = new POVButton(test, 90);
     public final POVButton tDPadDown = new POVButton(test, 180);
@@ -118,8 +121,8 @@ public class OI {
         dDPadLeft.whenPressed(new RobotUp());
         dDPadUp.whenPressed(new RobotDownToRelease());
         /*
-        * these are only for testing with only a driver joystick
-        */
+         * These are only for testing with only a driver joystick
+         */
         dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
         dBack.whenPressed(new HoodUp()); // hood has to be up for this shot
         dStart.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
@@ -127,14 +130,14 @@ public class OI {
 
         dDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
         dDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
-//        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
-//        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
-//        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-//        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
-//        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
-//        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
+        //        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
+        //        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
+        //        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
+        //        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
+        //        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
+        //        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
         /*
-         * testing end
+         * Testing end
          */
 
         aLTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
@@ -151,7 +154,7 @@ public class OI {
         aDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
         aX.whenPressed(new HoodDown());
         aY.whenPressed(new HoodUp());
-        //-aDPadDown.whenPressed(new CollectorDown());
+        // aDPadDown.whenPressed(new CollectorDown());
         aB.whenPressed(new CollectorUp());
         aA.whenPressed(new CollectorDown());
         aBack.whenPressed(new FangsOut());
@@ -160,8 +163,8 @@ public class OI {
 
     public void setRumble(boolean rumble) {
         driver.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
-        driver.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
+        driver.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0 : 0.0);
         aux.setRumble(GenericHID.RumbleType.kLeftRumble, rumble ? 1.0 : 0.0);
-        aux.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0: 0.0);
+        aux.setRumble(GenericHID.RumbleType.kRightRumble, rumble ? 1.0 : 0.0);
     }
 }
