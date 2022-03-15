@@ -175,7 +175,7 @@ public class Robot extends TimedRobot {
         elapsedTime.reset();
         elapsedTime.start();
 
-        limelight.setLEDMode(1);//turn off
+        limelight.setLEDMode(1);//turn off during autonomous
 
         compressor.disable();
 
@@ -202,7 +202,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
 
         Globals.autonomousModeActive = false;
-        limelight.setLEDMode(3);//force off
+        limelight.setLEDMode(3); // turn LED on for entire teleop
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

@@ -24,6 +24,7 @@ public class ClimberMaxUp extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.limelight.setLEDMode(1); // turn LED off during climb
         Robot.collectorPneumatics.collectorLower();
     }
 
