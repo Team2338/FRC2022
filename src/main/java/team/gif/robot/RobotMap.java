@@ -30,7 +30,6 @@ public abstract class RobotMap {
     public static final int SOLENOID_COLLECTOR_FORWARD = 7; // 4;
     public static final int SOLENOID_COLLECTOR_REVERSE = 0; // 5;
     public static final int SOLENOID_ENTRY = 5;
-    public static final int BRAKE = 3;
 
     // Compressors
     public static final int COMPRESSOR = 0;
