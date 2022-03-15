@@ -97,7 +97,6 @@ public class Drivetrain extends SubsystemBase {
         pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(rightTalon2);
 
         pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
-        pigeon.addToShuffleboard("SmartDashboard","Heading2");
 
         resetEncoders();
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
