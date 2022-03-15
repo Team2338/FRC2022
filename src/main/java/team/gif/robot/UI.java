@@ -9,6 +9,7 @@ import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
+import team.gif.robot.commands.limelight.LimelightLED;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.drivers.Pigeon;
 
@@ -44,6 +45,11 @@ public class UI {
         Robot.shuffleboardTab.add("Climber", new ResetClimber())
             .withPosition(8,1);
 
+        Robot.shuffleboardTab.add("LED", new LimelightLED());
+
+        Robot.shuffleboardTab.addCamera("limelight","limelight","mjpg:http://10.23.38.95:5800")
+            .withPosition(0,0)
+            .withSize(4,4);
 
         // Pigeon
         Robot.shuffleboardTab.add("Heading",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);})
