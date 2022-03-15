@@ -117,6 +117,7 @@ public class Robot extends TimedRobot {
         logger.addEvent("INIT", "Start building container");
         robotContainer = new RobotContainer();
         logger.addEvent("INIT", "End building container");
+        climber.setHangBrake(false);
     }
 
     /**

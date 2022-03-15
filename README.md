@@ -1,18 +1,18 @@
 # FRC2022
-Code for the 2022 robot, TBD.
+Code for the 2022 robot, Viper.
 
 ## Drivetrain
-TBD
+Tank Drive(Arcade Drive) go BRRRR
 
 ## Hanger
-TBD
+It do be going swing swing swing
 
 ## Indexer
-TBD
+It do be going digestive system
 
 ## Intake
-TBD
+It do be going suck
 
 ## Shooter
-TBD
+It do be going pew pew pew
 
