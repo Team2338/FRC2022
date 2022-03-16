@@ -11,147 +11,6 @@
         "vgap": 8.0,
         "titleType": 1,
         "tiles": {
-          "7,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///Shuffleboard/2022/Delay",
-              "_title": "Delay"
-            }
-          },
-          "7,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///Shuffleboard/2022/Enable Indexer",
-              "_title": "Indexer",
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "7,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///Shuffleboard/2022/Shooter Speed",
-              "_title": "Shooter Speed"
-            }
-          },
-          "4,0": {
-            "size": [
-              2,
-              3
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Heading",
-              "Layout/Label position": "HIDDEN",
-              "_children": [
-                {
-                  "_type": "Gyro",
-                  "_source0": "network_table:///Shuffleboard/2022/Heading",
-                  "_title": "Shuffleboard/2022/Heading",
-                  "Visuals/Major tick spacing": 45.0,
-                  "Visuals/Starting angle": 180.0,
-                  "Visuals/Show tick mark ring": true,
-                  "Visuals/Counter clockwise": false
-                },
-                {
-                  "_type": "Command",
-                  "_source0": "network_table:///Shuffleboard/2022/Reset",
-                  "_title": "Shuffleboard/2022/Reset"
-                }
-              ]
-            }
-          },
-          "6,0": {
-            "size": [
-              1,
-              3
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Sensors",
-              "Layout/Label position": "BOTTOM",
-              "_children": [
-                {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///Shuffleboard/2022/Sensors/Belt Sensor",
-                  "_title": "Belt Sensor",
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///Shuffleboard/2022/Sensors/Mid Sensor",
-                  "_title": "Mid Sensor",
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                },
-                {
-                  "_type": "Boolean Box",
-                  "_source0": "network_table:///Shuffleboard/2022/Sensors/Entry Sensor",
-                  "_title": "Entry Sensor",
-                  "Colors/Color when true": "#7CFC00FF",
-                  "Colors/Color when false": "#8B0000FF"
-                }
-              ]
-            }
-          },
-          "8,2": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "ComboBox Chooser",
-              "_source0": "network_table:///Shuffleboard/2022/Auto Select",
-              "_title": "Auto Select"
-            }
-          },
-          "8,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "List Layout",
-              "_title": "Climber",
-              "Layout/Label position": "HIDDEN",
-              "_children": [
-                {
-                  "_type": "Text View",
-                  "_source0": "network_table:///Shuffleboard/2022/Climber Position",
-                  "_title": "Position"
-                },
-                {
-                  "_type": "Command",
-                  "_source0": "network_table:///Shuffleboard/2022/Climber",
-                  "_title": "Climber"
-                }
-              ]
-            }
-          },
-          "9,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///Shuffleboard/2022/LED",
-              "_title": "LED"
-            }
-          },
           "0,0": {
             "size": [
               4,
@@ -169,6 +28,147 @@
               "fps": -1,
               "imageWidth": -1,
               "imageHeight": -1
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              3
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Sensors",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Belt Sensor",
+                  "_title": "Belt Sensor",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Mid Sensor",
+                  "_title": "Mid Sensor",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Entry Sensor",
+                  "_title": "Entry Sensor",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                }
+              ]
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Climber",
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Climber Position",
+                  "_title": "Climber Position"
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Climber",
+                  "_title": "Climber"
+                }
+              ]
+            }
+          },
+          "7,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Enable Indexer",
+              "_title": "Indexer",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Shooter Speed",
+              "_title": "Shooter Speed"
+            }
+          },
+          "9,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/LED",
+              "_title": "LED"
+            }
+          },
+          "8,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///Shuffleboard/SmartDashboard/Auto Select",
+              "_title": "Auto Select"
+            }
+          },
+          "7,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///Shuffleboard/SmartDashboard/Delay",
+              "_title": "Delay"
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              3
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Heading",
+              "Layout/Label position": "HIDDEN",
+              "_children": [
+                {
+                  "_type": "Gyro",
+                  "_source0": "network_table:///Shuffleboard/SmartDashboard/BotHead",
+                  "_title": "BotHead",
+                  "Visuals/Major tick spacing": 45.0,
+                  "Visuals/Starting angle": 180.0,
+                  "Visuals/Show tick mark ring": true,
+                  "Visuals/Counter clockwise": false
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Reset",
+                  "_title": "SmartDashboard/Reset"
+                }
+              ]
             }
           }
         }

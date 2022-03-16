@@ -25,28 +25,9 @@ public class UiSmartDashboard {
      * All the shuffleboard entry
      */
     public UiSmartDashboard(){
-        // Indexer and Indexer Sensors
-        SmartDashboard.putBoolean("Belt Sensor", indexer.getSensorBelt());
-        SmartDashboard.putBoolean("Mid Sensor", indexer.getSensorMid());
-        SmartDashboard.putBoolean("Entry Sensor",indexer.getSensorEntry());
-        SmartDashboard.putBoolean("Enable Indexer", Globals.indexerEnabled);
-
-        // Shooter
-        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
-
-        // Climber
-        SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
-        SmartDashboard.putData("Climber", new ResetClimber());
-
-        // Limelight Toggle
-        SmartDashboard.putData("LED", new LimelightLED());
-
-//        Robot.shuffleboardTab.addCamera("limelight","limelight","mjpg:http://10.23.38.95:5800")
-
         // Pigeon
         ShuffleboardTab tab  = Shuffleboard.getTab("SmartDashboard"); //gets a reference to the shuffleboard tab
         tab.add("BotHead",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);});
-        SmartDashboard.putData("Reset", new ResetHeading());
 
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
@@ -84,5 +65,23 @@ public class UiSmartDashboard {
         tab.add("Delay", delayChooser)
             .withPosition(7,2)
             .withSize(1,1);
+
+        SmartDashboard.putData("Climber", new ResetClimber());
+        SmartDashboard.putData("LED", new LimelightLED());
+        SmartDashboard.putData("Reset", new ResetHeading());
+    }
+
+    public void updateUI() {
+        // Indexer and Indexer Sensors
+        SmartDashboard.putBoolean("Belt Sensor", indexer.getSensorBelt());
+        SmartDashboard.putBoolean("Mid Sensor", indexer.getSensorMid());
+        SmartDashboard.putBoolean("Entry Sensor",indexer.getSensorEntry());
+        SmartDashboard.putBoolean("Enable Indexer", Globals.indexerEnabled);
+
+        // Shooter
+        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
+
+        // Climber
+        SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
     }
 }

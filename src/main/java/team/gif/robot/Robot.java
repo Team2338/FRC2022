@@ -129,6 +129,8 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
 
+        uiSmartDashboard.updateUI();
+
         chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
         chosenDelay = uiSmartDashboard.delayChooser.getSelected();
     }
