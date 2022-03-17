@@ -59,8 +59,8 @@ public final class Constants {
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
         public static final double RPM_RING_UPPER_HUB = 7500; // no flywheel 6500;
         public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
-        public static final double RPM_LAUNCHPAD = 9000; // verified on wood comp bot
-        public static final double RPM_FAR_COURT = 10500; // verified on wood comp bot - very variable
+        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot
+        public static final double RPM_FAR_COURT = 9800; // verified on wood comp bot - very variable
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 
