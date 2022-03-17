@@ -95,6 +95,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             new CollectorRun().withTimeout(0.5),
             forward(),
             new ParallelDeadlineGroup(
+                new CollectorRun().withTimeout(1.5),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
                 new RapidFire()
             )
