@@ -1,6 +1,10 @@
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.w3c.dom.html.HTMLOptionElement;
 import team.gif.lib.autoMode;
@@ -9,9 +13,11 @@ import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.commands.drivetrain.DriveTank;
 import team.gif.robot.commands.drivetrain.ResetHeading;
+import team.gif.robot.commands.limelight.LimelightLED;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.drivers.Pigeon;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static team.gif.robot.Robot.*;
@@ -25,45 +31,68 @@ public class UI {
      * All the shuffleboard entry
      */
     public UI(){
+
+        // Creating a new tab in shuffleboard.
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("FRC2022");
+        ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
+                .getLayout("Sensors", BuiltInLayouts.kGrid)
+                .withPosition(6,0)
+                .withSize(1,3)
+                .withProperties(Map.of("Label","HIDDEN"));
+
+    /*    public static ShuffleboardLayout shuffleboardLayoutHeading = shuffleboardTab
+        .getLayout("BotHeading", BuiltInLayouts.kGrid)
+        .withSize(2,3)
+        .withProperties(Map.of("Label", "HIDDEN"));
+*/
         // Indexer and Indexer Sensors
-        Robot.shuffleboardLayoutSensor.addBoolean("Belt Sensor", indexer::getSensorBelt);
-        Robot.shuffleboardLayoutSensor.addBoolean("Mid Sensor", indexer::getSensorMid);
-        Robot.shuffleboardLayoutSensor.addBoolean("Entry Sensor",indexer::getSensorEntry);
-        Robot.shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled)
+        shuffleboardLayoutSensor.addBoolean("Belt Sensor", indexer::getSensorBelt);
+        shuffleboardLayoutSensor.addBoolean("Mid Sensor", indexer::getSensorMid);
+        shuffleboardLayoutSensor.addBoolean("Entry Sensor",indexer::getSensorEntry);
+        shuffleboardTab.addBoolean("Enable Indexer", () -> Globals.indexerEnabled)
             .withPosition(7,0)
             .withSize(1,1);
         ;
 
         // Shooter
-        Robot.shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed)
+        shuffleboardTab.addNumber("Shooter Speed", shooter::getSpeed)
             .withPosition(7,1);
 
         // Climber
-        Robot.shuffleboardTab.addString("Climber Position", () -> climber.getPosition_Shuffleboard())
+        shuffleboardTab.addString("Climber Position", () -> climber.getPosition_Shuffleboard())
             .withPosition(8,0);
-        Robot.shuffleboardTab.add("Climber", new ResetClimber())
-            .withPosition(8,1);
+        shuffleboardTab.add("Climber", new ResetClimber())
+            .withPosition(8,1)
+            .withSize(1,1);
 
+        // Limelight Toggle
+        shuffleboardTab.add("LED", new LimelightLED())
+            .withPosition(9,0)
+            .withSize(1,1);
+
+//        shuffleboardTab.addCamera("limelight","limelight","mjpg:http://10.23.38.95:5800")
+//            .withPosition(0,0)
+//            .withSize(4,4);
 
         // Pigeon
-        Robot.shuffleboardTab.add("Heading",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);})
+        shuffleboardTab.add("Heading",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);})
             .withPosition(4,0)
             .withSize(2,2);
-        Robot.shuffleboardTab.add("Reset", new ResetHeading())
+        shuffleboardTab.add("Reset", new ResetHeading())
             .withPosition(4,2)
             .withSize(2,1);
 
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
-        autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
         autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);
+        autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
         autoModeChooser.addOption("Three+ Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
         autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
 
-        Robot.shuffleboardTab.add("Auto Select",autoModeChooser)
+        shuffleboardTab.add("Auto Select",autoModeChooser)
                 .withWidget(BuiltInWidgets.kComboBoxChooser)
                 .withPosition(8,2)
                 .withSize(2,1);
@@ -86,7 +115,7 @@ public class UI {
         delayChooser.addOption("14", delay.DELAY_14);
         delayChooser.addOption("15", delay.DELAY_15);
 
-        Robot.shuffleboardTab.add("Delay", delayChooser)
+        shuffleboardTab.add("Delay", delayChooser)
                 .withPosition(7,2)
                 .withSize(1,1);
     }

@@ -31,11 +31,15 @@ public class ClimberManualControl extends CommandBase {
             speed = 0;
         }
 
-        if (Globals.climberMotorEnabled) {
-
-            // run the elevator either up or down
-            Robot.climber.setSpeed(speed);
+        // allows user to run past 0 setpoint if pressing the right stick
+        if (Robot.oi.aux.getRightStickButton()) {
+            Robot.climber.enableLowerSoftLimit(false);
+        } else {
+            Robot.climber.enableLowerSoftLimit(true);
         }
+
+        // run the elevator either up or down
+        Robot.climber.setSpeed(speed);
     }
 
     // Returns true when the command should end.
@@ -48,6 +52,7 @@ public class ClimberManualControl extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.climber.setSpeed(0);
+        Robot.climber.enableLowerSoftLimit(true);
         // TODO: can't call multiple times or we crash
 //        Robot.shuffleboardTab.add("Hang Control", false);
     }
