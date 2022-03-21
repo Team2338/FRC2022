@@ -7,6 +7,8 @@ import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.Drivetrain;
 
+import static java.lang.Math.abs;
+
 public class LimelightAutoAim extends CommandBase {
     public LimelightAutoAim(){
         super();
@@ -37,8 +39,8 @@ public class LimelightAutoAim extends CommandBase {
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
-        // distance zones //more accurate than rohan (TM)
-        double distanceFromHub = Math.abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+        //more accurate than rohan (TM) // distance zones
+        double distanceFromHub = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
         if (distanceFromHub >= 200) { // Far Shot
             Robot.hood.setHoodUp();
             Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
@@ -64,14 +66,17 @@ public class LimelightAutoAim extends CommandBase {
         if (!robotHasSettled) {
             DifferentialDriveWheelSpeeds wheelSpeeds = Robot.drivetrain.getWheelSpeeds();
             // Make sure both wheels are within tolerance of not moving
-            if (Math.abs(wheelSpeeds.leftMetersPerSecond) < velocityCap && Math.abs(wheelSpeeds.rightMetersPerSecond) < velocityCap) {
+            if (abs(wheelSpeeds.leftMetersPerSecond) < velocityCap && abs(wheelSpeeds.rightMetersPerSecond) < velocityCap) {
                 robotHasSettled = true;
                 System.out.println("AutoFire: Robot has settled");
             }
         }
 
         if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
+
             double offset = Robot.limelight.getXOffset();
+            double pivVolts = offset * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
                 if (offset > -1.0 && offset < 1.0) {
@@ -94,12 +99,8 @@ public class LimelightAutoAim extends CommandBase {
                 if (offset > -1.0 && offset < 1.0) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
-                } else if (offset < 0) { // still not in tolerance, need to rotate
-                    Robot.drivetrain.tankDriveVolts(-Constants.Shooter.MAX_PIVOT_VOLTS, Constants.Shooter.MAX_PIVOT_VOLTS);
-                    targetLocked = false;
                 } else { // still not in tolerance, need to rotate
-                    Robot.drivetrain.tankDriveVolts(Constants.Shooter.MAX_PIVOT_VOLTS, -Constants.Shooter.MAX_PIVOT_VOLTS);
-                    targetLocked = false;
+                    Robot.drivetrain.tankDriveVolts(pivVolts, -pivVolts);
                 }
             }
         }
