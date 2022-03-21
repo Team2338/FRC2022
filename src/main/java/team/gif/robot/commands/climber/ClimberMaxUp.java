@@ -8,6 +8,7 @@
 package team.gif.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.lib.LimelightLedMode;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
@@ -21,6 +22,7 @@ public class ClimberMaxUp extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.limelight.setLEDMode(LimelightLedMode.OFF); // Turn LED off during climb
         Robot.collectorPneumatics.collectorLower();
     }
 

@@ -73,10 +73,10 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 reverse(),
                 new CollectorRun(),
                 new HoodUp(),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB - 200)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(1.5),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB - 200).withTimeout(1.5),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),

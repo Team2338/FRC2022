@@ -10,10 +10,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.lib.LimelightLedMode;
@@ -34,8 +30,6 @@ import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Shooter;
 import team.gif.robot.subsystems.drivers.Limelight;
 
-import java.util.Map;
-
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -51,7 +45,7 @@ public class Robot extends TimedRobot {
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
-    public static UI ui;
+    public static UiSmartDashboard uiSmartDashboard;
     public static FileLogger logger;
 
     private autoMode chosenAuto;
@@ -72,18 +66,6 @@ public class Robot extends TimedRobot {
     public static DriveArcade arcadeDrive;
     // public static DriveTank tankDrive;
 
-    // Creating a new tab in shuffleboard.
-    public static ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("2022");
-    public static ShuffleboardLayout shuffleboardLayoutSensor = shuffleboardTab
-        .getLayout("Sensors", BuiltInLayouts.kGrid)
-        .withPosition(6, 0)
-        .withSize(1, 3)
-        .withProperties(Map.of("Label", "HIDDEN"));
-/*    public static ShuffleboardLayout shuffleboardLayoutHeading = shuffleboardTab
-        .getLayout("BotHeading", BuiltInLayouts.kGrid)
-        .withSize(2,3)
-        .withProperties(Map.of("Label", "HIDDEN"));
-*/
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -116,7 +98,8 @@ public class Robot extends TimedRobot {
         limelight.setLEDMode(LimelightLedMode.OFF); // Force off
 
         oi = new OI();
-        ui = new UI();
+//        ui = new UI();
+        uiSmartDashboard = new UiSmartDashboard();
         logger = new FileLogger();
         addMetricsToLogger();
         logger.init();
@@ -126,6 +109,10 @@ public class Robot extends TimedRobot {
         logger.addEvent("INIT", "Start building container");
         robotContainer = new RobotContainer();
         logger.addEvent("INIT", "End building container");
+
+        hood.setHoodDown();
+        collectorPneumatics.collectorRaise();
+        climberPneumatics.setFangsIn();
     }
 
     /**
@@ -143,21 +130,20 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
 
-        chosenAuto = UI.autoModeChooser.getSelected();
-        chosenDelay = UI.delayChooser.getSelected();
+        uiSmartDashboard.updateUI();
+
+        chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
+        chosenDelay = uiSmartDashboard.delayChooser.getSelected();
     }
 
     /**
      * This function is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit() {
-        limelight.setLEDMode(LimelightLedMode.OFF); // Force off
-    }
+    public void disabledInit() {}
 
     @Override
-    public void disabledPeriodic() {
-    }
+    public void disabledPeriodic() {}
 
     /**
      * This runs the autonomous command selected by your {@link RobotContainer} class.
@@ -180,8 +166,7 @@ public class Robot extends TimedRobot {
         elapsedTime.reset();
         elapsedTime.start();
 
-        limelight.setLEDMode(LimelightLedMode.OFF); // Turn off
-
+        limelight.setLEDMode(LimelightLedMode.OFF); // Turn off during autonomous
         compressor.disable();
 
         runAutoScheduler = true;
@@ -206,8 +191,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
+        limelight.setLEDMode(LimelightLedMode.ON); // Turn LED on for entire teleop
+
         Globals.autonomousModeActive = false;
-        limelight.setLEDMode(LimelightLedMode.ON); // Force on
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -216,7 +203,6 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
         }
         compressor.enableDigital();
-        indexCommand.schedule();
         climber.releaseClimberBrake();
     }
 
@@ -238,15 +224,13 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testInit() {
-    }
+    public void testInit() {}
 
     /**
      * This function is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {
-    }
+    public void testPeriodic() {}
 
     public void addMetricsToLogger() {
         // Shooter

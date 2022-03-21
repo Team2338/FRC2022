@@ -23,6 +23,9 @@ public class Climber extends SubsystemBase {
         hangMotor.configFactoryDefault();
 
         // Soft Limits
+        hangMotor.configReverseSoftLimitEnable(true);
+        hangMotor.configReverseSoftLimitThreshold(0);
+
         hangMotor.enableCurrentLimit(false);
         hangMotor.configRemoteFeedbackFilter(RobotMap.MOTOR_INTAKE, RemoteSensorSource.TalonSRX_SelectedSensor, 0);
         hangMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.RemoteSensor0, 0, 0);
@@ -86,7 +89,7 @@ public class Climber extends SubsystemBase {
     }
 
     public void enableLowerSoftLimit(boolean engage) {
-        hangMotor.enableCurrentLimit(engage);
+        hangMotor.configReverseSoftLimitEnable(engage);
     }
 
     public void setClimberBrake() {
