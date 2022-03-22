@@ -33,6 +33,7 @@ public class LimelightAutoAim extends CommandBase {
 
         targetLocked = false;
         Globals.indexerEnabled = false;
+        Globals.hoodAngle = Constants.Shooter.HOOD_DOWN_ANGLE;
 
 //        delayCounter = 0;
         Robot.limelight.setLEDMode(3); // turn on - just in case they were turned off somehow
@@ -65,8 +66,7 @@ public class LimelightAutoAim extends CommandBase {
         /*
         //More Accurate Than Rohan (TM)// distance zones
         if (distanceFromHub >= 200) { // Far Shot
-            Robot.hood.setHoodUp();
-            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
+            Robot.hood.setHoodUp();            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
             System.out.println("Distance - Far: " + distanceFromHub);
 
         } else if (distanceFromHub >= 130) { // LaunchPad shot
