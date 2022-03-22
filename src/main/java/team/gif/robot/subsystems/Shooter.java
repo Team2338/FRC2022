@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -20,7 +19,8 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         super();
         shooterMotor.configFactoryDefault();
-        
+
+        shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
         shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 20);
 
         shooterMotor.setNeutralMode(NeutralMode.Coast);
@@ -67,7 +67,55 @@ public class Shooter extends SubsystemBase {
         }
         return 0;
     }
-    
+
+    public double getInputCurrent() {
+        return shooterMotor.getSupplyCurrent();
+    }
+
+    public double getOutputCurrent() {
+        return shooterMotor.getStatorCurrent();
+    }
+
+    public double getInputVoltage() {
+        return shooterMotor.getBusVoltage();
+    }
+
+    public double getOutputVoltage() {
+        return shooterMotor.getMotorOutputVoltage();
+    }
+
+    public double getGainP() {
+        if (shooterMotor.getControlMode() == ControlMode.Velocity) {
+            return Constants.Shooter.kP * shooterMotor.getClosedLoopError();
+        }
+
+        return 0;
+    }
+
+    public double getGainF() {
+        if (shooterMotor.getControlMode() == ControlMode.Velocity) {
+            return Constants.Shooter.kF * shooterMotor.getClosedLoopTarget();
+        }
+
+        return 0;
+    }
+
+    public double getGainI() {
+        if (shooterMotor.getControlMode() == ControlMode.Velocity) {
+            return Constants.Shooter.kI * shooterMotor.getIntegralAccumulator();
+        }
+
+        return 0;
+    }
+
+    public double getGainD() {
+        if (shooterMotor.getControlMode() == ControlMode.Velocity) {
+            return Constants.Shooter.kD * shooterMotor.getErrorDerivative();
+        }
+
+        return 0;
+    }
+
     public double getOutputPercent() {
         return shooterMotor.getMotorOutputPercent();
     }

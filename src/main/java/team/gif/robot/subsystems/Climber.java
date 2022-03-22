@@ -3,6 +3,7 @@ package team.gif.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -21,6 +22,8 @@ public class Climber extends SubsystemBase {
         hangMotor.setInverted(true);
         hangMotor.setSensorPhase(true);
         hangMotor.configFactoryDefault();
+
+        hangMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
 
         // Soft Limits
         hangMotor.configReverseSoftLimitEnable(true);

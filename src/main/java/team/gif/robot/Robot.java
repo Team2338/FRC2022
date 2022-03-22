@@ -242,18 +242,36 @@ public class Robot extends TimedRobot {
         telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
         telemetryLogger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
         telemetryLogger.addMetric("Shooter_Percent", shooter::getOutputPercent);
-    
+        telemetryLogger.addMetric("Shooter_Voltage_In", shooter::getInputVoltage);
+        telemetryLogger.addMetric("Shooter_Voltage_Out", shooter::getOutputVoltage);
+        telemetryLogger.addMetric("Shooter_Current_In", shooter::getInputCurrent);
+        telemetryLogger.addMetric("Shooter_Current_Out", shooter::getOutputCurrent);
+        telemetryLogger.addMetric("Shooter_Gain_P", shooter::getGainP);
+        telemetryLogger.addMetric("Shooter_Gain_I", shooter::getGainI);
+        telemetryLogger.addMetric("Shooter_Gain_D", shooter::getGainD);
+        telemetryLogger.addMetric("Shooter_Gain_F", shooter::getGainF);
+
         // Drivetrain
         telemetryLogger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
         telemetryLogger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
         telemetryLogger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
         telemetryLogger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
-    
+
+        telemetryLogger.addMetric("DriveLeft1_Voltage_Out", drivetrain::getOutputVoltageL1);
+        telemetryLogger.addMetric("DriveLeft2_Voltage_Out", drivetrain::getOutputVoltageL2);
+        telemetryLogger.addMetric("DriveRight1_Voltage_Out", drivetrain::getOutputVoltageR1);
+        telemetryLogger.addMetric("DriveRight2_Voltage_Out", drivetrain::getOutputVoltageR2);
+
         telemetryLogger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
         telemetryLogger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
         telemetryLogger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
         telemetryLogger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
-    
+
+        telemetryLogger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
+        telemetryLogger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
+        telemetryLogger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
+        telemetryLogger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
+
         telemetryLogger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
         telemetryLogger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
         telemetryLogger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
@@ -264,6 +282,7 @@ public class Robot extends TimedRobot {
     
         // PDP and Compressor
         telemetryLogger.addMetric("PDP_Voltage", pdp::getVoltage);
+        telemetryLogger.addMetric("PDP_Current_DriveLeft1", () -> pdp.getCurrent(0));
         telemetryLogger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
         telemetryLogger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
     
