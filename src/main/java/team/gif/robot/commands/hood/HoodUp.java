@@ -5,6 +5,8 @@
 package team.gif.robot.commands.hood;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import team.gif.robot.Constants;
+import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 public class HoodUp extends CommandBase {
@@ -16,7 +18,9 @@ public class HoodUp extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {Robot.hood.setHoodUp();}
+    public void initialize() {
+        Robot.hood.setHoodUp();
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
