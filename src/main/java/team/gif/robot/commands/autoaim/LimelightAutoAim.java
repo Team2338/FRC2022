@@ -43,8 +43,9 @@ public class LimelightAutoAim extends CommandBase {
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
-        //more accurate than rohan (TM) // distance zones
+        //more accurate than rohan (TM)
         double distanceFromHub = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+        // distance zones
         if (distanceFromHub >= 200) { // Far Shot
             Robot.hood.setHoodUp();
             Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
@@ -78,12 +79,12 @@ public class LimelightAutoAim extends CommandBase {
 
         if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
 
-            double offset = Robot.limelight.getXOffset();
-            double pivVolts = offset * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+            double xOffset = Robot.limelight.getXOffset();
+            double pivVolts = xOffset * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
-                if (offset > -1.0 && offset < 1.0) {
+                if (xOffset > -1.0 && xOffset < 1.0) {
                     if (Robot.shooter.isInTolerance()) {
                         // fire away!
                         System.out.println("Shooting - I hope it went in");
@@ -94,13 +95,13 @@ public class LimelightAutoAim extends CommandBase {
                         System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
                     }
                 } else {
-                    System.out.println("Offset Adjusting at: " + offset);
+                    System.out.println("Offset Adjusting at: " + xOffset);
                     // need to relock
                     targetLocked = false;
                     robotHasSettled = false;
                 }
             } else {
-                if (offset > -1.0 && offset < 1.0) { // target is locked
+                if (xOffset > -1.0 && xOffset < 1.0) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else { // still not in tolerance, need to rotate
