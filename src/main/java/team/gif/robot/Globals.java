@@ -5,4 +5,5 @@ public abstract class Globals {
     public static boolean indexerEnabled = true;
     public static boolean autonomousModeActive = false;
     public static boolean shooterRunning = false;
+    public static double hoodAngle;
 }

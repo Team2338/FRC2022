@@ -5,9 +5,16 @@ import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.commands.shooter.Shoot;
 import team.gif.robot.subsystems.Drivetrain;
+import team.gif.robot.subsystems.Hood;
+import team.gif.robot.subsystems.Shooter;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
+import static java.lang.Math.toRadians;
 
 public class LimelightAutoAim extends CommandBase {
     public LimelightAutoAim(){
@@ -26,6 +33,7 @@ public class LimelightAutoAim extends CommandBase {
 
         targetLocked = false;
         Globals.indexerEnabled = false;
+        Globals.hoodAngle = Constants.Shooter.HOOD_DOWN_ANGLE;
 
 //        delayCounter = 0;
         Robot.limelight.setLEDMode(3); // turn on - just in case they were turned off somehow
@@ -34,6 +42,9 @@ public class LimelightAutoAim extends CommandBase {
         Drivetrain.leftTalon2.enableCurrentLimit(false);
         Drivetrain.rightTalon1.enableCurrentLimit(false);
         Drivetrain.rightTalon2.enableCurrentLimit(false);
+
+        Robot.hood.setHoodDown();
+
     }
 
     @Override
@@ -43,12 +54,11 @@ public class LimelightAutoAim extends CommandBase {
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
-        //more accurate than rohan (TM)
         double distanceFromHub = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
-        // distance zones
+        /*
+        //More Accurate Than Rohan (TM)// distance zones
         if (distanceFromHub >= 200) { // Far Shot
-            Robot.hood.setHoodUp();
-            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
+            Robot.hood.setHoodUp();            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
             System.out.println("Distance - Far: " + distanceFromHub);
 
         } else if (distanceFromHub >= 130) { // LaunchPad shot
@@ -66,6 +76,16 @@ public class LimelightAutoAim extends CommandBase {
             Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_UPPER_HUB);
             System.out.println("Distance - Fender: " + distanceFromHub);
         }
+        */
+
+        if(distanceFromHub >= 50){
+            Robot.hood.setHoodUp();
+        }
+
+        //More Accurate than Rohan 2.0 (TM)
+        double targetRPM = (distanceFromHub / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT))/((2* distanceFromHub * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-9.81) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
+        Robot.shooter.setSpeedPID(targetRPM);
+        System.out.println("targetRPM: " + targetRPM);
 
         // bot must not be moving anymore
         if (!robotHasSettled) {
