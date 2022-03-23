@@ -33,7 +33,6 @@ public class LimelightAutoAim extends CommandBase {
 
         targetLocked = false;
         Globals.indexerEnabled = false;
-        Globals.hoodAngle = Constants.Shooter.HOOD_DOWN_ANGLE;
 
 //        delayCounter = 0;
         Robot.limelight.setLEDMode(3); // turn on - just in case they were turned off somehow

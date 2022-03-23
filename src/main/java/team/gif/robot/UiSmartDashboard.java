@@ -90,5 +90,10 @@ public class UiSmartDashboard {
 
         //Pressure Sensor
         SmartDashboard.putNumber("Pressure", 250*(pressureSensor.getVoltage() / 4.82) - 25);
+
+        //Limelight
+        //SmartDashboard.putNumber("Tx", limelight.getXOffset());
+        //SmartDashboard.putNumber("Ty", limelight.getYOffset());
+
     }
 }
