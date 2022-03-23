@@ -53,13 +53,12 @@ public final class Constants {
 
         //public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
         //public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
-//        public static final double RPM_LAUNCHPAD = 8300;
         public static final double RPM_FENDER_LOWER_HUB = 3500; // no flywheel 3000; // verified on wood comp bot
         public static final double RPM_FENDER_UPPER_HUB = 6800; // no flywheel 5900; // 5800 not good with ball in way; // verified on wood comp bot
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
         public static final double RPM_RING_UPPER_HUB = 7500; // no flywheel 6500;
         public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
-        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot
+        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot //8300;
         public static final double RPM_FAR_COURT = 10800; // verified on wood comp bot - very variable
 
         public static final double FLYWHEEL_TOLERANCE = 150;
@@ -75,17 +74,17 @@ public final class Constants {
         public static final double HOOD_DOWN_ANGLE = 0.0;
 
         public static final double FLYWHEEL_RADIUS = 9.84252;
-        public static final double SHOOTER_HEIGHT_METERS = 59.1;
+        public static final double SHOOTER_HEIGHT = 59.1;
 
         public static final double MAX_PIVOT_VOLTS = 5.0; // 3.3;
     }
 
     public static class Indexer {
-        public static final double kPBelt = 0;
-        public static final double kIBelt = 0;
-        public static final double kDBelt = 0;
-        public static final double kFFBelt = 0;
-        public static final double kIZoneBelt = 0;
+//        public static final double kPBelt = 0;
+//        public static final double kIBelt = 0;
+//        public static final double kDBelt = 0;
+//        public static final double kFFBelt = 0;
+//        public static final double kIZoneBelt = 0;
     }
 
     public static class Climber {

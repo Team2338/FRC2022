@@ -64,14 +64,15 @@ public class LimelightAutoAim extends CommandBase {
         }
 
             //RPM calculation
-        double targetRPM = Constants.Shooter.klP * (distanceFromHub / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT))/((2* distanceFromHub * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-386.4) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
+        double targetRPM = Constants.Shooter.klP * (distanceFromHub / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.SHOOTER_HEIGHT))/((2* distanceFromHub * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-386.4) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
         Robot.shooter.setSpeedPID(targetRPM);
         System.out.println("targetRPM: " + targetRPM);
 
         /*
         //More Accurate Than Rohan (TM)// distance zones
         if (distanceFromHub >= 200) { // Far Shot
-            Robot.hood.setHoodUp();            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
+            Robot.hood.setHoodUp();
+            Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FAR_COURT);
             System.out.println("Distance - Far: " + distanceFromHub);
 
         } else if (distanceFromHub >= 130) { // LaunchPad shot
