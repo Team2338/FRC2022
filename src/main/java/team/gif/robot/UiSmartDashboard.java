@@ -7,13 +7,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.limelight.LimelightLED;
+import team.gif.robot.subsystems.drivers.Limelight;
 import team.gif.robot.subsystems.drivers.Pigeon;
 
 import static team.gif.robot.Robot.climber;
 import static team.gif.robot.Robot.indexer;
+import static team.gif.robot.Robot.limelight;
 import static team.gif.robot.Robot.shooter;
 
 public class UiSmartDashboard {
@@ -83,5 +86,10 @@ public class UiSmartDashboard {
 
         // Climber
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
+
+        //Limelight
+        //SmartDashboard.putNumber("Tx", limelight.getXOffset());
+        //SmartDashboard.putNumber("Ty", limelight.getYOffset());
+
     }
 }

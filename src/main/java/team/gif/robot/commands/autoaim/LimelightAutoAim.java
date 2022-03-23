@@ -33,17 +33,15 @@ public class LimelightAutoAim extends CommandBase {
 
         targetLocked = false;
         Globals.indexerEnabled = false;
-        Globals.hoodAngle = Constants.Shooter.HOOD_DOWN_ANGLE;
 
 //        delayCounter = 0;
         Robot.limelight.setLEDMode(3); // turn on - just in case they were turned off somehow
-
         Drivetrain.leftTalon1.enableCurrentLimit(false);
         Drivetrain.leftTalon2.enableCurrentLimit(false);
         Drivetrain.rightTalon1.enableCurrentLimit(false);
         Drivetrain.rightTalon2.enableCurrentLimit(false);
 
-        Robot.hood.setHoodDown();
+
 
     }
 
@@ -55,6 +53,21 @@ public class LimelightAutoAim extends CommandBase {
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
         double distanceFromHub = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+
+        //More Accurate than Rohan 2.0 (TM)
+            //hood position
+        if(distanceFromHub >= 50){
+            Robot.hood.setHoodUp();
+        }
+        else {
+            Robot.hood.setHoodDown();
+        }
+
+            //RPM calculation
+        double targetRPM = Constants.Shooter.klP * (distanceFromHub / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT))/((2* distanceFromHub * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-386.4) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
+        Robot.shooter.setSpeedPID(targetRPM);
+        System.out.println("targetRPM: " + targetRPM);
+
         /*
         //More Accurate Than Rohan (TM)// distance zones
         if (distanceFromHub >= 200) { // Far Shot
@@ -78,14 +91,6 @@ public class LimelightAutoAim extends CommandBase {
         }
         */
 
-        if(distanceFromHub >= 50){
-            Robot.hood.setHoodUp();
-        }
-
-        //More Accurate than Rohan 2.0 (TM)
-        double targetRPM = (distanceFromHub / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT))/((2* distanceFromHub * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-9.81) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
-        Robot.shooter.setSpeedPID(targetRPM);
-        System.out.println("targetRPM: " + targetRPM);
 
         // bot must not be moving anymore
         if (!robotHasSettled) {

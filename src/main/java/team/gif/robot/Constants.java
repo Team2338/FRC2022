@@ -59,10 +59,13 @@ public final class Constants {
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
         public static final double RPM_RING_UPPER_HUB = 7500; // no flywheel 6500;
         public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
-        public static final double RPM_LAUNCHPAD = 9000; // verified on wood comp bot
-        public static final double RPM_FAR_COURT = 10500; // verified on wood comp bot - very variable
+        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot
+        public static final double RPM_FAR_COURT = 10800; // verified on wood comp bot - very variable
 
         public static final double FLYWHEEL_TOLERANCE = 150;
+
+        // Limelight
+        public static final double klP = 1 ;
 
         public static final double LIMELIGHT_ANGLE = 30.0;
         public static final double LIMELIGHT_HEIGHT = 36.5 ;
@@ -75,8 +78,6 @@ public final class Constants {
         public static final double SHOOTER_HEIGHT_METERS = 59.1;
 
         public static final double MAX_PIVOT_VOLTS = 5.0; // 3.3;
-
-
     }
 
     public static class Indexer {
