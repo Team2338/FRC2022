@@ -64,6 +64,9 @@ public final class Constants {
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 
+        // Limelight
+        public static final double klP = 1 ;
+
         public static final double LIMELIGHT_ANGLE = 30.0;
         public static final double LIMELIGHT_HEIGHT = 36.5 ;
         public static final double UPPER_HUB_HEIGHT = 96.0;
@@ -75,8 +78,6 @@ public final class Constants {
         public static final double SHOOTER_HEIGHT_METERS = 59.1;
 
         public static final double MAX_PIVOT_VOLTS = 5.0; // 3.3;
-
-
     }
 
     public static class Indexer {
