@@ -4,9 +4,12 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
@@ -18,8 +21,6 @@ import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.indexer.IndexScheduler;
@@ -63,6 +64,7 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
+    public static AnalogInput pressureSensor = null;
 
     public static DriveArcade arcadeDrive;
 //    public static DriveTank tankDrive;
@@ -87,6 +89,7 @@ public class Robot extends TimedRobot {
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
         climberPneumatics = new ClimberPneumatics();
+        pressureSensor = new AnalogInput(RobotMap.SENSOR_AIR_PRESSURE);
 
 //        tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
@@ -139,6 +142,9 @@ public class Robot extends TimedRobot {
 
         chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
         chosenDelay = uiSmartDashboard.delayChooser.getSelected();
+
+        double pressure = 250*(pressureSensor.getVoltage() / 4.82) - 25; // formula from rev robotics pressure sensor
+        System.out.println(pressure);
     }
 
     /**
@@ -293,5 +299,9 @@ public class Robot extends TimedRobot {
         telemetryLogger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
         telemetryLogger.addMetric("Climber_Percent", climber::getOutputPercent);
         telemetryLogger.addMetric("Climber_Velocity", climber::getVelocity);
+
+        // Input
+        telemetryLogger.addMetric("Driver_Left_Y", () -> -Robot.oi.driver.getLeftY());
+        telemetryLogger.addMetric("Driver_Right_X", () -> Robot.oi.driver.getRightX());
     }
 }

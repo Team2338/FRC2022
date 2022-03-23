@@ -34,8 +34,8 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static final int MAX_CONTINUOUS_CURRENT_AMPS = 15;
-    private static final int MAX_PEAK_CURRENT_AMPS = 20;
+    private static final int MAX_CONTINUOUS_CURRENT_AMPS = 30;
+    private static final int MAX_PEAK_CURRENT_AMPS = 30;
     private static final double OPEN_LOOP_RAMP_SECONDS = 0.1;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
