@@ -4,21 +4,23 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import team.gif.lib.autoMode;
 import team.gif.lib.delay;
-import team.gif.lib.logging.FileLogger;
+import team.gif.lib.logging.EventFileLogger;
+import team.gif.lib.logging.TelemetryFileLogger;
 import team.gif.robot.commands.climber.ClimberManualControl;
 import team.gif.robot.subsystems.Climber;
 import team.gif.robot.subsystems.ClimberPneumatics;
 import team.gif.robot.subsystems.CollectorPneumatics;
 import team.gif.robot.subsystems.Hood;
 import team.gif.robot.subsystems.drivers.Limelight;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.indexer.IndexScheduler;
@@ -45,7 +47,8 @@ public class Robot extends TimedRobot {
     private boolean runAutoScheduler = true;
     public static OI oi;
     public static UiSmartDashboard uiSmartDashboard;
-    public static FileLogger logger;
+    public static EventFileLogger eventLogger;
+    private static TelemetryFileLogger telemetryLogger;
 
     private autoMode chosenAuto;
     private delay chosenDelay;
@@ -61,6 +64,7 @@ public class Robot extends TimedRobot {
     public static Shooter shooter = null;
     public static Climber climber = null;
     public static Compressor compressor = null;
+    public static AnalogInput pressureSensor = null;
 
     public static DriveArcade arcadeDrive;
 //    public static DriveTank tankDrive;
@@ -85,6 +89,7 @@ public class Robot extends TimedRobot {
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
         climberPneumatics = new ClimberPneumatics();
+        pressureSensor = new AnalogInput(RobotMap.SENSOR_AIR_PRESSURE);
 
 //        tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
@@ -99,15 +104,19 @@ public class Robot extends TimedRobot {
         oi = new OI();
 //        ui = new UI();
         uiSmartDashboard = new UiSmartDashboard();
-        logger = new FileLogger();
+        
+        eventLogger = new EventFileLogger();
+        eventLogger.init();
+        
+        telemetryLogger = new TelemetryFileLogger();
         addMetricsToLogger();
-        logger.init();
+        telemetryLogger.init();
 
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        logger.addEvent("INIT", "Start building container");
+        eventLogger.addEvent("INIT", "Start building container");
         robotContainer = new RobotContainer();
-        logger.addEvent("INIT", "End building container");
+        eventLogger.addEvent("INIT", "End building container");
 
         hood.setHoodDown();
         collectorPneumatics.collectorRaise();
@@ -133,6 +142,9 @@ public class Robot extends TimedRobot {
 
         chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
         chosenDelay = uiSmartDashboard.delayChooser.getSelected();
+
+        double pressure = 250*(pressureSensor.getVoltage() / 4.82) - 25; // formula from rev robotics pressure sensor
+        System.out.println(pressure);
     }
 
     /**
@@ -149,14 +161,14 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        logger.addEvent("AUTO", "Auto Init");
+        eventLogger.addEvent("AUTO", "Auto Init");
         drivetrain.resetPigeon();
         drivetrain.resetEncoders();
         drivetrain.resetPose();
-        logger.addEvent("AUTO", "Reset sensors");
+        eventLogger.addEvent("AUTO", "Reset sensors");
 
         autonomousCommand = robotContainer.getAutonomousCommand(chosenAuto);
-        logger.addEvent("AUTO", "Got command from container");
+        eventLogger.addEvent("AUTO", "Got command from container");
 
         Globals.autonomousModeActive = true;
         indexCommand.schedule();
@@ -181,7 +193,7 @@ public class Robot extends TimedRobot {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
-                logger.addEvent("AUTO", "Scheduled auto command");
+                eventLogger.addEvent("AUTO", "Scheduled auto command");
             }
             runAutoScheduler = false;
             elapsedTime.stop();
@@ -219,7 +231,7 @@ public class Robot extends TimedRobot {
             collectorPneumatics.collectorRaise();
         }
 
-        logger.run();
+        telemetryLogger.run();
     }
 
     @Override
@@ -233,40 +245,63 @@ public class Robot extends TimedRobot {
     
     public void addMetricsToLogger() {
         // Shooter
-        logger.addMetric("Shooter_Velocity", shooter::getSpeed);
-        logger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
-        logger.addMetric("Shooter_Percent", shooter::getOutputPercent);
-    
+        telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
+        telemetryLogger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
+        telemetryLogger.addMetric("Shooter_Percent", shooter::getOutputPercent);
+        telemetryLogger.addMetric("Shooter_Voltage_In", shooter::getInputVoltage);
+        telemetryLogger.addMetric("Shooter_Voltage_Out", shooter::getOutputVoltage);
+        telemetryLogger.addMetric("Shooter_Current_In", shooter::getInputCurrent);
+        telemetryLogger.addMetric("Shooter_Current_Out", shooter::getOutputCurrent);
+        telemetryLogger.addMetric("Shooter_Gain_P", shooter::getGainP);
+        telemetryLogger.addMetric("Shooter_Gain_I", shooter::getGainI);
+        telemetryLogger.addMetric("Shooter_Gain_D", shooter::getGainD);
+        telemetryLogger.addMetric("Shooter_Gain_F", shooter::getGainF);
+
         // Drivetrain
-        logger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
-        logger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
-        logger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
-        logger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
+        telemetryLogger.addMetric("DriveLeft1_Voltage_In", drivetrain::getInputVoltageL1);
+        telemetryLogger.addMetric("DriveLeft2_Voltage_In", drivetrain::getInputVoltageL2);
+        telemetryLogger.addMetric("DriveRight1_Voltage_In", drivetrain::getInputVoltageR1);
+        telemetryLogger.addMetric("DriveRight2_Voltage_In", drivetrain::getInputVoltageR2);
+
+        telemetryLogger.addMetric("DriveLeft1_Voltage_Out", drivetrain::getOutputVoltageL1);
+        telemetryLogger.addMetric("DriveLeft2_Voltage_Out", drivetrain::getOutputVoltageL2);
+        telemetryLogger.addMetric("DriveRight1_Voltage_Out", drivetrain::getOutputVoltageR1);
+        telemetryLogger.addMetric("DriveRight2_Voltage_Out", drivetrain::getOutputVoltageR2);
+
+        telemetryLogger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
+        telemetryLogger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
+        telemetryLogger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
+        telemetryLogger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
+
+        telemetryLogger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
+        telemetryLogger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
+        telemetryLogger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
+        telemetryLogger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
+
+        telemetryLogger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
+        telemetryLogger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
+        telemetryLogger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
+        telemetryLogger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
     
-        logger.addMetric("DriveLeft1_Current_In", drivetrain::getInputCurrentL1);
-        logger.addMetric("DriveLeft2_Current_In", drivetrain::getInputCurrentL2);
-        logger.addMetric("DriveRight1_Current_In", drivetrain::getInputCurrentR1);
-        logger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
-    
-        logger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
-        logger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
-        logger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
-        logger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
-    
-        logger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
-        logger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
+        telemetryLogger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
+        telemetryLogger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
     
         // PDP and Compressor
-        logger.addMetric("PDP_Voltage", pdp::getVoltage);
-        logger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
-        logger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
+        telemetryLogger.addMetric("PDP_Voltage", pdp::getVoltage);
+        telemetryLogger.addMetric("PDP_Current_DriveLeft1", () -> pdp.getCurrent(0));
+        telemetryLogger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
+        telemetryLogger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
     
         // Climber
-        logger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
-        logger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
-        logger.addMetric("Climber_Current_In", climber::getInputCurrent);
-        logger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
-        logger.addMetric("Climber_Percent", climber::getOutputPercent);
-        logger.addMetric("Climber_Velocity", climber::getVelocity);
+        telemetryLogger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
+        telemetryLogger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);
+        telemetryLogger.addMetric("Climber_Current_In", climber::getInputCurrent);
+        telemetryLogger.addMetric("Climber_Current_Out", climber::getOutputCurrent);
+        telemetryLogger.addMetric("Climber_Percent", climber::getOutputPercent);
+        telemetryLogger.addMetric("Climber_Velocity", climber::getVelocity);
+
+        // Input
+        telemetryLogger.addMetric("Driver_Left_Y", () -> -Robot.oi.driver.getLeftY());
+        telemetryLogger.addMetric("Driver_Right_X", () -> Robot.oi.driver.getRightX());
     }
 }

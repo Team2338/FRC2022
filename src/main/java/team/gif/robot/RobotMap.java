@@ -21,6 +21,7 @@ public abstract class RobotMap {
     public static final int SENSOR_MID = 0;
     public static final int SENSOR_BELT = 1;
     public static final int SENSOR_ENTRY = 2;
+    public static final int SENSOR_AIR_PRESSURE = 1;
 
     // Solenoids
     public static final int SOLENOID_FANG_FORWARD = 1;

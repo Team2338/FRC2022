@@ -1,6 +1,7 @@
 package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -33,8 +34,9 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static final int maxContinuousCurrentAmps = 15;
-    private static final int maxPeakCurrentAmps = 20;
+    private static final int MAX_CONTINUOUS_CURRENT_AMPS = 30;
+    private static final int MAX_PEAK_CURRENT_AMPS = 30;
+    private static final double OPEN_LOOP_RAMP_SECONDS = 0.1;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -49,6 +51,9 @@ public class Drivetrain extends SubsystemBase {
         leftTalon2 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_LEFT_TWO);
         rightTalon1 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_RIGHT_ONE);
         rightTalon2 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_RIGHT_TWO);
+
+        leftTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
+        rightTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
 
         leftTalon1.setNeutralMode(NeutralMode.Brake);
         leftTalon2.setNeutralMode(NeutralMode.Brake);
@@ -82,10 +87,10 @@ public class Drivetrain extends SubsystemBase {
         currentLimitingSetup();
         currentLimitingEnable(true);
 
-        leftTalon1.configOpenloopRamp(0.1);
-        leftTalon2.configOpenloopRamp(0.1);
-        rightTalon1.configOpenloopRamp(0.1);
-        rightTalon2.configOpenloopRamp(0.1);
+        leftTalon1.configOpenloopRamp(OPEN_LOOP_RAMP_SECONDS);
+        leftTalon2.configOpenloopRamp(OPEN_LOOP_RAMP_SECONDS);
+        rightTalon1.configOpenloopRamp(OPEN_LOOP_RAMP_SECONDS);
+        rightTalon2.configOpenloopRamp(OPEN_LOOP_RAMP_SECONDS);
 
         // Per WPILib, motor outputs for the right side are negated
         // within the differentialDrive class. No need to negate them again.
@@ -105,15 +110,15 @@ public class Drivetrain extends SubsystemBase {
 
     public void currentLimitingSetup(){
 
-        leftTalon1.configContinuousCurrentLimit(maxContinuousCurrentAmps);
-        leftTalon2.configContinuousCurrentLimit(maxContinuousCurrentAmps);
-        rightTalon1.configContinuousCurrentLimit(maxContinuousCurrentAmps);
-        rightTalon2.configContinuousCurrentLimit(maxContinuousCurrentAmps);
+        leftTalon1.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+        leftTalon2.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+        rightTalon1.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+        rightTalon2.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
 
-        leftTalon1.configPeakCurrentLimit(maxPeakCurrentAmps);
-        leftTalon2.configPeakCurrentLimit(maxPeakCurrentAmps);
-        rightTalon1.configPeakCurrentLimit(maxPeakCurrentAmps);
-        rightTalon2.configPeakCurrentLimit(maxPeakCurrentAmps);
+        leftTalon1.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
+        leftTalon2.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
+        rightTalon1.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
+        rightTalon2.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
 
     }
 
