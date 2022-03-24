@@ -15,6 +15,7 @@ import team.gif.robot.subsystems.drivers.Pigeon;
 import static team.gif.robot.Robot.climber;
 import static team.gif.robot.Robot.indexer;
 import static team.gif.robot.Robot.shooter;
+import static team.gif.robot.Robot.pressureSensor;
 
 public class UiSmartDashboard {
 
@@ -83,5 +84,8 @@ public class UiSmartDashboard {
 
         // Climber
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
+
+        //Pressure Sensor
+         SmartDashboard.putNumber("Pressure Sensor", 250*(pressureSensor.getVoltage() / 4.82) - 25);
     }
 }
