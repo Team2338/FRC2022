@@ -167,8 +167,8 @@ public class Drivetrain extends SubsystemBase {
 
         if (pigeon.isActive()) {
             odometry.update( Rotation2d.fromDegrees(pigeon.get180Heading()),
-                getLeftEncoderPos_Meters(),
-                getRightEncoderPos_Meters());
+                    getLeftEncoderPos_Meters(),
+                    getRightEncoderPos_Meters());
         } else {
             if(++pigeonErrorCount >= 100) { // only print every 2 seconds
                 System.out.println("***   WARNING      \n***\n*** Cannot set robot odometry. Pigeon is not in ready state.\n***\n***");
@@ -193,7 +193,7 @@ public class Drivetrain extends SubsystemBase {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(leftEncoderTalon.getSelectedSensorVelocity() * (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE,
-                                                rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
+                rightEncoderTalon.getSelectedSensorVelocity()* (10.0/4096) * Constants.Drivetrain.WHEEL_CIRCUMFERENCE);
     }
 
     /**
@@ -232,11 +232,11 @@ public class Drivetrain extends SubsystemBase {
     public double getRightEncoderPos_Ticks() {
         return rightEncoderTalon.getSelectedSensorPosition();
     }
-    
+
     public double getLeftEncoderVelocity_Ticks() {
         return leftEncoderTalon.getSelectedSensorVelocity();
     }
-    
+
     public double getRightEncoderVelocity_Ticks() {
         return rightEncoderTalon.getSelectedSensorVelocity();
     }
@@ -249,83 +249,83 @@ public class Drivetrain extends SubsystemBase {
     public double getRightEncoderPos_Meters() {
         return rightEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_RIGHT;
     }
-    
+
     public double getInputVoltageL1() {
         return leftTalon1.getBusVoltage();
     }
-    
+
     public double getInputVoltageL2() {
         return leftTalon2.getBusVoltage();
     }
-    
+
     public double getInputVoltageR1() {
         return rightTalon1.getBusVoltage();
     }
-    
+
     public double getInputVoltageR2() {
         return rightTalon2.getBusVoltage();
     }
-    
+
     public double getOutputVoltageL1() {
         return leftTalon1.getMotorOutputVoltage();
     }
-    
+
     public double getOutputVoltageL2() {
         return leftTalon2.getMotorOutputVoltage();
     }
-    
+
     public double getOutputVoltageR1() {
         return rightTalon1.getMotorOutputVoltage();
     }
-    
+
     public double getOutputVoltageR2() {
         return rightTalon2.getMotorOutputVoltage();
     }
-    
+
     public double getOutputPercentL1() {
         return leftTalon1.getMotorOutputPercent();
     }
-    
+
     public double getOutputPercentL2() {
         return leftTalon2.getMotorOutputPercent();
     }
-    
+
     public double getOutputPercentR1() {
         return rightTalon1.getMotorOutputPercent();
     }
-    
+
     public double getOutputPercentR2() {
         return rightTalon2.getMotorOutputPercent();
     }
-    
+
     public double getInputCurrentL1() {
         return leftTalon1.getSupplyCurrent();
     }
-    
+
     public double getInputCurrentL2() {
         return leftTalon2.getSupplyCurrent();
     }
-    
+
     public double getInputCurrentR1() {
         return rightTalon1.getSupplyCurrent();
     }
-    
+
     public double getInputCurrentR2() {
         return rightTalon2.getSupplyCurrent();
     }
-    
+
     public double getOutputCurrentL1() {
         return leftTalon1.getStatorCurrent();
     }
-    
+
     public double getOutputCurrentL2() {
         return leftTalon2.getStatorCurrent();
     }
-    
+
     public double getOutputCurrentR1() {
         return rightTalon1.getStatorCurrent();
     }
-    
+
     public double getOutputCurrentR2() {
         return rightTalon2.getStatorCurrent();
     }
