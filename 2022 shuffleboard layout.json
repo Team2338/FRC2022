@@ -170,6 +170,20 @@
                 }
               ]
             }
+          },
+          "8,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Pressure Sensor",
+              "_title": "Pressure Sensor",
+              "Range/Min": 0.0,
+              "Range/Max": 115.0,
+              "Visuals/Show value": true
+            }
           }
         }
       }
