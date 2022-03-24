@@ -86,6 +86,6 @@ public class UiSmartDashboard {
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
 
         //Pressure Sensor
-         SmartDashboard.putNumber("Pressure Sensor", 250*(pressureSensor.getVoltage() / 4.82) - 25);
+        SmartDashboard.putNumber("Pressure", 250*(pressureSensor.getVoltage() / 4.82) - 25);
     }
 }
