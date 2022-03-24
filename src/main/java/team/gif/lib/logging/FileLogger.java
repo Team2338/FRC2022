@@ -16,6 +16,7 @@ abstract class FileLogger implements Closeable, Flushable {
 	
 	private static final String LOG_DIR_LOCAL = "/home/lvuser/logs";
 	private static final String LOG_DIR_USB = "/media/sda2/logs";
+	private static final String LOG_DIR_USB_BACKUP = "/media/sda1/logs";
 	private static final String EVENT_LOG_PREFIX = "events";
 	private static final String FILE_EXTENSION = ".csv";
 	
@@ -46,6 +47,12 @@ abstract class FileLogger implements Closeable, Flushable {
 	private File createLogDir() {
 		// Attempt USB first
 		File dir = new File(LOG_DIR_USB);
+		if (dir.exists() || dir.mkdir()) {
+			return dir;
+		}
+		
+		// Our new USB uses this
+		dir = new File(LOG_DIR_USB_BACKUP);
 		if (dir.exists() || dir.mkdir()) {
 			return dir;
 		}
