@@ -36,10 +36,10 @@ public class LimelightAutoAim extends CommandBase {
 
 //        delayCounter = 0;
         Robot.limelight.setLEDMode(3); // turn on - just in case they were turned off somehow
-        Drivetrain.leftTalon1.enableCurrentLimit(false);
-        Drivetrain.leftTalon2.enableCurrentLimit(false);
-        Drivetrain.rightTalon1.enableCurrentLimit(false);
-        Drivetrain.rightTalon2.enableCurrentLimit(false);
+//        Drivetrain.leftTalon1.enableCurrentLimit(false);
+//        Drivetrain.leftTalon2.enableCurrentLimit(false);
+//        Drivetrain.rightTalon1.enableCurrentLimit(false);
+//        Drivetrain.rightTalon2.enableCurrentLimit(false);
 
 
 
@@ -105,12 +105,12 @@ public class LimelightAutoAim extends CommandBase {
 
         if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
 
-            double xOffset = Robot.limelight.getXOffset();
-            double pivVolts = xOffset * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+            //double xOffset = Robot.limelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
+            //double pivVolts = Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
-                if (xOffset > -1.0 && xOffset < 1.0) {
+                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
                     if (Robot.shooter.isInTolerance()) {
                         // fire away!
                         System.out.println("Shooting - I hope it went in");
@@ -121,17 +121,17 @@ public class LimelightAutoAim extends CommandBase {
                         System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
                     }
                 } else {
-                    System.out.println("Offset Adjusting at: " + xOffset);
+                    System.out.println("Offset Adjusting at: " + Robot.limelight.getXOffset());
                     // need to relock
                     targetLocked = false;
                     robotHasSettled = false;
                 }
             } else {
-                if (xOffset > -1.0 && xOffset < 1.0) { // target is locked
+                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else { // still not in tolerance, need to rotate
-                    Robot.drivetrain.tankDriveVolts(pivVolts, -pivVolts);
+                    Robot.drivetrain.tankDriveVolts(Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS, -Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS);
                 }
             }
         }
@@ -147,10 +147,10 @@ public class LimelightAutoAim extends CommandBase {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
 
-        Drivetrain.leftTalon1.enableCurrentLimit(true);
-        Drivetrain.leftTalon2.enableCurrentLimit(true);
-        Drivetrain.rightTalon1.enableCurrentLimit(true);
-        Drivetrain.rightTalon2.enableCurrentLimit(true);
+//        Drivetrain.leftTalon1.enableCurrentLimit(true);
+//        Drivetrain.leftTalon2.enableCurrentLimit(true);
+//        Drivetrain.rightTalon1.enableCurrentLimit(true);
+//        Drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
         Robot.limelight.setLEDMode(3); // leave LED on after autoaim so we can still use during manual
