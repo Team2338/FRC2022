@@ -45,7 +45,7 @@ abstract class FileLogger implements Closeable, Flushable {
 	}
 	
 	private File createLogDir() {
-		// Attempt USB first
+		// Attempt Samsung USB first
 		File dir = new File(LOG_DIR_USB);
 		if (dir.exists() || dir.mkdir()) {
 			return dir;
