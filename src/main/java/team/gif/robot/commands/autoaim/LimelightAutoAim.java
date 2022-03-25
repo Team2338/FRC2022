@@ -28,10 +28,6 @@ public class LimelightAutoAim extends CommandBase {
 //        delayCounter = 0;
         Robot.limelight.setLEDMode(3); // turn on - just in case they were turned off somehow
 
-        Drivetrain.leftTalon1.enableCurrentLimit(false);
-        Drivetrain.leftTalon2.enableCurrentLimit(false);
-        Drivetrain.rightTalon1.enableCurrentLimit(false);
-        Drivetrain.rightTalon2.enableCurrentLimit(false);
     }
 
     @Override
@@ -118,11 +114,6 @@ public class LimelightAutoAim extends CommandBase {
         Robot.shooter.setSpeedPercent(0);
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
-
-        Drivetrain.leftTalon1.enableCurrentLimit(true);
-        Drivetrain.leftTalon2.enableCurrentLimit(true);
-        Drivetrain.rightTalon1.enableCurrentLimit(true);
-        Drivetrain.rightTalon2.enableCurrentLimit(true);
 
         System.out.println("Auto Aim Finished");
         Robot.limelight.setLEDMode(3); // leave LED on after autoaim so we can still use during manual

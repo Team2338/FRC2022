@@ -143,8 +143,6 @@ public class Robot extends TimedRobot {
         chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
         chosenDelay = uiSmartDashboard.delayChooser.getSelected();
 
-        double pressure = 250*(pressureSensor.getVoltage() / 4.82) - 25; // formula from rev robotics pressure sensor
-        System.out.println(pressure);
     }
 
     /**

@@ -1,7 +1,10 @@
 package team.gif.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -18,25 +21,27 @@ import team.gif.robot.subsystems.drivers.Pigeon;
 
 public class Drivetrain extends SubsystemBase {
 
-    public static WPI_TalonSRX leftTalon1;
-    public static WPI_TalonSRX leftTalon2;
-    public static WPI_TalonSRX rightTalon1;
-    public static WPI_TalonSRX rightTalon2;
+    private static WPI_TalonSRX old_leftTalon1;
+    private static WPI_TalonSRX old_rightTalon1;
+    private static WPI_TalonFX leftTalon1;
+    private static WPI_TalonFX leftTalon2;
+    private static WPI_TalonFX rightTalon1;
+    private static WPI_TalonFX rightTalon2;
 
-    public static MotorControllerGroup leftMotors;
-    public static MotorControllerGroup rightMotors;
-    public static DifferentialDrive drive;
+    private static MotorControllerGroup leftMotors;
+    private static MotorControllerGroup rightMotors;
+    private static DifferentialDrive drive;
 
     // ------------ Variables for Trajectory ---------------
-    public static WPI_TalonSRX leftEncoderTalon;
-    public static WPI_TalonSRX rightEncoderTalon;
-    public static DifferentialDriveOdometry odometry;
+    private static WPI_TalonSRX leftEncoderTalon;
+    private static WPI_TalonSRX rightEncoderTalon;
+    private static DifferentialDriveOdometry odometry;
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static final int MAX_CONTINUOUS_CURRENT_AMPS = 30;
-    private static final int MAX_PEAK_CURRENT_AMPS = 30;
-    private static final double OPEN_LOOP_RAMP_SECONDS = 0.1;
+    private static final int MAX_SUPPLY_CURRENT_AMPS = 12;
+    private static final int MAX_STATOR_CURRENT_AMPS = 80;
+    private static final double OPEN_LOOP_RAMP_SECONDS = 0.5;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -47,10 +52,12 @@ public class Drivetrain extends SubsystemBase {
 
     public Drivetrain() {
         super();
-        leftTalon1 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_LEFT_ONE);
-        leftTalon2 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_LEFT_TWO);
-        rightTalon1 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_RIGHT_ONE);
-        rightTalon2 = new WPI_TalonSRX(RobotMap.MOTOR_DRIVE_RIGHT_TWO);
+        old_leftTalon1 = new WPI_TalonSRX(RobotMap.OLD_MOTOR_DRIVE_LEFT_ONE);
+        old_rightTalon1 = new WPI_TalonSRX(RobotMap.OLD_MOTOR_DRIVE_RIGHT_ONE);
+        leftTalon1 = new WPI_TalonFX(RobotMap.MOTOR_DRIVE_LEFT_ONE);
+        leftTalon2 = new WPI_TalonFX(RobotMap.MOTOR_DRIVE_LEFT_TWO);
+        rightTalon1 = new WPI_TalonFX(RobotMap.MOTOR_DRIVE_RIGHT_ONE);
+        rightTalon2 = new WPI_TalonFX(RobotMap.MOTOR_DRIVE_RIGHT_TWO);
 
         leftTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
         rightTalon1.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
@@ -72,8 +79,8 @@ public class Drivetrain extends SubsystemBase {
         drive.setDeadband(Robot.isCompBot ? .02 : .05);
 
         // ------------  Trajectory Functionality ----------
-        leftEncoderTalon = leftTalon2;
-        rightEncoderTalon = rightTalon2;
+        leftEncoderTalon = old_leftTalon1;
+        rightEncoderTalon = old_rightTalon1;
 
         //leftEncoderTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         //rightEncoderTalon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
@@ -99,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        pigeon = Robot.isCompBot ? new Pigeon(leftTalon1) : new Pigeon(rightTalon2);
+        pigeon = new Pigeon();
 
         pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
 
@@ -109,24 +116,32 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void currentLimitingSetup(){
-
-        leftTalon1.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
-        leftTalon2.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
-        rightTalon1.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
-        rightTalon2.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
-
-        leftTalon1.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
-        leftTalon2.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
-        rightTalon1.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
-        rightTalon2.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
-
+//        leftTalon1.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+//        leftTalon2.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+//        rightTalon1.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+//        rightTalon2.configContinuousCurrentLimit(MAX_CONTINUOUS_CURRENT_AMPS);
+//
+//        leftTalon1.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
+//        leftTalon2.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
+//        rightTalon1.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
+//        rightTalon2.configPeakCurrentLimit(MAX_PEAK_CURRENT_AMPS);
     }
 
     public void currentLimitingEnable(boolean enableLimit){
-        leftTalon1.enableCurrentLimit(enableLimit);
-        leftTalon2.enableCurrentLimit(enableLimit);
-        rightTalon1.enableCurrentLimit(enableLimit);
-        rightTalon2.enableCurrentLimit(enableLimit);
+//        leftTalon1.enableCurrentLimit(enableLimit);
+//        leftTalon2.enableCurrentLimit(enableLimit);
+//        rightTalon1.enableCurrentLimit(enableLimit);
+//        rightTalon2.enableCurrentLimit(enableLimit);
+    
+        leftTalon1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(enableLimit, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+        leftTalon2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(enableLimit, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+        rightTalon1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(enableLimit, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+        rightTalon2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(enableLimit, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+    
+        leftTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+        leftTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+        rightTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+        rightTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
     }
 
     // -------------- Teleop Driving -----------------------
