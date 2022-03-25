@@ -3,12 +3,12 @@ package team.gif.robot;
 public abstract class RobotMap {
 
     // Drive Motors
-    public static final int OLD_MOTOR_DRIVE_LEFT_ONE = 0;
-    public static final int MOTOR_DRIVE_LEFT_ONE = 7;
-    public static final int MOTOR_DRIVE_LEFT_TWO = 8;
-    public static final int OLD_MOTOR_DRIVE_RIGHT_ONE = 4;
-    public static final int MOTOR_DRIVE_RIGHT_ONE = 5;
-    public static final int MOTOR_DRIVE_RIGHT_TWO = 6;
+    public static final int OLD_MOTOR_DRIVE_LEFT_ONE = 1;
+    public static final int MOTOR_DRIVE_LEFT_ONE = 20;
+    public static final int MOTOR_DRIVE_LEFT_TWO = 23;
+    public static final int OLD_MOTOR_DRIVE_RIGHT_ONE = 5;
+    public static final int MOTOR_DRIVE_RIGHT_ONE = 21;
+    public static final int MOTOR_DRIVE_RIGHT_TWO = 22;
 
     // Other Motors
     public static final int MOTOR_INTAKE = 3;
@@ -45,6 +45,6 @@ public abstract class RobotMap {
     public static final int TEST_CONTROLLER_ID = 2;
 
     // Pigeon
-    public static final int PIGEON_CAN = 5;
+    public static final int PIGEON_CAN = 2;
 
 }

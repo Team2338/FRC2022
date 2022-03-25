@@ -39,9 +39,9 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static final int MAX_SUPPLY_CURRENT_AMPS = 25;
+    private static final int MAX_SUPPLY_CURRENT_AMPS = 12;
     private static final int MAX_STATOR_CURRENT_AMPS = 80;
-    private static final double OPEN_LOOP_RAMP_SECONDS = 0.1;
+    private static final double OPEN_LOOP_RAMP_SECONDS = 0.5;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -106,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
 
-        pigeon = new Pigeon(old_leftTalon1);
+        pigeon = new Pigeon();
 
         pigeon.resetPigeonPosition(); // set initial heading of pigeon to zero degrees
 
