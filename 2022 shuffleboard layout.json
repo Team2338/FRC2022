@@ -198,22 +198,22 @@
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Temp Left1",
-                  "_title": "Left1"
+                  "_title": "/SmartDashboard/Temp Left1"
                 },
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Temp Left2",
-                  "_title": "Left2"
+                  "_title": "/SmartDashboard/Temp Left2"
                 },
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Temp Right1",
-                  "_title": "Right1"
+                  "_title": "/SmartDashboard/Temp Right1"
                 },
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Temp Right2",
-                  "_title": "Right2"
+                  "_title": "/SmartDashboard/Temp Right2"
                 }
               ]
             }
