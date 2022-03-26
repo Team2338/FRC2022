@@ -13,9 +13,10 @@ import team.gif.robot.commands.limelight.LimelightLED;
 import team.gif.robot.subsystems.drivers.Pigeon;
 
 import static team.gif.robot.Robot.climber;
+import static team.gif.robot.Robot.drivetrain;
 import static team.gif.robot.Robot.indexer;
 import static team.gif.robot.Robot.shooter;
-import static team.gif.robot.Robot.pressureSensor;
+import static team.gif.robot.Robot.compressor;
 
 public class UiSmartDashboard {
 
@@ -86,6 +87,11 @@ public class UiSmartDashboard {
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
 
         //Pressure Sensor
-        SmartDashboard.putNumber("Pressure", 250*(pressureSensor.getVoltage() / 4.82) - 25);
+        SmartDashboard.putNumber("Pressure",  compressor.getPressure());
+
+        SmartDashboard.putNumber("Temp Left1", drivetrain.getTemperatureLeft1());
+        SmartDashboard.putNumber("Temp Left2", drivetrain.getTemperatureLeft2());
+        SmartDashboard.putNumber("Temp Right1", drivetrain.getTemperatureRight1());
+        SmartDashboard.putNumber("Temp Right2", drivetrain.getTemperatureRight2());
     }
 }
