@@ -62,7 +62,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-17.0, 4, 0),
-                new Pose2dFeet().set(-6.0, 2, -5) // shooting position
+                new Pose2dFeet().set(-6.0, 2, -2) // shooting position
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
@@ -92,7 +92,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
                 reverseAgainTwo(),
                 new CollectorRun()
             ),
-            new CollectorRun().withTimeout(0.5),
+            new CollectorRun().withTimeout(2),
             forward(),
             new ParallelDeadlineGroup(
                 new CollectorRun().withTimeout(1.5),

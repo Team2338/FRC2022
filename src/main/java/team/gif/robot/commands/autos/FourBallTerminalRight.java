@@ -52,7 +52,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-5.5, 20.5, 54.0),
-                new Pose2dFeet().set(0.0, 11.0, 50.0) // shooting location
+                new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForwardFast
         );

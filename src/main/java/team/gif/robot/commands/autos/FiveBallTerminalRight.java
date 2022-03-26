@@ -42,7 +42,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-1.5, 8.0, 100.0), // 2nd cargo location
                 new Pose2dFeet().set(-1.5,13.0,55.0)
             ),
-            RobotTrajectory.getInstance().configReverse
+            RobotTrajectory.getInstance().configReverseMedium
         );
         // create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -53,7 +53,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-1.5, 13.0, 55.0),
-                new Pose2dFeet().set(-5.5,21.0,43.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-5.0,21.25,43.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverseFast
         );
@@ -66,8 +66,8 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-5.5, 21.0, 43.0),
-                new Pose2dFeet().set(0.0, 13.0, 55.0) // shooting location
+                new Pose2dFeet().set(-5.0, 21.25, 43.0),
+                new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
@@ -86,10 +86,10 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new CollectorDown(),
                 new CollectorRun(),
                 new HoodUp(),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(1.5),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.5),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),
@@ -99,15 +99,16 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new WaitCommand(1.75).andThen(new CollectorRun())
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB+700).withTimeout(1.2),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB+700).withTimeout(1.8),
                 new HoodUp(),
                 new CollectorRun().withTimeout(0.5),
                 new RapidFire()
             ),
             new ParallelDeadlineGroup(
                 pickupTerminal(),
-                new WaitCommand(2.5).andThen(new CollectorRun())
+                new WaitCommand(1.5).andThen(new CollectorRun())
             ),
+            new CollectorRun().withTimeout(1.0),
             new ParallelDeadlineGroup(
                 forward(),
                 new CollectorRun().withTimeout(2),
