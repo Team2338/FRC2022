@@ -98,7 +98,7 @@ public final class Constants {
         public static final double RELEASE_FANGS_POSITION = 3000;
 
         public static final double UP_UNLOADED_VOLTAGE = 1.0;
-        public static final double DOWN_LOADED_VOLTAGE = -0.8;
+        public static final double DOWN_LOADED_VOLTAGE = -1.0;
         public static final double HOLD_LOADED_VOLTAGE = -0.2;
         public static final double LOADED_DROP_VOLTAGE = 0.30;
     }
