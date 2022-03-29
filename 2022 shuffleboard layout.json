@@ -214,7 +214,7 @@
               "_source0": "network_table:///SmartDashboard/Pressure",
               "_title": "Pressure",
               "Range/Min": 0.0,
-              "Range/Max": 120.0,
+              "Range/Max": 115.0,
               "Visuals/Show value": true
             }
           }
