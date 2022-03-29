@@ -40,7 +40,7 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
                         new Pose2dFeet().set(-5.0, 8.0, 70.0), // waypoint to drive past cargo
                         new Pose2dFeet().set(-5.5,20.5,54.0) // 2nd cargo (terminal) location
                 ),
-                RobotTrajectory.getInstance().configReverse
+                RobotTrajectory.getInstance().configReverseMedium
         );
         // create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -52,7 +52,7 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
                         new Pose2dFeet().set(-5.5, 20.5, 54.0),
-                        new Pose2dFeet().set(4.0, 11.0, 85.0) // shooting location
+                        new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
                 ),
                 RobotTrajectory.getInstance().configForwardFast
         );
@@ -70,10 +70,10 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
                         reverse(),
                         new CollectorRun(),
                         new HoodUp(),
-                        new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                        new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
                 ),
                 new ParallelDeadlineGroup(
-                        new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB).withTimeout(1.5),
+                        new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.5),
                         new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                         new RapidFire()
                 ),

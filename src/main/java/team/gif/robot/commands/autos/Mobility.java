@@ -15,7 +15,7 @@ public class Mobility extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-5.0, 0.0, 0.0)
+                new Pose2dFeet().set(-7.0, 0.0, 0.0)
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
