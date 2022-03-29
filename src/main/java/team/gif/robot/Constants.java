@@ -92,7 +92,7 @@ public final class Constants {
 
         public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
-        public static final double MAX_POSITION = 23500; //24000;
+        public static final double MAX_POSITION = 24000; //24000;
         public static final double ROBOT_UP_POSITION = 125;
         public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 18000;
         public static final double RELEASE_FANGS_POSITION = 3000;
@@ -100,6 +100,6 @@ public final class Constants {
         public static final double UP_UNLOADED_VOLTAGE = 1.0;
         public static final double DOWN_LOADED_VOLTAGE = -1.0;
         public static final double HOLD_LOADED_VOLTAGE = -0.2;
-        public static final double LOADED_DROP_VOLTAGE = 0.30;
+        public static final double LOADED_DROP_VOLTAGE = 0.25;
     }
 }
