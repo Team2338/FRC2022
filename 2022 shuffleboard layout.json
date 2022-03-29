@@ -171,6 +171,39 @@
               ]
             }
           },
+          "10,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Motor Temps",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Temp Left1",
+                  "_title": "Left 1"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Temp Left2",
+                  "_title": "Left 2"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Temp Right1",
+                  "_title": "Right 1"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Temp Right2",
+                  "_title": "Right 2"
+                }
+              ]
+            }
+          },
           "8,1": {
             "size": [
               1,

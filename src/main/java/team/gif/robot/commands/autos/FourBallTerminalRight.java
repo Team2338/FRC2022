@@ -38,7 +38,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
                 new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
                 new Pose2dFeet().set(-1.5, 8.0, 95.0), // 2nd cargo location
-                new Pose2dFeet().set(-5.5,20.5,54.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-5,21.25,43)//-5.5,20.5,54.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverse
         );
@@ -51,8 +51,8 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-5.5, 20.5, 54.0),
-                new Pose2dFeet().set(0.0, 11.0, 50.0) // shooting location
+                new Pose2dFeet().set(-5,21.25,43),//-5.5, 20.5, 54.0),
+                new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
@@ -69,10 +69,10 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 reverse(),
                 new CollectorRun(),
                 new HoodUp(),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB - 200)
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB - 200).withTimeout(1.5),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.5),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),

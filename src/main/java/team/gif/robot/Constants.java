@@ -25,20 +25,22 @@ public final class Constants {
 
         // trajectory
         // from FRC Characterization Tool
-        public static final double ksVolts = 1.2596;//1.37;
-        public static final double kvVoltSecondsPerMeter = 2.5664;//2.46;
-        public static final double kaVoltSecondsSquaredPerMeter = 1.0142;//0.773;
+        public static final double ksVolts = 0.61696; //cims 1.2596;
+        public static final double kvVoltSecondsPerMeter = 0.59136; //cims 2.5664;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.28479; //cims 1.0142;
         public static final double kPDriveVelLeft = 10.0;
         public static final double kPDriveVelRight = kPDriveVelLeft;
-        public static final double kTrackWidthMeters = 1.0;
+        public static final double kTrackWidthMeters = 0.6604; //cims 1.0;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
 }
     public static class Auto {
         // part of trajectory but numbers are from example
         public static final double kStdSpeedMetersPerSecond = 3.8;
         public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
-        public static final double kSlowSpeedMetersPerSecond = 1.5;//1.5
-        public static final double kSlowAccelerationMetersPerSecondSquared = 1.5;//1.5
+        public static final double kSlowSpeedMetersPerSecond = 2.3;//1.5
+        public static final double kSlowAccelerationMetersPerSecondSquared = 3.5;
+        public static final double kMediumAccelerationMetersPerSecondSquared = 3.5;
+        public static final double kMediumSpeedMetersPerSecond = 2.3;
         public static final double kFastSpeedMetersPerSecond = 4.0;
         public static final double kFastAccelerationMetersPerSecondSquared = 4.0;
         public static final double kRamseteB = 2;
@@ -58,8 +60,9 @@ public final class Constants {
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
         public static final double RPM_RING_UPPER_HUB = 7500; // no flywheel 6500;
         public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
-        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot //8300;
-        public static final double RPM_FAR_COURT = 10800; // verified on wood comp bot - very variable
+        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot
+        public static final double RPM_FAR_COURT = 10800;
+        public static final double RPM_AUTO_RIGHT_RING = 7300; //used for auto ring shot on right side
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 
@@ -98,14 +101,14 @@ public final class Constants {
 
         public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
-        public static final double MAX_POSITION = 23500; //24000;
+        public static final double MAX_POSITION = 24000; //24000;
         public static final double ROBOT_UP_POSITION = 125;
         public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 18000;
         public static final double RELEASE_FANGS_POSITION = 3000;
 
         public static final double UP_UNLOADED_VOLTAGE = 1.0;
-        public static final double DOWN_LOADED_VOLTAGE = -0.8;
+        public static final double DOWN_LOADED_VOLTAGE = -1.0;
         public static final double HOLD_LOADED_VOLTAGE = -0.2;
-        public static final double LOADED_DROP_VOLTAGE = 0.30;
+        public static final double LOADED_DROP_VOLTAGE = 0.25;
     }
 }

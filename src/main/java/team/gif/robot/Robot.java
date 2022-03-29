@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -30,6 +29,7 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.RobotCompressor;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -63,8 +63,7 @@ public class Robot extends TimedRobot {
     public static Command indexCommand = null;
     public static Shooter shooter = null;
     public static Climber climber = null;
-    public static Compressor compressor = null;
-    public static AnalogInput pressureSensor = null;
+    public static RobotCompressor compressor = null;
 
     public static DriveArcade arcadeDrive;
 //    public static DriveTank tankDrive;
@@ -80,7 +79,7 @@ public class Robot extends TimedRobot {
 
         pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
-        compressor = new Compressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
+        compressor = new RobotCompressor(RobotMap.COMPRESSOR, PneumaticsModuleType.CTREPCM);
         collector = new Collector();
         climber = new Climber();
         indexer = new Indexer();
@@ -89,7 +88,6 @@ public class Robot extends TimedRobot {
         hood = new Hood();
         collectorPneumatics = new CollectorPneumatics();
         climberPneumatics = new ClimberPneumatics();
-        pressureSensor = new AnalogInput(RobotMap.SENSOR_AIR_PRESSURE);
 
 //        tankDrive = new DriveTank();
         arcadeDrive = new DriveArcade();
@@ -142,7 +140,6 @@ public class Robot extends TimedRobot {
 
         chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
         chosenDelay = uiSmartDashboard.delayChooser.getSelected();
-
     }
 
     /**

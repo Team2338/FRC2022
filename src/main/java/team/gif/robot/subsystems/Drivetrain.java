@@ -43,9 +43,9 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static final int MAX_SUPPLY_CURRENT_AMPS = 12;
+    private static final int MAX_SUPPLY_CURRENT_AMPS = 15;
     private static final int MAX_STATOR_CURRENT_AMPS = 80;
-    private static final double OPEN_LOOP_RAMP_SECONDS = 0.5;
+    private static final double OPEN_LOOP_RAMP_SECONDS = 0.3;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
     public static ChassisSpeeds chassisSpeeds;
@@ -280,6 +280,11 @@ public class Drivetrain extends SubsystemBase {
     public double getRightEncoderPos_Meters() {
         return rightEncoderTalon.getSelectedSensorPosition() / Constants.Drivetrain.TICKS_TO_METERS_RIGHT;
     }
+
+    public double getTemperatureLeft1() { return leftTalon1.getTemperature();}
+    public double getTemperatureLeft2() { return leftTalon2.getTemperature();}
+    public double getTemperatureRight1() { return rightTalon1.getTemperature();}
+    public double getTemperatureRight2() { return rightTalon2.getTemperature();}
 
     public double getInputVoltageL1() {
         return leftTalon1.getBusVoltage();
