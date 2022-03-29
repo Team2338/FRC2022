@@ -171,20 +171,6 @@
               ]
             }
           },
-          "8,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Simple Dial",
-              "_source0": "network_table:///SmartDashboard/Pressure",
-              "_title": "Pressure",
-              "Range/Min": 0.0,
-              "Range/Max": 115.0,
-              "Visuals/Show value": true
-            }
-          },
           "10,0": {
             "size": [
               1,
@@ -216,6 +202,20 @@
                   "_title": "Right 2"
                 }
               ]
+            }
+          },
+          "8,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Pressure",
+              "_title": "Pressure",
+              "Range/Min": 0.0,
+              "Range/Max": 120.0,
+              "Visuals/Show value": true
             }
           }
         }
