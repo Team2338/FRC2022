@@ -45,10 +45,13 @@ public class LimelightAutoAim extends CommandBase {
         // we don't need this if limelight can stay on all the time
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
-        // we want the shooter to start revving up so the robot can shoot as soon as it settles
-        double distanceFromHubInches = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+        if ( !Robot.limelight.hasTarget() ){
+            return;
+        }
 
-        System.out.println(distanceFromHubInches);
+        // we want the shooter to start revving up so the robot can shoot as soon as it settles
+//        double distanceFromHubInches = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+
         // More Accurate than Rohan 2.0 (TM)
         // hood position
         Robot.hood.setHoodUp();
