@@ -86,15 +86,15 @@ public final class Constants {
 
     public static class Climber {
         // Elevator
-        public static final double P = 0.0; // Connor said 4
+        public static final double P = 0.8184;
         public static final double I = 0.0;
         public static final double D = 0.0;
-        public static final double F = 0; //0.425
+        public static final double F = 0.006; //0.425
         public static final double REV_F = 0.38;
 
         public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
-        public static final double MAX_POSITION = 24000; //24000;
+        public static final double MAX_POSITION = 24400; //24000;
         public static final double ROBOT_UP_POSITION = 125;
         public static final double ROBOT_DOWN_TO_RELEASE_POSITION = 18000;
         public static final double RELEASE_FANGS_POSITION = 3000;

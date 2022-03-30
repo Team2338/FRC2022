@@ -33,8 +33,9 @@ public class Climber extends SubsystemBase {
         hangMotor.configRemoteFeedbackFilter(RobotMap.MOTOR_INTAKE, RemoteSensorSource.TalonSRX_SelectedSensor, 0);
         hangMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.RemoteSensor0, 0, 0);
 
-
         hangMotor.setNeutralMode(NeutralMode.Brake);
+        hangMotor.config_kP(0, Constants.Climber.P);
+        hangMotor.config_kF(0, Constants.Climber.F);
 
         releaseClimberBrake();
     }
@@ -51,12 +52,8 @@ public class Climber extends SubsystemBase {
         hangMotor.set(ControlMode.PercentOutput, speed);
     }
 
-    public void setF() {
-        hangMotor.config_kF(0, Constants.Climber.F);
-    }
-
-    public void setFGravity() {
-        hangMotor.config_kF(0, Constants.Climber.GRAV_FEED_FORWARD);
+    public void setPidPosition(double setPoint) {
+        hangMotor.set(ControlMode.Position, setPoint);
     }
 
     public double getPosition() {

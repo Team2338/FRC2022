@@ -26,12 +26,13 @@ public class ClimberMaxUp extends CommandBase {
     public void initialize() {
         Robot.limelight.setLEDMode(1); // turn LED off during climb
         Robot.collectorPneumatics.collectorLower();
+        Robot.climber.setPidPosition(Constants.Climber.MAX_POSITION);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
+        //Robot.climber.setSpeed(Constants.Climber.UP_UNLOADED_VOLTAGE);
 
         if(Robot.climber.getPosition() > Constants.Climber.RELEASE_FANGS_POSITION){
             Robot.climberPneumatics.setFangsOut();
