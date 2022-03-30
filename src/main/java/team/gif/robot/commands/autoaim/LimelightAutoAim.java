@@ -105,12 +105,13 @@ public class LimelightAutoAim extends CommandBase {
 
         if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
 
-            //double xOffset = Robot.limelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
+            double xOffset = Robot.limelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
+            System.out.println("          " + xOffset);
             //double pivVolts = Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
-                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) {
+                if (xOffset > -1.5 && xOffset < 1.5) {
                     if (Robot.shooter.isInTolerance()) {
                         // fire away!
                         System.out.println("Shooting - I hope it went in");
@@ -121,17 +122,20 @@ public class LimelightAutoAim extends CommandBase {
                         System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
                     }
                 } else {
-                    System.out.println("Offset Adjusting at: " + Robot.limelight.getXOffset());
+                    System.out.println("Offset Adjusting at: " + xOffset);
                     // need to relock
                     targetLocked = false;
                     robotHasSettled = false;
                 }
             } else {
-                if (Robot.limelight.getXOffset() > -1.0 && Robot.limelight.getXOffset() < 1.0) { // target is locked
+                if (xOffset > -1.5 && xOffset < 1.5) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else { // still not in tolerance, need to rotate
-                    Robot.drivetrain.tankDriveVolts(Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS, -Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS);
+//                    Robot.drivetrain.tankDriveVolts(Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS, -Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS);
+                    double pivotVolts = 1.5 + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+                    pivotVolts = xOffset > 0 ? pivotVolts : -1.0 * pivotVolts;
+                    Robot.drivetrain.tankDriveVolts(pivotVolts, -pivotVolts);
                 }
             }
         }
