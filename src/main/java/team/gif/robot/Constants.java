@@ -70,7 +70,7 @@ public final class Constants {
         public static final double klP = 1 ;
 
         public static final double LIMELIGHT_ANGLE = 30.0;
-        public static final double LIMELIGHT_HEIGHT = 36.5 ;
+        public static final double LIMELIGHT_HEIGHT = 36.0;//36.5
         public static final double UPPER_HUB_HEIGHT = 96.0;
 
 

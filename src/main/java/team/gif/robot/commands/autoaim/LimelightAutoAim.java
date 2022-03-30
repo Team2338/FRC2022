@@ -25,6 +25,7 @@ public class LimelightAutoAim extends CommandBase {
     private boolean targetLocked = false;
     private boolean robotHasSettled = false;
     private final double velocityCap = 0.5;
+    private final double xTolerance = 1.5;
 //    private int delayCounter; // may need if we are required to turn off limelight during a match
 
     @Override
@@ -45,20 +46,22 @@ public class LimelightAutoAim extends CommandBase {
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
-        double distanceFromHub = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
+        double distanceFromHubInches = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
 
+        System.out.println(distanceFromHubInches);
         // More Accurate than Rohan 2.0 (TM)
         // hood position
-        if(distanceFromHub >= 50){
+        Robot.hood.setHoodUp();
+/*        if(distanceFromHubInches >= 50){
             Robot.hood.setHoodUp();
         }
         else {
             Robot.hood.setHoodDown();
         }
-
+*/
         // RPM calculation
-        double targetRPM = Constants.Shooter.klP * (distanceFromHub / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.SHOOTER_HEIGHT))/((2* distanceFromHub * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-386.4) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
-        Robot.shooter.setSpeedPID(targetRPM);
+        //double targetRPM = Constants.Shooter.klP * (distanceFromHubInches / Constants.Shooter.FLYWHEEL_RADIUS) * sqrt((2 * (Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.SHOOTER_HEIGHT))/((2* distanceFromHubInches * sin(toRadians(Globals.hoodAngle)) * cos(toRadians(Globals.hoodAngle))) + (-386.4) * (Math.pow(cos(toRadians(Globals.hoodAngle)),2))));
+        //Robot.shooter.setSpeedPID(targetRPM);
 //        System.out.println("targetRPM: " + targetRPM);
 
         /*
@@ -96,13 +99,13 @@ public class LimelightAutoAim extends CommandBase {
             }
         }
 
-        if(robotHasSettled){ // Note: can't combine this using else because robotHasSettled can be set to true in the above section
+        if (robotHasSettled) { // Note: can't combine this using else because robotHasSettled can be set to true in the above section
             double xOffset = Robot.limelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
             //double pivVolts = Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
-                if (xOffset > -1.5 && xOffset < 1.5) {
+                if (xOffset > -xTolerance && xOffset < xTolerance) {
                     if (Robot.shooter.isInTolerance()) {
                         // fire away!
 //                        System.out.println("Shooting - I hope it went in");
@@ -119,7 +122,7 @@ public class LimelightAutoAim extends CommandBase {
                     robotHasSettled = false;
                 }
             } else {
-                if (xOffset > -1.5 && xOffset < 1.5) { // target is locked
+                if (xOffset > -xTolerance && xOffset < xTolerance) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else { // still not in tolerance, need to rotate
