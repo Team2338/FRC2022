@@ -73,13 +73,6 @@ public final class Constants {
         public static final double LIMELIGHT_HEIGHT = 36.0;//36.5
         public static final double UPPER_HUB_HEIGHT = 96.0;
 
-
-        public static final double HOOD_UP_ANGLE = 24.0;
-        public static final double HOOD_DOWN_ANGLE = 14.0;
-
-        public static final double FLYWHEEL_RADIUS = 5;
-        public static final double SHOOTER_HEIGHT = 59.1;
-
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
     }
 

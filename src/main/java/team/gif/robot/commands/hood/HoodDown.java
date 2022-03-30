@@ -5,8 +5,6 @@
 package team.gif.robot.commands.hood;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.Constants;
-import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 /** An example command that uses an example subsystem. */
@@ -21,7 +19,6 @@ public class HoodDown extends CommandBase {
     @Override
     public void initialize() {
         Robot.hood.setHoodDown();
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
