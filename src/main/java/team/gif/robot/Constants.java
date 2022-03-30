@@ -80,7 +80,7 @@ public final class Constants {
         public static final double FLYWHEEL_RADIUS = 5;
         public static final double SHOOTER_HEIGHT = 59.1;
 
-        public static final double MAX_PIVOT_VOLTS = 3.0; // 3.3;
+        public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
     }
 
     public static class Indexer {
