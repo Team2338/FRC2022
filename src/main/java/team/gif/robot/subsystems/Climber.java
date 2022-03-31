@@ -44,7 +44,7 @@ public class Climber extends SubsystemBase {
         hangMotor.setSelectedSensorPosition(0);
     }
 
-    public void setVoltage(double speed){
+    public void setVoltage(double speed) {
         hangMotor.set(ControlMode.Current, speed);
     }
 
@@ -61,34 +61,34 @@ public class Climber extends SubsystemBase {
     }
 
     public String getPosition_Shuffleboard() {
-        return String.format("%11.2f",hangMotor.getSelectedSensorPosition());
+        return String.format("%11.2f", hangMotor.getSelectedSensorPosition());
     }
-    
+
     public double getInputVoltage() {
         return hangMotor.getBusVoltage();
     }
-    
+
     public double getOutputVoltage() {
         return hangMotor.getMotorOutputVoltage();
     }
-    
+
     public double getInputCurrent() {
         return hangMotor.getSupplyCurrent();
     }
-    
+
     public double getOutputCurrent() {
         return hangMotor.getStatorCurrent();
     }
-    
+
     public double getOutputPercent() {
         return hangMotor.getMotorOutputPercent();
     }
-    
+
     public double getVelocity() {
         return hangMotor.getSelectedSensorVelocity();
     }
 
-    public void enableLowerSoftLimit(boolean engage){
+    public void enableLowerSoftLimit(boolean engage) {
         hangMotor.configReverseSoftLimitEnable(engage);
     }
 

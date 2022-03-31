@@ -61,8 +61,8 @@ public class Shooter extends SubsystemBase {
         return shooterMotor.getSelectedSensorVelocity();
     }
 
-    public double getAcceleration(){
-        if (shooterMotor.getControlMode() == ControlMode.Velocity){
+    public double getAcceleration() {
+        if (shooterMotor.getControlMode() == ControlMode.Velocity) {
             return shooterMotor.getErrorDerivative();
         }
         return 0;
@@ -124,10 +124,10 @@ public class Shooter extends SubsystemBase {
         //return Math.abs(shooterMotor.getClosedLoopError()) < Constants.Shooter.FLYWHEEL_TOLERANCE &&
         // ^^ Get the wheel to speed, press shooter button, end flywheel, release shooter button ... press shooter button, start flywheel ... belt moves
         // immediately and does not wait for the flywheel to get to speed. Changed it to the below
-        if ( shooterMotor.getControlMode() == ControlMode.Disabled )
+        if (shooterMotor.getControlMode() == ControlMode.Disabled)
             return false;
 
-        return (Math.abs( shooterMotor.getClosedLoopTarget() - getSpeed() ) < Constants.Shooter.FLYWHEEL_TOLERANCE) &&
+        return (Math.abs(shooterMotor.getClosedLoopTarget() - getSpeed()) < Constants.Shooter.FLYWHEEL_TOLERANCE) &&
             shooterMotor.getClosedLoopTarget() != 0;
     }
 

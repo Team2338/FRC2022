@@ -23,7 +23,7 @@ public class Collector extends SubsystemBase {
         collectorMotor.configSelectedFeedbackSensor(TalonSRXFeedbackDevice.QuadEncoder, 0, 0);
     }
 
-    //Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
+    // Set the speed of the intake as a decimal percentage - values 0.00 -> 1.00
     public void setSpeedPercentCollector(double percent) {
         collectorMotor.set(ControlMode.PercentOutput, percent);
     }
