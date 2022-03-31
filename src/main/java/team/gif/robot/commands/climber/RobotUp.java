@@ -11,14 +11,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-/**
- * Describe the Command functionality here
- */
 public class RobotUp extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private boolean isHoldState = false;
 
-    // Called when the command is initially scheduled.
     public RobotUp() {
         super();
         addRequirements(Robot.climber);
@@ -33,16 +28,16 @@ public class RobotUp extends CommandBase {
     @Override
     public void execute() {
         double climberPos = Robot.climber.getPosition();
-        if( climberPos < Constants.Climber.ROBOT_UP_POSITION) { // robot is near bar and hanging. Need to apply small voltage to overcome gravity.
+        if (climberPos < Constants.Climber.ROBOT_UP_POSITION) { // robot is near bar and hanging. Need to apply small voltage to overcome gravity.
             isHoldState = true;
         }
 
-        if( climberPos < 100 ) { // don't allow the climber to go below 100 ticks
+        if (climberPos < 100) { // Don't allow the climber to go below 100 ticks
             Robot.climber.setSpeed(0);
             return;
         }
 
-        if( isHoldState ) { // robot is near bar and hanging. Need to apply small voltage to overcome gravity.
+        if (isHoldState) { // Robot is near bar and hanging. Need to apply small voltage to overcome gravity.
             Robot.climber.setSpeed(Constants.Climber.HOLD_LOADED_VOLTAGE);
             return;
         }
@@ -53,10 +48,11 @@ public class RobotUp extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-    return false;
+        return false;
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 }

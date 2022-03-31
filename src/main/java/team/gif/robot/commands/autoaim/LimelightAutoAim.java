@@ -17,7 +17,7 @@ import static java.lang.Math.sqrt;
 import static java.lang.Math.toRadians;
 
 public class LimelightAutoAim extends CommandBase {
-    public LimelightAutoAim(){
+    public LimelightAutoAim() {
         super();
         addRequirements(Robot.hood, Robot.shooter, Robot.indexer);
     }
@@ -42,10 +42,10 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public void execute() {
 
-        // we don't need this if limelight can stay on all the time
+        // We don't need this if limelight can stay on all the time
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
-        if ( !Robot.limelight.hasTarget() ){
+        if (!Robot.limelight.hasTarget()) {
             return;
         }
 
@@ -92,7 +92,7 @@ public class LimelightAutoAim extends CommandBase {
         */
 
 
-        // bot must not be moving anymore
+        // Bot must not be moving anymore
         if (!robotHasSettled) {
             DifferentialDriveWheelSpeeds wheelSpeeds = Robot.drivetrain.getWheelSpeeds();
             // Make sure both wheels are within tolerance of not moving
@@ -104,13 +104,13 @@ public class LimelightAutoAim extends CommandBase {
 
         if (robotHasSettled) { // Note: can't combine this using else because robotHasSettled can be set to true in the above section
             double xOffset = Robot.limelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
-            //double pivVolts = Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+//            double pivVolts = Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
                 if (xOffset > -xTolerance && xOffset < xTolerance) {
                     if (Robot.shooter.isInTolerance()) {
-                        // fire away!
+                        // Fire away!
 //                        System.out.println("Shooting - I hope it went in");
                         Robot.indexer.setBeltMotorSpeedPercent(1.0);
                         Robot.indexer.setMidMotorSpeed(1.0);
@@ -120,7 +120,7 @@ public class LimelightAutoAim extends CommandBase {
                     }
                 } else {
 //                    System.out.println("Offset Adjusting at: " + xOffset);
-                    // need to relock
+                    // Need to relock
                     targetLocked = false;
                     robotHasSettled = false;
                 }
@@ -148,11 +148,13 @@ public class LimelightAutoAim extends CommandBase {
         Robot.indexer.setMidMotorSpeed(0);
 
 //        System.out.println("Auto Aim Finished");
-        Robot.limelight.setLEDMode(3); // leave LED on after autoaim so we can still use during manual
+        Robot.limelight.setLEDMode(3); // Leave LED on after autoaim so we can still use during manual
 
         Globals.indexerEnabled = true;
     }
 
     @Override
-    public boolean isFinished() {return false;}
+    public boolean isFinished() {
+        return false;
+    }
 }

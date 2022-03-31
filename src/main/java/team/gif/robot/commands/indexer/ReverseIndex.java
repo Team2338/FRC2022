@@ -5,14 +5,13 @@ import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 public class ReverseIndex extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     public ReverseIndex() {
         addRequirements(Robot.indexer, Robot.collector);
     }
 
     @Override
     public void initialize() {
-        Globals.indexerEnabled = false; //TODO: Do we really need this anymore?
+        Globals.indexerEnabled = false; // TODO: Do we really need this anymore?
     }
 
     @Override

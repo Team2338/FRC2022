@@ -20,16 +20,19 @@ import static team.gif.robot.Robot.compressor;
 
 public class UiSmartDashboard {
 
-    public static SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
-    public static SendableChooser<delay> delayChooser = new SendableChooser<>();
+    public SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
+    public SendableChooser<delay> delayChooser = new SendableChooser<>();
 
     /*
-     * All the shuffleboard entry
+     * All the shuffleboard entries
      */
-    public UiSmartDashboard(){
+    public UiSmartDashboard() {
         // Pigeon
-        ShuffleboardTab tab  = Shuffleboard.getTab("SmartDashboard"); //gets a reference to the shuffleboard tab
-        tab.add("BotHead",(x)->{x.setSmartDashboardType("Gyro");x.addDoubleProperty("Value", ()-> Pigeon.getInstance().getCompassHeading(),null);});
+        ShuffleboardTab tab = Shuffleboard.getTab("SmartDashboard"); // Gets a reference to the shuffleboard tab
+        tab.add("BotHead", (x) -> {
+            x.setSmartDashboardType("Gyro");
+            x.addDoubleProperty("Value", () -> Pigeon.getInstance().getCompassHeading(), null);
+        });
 
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
@@ -41,12 +44,12 @@ public class UiSmartDashboard {
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
 
-        tab.add("Auto Select",autoModeChooser)
+        tab.add("Auto Select", autoModeChooser)
             .withWidget(BuiltInWidgets.kComboBoxChooser)
-            .withPosition(8,2)
-            .withSize(2,1);
+            .withPosition(8, 2)
+            .withSize(2, 1);
 
-        //Auto delay
+        // Auto delay
         delayChooser.setDefaultOption("0", delay.DELAY_0);
         delayChooser.addOption("1", delay.DELAY_1);
         delayChooser.addOption("2", delay.DELAY_2);
@@ -65,8 +68,8 @@ public class UiSmartDashboard {
         delayChooser.addOption("15", delay.DELAY_15);
 
         tab.add("Delay", delayChooser)
-            .withPosition(7,2)
-            .withSize(1,1);
+            .withPosition(7, 2)
+            .withSize(1, 1);
 
         SmartDashboard.putData("Climber", new ResetClimber());
         SmartDashboard.putData("LED", new LimelightLED());
@@ -77,7 +80,7 @@ public class UiSmartDashboard {
         // Indexer and Indexer Sensors
         SmartDashboard.putBoolean("Belt Sensor", indexer.getSensorBelt());
         SmartDashboard.putBoolean("Mid Sensor", indexer.getSensorMid());
-        SmartDashboard.putBoolean("Entry Sensor",indexer.getSensorEntry());
+        SmartDashboard.putBoolean("Entry Sensor", indexer.getSensorEntry());
         SmartDashboard.putBoolean("Enable Indexer", Globals.indexerEnabled);
 
         // Shooter
@@ -86,8 +89,8 @@ public class UiSmartDashboard {
         // Climber
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
 
-        //Pressure Sensor
-        SmartDashboard.putNumber("Pressure",  compressor.getPressure());
+        // Pressure Sensor
+        SmartDashboard.putNumber("Pressure", compressor.getPressure());
 
         SmartDashboard.putNumber("Temp Left1", drivetrain.getTemperatureLeft1());
         SmartDashboard.putNumber("Temp Left2", drivetrain.getTemperatureLeft2());

@@ -25,19 +25,20 @@ public final class Constants {
 
         // trajectory
         // from FRC Characterization Tool
-        public static final double ksVolts = 0.61696; //cims 1.2596;
-        public static final double kvVoltSecondsPerMeter = 0.59136; //cims 2.5664;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.28479; //cims 1.0142;
+        public static final double ksVolts = 0.61696; // cims 1.2596;
+        public static final double kvVoltSecondsPerMeter = 0.59136; // cims 2.5664;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.28479; // cims 1.0142;
         public static final double kPDriveVelLeft = 10.0;
         public static final double kPDriveVelRight = kPDriveVelLeft;
-        public static final double kTrackWidthMeters = 0.6604; //cims 1.0;
+        public static final double kTrackWidthMeters = 0.6604; // cims 1.0;
         public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
-}
+    }
+
     public static class Auto {
         // part of trajectory but numbers are from example
         public static final double kStdSpeedMetersPerSecond = 3.8;
         public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
-        public static final double kSlowSpeedMetersPerSecond = 2.3;//1.5
+        public static final double kSlowSpeedMetersPerSecond = 2.3; // 1.5
         public static final double kSlowAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumSpeedMetersPerSecond = 2.3;
@@ -51,26 +52,26 @@ public final class Constants {
         public static final double kP = 0.1; // 0.2
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kF = 0.055; //0.065
+        public static final double kF = 0.055; // 0.065
 
-        //public static final double RPM_LOW = 7500; // currently only used in LimelightAutoAim
-        //public static final double RPM_HIGH = 10000; // currently only used in LimelightAutoAim
-        public static final double RPM_FENDER_LOWER_HUB = 3500; // no flywheel 3000; // verified on wood comp bot
-        public static final double RPM_FENDER_UPPER_HUB = 6800; // no flywheel 5900; // 5800 not good with ball in way; // verified on wood comp bot
+//        public static final double RPM_LOW = 7500; // Currently only used in LimelightAutoAim
+//        public static final double RPM_HIGH = 10000; // Currently only used in LimelightAutoAim
+        public static final double RPM_FENDER_LOWER_HUB = 3500; // no flywheel 3000;
+        public static final double RPM_FENDER_UPPER_HUB = 6800; // no flywheel 5900; // 5800 not good with ball in way
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
         public static final double RPM_RING_UPPER_HUB = 7500; // no flywheel 6500;
         public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
-        public static final double RPM_LAUNCHPAD = 8000; // verified on wood comp bot
+        public static final double RPM_LAUNCHPAD = 8000;
         public static final double RPM_FAR_COURT = 10800;
-        public static final double RPM_AUTO_RIGHT_RING = 7300; //used for auto ring shot on right side
+        public static final double RPM_AUTO_RIGHT_RING = 7300; // Used for auto ring shot on right side
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 
         // Limelight
-        public static final double klP = 1 ;
+        public static final double klP = 1;
 
         public static final double LIMELIGHT_ANGLE = 30.0;
-        public static final double LIMELIGHT_HEIGHT = 36.0;//36.5
+        public static final double LIMELIGHT_HEIGHT = 36.0; // 36.5
         public static final double UPPER_HUB_HEIGHT = 96.0;
 
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
@@ -90,9 +91,6 @@ public final class Constants {
         public static final double I = 0.0;
         public static final double D = 0.0;
         public static final double F = 0.006; //0.425
-        public static final double REV_F = 0.38;
-
-        public static final double GRAV_FEED_FORWARD = 300 / 1023.0; // Percent constant to counteract gravity
 
         public static final double MAX_POSITION = 24400; //24000;
         public static final double ROBOT_UP_POSITION = 125;

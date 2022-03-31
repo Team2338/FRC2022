@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
 public class DriveTank extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public DriveTank() {
         super();
@@ -13,7 +12,8 @@ public class DriveTank extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -23,7 +23,7 @@ public class DriveTank extends CommandBase {
          */
         double currL = -Robot.oi.driver.getLeftY(); //assuming negative because motors have .setInverted(false);
         double currR = -Robot.oi.driver.getRightY();
-        if(Robot.isCompBot) {
+        if (Robot.isCompBot) {
             Robot.drivetrain.setSpeed(currL, -currR);
         } else {
             Robot.drivetrain.setSpeed(currL, currR);
@@ -38,5 +38,6 @@ public class DriveTank extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 }

@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -102,10 +101,10 @@ public class Robot extends TimedRobot {
         oi = new OI();
 //        ui = new UI();
         uiSmartDashboard = new UiSmartDashboard();
-        
+
         eventLogger = new EventFileLogger();
         eventLogger.init();
-        
+
         telemetryLogger = new TelemetryFileLogger();
         addMetricsToLogger();
         telemetryLogger.init();
@@ -146,10 +145,12 @@ public class Robot extends TimedRobot {
      * This function is called once each time the robot enters Disabled mode.
      */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+    }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+    }
 
     /**
      * This runs the autonomous command selected by your {@link RobotContainer} class.
@@ -167,7 +168,7 @@ public class Robot extends TimedRobot {
 
         Globals.autonomousModeActive = true;
         indexCommand.schedule();
-        
+
         // used for delaying the start of autonomous
         elapsedTime.reset();
         elapsedTime.start();
@@ -184,7 +185,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        if ( runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
+        if (runAutoScheduler && (elapsedTime.get() > (chosenDelay.getValue()))) {
             if (autonomousCommand != null) {
                 System.out.println("Delay over. Auto selection scheduler started.");
                 autonomousCommand.schedule();
@@ -219,9 +220,9 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double timeLeft = DriverStation.getMatchTime();
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
-                     (timeLeft <=  5.0 && timeLeft >=  3.0));
+            (timeLeft <= 5.0 && timeLeft >= 3.0));
 
-        if ( indexer.getCargoCount() == 2 ){
+        if (indexer.getCargoCount() == 2) {
             collectorPneumatics.entryRaise();
             collectorPneumatics.collectorRaise();
         }
@@ -230,14 +231,16 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testInit() {}
+    public void testInit() {
+    }
 
     /**
      * This function is called periodically during test mode.
      */
     @Override
-    public void testPeriodic() {}
-    
+    public void testPeriodic() {
+    }
+
     public void addMetricsToLogger() {
         // Shooter
         telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
@@ -277,16 +280,16 @@ public class Robot extends TimedRobot {
         telemetryLogger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
         telemetryLogger.addMetric("DriveRight1_Percent", drivetrain::getOutputPercentR1);
         telemetryLogger.addMetric("DriveRight2_Percent", drivetrain::getOutputPercentR2);
-    
+
         telemetryLogger.addMetric("DriveLeft1_Velocity", drivetrain::getLeftEncoderVelocity_Ticks);
         telemetryLogger.addMetric("DriveRight1_Velocity", drivetrain::getRightEncoderVelocity_Ticks);
-    
+
         // PDP and Compressor
         telemetryLogger.addMetric("PDP_Voltage", pdp::getVoltage);
         telemetryLogger.addMetric("PDP_Current_DriveLeft1", () -> pdp.getCurrent(0));
         telemetryLogger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
         telemetryLogger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
-    
+
         // Climber
         telemetryLogger.addMetric("Climber_Voltage_In", climber::getInputVoltage);
         telemetryLogger.addMetric("Climber_Voltage_Out", climber::getOutputVoltage);

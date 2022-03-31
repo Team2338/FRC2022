@@ -1,10 +1,8 @@
 package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.Shooter;
 
 public class RevFlywheel extends CommandBase {
     private final double setpoint;
@@ -40,8 +38,8 @@ public class RevFlywheel extends CommandBase {
         //Robot.shooter.setSpeedPercent(0);
         Robot.limelight.setLEDMode(0);//force off
 
-        // this is used to inform RapidFire to stop running the belt
-        // otherwise, RapidFire will continue to run the belt after the
+        // This is used to inform RapidFire to stop running the belt.
+        // Otherwise, RapidFire will continue to run the belt after the
         // shooter has stopped and could cause a possible jam
         Globals.shooterRunning = false;
     }

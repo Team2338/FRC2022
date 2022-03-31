@@ -7,9 +7,7 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class ShooterIdle extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public ShooterIdle() {
         super();
@@ -18,12 +16,13 @@ public class ShooterIdle extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        // Robot.shooter.setSpeedPercent(0);
+//        Robot.shooter.setSpeedPercent(0);
         Robot.shooter.setToNeutral();
     }
 
@@ -35,5 +34,6 @@ public class ShooterIdle extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 }

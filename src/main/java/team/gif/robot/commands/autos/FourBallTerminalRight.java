@@ -2,7 +2,11 @@ package team.gif.robot.commands.autos;
 
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
@@ -26,7 +30,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
@@ -38,11 +42,11 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
                 new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
                 new Pose2dFeet().set(-1.5, 8.0, 95.0), // 2nd cargo location
-                new Pose2dFeet().set(-5,21.25,43)//-5.5,20.5,54.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-5, 21.25, 43)//-5.5,20.5,54.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverse
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
@@ -51,12 +55,12 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-5,21.25,43),//-5.5, 20.5, 54.0),
+                new Pose2dFeet().set(-5, 21.25, 43),//-5.5, 20.5, 54.0),
                 new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForwardFast
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
@@ -84,7 +88,7 @@ public class FourBallTerminalRight extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 forward(),
                 new CollectorRun().withTimeout(2),
-                new WaitCommand(3).andThen( new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB))
+                new WaitCommand(3).andThen(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB))
             ),
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),

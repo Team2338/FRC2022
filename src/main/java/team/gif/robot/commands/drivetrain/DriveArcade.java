@@ -7,10 +7,7 @@ package team.gif.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class DriveArcade extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    //private final ExampleSubsystem m_subsystem;
 
     public DriveArcade() {
         super();
@@ -19,7 +16,8 @@ public class DriveArcade extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -29,7 +27,7 @@ public class DriveArcade extends CommandBase {
          */
         double rotation = Robot.oi.driver.getRightX();
         double currSpeed = Robot.oi.driver.getLeftY();
-        if(Robot.isCompBot) {
+        if (Robot.isCompBot) {
             Robot.drivetrain.driveArcade(rotation, -currSpeed);
         } else {
             Robot.drivetrain.driveArcade(-currSpeed, rotation);
@@ -45,5 +43,6 @@ public class DriveArcade extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 }
