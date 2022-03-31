@@ -12,10 +12,12 @@ public enum autoMode {
     FIVE_BALL_TERMINAL_RIGHT(0);
 
     private int value;
+
     autoMode(int value) {
         this.value = value;
     }
-    public int getValue(){
+
+    public int getValue() {
         return this.value;
     }
 }
