@@ -7,9 +7,7 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class Shoot extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public Shoot() {
         super();
@@ -18,14 +16,15 @@ public class Shoot extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (Robot.shooter.isInTolerance() ) { // && Robot.indexer.getSensorBelt()) {
+        if (Robot.shooter.isInTolerance()) { // && Robot.indexer.getSensorBelt()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);
-            //Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
+//            Robot.indexer.setBeltMotorSpeedPID(1000); TODO: Tune and add PID values so we can have even belt movement
         } else {
             Robot.indexer.setBeltMotorSpeedPercent(0);
         }

@@ -4,10 +4,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
 public class ResetClimber extends CommandBase {
-    //@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     public ResetClimber() {
-        // Use addRequirements() here to declare subsystem dependencies.
     }
 
     // Called when the command is initially scheduled.

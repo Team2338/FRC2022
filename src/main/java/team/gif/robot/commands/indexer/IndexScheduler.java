@@ -5,19 +5,15 @@
 package team.gif.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
-/** An example command that uses an example subsystem. */
 public class IndexScheduler extends CommandBase {
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
     private CommandBase currCommand = null;
 
     public IndexScheduler() {
         super();
-        // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(Robot.indexer);
     }
 
@@ -30,17 +26,19 @@ public class IndexScheduler extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(currCommand != null && currCommand.isFinished()) {
+        if (currCommand != null && currCommand.isFinished()) {
             currCommand = null;
         }
-        if(currCommand == null && Globals.indexerEnabled) {
-            if(!Robot.indexer.getSensorBelt() && Robot.indexer.getSensorMid()) {
+
+        if (currCommand == null && Globals.indexerEnabled) {
+            if (!Robot.indexer.getSensorBelt() && Robot.indexer.getSensorMid()) {
                 currCommand = new IndexMidToBelt();
                 currCommand.schedule();
             }
-            if(!Robot.indexer.getSensorMid() && Robot.indexer.getSensorEntry()) {
+
+            if (!Robot.indexer.getSensorMid() && Robot.indexer.getSensorEntry()) {
                 currCommand = new IndexCollectorToMid();
-                currCommand.schedule();;
+                currCommand.schedule();
             }
         }
     }
@@ -54,7 +52,5 @@ public class IndexScheduler extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        //Robot.indexer.setMidMotorSpeed(0);
-        //Robot.indexer.setBeltMotorSpeedPercent(0);
     }
 }

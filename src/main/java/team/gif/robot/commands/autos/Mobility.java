@@ -2,7 +2,9 @@ package team.gif.robot.commands.autos;
 
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Robot;
@@ -19,7 +21,7 @@ public class Mobility extends SequentialCommandGroup {
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
-        // create the command using the trajectory
+        // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));

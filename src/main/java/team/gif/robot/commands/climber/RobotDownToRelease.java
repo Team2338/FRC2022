@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-/**
- * Describe the Command functionality here
- */
 public class RobotDownToRelease extends CommandBase {
 
     // Called when the command is initially scheduled.
@@ -43,5 +40,6 @@ public class RobotDownToRelease extends CommandBase {
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 }
