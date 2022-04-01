@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
         hood.setHoodDown();
         collectorPneumatics.collectorRaise();
         climberPneumatics.setFangsIn();
+        Globals.climbingActive = false;
     }
 
     /**
@@ -211,6 +212,7 @@ public class Robot extends TimedRobot {
         }
         compressor.enableDigital();
         climber.releaseClimberBrake();
+        Globals.climbingActive = false;
     }
 
     /**
@@ -222,7 +224,7 @@ public class Robot extends TimedRobot {
         oi.setRumble((timeLeft <= 40.0 && timeLeft >= 36.0) ||
             (timeLeft <= 5.0 && timeLeft >= 3.0));
 
-        if (indexer.getCargoCount() == 2) {
+        if (indexer.getCargoCount() == 2 && !Globals.climbingActive) {
             collectorPneumatics.entryRaise();
             collectorPneumatics.collectorRaise();
         }
