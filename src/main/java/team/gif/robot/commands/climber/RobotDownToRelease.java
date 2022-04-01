@@ -22,7 +22,9 @@ public class RobotDownToRelease extends CommandBase {
     @Override
     public void initialize() {
         //Use Robot weight to go down
-        Robot.climber.setSpeed(Constants.Climber.LOADED_DROP_VOLTAGE);
+        Robot.climber.setSpeed(Constants.Climber.HOLD_LOADED_VOLTAGE);
+        Robot.climber.enableRampRate(true);
+//        Robot.climber.setSpeed(Constants.Climber.LOADED_DROP_VOLTAGE);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,5 +43,6 @@ public class RobotDownToRelease extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        Robot.climber.enableRampRate(false);
     }
 }

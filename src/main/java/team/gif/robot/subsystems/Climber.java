@@ -99,4 +99,12 @@ public class Climber extends SubsystemBase {
     public void releaseClimberBrake() {
         hangBrake.set(true);
     }
+
+    public void enableRampRate(boolean isRamping) {
+        if (isRamping) {
+            hangMotor.configOpenloopRamp(0.7);
+            return;
+        }
+        hangMotor.configOpenloopRamp(0);
+    }
 }
