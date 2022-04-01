@@ -24,7 +24,7 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-4.5, 0.0, 0.0)
+                new Pose2dFeet().set(-4.0, 0.0, 0.0)
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -37,8 +37,8 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
     public Command oppOneBall() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
-                        new Pose2dFeet().set(-4.5, 0.0, 0.0),
-                        new Pose2dFeet().set(-3.5, 4.0, 95.0)
+                        new Pose2dFeet().set(-4.0, 0.0, 0.0),
+                        new Pose2dFeet().set(-4.25, 3.5, 90.0)
                 ),
                 RobotTrajectory.getInstance().configReverseSlow
         );
@@ -51,9 +51,10 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
     public Command oppTwoBall() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
-                        new Pose2dFeet().set(-3.5, 4.0, 95.0),
-                        new Pose2dFeet().set(-1.5, 2, -90.0), // turn in place
-                        new Pose2dFeet().set(-1.5, -9.0, -60.0)
+                        new Pose2dFeet().set(-4.25, 3.5, 90.0),
+                        new Pose2dFeet().set(-2.0,3.5,180), // turn in place
+                        new Pose2dFeet().set(0.0, 2.0, -120.0), // right turn
+                        new Pose2dFeet().set(-0.4, -8.0, -43.0)
                 ),
                 RobotTrajectory.getInstance().configReverse
         );
@@ -66,8 +67,9 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
     public Command oppTwoBallShoot() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
-                        new Pose2dFeet().set(-1.5, -9.0, -60.0),
-                        new Pose2dFeet().set(-1.5, -6.0, 155.0) // turn in place
+                        new Pose2dFeet().set(-0.4, -8.0, -43.0),
+                        new Pose2dFeet().set(-3.0, -6.0, 156.0)
+                        //new Pose2dFeet().set(-3.5, -4.5, 146)
                 ),
                 RobotTrajectory.getInstance().configForwardFast
         );
@@ -80,20 +82,20 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
     public TwoBallLeftOpp2Ball() {
 
         addCommands(
-            new CollectorDown(),
             new ParallelDeadlineGroup(
                 new CollectorRun().withTimeout(2),
+                new CollectorDown(),
                 reverse(),
                 new HoodUp(),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
-                new RapidFire().withTimeout(2),
+                new RapidFire().withTimeout(1.6),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
                 oppOneBall(),
-                new CollectorRun().withTimeout(4)
+                new CollectorRun()
             ),
             new ParallelDeadlineGroup(
                 oppTwoBall(),
