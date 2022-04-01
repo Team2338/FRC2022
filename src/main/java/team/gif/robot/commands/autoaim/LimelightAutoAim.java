@@ -137,6 +137,15 @@ public class LimelightAutoAim extends CommandBase {
         }
     }
 
+    @Override
+    public boolean isFinished() {
+        // if we are in autonomous and the limelight isn't working, abort autoAim
+        if (Globals.autonomousModeActive && Robot.limelight.noTarget() ) {
+            return true;
+        }
+        return false;
+    }
+
     //
     // Called as a whileHeld. When user releases the toggle, end() is called
     //
@@ -151,10 +160,5 @@ public class LimelightAutoAim extends CommandBase {
         Robot.limelight.setLEDMode(3); // Leave LED on after autoaim so we can still use during manual
 
         Globals.indexerEnabled = true;
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 }

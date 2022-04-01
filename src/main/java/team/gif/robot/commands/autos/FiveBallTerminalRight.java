@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
@@ -118,11 +119,16 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new CollectorRun().withTimeout(2),
                 new WaitCommand(3).andThen(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB))
             ),
-            new LimelightAutoAim()
-//            new ParallelDeadlineGroup(
-//                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
-//                new RapidFire()
-//            )
+            new ParallelDeadlineGroup(
+                new LimelightAutoAim(), // If limelight is not functioning, this will end immediately
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+            ),
+
+//            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
+            new ParallelDeadlineGroup(
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
+                new RapidFire()
+            )
         );
     }
 }

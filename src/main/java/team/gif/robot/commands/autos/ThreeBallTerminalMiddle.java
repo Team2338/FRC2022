@@ -6,10 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.hood.HoodUp;
@@ -99,6 +101,13 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
             new CollectorRun().withTimeout(2),
             forward(),
+            new ParallelDeadlineGroup(
+                new LimelightAutoAim(), // If limelight is not functioning, this will end immediately
+                new CollectorRun().withTimeout(1.5),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+            ),
+
+//            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
             new ParallelDeadlineGroup(
                 new CollectorRun().withTimeout(1.5),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
