@@ -6,28 +6,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class FiveBallTerminalRight extends SequentialCommandGroup {
+public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-3.4, 0.0, 0.0) // 1st cargo location
+                new Pose2dFeet().set(-4.5, 0.0, 0.0)
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -37,15 +34,13 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command pickUpNext() {
+    public Command oppOneBall() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-3.4, 0.0, 0.0),
-                new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
-                new Pose2dFeet().set(-1.5, 8.0, 100.0), // 2nd cargo location
-                new Pose2dFeet().set(-1.5, 13.0, 55.0)
-            ),
-            RobotTrajectory.getInstance().configReverseMedium
+                List.of(
+                        new Pose2dFeet().set(-4.5, 0.0, 0.0),
+                        new Pose2dFeet().set(-3.5, 4.0, 95.0)
+                ),
+                RobotTrajectory.getInstance().configReverseSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -53,13 +48,14 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command pickupTerminal() {
+    public Command oppTwoBall() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-1.5, 13.0, 55.0),
-                new Pose2dFeet().set(-5.0, 21.25, 43.0) // 3rd cargo (terminal) location
-            ),
-            RobotTrajectory.getInstance().configReverseFast
+                List.of(
+                        new Pose2dFeet().set(-3.5, 4.0, 95.0),
+                        new Pose2dFeet().set(-1.5, 2, -90.0), // turn in place
+                        new Pose2dFeet().set(-1.5, -9.0, -60.0)
+                ),
+                RobotTrajectory.getInstance().configReverse
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -67,13 +63,13 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command forward() {
+    public Command oppTwoBallShoot() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-5.0, 21.25, 43.0),
-                new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
-            ),
-            RobotTrajectory.getInstance().configForwardFast
+                List.of(
+                        new Pose2dFeet().set(-1.5, -9.0, -60.0),
+                        new Pose2dFeet().set(-1.5, -6.0, 155.0) // turn in place
+                ),
+                RobotTrajectory.getInstance().configForwardFast
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -81,48 +77,36 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-
-    public FiveBallTerminalRight() {
+    public TwoBallLeftOpp2Ball() {
 
         addCommands(
+            new CollectorDown(),
             new ParallelDeadlineGroup(
-                reverse(),
-                new CollectorDown(),
-                new CollectorRun(),
-                new HoodUp(),
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
-            ),
-            new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.5),
-                new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
-                new RapidFire()
-            ),
-            new ParallelDeadlineGroup(
-                pickUpNext(),
-                new WaitCommand(1).andThen(new CollectorDown()),
-                new WaitCommand(1.75).andThen(new CollectorRun())
-            ),
-            new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB + 700).withTimeout(1.8),
-                new HoodUp(),
-                new CollectorRun().withTimeout(0.5),
-                new RapidFire()
-            ),
-            new ParallelDeadlineGroup(
-                pickupTerminal(),
-                new WaitCommand(1.5).andThen(new CollectorRun())
-            ),
-            new CollectorRun().withTimeout(1.0),
-            new ParallelDeadlineGroup(
-                forward(),
                 new CollectorRun().withTimeout(2),
-                new WaitCommand(3).andThen(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB))
+                reverse(),
+                new HoodUp(),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
-            new LimelightAutoAim()
-//            new ParallelDeadlineGroup(
-//                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
-//                new RapidFire()
-//            )
+            new ParallelDeadlineGroup(
+                new RapidFire().withTimeout(2),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+            ),
+            new ParallelDeadlineGroup(
+                oppOneBall(),
+                new CollectorRun().withTimeout(4)
+            ),
+            new ParallelDeadlineGroup(
+                oppTwoBall(),
+                new CollectorRun()
+            ),
+            new ParallelDeadlineGroup(
+                oppTwoBallShoot(),
+                new CollectorRun()
+            ),
+            new ParallelDeadlineGroup(
+                new RapidFire().withTimeout(3),
+                new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED)
+            )
         );
     }
 }

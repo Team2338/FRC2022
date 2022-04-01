@@ -10,6 +10,7 @@ import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.hood.HoodUp;
@@ -39,15 +40,16 @@ public class TwoBallLeft extends SequentialCommandGroup {
         addCommands(
             new CollectorDown(),
             new ParallelDeadlineGroup(
+                new CollectorRun().withTimeout(3),
                 reverse(),
-                new CollectorRun(),
                 new HoodUp(),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
-            new ParallelDeadlineGroup(
-                new RapidFire().withTimeout(4),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
-            )
+                new LimelightAutoAim().withTimeout(5)
+//            new ParallelDeadlineGroup(
+//                new RapidFire().withTimeout(4),
+//                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+//            )
         );
     }
 }
