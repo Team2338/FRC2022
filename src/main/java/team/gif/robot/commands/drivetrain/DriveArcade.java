@@ -11,12 +11,13 @@ public class DriveArcade extends CommandBase {
 
     public DriveArcade() {
         super();
-        addRequirements(Robot.drivetrain);
+        addRequirements(Robot.drivetrain, Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.drivetrain.playMusic();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -25,13 +26,13 @@ public class DriveArcade extends CommandBase {
         /*
          * Arcade Drive
          */
-        double rotation = Robot.oi.driver.getRightX();
-        double currSpeed = Robot.oi.driver.getLeftY();
-        if (Robot.isCompBot) {
-            Robot.drivetrain.driveArcade(rotation, -currSpeed);
-        } else {
-            Robot.drivetrain.driveArcade(-currSpeed, rotation);
-        }
+//        double rotation = Robot.oi.driver.getRightX();
+//        double currSpeed = Robot.oi.driver.getLeftY();
+//        if (Robot.isCompBot) {
+//            Robot.drivetrain.driveArcade(rotation, -currSpeed);
+//        } else {
+//            Robot.drivetrain.driveArcade(-currSpeed, rotation);
+//        }
 
     }
 
@@ -44,5 +45,6 @@ public class DriveArcade extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        Robot.drivetrain.stopMusic();
     }
 }

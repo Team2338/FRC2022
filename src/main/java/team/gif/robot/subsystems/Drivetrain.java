@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.music.Orchestra;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,6 +21,9 @@ import team.gif.robot.Robot;
 import team.gif.robot.RobotMap;
 import team.gif.robot.subsystems.drivers.Pigeon;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class Drivetrain extends SubsystemBase {
 
     private static WPI_TalonSRX old_leftTalon1;
@@ -27,6 +32,11 @@ public class Drivetrain extends SubsystemBase {
     private static WPI_TalonFX leftTalon2;
     private static WPI_TalonFX rightTalon1;
     private static WPI_TalonFX rightTalon2;
+    public Orchestra orchestra0;
+    public Orchestra orchestra1;
+    public Orchestra orchestra2;
+    public Orchestra orchestra3;
+    public Orchestra orchestra4;
 
     private static MotorControllerGroup leftMotors;
     private static MotorControllerGroup rightMotors;
@@ -113,6 +123,38 @@ public class Drivetrain extends SubsystemBase {
         resetEncoders();
         odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
         resetPose();
+
+        orchestra0 = new Orchestra();
+        orchestra1 = new Orchestra();
+        orchestra2 = new Orchestra();
+        orchestra3 = new Orchestra();
+        orchestra4 = new Orchestra();
+
+        orchestra0.addInstrument(leftTalon1);
+        orchestra1.addInstrument(leftTalon2);
+        orchestra2.addInstrument(rightTalon1);
+        orchestra3.addInstrument(rightTalon2);
+
+        orchestra0.loadMusic("RR3.chrp");
+        orchestra1.loadMusic("RR3.chrp");
+        orchestra2.loadMusic("RR3.chrp");
+        orchestra3.loadMusic("RR3.chrp");
+    }
+
+    public void playMusic() {
+        orchestra0.play();
+        orchestra1.play();
+        orchestra2.play();
+        orchestra3.play();
+        orchestra4.play();
+    }
+
+    public void stopMusic() {
+        orchestra0.stop();
+        orchestra1.stop();
+        orchestra2.stop();
+        orchestra3.stop();
+        orchestra4.stop();
     }
 
     public void currentLimitingSetup(){

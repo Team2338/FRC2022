@@ -23,7 +23,7 @@ public class ShooterIdle extends CommandBase {
     @Override
     public void execute() {
 //        Robot.shooter.setSpeedPercent(0);
-        Robot.shooter.setToNeutral();
+//        Robot.shooter.setToNeutral();
     }
 
     // Returns true when the command should end.
