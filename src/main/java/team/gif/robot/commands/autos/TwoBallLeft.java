@@ -51,7 +51,8 @@ public class TwoBallLeft extends SequentialCommandGroup {
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             ),
 
-            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
+            // This is the backup action in case the limelight isn't working
+            new WaitUntilCommand(Robot.limelight::noTarget),
             new ParallelDeadlineGroup(
                 new RapidFire(),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)

@@ -89,6 +89,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
             new ParallelDeadlineGroup(
                 reverseAgain(),
+                new CollectorRun(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
@@ -108,6 +109,7 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
             ),
 
 //            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
+            // This is the backup action in case the limelight isn't working
             new ParallelDeadlineGroup(
                 new CollectorRun().withTimeout(1.5),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),

@@ -60,6 +60,7 @@ public class TwoBallMiddle extends SequentialCommandGroup {
                 new HoodUp()
             ),
             new ParallelDeadlineGroup(
+                new CollectorRun().withTimeout(2),
                 reverseAgain(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
             ),
@@ -68,7 +69,8 @@ public class TwoBallMiddle extends SequentialCommandGroup {
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
             ),
 
-            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
+            // This is the backup action in case the limelight isn't working
+            new WaitUntilCommand(Robot.limelight::noTarget),
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB).withTimeout(2),
                 new RapidFire()
