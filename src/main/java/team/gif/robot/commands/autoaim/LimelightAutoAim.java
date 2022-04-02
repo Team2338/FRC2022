@@ -11,7 +11,6 @@ import static java.lang.Math.abs;
 public class LimelightAutoAim extends CommandBase {
     public LimelightAutoAim() {
         super();
-        addRequirements(Robot.hood);
     }
 
     private boolean targetLocked = false;

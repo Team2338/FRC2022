@@ -63,7 +63,7 @@ public final class Constants {
         public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
         public static final double RPM_LAUNCHPAD = 8000;
         public static final double RPM_FAR_COURT = 10800;
-        public static final double RPM_AUTO_RIGHT_RING = 7300; // Used for auto ring shot on right side
+        public static final double RPM_AUTO_RIGHT_RING = 7100; // Used for auto ring shot on right side
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 

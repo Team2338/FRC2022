@@ -84,27 +84,26 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
 
 
     public FiveBallTerminalRight() {
-
         addCommands(
+            new CollectorDown(),
             new ParallelDeadlineGroup(
                 reverse(),
-                new CollectorDown(),
                 new CollectorRun(),
                 new HoodUp(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.5),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.2),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),
             new ParallelDeadlineGroup(
                 pickUpNext(),
                 new WaitCommand(1).andThen(new CollectorDown()),
-                new WaitCommand(1.75).andThen(new CollectorRun())
+                new WaitCommand(1.25).andThen(new CollectorRun())
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB + 700).withTimeout(1.8),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB + 500).withTimeout(1.6),
                 new HoodUp(),
                 new CollectorRun().withTimeout(0.5),
                 new RapidFire()
@@ -113,7 +112,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 pickupTerminal(),
                 new WaitCommand(1.5).andThen(new CollectorRun())
             ),
-            new CollectorRun().withTimeout(1.0),
+            new CollectorRun().withTimeout(0.9),
             new ParallelDeadlineGroup(
                 forward(),
                 new CollectorRun().withTimeout(2),
