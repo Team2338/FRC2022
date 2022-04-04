@@ -156,7 +156,7 @@ public class OI {
         aA.whenPressed(new CollectorDown());
         aBack.whenPressed(new FangsOut());
         aStart.whenPressed(new FangsIn());
-        aLStickBtn.whenPressed(new EjectSingleCargo());
+        aRTrigger.whenPressed(new EjectSingleCargo());
     }
 
     public void setRumble(boolean rumble) {

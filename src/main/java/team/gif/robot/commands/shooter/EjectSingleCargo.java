@@ -18,9 +18,10 @@ public class EjectSingleCargo extends CommandBase {
     public void initialize() {
         // Turn off indexer with flag (doesn't kill indexer, simply disables it during Eject
         Globals.indexerEnabled = false;
+        Globals.shooterRunning = true;
         counter=0;
         Robot.hood.setHoodUp();
-        Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED);
+        Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_LOWER_HUB);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class EjectSingleCargo extends CommandBase {
         // Only run if the shooter is running
         // Without this, the belt runs regardless of the shooter state and
         // could possibly jam a ball between the running belt and the stopped shooter.
-        return !Globals.shooterRunning || (counter > 50); // only run for 1 second to eject ball
+        return !Globals.shooterRunning || (counter > 10); // only run for 1 second to eject ball
     }
 
     @Override
@@ -45,5 +46,6 @@ public class EjectSingleCargo extends CommandBase {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
         Globals.indexerEnabled = true;
+        Globals.shooterRunning = false;
     }
 }
