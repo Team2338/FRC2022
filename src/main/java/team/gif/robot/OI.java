@@ -13,6 +13,7 @@ import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
+import team.gif.robot.commands.shooter.EjectSingleCargo;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
@@ -155,6 +156,7 @@ public class OI {
         aA.whenPressed(new CollectorDown());
         aBack.whenPressed(new FangsOut());
         aStart.whenPressed(new FangsIn());
+        aLStickBtn.whenPressed(new EjectSingleCargo());
     }
 
     public void setRumble(boolean rumble) {
