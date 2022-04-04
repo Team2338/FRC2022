@@ -42,9 +42,10 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
-                new Pose2dFeet().set(-3.4, 2.0, 111.0), // ~turn in place
-                new Pose2dFeet().set(-2.0, 7.5, 111.0), // 2nd cargo location
-                new Pose2dFeet().set(-1.0, 12.0, 55.0)
+                new Pose2dFeet().set(-3.4, 2.0, 127.0), // ~turn in place
+                new Pose2dFeet().set(-1.7, 7.0, 90.0), // 2nd cargo location
+                new Pose2dFeet().set(-1.7, 8.0,90.0), // extend a foot to make sure
+                new Pose2dFeet().set(-2.5, 12.0, 51.0) // shooting location
             ),
             RobotTrajectory.getInstance().configReverseMedium
         );
@@ -57,8 +58,8 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command pickupTerminal() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-1.0, 12.0, 55.0),
-                new Pose2dFeet().set(-4.7, 20.3, 36.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-2.5, 12.0, 51.0),
+                new Pose2dFeet().set(-4.7, 20.2, 36.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverseFast
         );
@@ -71,8 +72,8 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-4.7, 20.3, 36.0),
-                new Pose2dFeet().set(-1.0, 12.0, 55.0) // shooting location
+                new Pose2dFeet().set(-4.7, 20.2, 36.0),
+                new Pose2dFeet().set(-2.5, 12.0, 51.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForward5BallFast
         );
@@ -92,40 +93,41 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new HoodUp(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
             ),
-            new ParallelDeadlineGroup( // Only allow enough time to shoot first ball. Shoot second ball next.
+            new ParallelDeadlineGroup( // Only allow enough time to shoot first cargo. Shoot second cargo next.
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.2),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
             ),
             new ParallelDeadlineGroup(
                 pickUpNext(),
-                new WaitCommand(1).andThen(new CollectorDown()),
-                new WaitCommand(1.25).andThen(new CollectorRun())
+                new WaitCommand(0.75).andThen(new CollectorDown()),
+                new WaitCommand(1.0).andThen(new CollectorRun()),
+                new WaitCommand(1.25).andThen(new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB))
             ),
-            new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB + 500).withTimeout(1.6),
+            new ParallelDeadlineGroup( // Allow enough time for both cargo to shoot
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB).withTimeout(1.6),
                 new HoodUp(),
                 new CollectorRun().withTimeout(0.5),
                 new RapidFire()
             ),
             new ParallelDeadlineGroup(
                 pickupTerminal(),
-                new WaitCommand(1.5).andThen(new CollectorRun())
+                new WaitCommand(1.0).andThen(new CollectorRun())
             ),
             new CollectorRun().withTimeout(0.9),
             new ParallelDeadlineGroup(
                 forward(),
                 new CollectorRun().withTimeout(2),
-                new WaitCommand(3).andThen(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB))
+                new WaitCommand(1.5).andThen(new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB))
             ),
             new ParallelDeadlineGroup(
                 new LimelightAutoAim(), // If limelight is not functioning, this will end immediately
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
             ),
 
 //            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
                 new RapidFire()
             )
         );
