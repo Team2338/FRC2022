@@ -44,6 +44,8 @@ public final class Constants {
         public static final double kMediumSpeedMetersPerSecond = 2.3;
         public static final double kFastSpeedMetersPerSecond = 4.0;
         public static final double kFastAccelerationMetersPerSecondSquared = 4.0;
+        public static final double k5BallFastSpeedMetersPerSecond = 4.5;
+        public static final double k5BallFastAccelerationMetersPerSecondSquared = 4.5;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
     }

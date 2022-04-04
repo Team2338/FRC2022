@@ -42,9 +42,9 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
-                new Pose2dFeet().set(-3.4, 2.0, 95.0), // ~turn in place
-                new Pose2dFeet().set(-1.5, 8.0, 100.0), // 2nd cargo location
-                new Pose2dFeet().set(-1.5, 13.0, 55.0)
+                new Pose2dFeet().set(-3.4, 2.0, 111.0), // ~turn in place
+                new Pose2dFeet().set(-2.0, 7.5, 111.0), // 2nd cargo location
+                new Pose2dFeet().set(-1.0, 12.0, 55.0)
             ),
             RobotTrajectory.getInstance().configReverseMedium
         );
@@ -57,8 +57,8 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command pickupTerminal() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-1.5, 13.0, 55.0),
-                new Pose2dFeet().set(-5.0, 21.25, 43.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-1.0, 12.0, 55.0),
+                new Pose2dFeet().set(-4.7, 20.3, 36.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverseFast
         );
@@ -71,10 +71,10 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-5.0, 21.25, 43.0),
-                new Pose2dFeet().set(-2.0, 9.0, 47.0) // shooting location
+                new Pose2dFeet().set(-4.7, 20.3, 36.0),
+                new Pose2dFeet().set(-1.0, 12.0, 55.0) // shooting location
             ),
-            RobotTrajectory.getInstance().configForwardFast
+            RobotTrajectory.getInstance().configForward5BallFast
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -92,7 +92,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new HoodUp(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING)
             ),
-            new ParallelDeadlineGroup(
+            new ParallelDeadlineGroup( // Only allow enough time to shoot first ball. Shoot second ball next.
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_RIGHT_RING).withTimeout(1.2),
                 new CollectorRun().withTimeout(1).andThen(new CollectorUp()),
                 new RapidFire()
