@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
+import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
@@ -66,10 +68,10 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
                         new Pose2dFeet().set(-6.0, 0, 137.0),
-                        new Pose2dFeet().set(1.0, 0.0, -133), // Apex of turn
+                        new Pose2dFeet().set(0.0, -1.0, -133), // Apex of turn
                         new Pose2dFeet().set(-0.4, -8.0, -43.0)
                 ),
-                RobotTrajectory.getInstance().configReverse
+                RobotTrajectory.getInstance().configReverseMediumOpp
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -110,9 +112,11 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
                 new CollectorRun()
             ),
             oppTwoBallPart1(), // drive forward and 2 point turn
+            new CollectorUp(),
             new ParallelDeadlineGroup(
                 oppTwoBall(),
-                new CollectorRun()
+                new WaitCommand(2).andThen(new CollectorDown()),
+                new WaitCommand(2.3).andThen(new CollectorRun())
             ),
             new ParallelDeadlineGroup(
                 oppTwoBallShoot(),

@@ -115,6 +115,16 @@ public class RobotTrajectory {
         // Apply the voltage constraint
         .addConstraint(autoVoltageConstraint);
 
+    public TrajectoryConfig configReverseMediumOpp = new TrajectoryConfig(
+        Constants.Auto.kStdSpeedMetersPerSecond,
+        Constants.Auto.kStdAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(Constants.Drivetrain.kDriveKinematics)
+        .setReversed(true)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint)
+        .addConstraint(new CentripetalAccelerationConstraint(1.5));
+
     /**
      * Creates a Ramsete command given the defined trajectory
      */
