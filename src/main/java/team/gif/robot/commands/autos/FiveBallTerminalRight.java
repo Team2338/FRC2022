@@ -44,7 +44,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
                 new Pose2dFeet().set(-3.4, 2.0, 127.0), // ~turn in place
                 new Pose2dFeet().set(-1.7, 7.0, 90.0), // 2nd cargo location
-                new Pose2dFeet().set(-1.7, 8.0,90.0), // extend a foot to make sure
+                new Pose2dFeet().set(-1.7, 8.0, 90.0), // extend a foot to make sure
                 new Pose2dFeet().set(-2.5, 12.0, 51.0) // shooting location
             ),
             RobotTrajectory.getInstance().configReverseMedium
