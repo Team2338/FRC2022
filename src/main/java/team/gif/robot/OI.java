@@ -13,6 +13,7 @@ import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.indexer.ReverseIndex;
 import team.gif.robot.commands.indexer.ToggleIndexer;
+import team.gif.robot.commands.limelight.LimelightToggle;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 import team.gif.robot.commands.shooter.Shoot;
@@ -116,25 +117,8 @@ public class OI {
         dDPadDown.whenPressed(new ClimberMaxUp());
         dDPadLeft.whenPressed(new RobotUp());
         dDPadUp.whenPressed(new RobotDownToRelease());
-        /*
-         * These are only for testing with only a driver joystick
-         */
-        dBack.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
-        dBack.whenPressed(new HoodUp()); // Hood has to be up for this shot
-        dStart.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_UPPER_HUB));
-        dStart.whenPressed(new HoodDown()); // Hood has to be down for this shot
 
-        dDPadRight.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED));
-        dDPadRight.whenPressed(new HoodUp()); // hood has to be up for this shot
-//        dDPadUp.whenHeld(new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB));
-//        dDPadUp.whenPressed(new HoodUp()); // hood has to be up for this shot
-//        dDPadLeft.whenHeld(new RevFlywheel(Constants.Shooter.RPM_LAUNCHPAD));
-//        dDPadLeft.whenPressed(new HoodUp()); // hood has to be up for this shot
-//        dDPadDown.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FAR_COURT));
-//        dDPadDown.whenPressed(new HoodUp()); // hood has to be up for this shot
-        /*
-         * Testing end
-         */
+        dBack.whenPressed(new LimelightToggle()); // Manually enable/disable state of limelight
 
         aLTrigger.whenHeld(new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB));
         aLTrigger.whenPressed(new HoodUp()); // Hood has to be up for this shot
@@ -150,7 +134,6 @@ public class OI {
         aDPadDown.whenPressed(new HoodUp()); // Hood has to be up for this shot
         aX.whenPressed(new HoodDown());
         aY.whenPressed(new HoodUp());
-//        aDPadDown.whenPressed(new CollectorDown());
         aB.whenPressed(new CollectorUp());
         aA.whenPressed(new CollectorDown());
         aBack.whenPressed(new FangsOut());

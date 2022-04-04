@@ -119,6 +119,7 @@ public class Robot extends TimedRobot {
         collectorPneumatics.collectorRaise();
         climberPneumatics.setFangsIn();
         Globals.climbingActive = false;
+        Globals.limeLightEnabled = true;
     }
 
     /**
