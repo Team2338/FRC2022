@@ -8,6 +8,7 @@ import team.gif.robot.Robot;
 import static java.lang.Math.abs;
 public class ImprovedAutoAim extends CommandBase {
     private double xOffset;
+    private boolean robotHasSettled = false;
     private final double velocityCap = 0.5;
     private final double xTolerance = 1.5;
     public ImprovedAutoAim() {
@@ -26,7 +27,8 @@ public class ImprovedAutoAim extends CommandBase {
         // Checks if the limelight can see a target
         if (!Robot.limelight.hasTarget()) {return;}
         // Make sure both wheels are within tolerance of not moving
-        if (!(abs(Robot.drivetrain.getWheelSpeeds().leftMetersPerSecond) < velocityCap && abs(Robot.drivetrain.getWheelSpeeds().rightMetersPerSecond) < velocityCap)) {return;}
+        if (robotHasSettled||!(abs(Robot.drivetrain.getWheelSpeeds().leftMetersPerSecond) < velocityCap && abs(Robot.drivetrain.getWheelSpeeds().rightMetersPerSecond) < velocityCap)) {return;}
+        robotHasSettled = true; // Allows pivot to work
         xOffset = Robot.limelight.getXOffset(); // Sets x offset
         Robot.hood.setHoodUp();// Hood Up
         if (abs(xOffset) > xTolerance) { // Pivot
@@ -51,6 +53,7 @@ public class ImprovedAutoAim extends CommandBase {
         Robot.indexer.setMidMotorSpeed(0);
         Robot.limelight.setLEDMode(3); // Leave LED on after autoaim so we can still use during manual
         Globals.indexerEnabled = true;
+        robotHasSettled = false;
     }
 }
 
