@@ -25,7 +25,7 @@ public class LimelightAutoAim extends CommandBase {
     private boolean targetLocked = false;
     private boolean robotHasSettled = false;
     private final double velocityCap = 0.5;
-    private final double xTolerance = 1.5;
+    final double xTolerance = 1.5;
 //    private int delayCounter; // may need if we are required to turn off limelight during a match
 
     @Override
@@ -41,21 +41,35 @@ public class LimelightAutoAim extends CommandBase {
 
     @Override
     public void execute() {
-
         // We don't need this if limelight can stay on all the time
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
-        if (!Robot.limelight.hasTarget()) {
-            return;
+        //Checks if the limelight can see a target
+        if (!Robot.limelight.hasTarget()) {return;}
+
+        Robot.hood.setHoodUp();
+
+        // Bot must not be moving anymore
+        if (!robotHasSettled) {
+            DifferentialDriveWheelSpeeds wheelSpeeds = Robot.drivetrain.getWheelSpeeds();
+            // Make sure both wheels are within tolerance of not moving
+            if (abs(wheelSpeeds.leftMetersPerSecond) < velocityCap && abs(wheelSpeeds.rightMetersPerSecond) < velocityCap) {
+                robotHasSettled = true;
+//                System.out.println("AutoFire: Robot has settled");
+            }
         }
+
+
+
+
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
 //        double distanceFromHubInches = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
 
         // More Accurate than Rohan 2.0 (TM)
         // hood position
-        Robot.hood.setHoodUp();
-/*        if(distanceFromHubInches >= 50){
+/*      Robot.hood.setHoodUp();
+        if(distanceFromHubInches >= 50){
             Robot.hood.setHoodUp();
         }
         else {
@@ -92,19 +106,10 @@ public class LimelightAutoAim extends CommandBase {
         */
 
 
-        // Bot must not be moving anymore
-        if (!robotHasSettled) {
-            DifferentialDriveWheelSpeeds wheelSpeeds = Robot.drivetrain.getWheelSpeeds();
-            // Make sure both wheels are within tolerance of not moving
-            if (abs(wheelSpeeds.leftMetersPerSecond) < velocityCap && abs(wheelSpeeds.rightMetersPerSecond) < velocityCap) {
-                robotHasSettled = true;
-//                System.out.println("AutoFire: Robot has settled");
-            }
-        }
+
 
         if (robotHasSettled) { // Note: can't combine this using else because robotHasSettled can be set to true in the above section
-            double xOffset = Robot.limelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
-//            double pivVolts = Robot.limelight.getXOffset() * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+            double xOffset = Robot.limelight.getXOffset();
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
@@ -116,7 +121,7 @@ public class LimelightAutoAim extends CommandBase {
                         Robot.indexer.setMidMotorSpeed(1.0);
                     } else {
                         // shooter is still spinning up or just can't get to the desired speed
-//                        System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
+//                      System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
                     }
                 } else {
 //                    System.out.println("Offset Adjusting at: " + xOffset);
@@ -125,11 +130,12 @@ public class LimelightAutoAim extends CommandBase {
                     robotHasSettled = false;
                 }
             } else {
+                //Pivot
                 if (xOffset > -xTolerance && xOffset < xTolerance) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
                 } else { // still not in tolerance, need to rotate
-                    double pivotVolts = 1.5 + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
+                    double pivotVolts = Constants.Shooter.MIN_FRICTION_VOLTS + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
                     pivotVolts = xOffset > 0 ? pivotVolts : -1.0 * pivotVolts;
                     Robot.drivetrain.tankDriveVolts(pivotVolts, -pivotVolts);
                 }
