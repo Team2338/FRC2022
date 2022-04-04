@@ -48,12 +48,25 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command oppTwoBall() {
+    public Command oppTwoBallPart1() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
                 List.of(
                         new Pose2dFeet().set(-4.25, 3.5, 90.0),
-                        new Pose2dFeet().set(-2.0,3.5,180), // turn in place
-                        new Pose2dFeet().set(0.0, 2.0, -120.0), // right turn
+                        new Pose2dFeet().set(-6.0,0,137) // 2 point turn
+                ),
+                RobotTrajectory.getInstance().configForward
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
+    public Command oppTwoBall() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                List.of(
+                        new Pose2dFeet().set(-6.0, 0, 137.0),
+                        new Pose2dFeet().set(1.0, 0.0, -133), // Apex of turn
                         new Pose2dFeet().set(-0.4, -8.0, -43.0)
                 ),
                 RobotTrajectory.getInstance().configReverse
@@ -69,7 +82,6 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
                 List.of(
                         new Pose2dFeet().set(-0.4, -8.0, -43.0),
                         new Pose2dFeet().set(-3.0, -6.0, 156.0)
-                        //new Pose2dFeet().set(-3.5, -4.5, 146)
                 ),
                 RobotTrajectory.getInstance().configForwardFast
         );
@@ -97,6 +109,7 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
                 oppOneBall(),
                 new CollectorRun()
             ),
+            oppTwoBallPart1(), // drive forward and 2 point turn
             new ParallelDeadlineGroup(
                 oppTwoBall(),
                 new CollectorRun()
