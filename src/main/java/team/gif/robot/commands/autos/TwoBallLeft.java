@@ -44,11 +44,11 @@ public class TwoBallLeft extends SequentialCommandGroup {
                 new CollectorRun().withTimeout(3),
                 reverse(),
                 new HoodUp(),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB - 200)
             ),
             new ParallelDeadlineGroup(
                 new LimelightAutoAim().withTimeout(4), // If limelight is not functioning, this will end immediately
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB - 200)
             ),
 
             // This is the backup action in case the limelight isn't working

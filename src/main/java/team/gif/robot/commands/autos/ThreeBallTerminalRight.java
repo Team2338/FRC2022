@@ -88,6 +88,7 @@ public class ThreeBallTerminalRight extends SequentialCommandGroup {
                 new WaitCommand(1).andThen(new CollectorDown()),
                 new WaitCommand(2).andThen(new CollectorRun())
             ),
+            new CollectorRun().withTimeout(2),
             new ParallelDeadlineGroup(
                 forward(),
                 new CollectorRun().withTimeout(2),
