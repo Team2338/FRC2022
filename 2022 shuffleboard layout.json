@@ -217,6 +217,31 @@
               "Range/Max": 115.0,
               "Visuals/Show value": true
             }
+          },
+          "10,2": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Limelight",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///SmartDashboard/Limelight",
+                  "_title": "/SmartDashboard/Limelight",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Toggle",
+                  "_title": "/SmartDashboard/Toggle"
+                }
+              ]
+            }
           }
         }
       }
