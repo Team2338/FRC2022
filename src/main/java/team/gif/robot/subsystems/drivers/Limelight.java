@@ -105,6 +105,16 @@ public class Limelight {
     }
 
     /**
+     *
+     * @return true if does not have target, false if it does
+     * Needed for autonomous to continue when a target is not found
+     *     and can't use limelight::!hasTarget
+     */
+    public boolean noTarget() {
+        return !hasTarget();
+    }
+
+    /**
      * Returns the horizontal offset from crosshair to target.
      *
      * @return offset in degrees (-29.8 to +29.8)

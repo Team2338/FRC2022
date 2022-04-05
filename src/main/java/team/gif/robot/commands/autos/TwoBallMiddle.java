@@ -6,10 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
+import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.hood.HoodUp;
@@ -58,9 +60,17 @@ public class TwoBallMiddle extends SequentialCommandGroup {
                 new HoodUp()
             ),
             new ParallelDeadlineGroup(
+                new CollectorRun().withTimeout(2),
                 reverseAgain(),
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
             ),
+            new ParallelDeadlineGroup(
+                new LimelightAutoAim().withTimeout(4), // If limelight is not functioning, this will end immediately
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
+            ),
+
+            // This is the backup action in case the limelight isn't working
+            new WaitUntilCommand(Robot.limelight::noTarget),
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB).withTimeout(2),
                 new RapidFire()

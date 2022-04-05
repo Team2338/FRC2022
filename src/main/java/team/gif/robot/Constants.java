@@ -44,6 +44,8 @@ public final class Constants {
         public static final double kMediumSpeedMetersPerSecond = 2.3;
         public static final double kFastSpeedMetersPerSecond = 4.0;
         public static final double kFastAccelerationMetersPerSecondSquared = 4.0;
+        public static final double k5BallFastSpeedMetersPerSecond = 4.5;
+        public static final double k5BallFastAccelerationMetersPerSecondSquared = 4.5;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
     }
@@ -56,14 +58,15 @@ public final class Constants {
 
 //        public static final double RPM_LOW = 7500; // Currently only used in LimelightAutoAim
 //        public static final double RPM_HIGH = 10000; // Currently only used in LimelightAutoAim
-        public static final double RPM_FENDER_LOWER_HUB = 3500; // no flywheel 3000;
-        public static final double RPM_FENDER_UPPER_HUB = 6800; // no flywheel 5900; // 5800 not good with ball in way
-        public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000; // no flywheel 4000;
-        public static final double RPM_RING_UPPER_HUB = 7500; // no flywheel 6500;
-        public static final double RPM_AUTO_UPPER_HUB = RPM_RING_UPPER_HUB + 300;
+        public static final double RPM_FENDER_LOWER_HUB = 3500;
+        public static final double RPM_FENDER_UPPER_HUB = 6800;
+        public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000;
         public static final double RPM_LAUNCHPAD = 8000;
         public static final double RPM_FAR_COURT = 10800;
-        public static final double RPM_AUTO_RIGHT_RING = 7300; // Used for auto ring shot on right side
+        public static final double RPM_RING_UPPER_HUB        = 7500;
+        public static final double RPM_AUTO_UPPER_HUB        = 7500 + 300; // Middle side auto ring shot, slightly long of ring
+        public static final double RPM_AUTO_5_BALL_UPPER_HUB = 7500 + 500; // 5 ball far auto ring shot, long of ring
+        public static final double RPM_AUTO_RIGHT_RING       = 7100;       // Right side auto ring shot, short of ring
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 

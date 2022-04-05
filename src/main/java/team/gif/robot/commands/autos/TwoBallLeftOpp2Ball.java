@@ -6,12 +6,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.hood.HoodUp;
@@ -20,28 +18,13 @@ import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
+public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-4.5, 0, 0.0) // 1st cargo location
-            ),
-            RobotTrajectory.getInstance().configReverseSlow
-        );
-        // Create the command using the trajectory
-        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
-        // Run path following command, then stop at the end.
-//        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
-        return rc;
-    }
-
-    public Command reverseAgain() {
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-4.5, 0, 0),
-                new Pose2dFeet().set(-6.5, 0, -10) // shooting position
+                new Pose2dFeet().set(-4.0, 0.0, 0.0)
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -51,13 +34,13 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command reverseAgainTwo() {
+    public Command oppOneBall() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-6.5, 0, -10),
-                new Pose2dFeet().set(-17.0, 4, 0) // 2nd cargo (terminal) location
-            ),
-            RobotTrajectory.getInstance().configReverse
+                List.of(
+                        new Pose2dFeet().set(-4.0, 0.0, 0.0),
+                        new Pose2dFeet().set(-4.25, 3.5, 90.0)
+                ),
+                RobotTrajectory.getInstance().configReverseSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -65,13 +48,13 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command forward() {
+    public Command oppTwoBallPart1() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-17.0, 4, 0),
-                new Pose2dFeet().set(-6.0, 2, -2) // shooting position
-            ),
-            RobotTrajectory.getInstance().configForwardFast
+                List.of(
+                        new Pose2dFeet().set(-4.25, 3.5, 90.0),
+                        new Pose2dFeet().set(-6.0,0,137) // 2 point turn
+                ),
+                RobotTrajectory.getInstance().configForward
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -79,41 +62,65 @@ public class ThreeBallTerminalMiddle extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public ThreeBallTerminalMiddle() {
+    public Command oppTwoBall() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                List.of(
+                        new Pose2dFeet().set(-6.0, 0, 137.0),
+                        new Pose2dFeet().set(1.0, 0.0, -133), // Apex of turn
+                        new Pose2dFeet().set(-0.4, -8.0, -43.0)
+                ),
+                RobotTrajectory.getInstance().configReverse
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
+    public Command oppTwoBallShoot() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                List.of(
+                        new Pose2dFeet().set(-0.4, -8.0, -43.0),
+                        new Pose2dFeet().set(-3.0, -6.0, 156.0)
+                ),
+                RobotTrajectory.getInstance().configForwardFast
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
+    public TwoBallLeftOpp2Ball() {
+
         addCommands(
             new ParallelDeadlineGroup(
-                reverse(),
+                new CollectorRun().withTimeout(2),
                 new CollectorDown(),
-                new CollectorRun(),
-                new HoodUp()
+                reverse(),
+                new HoodUp(),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-200)
             ),
             new ParallelDeadlineGroup(
-                reverseAgain(),
-                new CollectorRun(),
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB)
+                new RapidFire().withTimeout(1.6),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-200)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB).withTimeout(2),
-                new RapidFire()
-            ),
-            new ParallelDeadlineGroup(
-                reverseAgainTwo(),
+                oppOneBall(),
                 new CollectorRun()
             ),
-            new CollectorRun().withTimeout(2),
-            forward(),
+            oppTwoBallPart1(), // drive forward and 2 point turn
             new ParallelDeadlineGroup(
-                new LimelightAutoAim(), // If limelight is not functioning, this will end immediately
-                new CollectorRun().withTimeout(1.5),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
+                oppTwoBall(),
+                new CollectorRun()
             ),
-
-//            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
-            // This is the backup action in case the limelight isn't working
             new ParallelDeadlineGroup(
-                new CollectorRun().withTimeout(1.5),
-                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB),
-                new RapidFire()
+                oppTwoBallShoot(),
+                new CollectorRun()
+            ),
+            new ParallelDeadlineGroup(
+                new RapidFire().withTimeout(3),
+                new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED)
             )
         );
     }

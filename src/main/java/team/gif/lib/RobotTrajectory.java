@@ -60,6 +60,16 @@ public class RobotTrajectory {
         .addConstraint(autoVoltageConstraint)
         .addConstraint(new CentripetalAccelerationConstraint(1));
 
+    public TrajectoryConfig configForward5BallFast = new TrajectoryConfig(
+        Constants.Auto.kFastSpeedMetersPerSecond,
+        Constants.Auto.kFastAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(Constants.Drivetrain.kDriveKinematics)
+        //.setReversed(false)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint);
+//        .addConstraint(new CentripetalAccelerationConstraint(2));
+
     public TrajectoryConfig configForwardSlow = new TrajectoryConfig(
         Constants.Auto.kSlowSpeedMetersPerSecond,
         Constants.Auto.kSlowAccelerationMetersPerSecondSquared)
@@ -114,6 +124,16 @@ public class RobotTrajectory {
         .setReversed(true)
         // Apply the voltage constraint
         .addConstraint(autoVoltageConstraint);
+
+    public TrajectoryConfig configReverseMedium5Ball = new TrajectoryConfig(
+        Constants.Auto.kMediumSpeedMetersPerSecond,
+        Constants.Auto.kMediumAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(Constants.Drivetrain.kDriveKinematics)
+        .setReversed(true)
+        // Apply the voltage constraint
+        .addConstraint(autoVoltageConstraint)
+        .addConstraint(new CentripetalAccelerationConstraint(1.2));
 
     /**
      * Creates a Ramsete command given the defined trajectory
