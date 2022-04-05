@@ -34,7 +34,7 @@ public class LimelightAutoAim extends CommandBase {
         // We don't need this if limelight can stay on all the time
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
-        if (!Robot.limelight.hasTarget()) {
+        if (!Robot.limelight.hasTarget() || !Globals.limeLightEnabled) {
             return;
         }
 
@@ -119,7 +119,7 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public boolean isFinished() {
         // if we are in autonomous and the limelight isn't working, abort autoAim
-        if (Globals.autonomousModeActive && Robot.limelight.noTarget() ) {
+        if (Globals.autonomousModeActive && (Robot.limelight.noTarget() || !Globals.limeLightEnabled)) {
             return true;
         }
         return false;

@@ -6,4 +6,5 @@ public abstract class Globals {
     public static boolean autonomousModeActive = false;
     public static boolean shooterRunning = false;
     public static boolean climbingActive = false;
+    public static boolean limeLightEnabled = true;
 }

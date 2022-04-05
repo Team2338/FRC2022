@@ -10,6 +10,7 @@ import team.gif.lib.delay;
 import team.gif.robot.commands.climber.ResetClimber;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.limelight.LimelightLED;
+import team.gif.robot.commands.limelight.LimelightToggle;
 import team.gif.robot.subsystems.drivers.Pigeon;
 
 import static team.gif.robot.Robot.climber;
@@ -75,6 +76,7 @@ public class UiSmartDashboard {
         SmartDashboard.putData("Climber", new ResetClimber());
         SmartDashboard.putData("LED", new LimelightLED());
         SmartDashboard.putData("Reset", new ResetHeading());
+        SmartDashboard.putData("Toggle", new LimelightToggle());
     }
 
     public void updateUI() {
@@ -97,5 +99,7 @@ public class UiSmartDashboard {
         SmartDashboard.putNumber("Temp Left2", drivetrain.getTemperatureLeft2());
         SmartDashboard.putNumber("Temp Right1", drivetrain.getTemperatureRight1());
         SmartDashboard.putNumber("Temp Right2", drivetrain.getTemperatureRight2());
+
+        SmartDashboard.putBoolean("Limelight", Globals.limeLightEnabled);
     }
 }

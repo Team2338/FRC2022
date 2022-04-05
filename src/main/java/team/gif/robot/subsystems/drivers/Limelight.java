@@ -2,6 +2,7 @@ package team.gif.robot.subsystems.drivers;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import team.gif.robot.Globals;
 
 public class Limelight {
 
@@ -111,7 +112,7 @@ public class Limelight {
      *     and can't use limelight::!hasTarget
      */
     public boolean noTarget() {
-        return !hasTarget();
+        return !hasTarget() || !Globals.limeLightEnabled;
     }
 
     /**
