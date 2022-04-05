@@ -103,14 +103,14 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
             ),
             new ParallelDeadlineGroup(
-                new RapidFire().withTimeout(1.5),
+                new RapidFire().withTimeout(1.4),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
             ),
             new ParallelDeadlineGroup(
                 oppOneBall(),
                 new CollectorRun()
             ),
-            new CollectorRun().withTimeout(0.6),
+            new CollectorRun().withTimeout(0.5),
             oppTwoBallPart1(), // drive forward and 2 point turn
             new CollectorUp(),
             new ParallelDeadlineGroup(
@@ -123,7 +123,7 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
                 new CollectorRun()
             ),
             new ParallelDeadlineGroup(
-                new RapidFire().withTimeout(3),
+                new RapidFire(),
                 new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED)
             )
         );
