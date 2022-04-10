@@ -6,11 +6,12 @@ import team.gif.robot.Globals;
 import team.gif.robot.Robot;
 
 import static java.lang.Math.abs;
+import static team.gif.robot.Constants.Shooter.xTolerance;
+
 public class ImprovedAutoAim extends CommandBase {
     private double xOffset;
     private boolean robotHasSettled = false;
-    private final double velocityCap = 0.5;
-    private final double xTolerance = 1.5;
+
     public ImprovedAutoAim() {
         super();
         addRequirements();
@@ -27,11 +28,11 @@ public class ImprovedAutoAim extends CommandBase {
         // Checks if the limelight can see a target
         if (!Robot.limelight.hasTarget()) {return;}
         // Make sure both wheels are within tolerance of not moving
-        if (robotHasSettled||!(abs(Robot.drivetrain.getWheelSpeeds().leftMetersPerSecond) < velocityCap && abs(Robot.drivetrain.getWheelSpeeds().rightMetersPerSecond) < velocityCap)) {return;}
+        if (robotHasSettled||!(abs(Robot.drivetrain.getWheelSpeeds().leftMetersPerSecond) < Constants.Shooter.velocityCap && abs(Robot.drivetrain.getWheelSpeeds().rightMetersPerSecond) < Constants.Shooter.velocityCap)) {return;}
         robotHasSettled = true; // Allows pivot to work
         xOffset = Robot.limelight.getXOffset(); // Sets x offset
         Robot.hood.setHoodUp();// Hood Up
-        if (abs(xOffset) > xTolerance) { // Pivot
+        if (abs(xOffset) > xTolerance) { // More Accurate Than Aaron 2.0
             double pivotVolts = (xOffset < 0 ? 1 : -1.0) * (Constants.Shooter.MIN_FRICTION_VOLTS + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS);
             Robot.drivetrain.tankDriveVolts(pivotVolts, -pivotVolts);
             return;

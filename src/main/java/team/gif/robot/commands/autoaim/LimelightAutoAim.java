@@ -130,7 +130,7 @@ public class LimelightAutoAim extends CommandBase {
                     robotHasSettled = false;
                 }
             } else {
-                //Pivot
+                //More Accurate than Aaron 1.0
                 if (xOffset > -xTolerance && xOffset < xTolerance) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;

@@ -66,17 +66,16 @@ public final class Constants {
         public static final double RPM_AUTO_RIGHT_RING = 7300; // Used for auto ring shot on right side
 
         public static final double FLYWHEEL_TOLERANCE = 150;
-
-        // Limelight
-            //Distance
+        //Distance
 //        public static final double LIMELIGHT_ANGLE = 30.0;
 //        public static final double LIMELIGHT_HEIGHT = 36.0; // 36.5
 //        public static final double UPPER_HUB_HEIGHT = 96.0;
-            //Pivot
+        //Pivot
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
         public static final double MIN_FRICTION_VOLTS = 1.5;
+        public static final double velocityCap = 0.5;
+        public static final double xTolerance = 1.5;
     }
-
     public static class Indexer {
 //        public static final double kPBelt = 0;
 //        public static final double kIBelt = 0;
