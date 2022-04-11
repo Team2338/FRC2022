@@ -28,15 +28,14 @@ public class DriveArcade extends CommandBase {
         /*
          * Arcade Drive
          */
-        rotation += Math.min(Robot.oi.driver.getRightX(), 0.25);
+        rotation += (Robot.oi.driver.getRightX() / Math.abs(Robot.oi.driver.getRightX())) * Math.min(Math.abs(Robot.oi.driver.getRightX()), 0.25);
         double currSpeed = Robot.oi.driver.getLeftY();
-        Robot.drivetrain.boost(Robot.compressor.getPressure() >= 95.0 && Robot.collectorPneumatics.getCollectorPosition().equals(DoubleSolenoid.Value.kReverse) && Robot.oi.driver.getBButton());
+        Robot.drivetrain.boost(Robot.compressor.getPressure() >= 90.0 && Robot.collectorPneumatics.getCollectorPosition().equals(DoubleSolenoid.Value.kReverse) && Robot.oi.driver.getBButton());
         if (Robot.isCompBot) {
             Robot.drivetrain.driveArcade(rotation, -currSpeed);
         } else {
             Robot.drivetrain.driveArcade(-currSpeed, rotation);
         }
-
     }
 
     // Returns true when the command should end.
