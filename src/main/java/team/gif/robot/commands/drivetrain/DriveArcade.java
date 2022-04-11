@@ -4,6 +4,7 @@
 
 package team.gif.robot.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
 
@@ -14,6 +15,8 @@ public class DriveArcade extends CommandBase {
         addRequirements(Robot.drivetrain);
     }
 
+    private double prevPoint = 0;
+    private double rotation = 0;
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
@@ -25,8 +28,9 @@ public class DriveArcade extends CommandBase {
         /*
          * Arcade Drive
          */
-        double rotation = Robot.oi.driver.getRightX();
+        rotation += Math.min(Robot.oi.driver.getRightX(), 0.25);
         double currSpeed = Robot.oi.driver.getLeftY();
+        Robot.drivetrain.boost(Robot.compressor.getPressure() >= 95.0 && Robot.collectorPneumatics.getCollectorPosition().equals(DoubleSolenoid.Value.kReverse) && Robot.oi.driver.getBButton());
         if (Robot.isCompBot) {
             Robot.drivetrain.driveArcade(rotation, -currSpeed);
         } else {

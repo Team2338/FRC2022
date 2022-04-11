@@ -29,4 +29,8 @@ public class CollectorPneumatics extends SubsystemBase {
     public void entryRaise() {
         entrySolenoid.set(false);
     }
+
+    public DoubleSolenoid.Value getCollectorPosition() {
+        return collectorSolenoidForward.get();
+    }
 }

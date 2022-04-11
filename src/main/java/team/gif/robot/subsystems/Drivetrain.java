@@ -41,6 +41,7 @@ public class Drivetrain extends SubsystemBase {
 
     private static final int MAX_SUPPLY_CURRENT_AMPS = 15;
     private static final int MAX_STATOR_CURRENT_AMPS = 80;
+    private static final int BOOST_SCALER = 5;
     private static final double OPEN_LOOP_RAMP_SECONDS = 0.3;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
@@ -142,6 +143,30 @@ public class Drivetrain extends SubsystemBase {
         leftTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
         rightTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
         rightTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(enableLimit, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+    }
+
+    public void boost(boolean isOn) {
+        if(isOn) {
+            leftTalon1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS + BOOST_SCALER, 0));
+            leftTalon2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS + BOOST_SCALER, 0));
+            rightTalon1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS + BOOST_SCALER, 0));
+            rightTalon2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS + BOOST_SCALER, 0));
+
+            leftTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS + BOOST_SCALER, 0));
+            leftTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS + BOOST_SCALER, 0));
+            rightTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS + BOOST_SCALER, 0));
+            rightTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS + BOOST_SCALER, 0));
+            return;
+        }
+        leftTalon1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+        leftTalon2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+        rightTalon1.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+        rightTalon2.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, MAX_SUPPLY_CURRENT_AMPS, MAX_SUPPLY_CURRENT_AMPS, 0));
+
+        leftTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+        leftTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+        rightTalon1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
+        rightTalon2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, MAX_STATOR_CURRENT_AMPS, MAX_STATOR_CURRENT_AMPS, 0));
     }
 
     // -------------- Teleop Driving -----------------------
