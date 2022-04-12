@@ -32,6 +32,7 @@ public class LimelightBallDetection extends CommandBase {
         if (robotHasSettled||!(abs(Robot.drivetrain.getWheelSpeeds().leftMetersPerSecond) < Constants.Shooter.velocityCap && abs(Robot.drivetrain.getWheelSpeeds().rightMetersPerSecond) < Constants.Shooter.velocityCap)) {return;}
         robotHasSettled = true; // Allows pivot to work
         xOffset = Robot.limelight.getXOffset(); // Sets x offset
+        yOffset = Robot.limelight.getYOffset();
         if (abs(xOffset) > xTolerance) { // More Accurate Than Aaron 2.0
             double pivotVolts = (xOffset < 0 ? 1 : -1.0) * (Constants.Shooter.MIN_FRICTION_VOLTS + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS);
             Robot.drivetrain.tankDriveVolts(-pivotVolts, pivotVolts);
@@ -39,8 +40,9 @@ public class LimelightBallDetection extends CommandBase {
         }
         Robot.drivetrain.tankDriveVolts(0, 0);// Set speed to 0
         if (abs(xOffset) > xTolerance) {return;} //checks again
+        // Reverses into ball and when no see ball algorithm stops
         double reverseVolts = ((yOffset + 45) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_FRICTION_VOLTS;
-        Robot.drivetrain.tankDriveVolts(-reverseVolts, -reverseVolts);
+        Robot.drivetrain.tankDriveVolts(-reverseVolts, -reverseVolts); // slows robot down until collects ball
     }
     // Returns true when the command should end.
     @Override
