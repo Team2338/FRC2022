@@ -2,7 +2,6 @@ package team.gif.robot.commands.limelight;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
-import team.gif.robot.Robot;
 
 public class LimelightToggle extends CommandBase {
 
@@ -13,7 +12,7 @@ public class LimelightToggle extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Globals.limeLightEnabled = !Globals.limeLightEnabled;
+        Globals.limelightEnabledAutoAim = !Globals.limelightEnabledAutoAim;
     }
 
     // Called every time the scheduler runs while the command is scheduled.

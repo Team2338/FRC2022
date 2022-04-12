@@ -21,7 +21,7 @@ public class RapidFire extends CommandBase {
 
     @Override
     public void execute() {
-        Robot.limelight.setLEDMode(3); // Turn on LED just in case they were turned off
+        Robot.limelightaim.setLEDMode(3); // Turn on LED just in case they were turned off
 
         if (Robot.shooter.isInTolerance()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);

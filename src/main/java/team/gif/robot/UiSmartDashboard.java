@@ -16,6 +16,7 @@ import team.gif.robot.subsystems.drivers.Pigeon;
 import static team.gif.robot.Robot.climber;
 import static team.gif.robot.Robot.drivetrain;
 import static team.gif.robot.Robot.indexer;
+import static team.gif.robot.Robot.limelightballs;
 import static team.gif.robot.Robot.shooter;
 import static team.gif.robot.Robot.compressor;
 
@@ -100,6 +101,8 @@ public class UiSmartDashboard {
         SmartDashboard.putNumber("Temp Right1", drivetrain.getTemperatureRight1());
         SmartDashboard.putNumber("Temp Right2", drivetrain.getTemperatureRight2());
 
-        SmartDashboard.putBoolean("Limelight", Globals.limeLightEnabled);
+        SmartDashboard.putBoolean("LimelightAim", Globals.limelightEnabledAutoAim);
+        SmartDashboard.putBoolean("LimelightBallsMode",Globals.limelightballmode);
+
     }
 }

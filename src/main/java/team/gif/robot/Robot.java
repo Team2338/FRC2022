@@ -41,7 +41,8 @@ public class Robot extends TimedRobot {
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
-    public static Limelight limelight = null;
+    public static Limelight limelightaim = null;
+    public static Limelight limelightballs = null;
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
@@ -74,7 +75,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        limelight = new Limelight();
+        // Sets which limelight goes to which commands
+        limelightaim = new Limelight("limelightaim");
+        limelightballs = new Limelight("limelightballs");
+
 
         pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
@@ -96,7 +100,7 @@ public class Robot extends TimedRobot {
         drivetrain.setDefaultCommand(arcadeDrive);
         climber.setDefaultCommand(new ClimberManualControl());
 
-        limelight.setLEDMode(1);//force off
+
 
         oi = new OI();
 //        ui = new UI();
@@ -119,7 +123,7 @@ public class Robot extends TimedRobot {
         collectorPneumatics.collectorRaise();
         climberPneumatics.setFangsIn();
         Globals.climbingActive = false;
-        Globals.limeLightEnabled = true;
+        Globals.limelightEnabledAutoAim = true;
     }
 
     /**
@@ -175,7 +179,8 @@ public class Robot extends TimedRobot {
         elapsedTime.reset();
         elapsedTime.start();
 
-        limelight.setLEDMode(1);//turn off during autonomous
+        limelightaim.setLEDMode(1);//turn on during autonomous
+        limelightballs.setCamMode(0);
 
         compressor.disable();
 
@@ -201,7 +206,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
-        limelight.setLEDMode(3); // turn LED on for entire teleop
+        limelightaim.setLEDMode(3); // turn LED on for entire teleop
+        limelightballs.setCamMode(1); // Turns on Driver Vision for back limelight
+        limelightballs.setLEDMode(0); // Turns off back LEDs
 
         Globals.autonomousModeActive = false;
         // This makes sure that the autonomous stops running when
