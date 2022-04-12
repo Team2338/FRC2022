@@ -70,7 +70,7 @@ public class TwoBallMiddle extends SequentialCommandGroup {
             ),
 
             // This is the backup action in case the limelight isn't working
-            new WaitUntilCommand(Robot.limelightaim::noTarget),
+            new WaitUntilCommand(Robot.shooterLimelight::noTarget),
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_UPPER_HUB).withTimeout(2),
                 new RapidFire()

@@ -15,7 +15,7 @@ public class RevFlywheel extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.limelightaim.setLEDMode(3);
+        Robot.shooterLimelight.setLEDMode(3);
         Robot.shooter.setSpeedPID(setpoint);
         Globals.shooterRunning = true;
     }
@@ -23,7 +23,7 @@ public class RevFlywheel extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.limelightaim.setLEDMode(3);
+        Robot.shooterLimelight.setLEDMode(3);
     }
 
     // Returns true when the command should end.
@@ -36,7 +36,7 @@ public class RevFlywheel extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         //Robot.shooter.setSpeedPercent(0);
-        Robot.limelightaim.setLEDMode(0);//force off
+        Robot.shooterLimelight.setLEDMode(0);//force off
 
         // This is used to inform RapidFire to stop running the belt.
         // Otherwise, RapidFire will continue to run the belt after the

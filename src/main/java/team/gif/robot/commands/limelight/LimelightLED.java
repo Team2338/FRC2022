@@ -17,7 +17,7 @@ public class LimelightLED extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.limelightaim.setLEDMode(3); // Turn on LED
+        Robot.shooterLimelight.setLEDMode(3); // Turn on LED
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +34,7 @@ public class LimelightLED extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.limelightaim.setLEDMode(1); // Turn off LED
+        Robot.shooterLimelight.setLEDMode(1); // Turn off LED
     }
 
     @Override

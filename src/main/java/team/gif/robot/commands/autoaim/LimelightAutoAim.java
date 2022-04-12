@@ -25,7 +25,7 @@ public class LimelightAutoAim extends CommandBase {
         targetLocked = false;
 
 //        delayCounter = 0;
-        Robot.limelightaim.setLEDMode(3); // turn on - just in case they were turned off somehow
+        Robot.shooterLimelight.setLEDMode(3); // turn on - just in case they were turned off somehow
     }
 
     @Override
@@ -34,7 +34,9 @@ public class LimelightAutoAim extends CommandBase {
         // We don't need this if limelight can stay on all the time
 //        if (++delayCounter < 12) return; // Give limelight enough time to turn on LEDs before taking snapshot
 
-        if (Robot.limelightaim.noTarget() || !Globals.limelightEnabledAutoAim) {return;}
+        if (!Robot.shooterLimelight.hasTarget() || !Globals.shooterLimelightEnabled) {
+            return;
+        }
 
         // we want the shooter to start revving up so the robot can shoot as soon as it settles
 //        double distanceFromHubInches = abs((Constants.Shooter.UPPER_HUB_HEIGHT - Constants.Shooter.LIMELIGHT_HEIGHT) / Math.tan(Math.toRadians(Constants.Shooter.LIMELIGHT_ANGLE + Robot.limelight.getYOffset())));
@@ -82,7 +84,7 @@ public class LimelightAutoAim extends CommandBase {
         }
 
         if (robotHasSettled) { // Note: can't combine this using else because robotHasSettled can be set to true in the above section
-            double xOffset = Robot.limelightaim.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
+            double xOffset = Robot.shooterLimelight.getXOffset();//commented bc as the robot turns the amount of ring detected change meaning this value needs to change too
 
             if (targetLocked) {
                 // we need to check again to make sure the robot hasn't overshot the target
@@ -117,7 +119,7 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public boolean isFinished() {
         // if we are in autonomous and the limelight isn't working, abort autoAim
-        if (Globals.autonomousModeActive && (Robot.limelightaim.noTarget() || !Globals.limelightEnabledAutoAim)) {
+        if (Globals.autonomousModeActive && (Robot.shooterLimelight.noTarget() || !Globals.shooterLimelightEnabled)) {
             return true;
         }
         return false;
@@ -133,7 +135,7 @@ public class LimelightAutoAim extends CommandBase {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
 
-        Robot.limelightaim.setLEDMode(3); // Leave LED on after auto aim so we can still use during manual
+        Robot.shooterLimelight.setLEDMode(3); // Leave LED on after auto aim so we can still use during manual
 
         Globals.indexerEnabled = true;
     }

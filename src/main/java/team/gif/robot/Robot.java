@@ -41,8 +41,8 @@ public class Robot extends TimedRobot {
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
-    public static Limelight limelightaim = null;
-    public static Limelight limelightballs = null;
+    public static Limelight shooterLimelight = null;
+    public static Limelight collectorLimelight = null;
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
@@ -76,8 +76,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         // Sets which limelight goes to which commands
-        limelightaim = new Limelight("limelightaim");
-        limelightballs = new Limelight("limelightballs");
+        shooterLimelight = new Limelight("shooterLL");
+        collectorLimelight = new Limelight("collectorLL");
 
 
         pdp = new PowerDistribution();
@@ -123,7 +123,7 @@ public class Robot extends TimedRobot {
         collectorPneumatics.collectorRaise();
         climberPneumatics.setFangsIn();
         Globals.climbingActive = false;
-        Globals.limelightEnabledAutoAim = true;
+        Globals.shooterLimelightEnabled = true;
     }
 
     /**
@@ -179,8 +179,8 @@ public class Robot extends TimedRobot {
         elapsedTime.reset();
         elapsedTime.start();
 
-        limelightaim.setLEDMode(1);//turn on during autonomous
-        limelightballs.setCamMode(0);
+        shooterLimelight.setLEDMode(1);//turn on during autonomous
+        collectorLimelight.setCamMode(0); //Set to image processing mode
 
         compressor.disable();
 
@@ -206,9 +206,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
-        limelightaim.setLEDMode(3); // turn LED on for entire teleop
-        limelightballs.setCamMode(1); // Turns on Driver Vision for back limelight
-        limelightballs.setLEDMode(0); // Turns off back LEDs
+        shooterLimelight.setLEDMode(3); // turn LED on for entire teleop
+        collectorLimelight.setCamMode(1); // Turns on Driver Vision for back limelight
+        collectorLimelight.setLEDMode(0); // Turns off back LEDs
 
         Globals.autonomousModeActive = false;
         // This makes sure that the autonomous stops running when

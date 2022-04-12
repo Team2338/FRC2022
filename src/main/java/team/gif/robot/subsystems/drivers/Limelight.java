@@ -112,7 +112,7 @@ public class Limelight {
      *     and can't use limelight::!hasTarget
      */
     public boolean noTarget() {
-        return !hasTarget() || !Globals.limelightEnabledAutoAim;
+        return !hasTarget() || !Globals.shooterLimelightEnabled;
     }
 
     /**
