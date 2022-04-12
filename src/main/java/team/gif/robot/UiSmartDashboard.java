@@ -49,7 +49,7 @@ public class UiSmartDashboard {
 
         tab.add("Auto Select", autoModeChooser)
             .withWidget(BuiltInWidgets.kComboBoxChooser)
-            .withPosition(8, 2)
+            .withPosition(3, 0)
             .withSize(2, 1);
 
         // Auto delay
@@ -71,13 +71,19 @@ public class UiSmartDashboard {
         delayChooser.addOption("15", delay.DELAY_15);
 
         tab.add("Delay", delayChooser)
-            .withPosition(7, 2)
+            .withPosition(2, 0)
             .withSize(1, 1);
 
         SmartDashboard.putData("Climber", new ResetClimber());
-        SmartDashboard.putData("LED", new LimelightLED());
         SmartDashboard.putData("Reset", new ResetHeading());
         SmartDashboard.putData("Toggle", new LimelightToggle());
+
+
+        tab.add("LED", new LimelightLED())
+                .withPosition(5, 0)
+                .withSize(1, 1);
+
+//        SmartDashboard.putData("LED", new LimelightLED());
     }
 
     public void updateUI() {
@@ -88,7 +94,7 @@ public class UiSmartDashboard {
         SmartDashboard.putBoolean("Enable Indexer", Globals.indexerEnabled);
 
         // Shooter
-        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
+//        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
 
         // Climber
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
