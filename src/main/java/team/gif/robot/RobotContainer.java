@@ -8,15 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.lib.autoMode;
-import team.gif.robot.commands.autos.FiveBallTerminalRight;
-import team.gif.robot.commands.autos.FourBallTerminalRight;
-import team.gif.robot.commands.autos.Mobility;
-import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
-import team.gif.robot.commands.autos.ThreeBallTerminalRight;
-import team.gif.robot.commands.autos.TwoBallLeft;
-import team.gif.robot.commands.autos.TwoBallLeftOpp2Ball;
-import team.gif.robot.commands.autos.TwoBallMiddle;
-import team.gif.robot.commands.autos.TwoBallRight;
+import team.gif.robot.commands.autos.*;
 
 import java.util.HashMap;
 
@@ -58,6 +50,7 @@ public class RobotContainer {
         autoCommands.put(autoMode.THREE_BALL_TERMINAL_RIGHT, new ThreeBallTerminalRight());
         autoCommands.put(autoMode.FOUR_BALL_TERMINAL_RIGHT, new FourBallTerminalRight());
         autoCommands.put(autoMode.FIVE_BALL_TERMINAL_RIGHT, new FiveBallTerminalRight());
+        autoCommands.put(autoMode.BALL_FOLLOW_TEST, new BallFollowTest());
     }
 
     /**
