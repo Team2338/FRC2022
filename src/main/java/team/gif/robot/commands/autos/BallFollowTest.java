@@ -20,11 +20,11 @@ public class BallFollowTest extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-                List.of(
-                        new Pose2dFeet().set(0.0, 0.0, 0.0),
-                        new Pose2dFeet().set(-7.0, 0.0, 0.0)
-                ),
-                RobotTrajectory.getInstance().configReverseSlow
+            List.of(
+                new Pose2dFeet().set(0.0, 0.0, 0.0),
+                new Pose2dFeet().set(-7.0, 0.0, 0.0)
+            ),
+            RobotTrajectory.getInstance().configReverseSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -34,11 +34,11 @@ public class BallFollowTest extends SequentialCommandGroup {
 
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-                List.of(
-                        new Pose2dFeet().set(0.0, 0.0, 0.0),
-                        new Pose2dFeet().set(7.0, 0.0, 0.0)
-                ),
-                RobotTrajectory.getInstance().configReverseSlow
+            List.of(
+                new Pose2dFeet().set(0.0, 0.0, 0.0),
+                new Pose2dFeet().set(7.0, 0.0, 0.0)
+            ),
+            RobotTrajectory.getInstance().configReverseSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -48,25 +48,23 @@ public class BallFollowTest extends SequentialCommandGroup {
 
     public BallFollowTest() {
         addCommands(
-                reverse(),
-                new ParallelDeadlineGroup(
-                        new LimelightBallDetection(),
-                        new CollectorRun()
-                ),
-                new ResetHeading(),
-                new ParallelDeadlineGroup(
-                        forward(),
-                        new WaitCommand(0.5).andThen(new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB))
-                ),
-                new ParallelDeadlineGroup(
-                        new LimelightAutoAim(),
-                        new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
-                ),
-                new ParallelDeadlineGroup(
-                        new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
-                        new RapidFire()
-
-
+            reverse(),
+            new ParallelDeadlineGroup(
+                new LimelightBallDetection(),
+                new CollectorRun()
+            ),
+            new ResetHeading(),
+            new ParallelDeadlineGroup(
+                forward(),
+                new WaitCommand(0.5).andThen(new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB))
+            ),
+            new ParallelDeadlineGroup(
+                new LimelightAutoAim(),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
+            ),
+            new ParallelDeadlineGroup(
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
+                new RapidFire()
         ));
     }
 }
