@@ -38,7 +38,7 @@ public class LimelightBallDetection extends CommandBase {
             return;
         }
         // Reverses into ball and when no see ball algorithm stops
-        double reverseVolts = ((yOffset + 45) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_FRICTION_VOLTS;
+        double reverseVolts = ((yOffset + Constants.Shooter.LIMELIGHT_LOW_BOUND_ANGLE_BALLS) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
         Robot.drivetrain.tankDriveVolts(-reverseVolts, -reverseVolts); // slows robot down until collects ball
     }
     // Returns true when the command should end.

@@ -163,7 +163,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        Globals.collectorLimelightBallMode = DriverStation.getAlliance() == DriverStation.Alliance.Red ? true : false; // notifies at start of match
+        Globals.collectorLimelightBallMode = DriverStation.getAlliance() == DriverStation.Alliance.Red ? true : false; // Sets color to detect at start of match
 
         eventLogger.addEvent("AUTO", "Auto Init");
         drivetrain.resetPigeon();
