@@ -209,7 +209,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
 
         shooterLimelight.setLEDMode(3); // turn LED on for entire teleop
-        collectorLimelight.setCamMode(1); // Turns on Driver Vision for back limelight
+        collectorLimelight.setCamMode(0); // Turns on Driver Vision for back limelight
         collectorLimelight.setLEDMode(0); // Turns off back LEDs
 
         Globals.autonomousModeActive = false;

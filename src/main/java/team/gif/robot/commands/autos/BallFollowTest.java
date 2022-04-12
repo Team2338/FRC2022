@@ -8,6 +8,7 @@ import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.autoaim.LimelightAutoAim;
+import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.limelight.LimelightBallDetection;
@@ -38,7 +39,7 @@ public class BallFollowTest extends SequentialCommandGroup {
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
                 new Pose2dFeet().set(7.0, 0.0, 0.0)
             ),
-            RobotTrajectory.getInstance().configReverseSlow
+            RobotTrajectory.getInstance().configForwardSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -48,11 +49,14 @@ public class BallFollowTest extends SequentialCommandGroup {
 
     public BallFollowTest() {
         addCommands(
-            reverse(),
+            new ParallelDeadlineGroup(
+                reverse(),
+                new CollectorDown()
+            ),
             new ParallelDeadlineGroup(
                 new LimelightBallDetection(),
                 new CollectorRun()
-            ),
+            ) /*,
             new ResetHeading(),
             new ParallelDeadlineGroup(
                 forward(),
@@ -65,6 +69,7 @@ public class BallFollowTest extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
                 new RapidFire()
-        ));
+        )*/
+        );
     }
 }
