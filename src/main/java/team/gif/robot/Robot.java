@@ -76,9 +76,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         // Sets which limelight goes to which commands
-        shooterLimelight = new Limelight("shooterLL");
-        collectorLimelight = new Limelight("collectorLL");
-
+        shooterLimelight = new Limelight("limelight");
+        collectorLimelight = new Limelight("limelight-rear");
 
         pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
