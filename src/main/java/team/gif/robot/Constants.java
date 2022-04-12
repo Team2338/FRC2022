@@ -78,6 +78,11 @@ public final class Constants {
         public static final double UPPER_HUB_HEIGHT = 96.0;
 
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
+        public static final double MIN_FRICTION_VOLTS = 1.5;
+        public static final double velocityCap = 1.5;
+
+        public static final double MIN_REVERSE_VOLTS = 1.5;
+        public static final double MAX_REVERSE_VOLTS = 5.0;
     }
 
     public static class Indexer {
