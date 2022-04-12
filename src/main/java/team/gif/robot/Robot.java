@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -162,6 +163,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        Globals.collectorLimelightBallMode = DriverStation.getAlliance() == DriverStation.Alliance.Red ? true : false; // notifies at start of match
+
         eventLogger.addEvent("AUTO", "Auto Init");
         drivetrain.resetPigeon();
         drivetrain.resetEncoders();
