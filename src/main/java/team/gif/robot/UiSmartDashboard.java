@@ -33,7 +33,8 @@ public class UiSmartDashboard {
         tab.add("BotHead", (x) -> {
             x.setSmartDashboardType("Gyro");
             x.addDoubleProperty("Value", () -> Pigeon.getInstance().getCompassHeading(), null);
-        });
+        })
+        .withPosition(5, 0);
 
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
@@ -48,7 +49,7 @@ public class UiSmartDashboard {
 
         tab.add("Auto Select", autoModeChooser)
             .withWidget(BuiltInWidgets.kComboBoxChooser)
-            .withPosition(3, 0)
+            .withPosition(7, 1)
             .withSize(2, 1);
 
         // Auto delay
@@ -70,7 +71,7 @@ public class UiSmartDashboard {
         delayChooser.addOption("15", delay.DELAY_15);
 
         tab.add("Delay", delayChooser)
-            .withPosition(2, 0)
+            .withPosition(7, 0)
             .withSize(1, 1);
 
         SmartDashboard.putData("Climber", new ResetClimber());
@@ -78,11 +79,11 @@ public class UiSmartDashboard {
         SmartDashboard.putData("Toggle", new LimelightToggle());
 
         tab.addNumber("Shooter Speed", shooter::getSpeed)
-                .withPosition(6,0)
+                .withPosition(1,0)
                 .withSize(1,1);
 
         tab.add("ShooterLED", new LimelightLED())
-                .withPosition(5, 0)
+                .withPosition(0, 0)
                 .withSize(1, 1);
 //        SmartDashboard.putData("LED", new LimelightLED());
     }
