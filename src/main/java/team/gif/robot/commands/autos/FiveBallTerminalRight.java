@@ -59,7 +59,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-2.5, 12.0, 48.0),
-                new Pose2dFeet().set(-4.0, 21.0, 25.0) // 3rd cargo (terminal) location
+                new Pose2dFeet().set(-4.7, 20.3, 22.0) // 3rd cargo (terminal) location
             ),
             RobotTrajectory.getInstance().configReverseFast
         );
@@ -72,7 +72,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-4.0, 21.0, 25.0),
+                new Pose2dFeet().set(-4.7, 20.3, 22.0),
                 new Pose2dFeet().set(-2.5, 12.0, 48.0) // shooting location
             ),
             RobotTrajectory.getInstance().configForward5BallFast
@@ -117,7 +117,7 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
             new CollectorRun().withTimeout(1.2),
             new ParallelDeadlineGroup(
                 forward(),
-                new CollectorRun().withTimeout(2),
+                new CollectorRun().withTimeout(3),
                 new WaitCommand(1.5).andThen(new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB))
             ),
             new ParallelDeadlineGroup(
