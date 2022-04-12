@@ -12,7 +12,6 @@ public class LimelightBallDetection extends CommandBase {
         super();
         addRequirements();
     }
-    private boolean robotHasSettled = false;
     private final double xTolerance = 1.5;
 
     // Called when the command is initially scheduled.
@@ -34,13 +33,13 @@ public class LimelightBallDetection extends CommandBase {
 
         // More Accurate Than Shalin
         if (abs(xOffset) > xTolerance) {
-            double pivot = (xOffset < 0 ? 1 : -1.0) * (Constants.Shooter.MIN_PIVOT + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT);
-            Robot.drivetrain.driveArcade(Robot.drivetrain.getWheelSpeeds().leftMetersPerSecond,pivot);
+            double pivotVolts = (xOffset < 0 ? 1 : -1.0) * (Constants.Shooter.MIN_PIVOT_VOLTS_BALL + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS_BALL);
+            Robot.drivetrain.tankDriveVolts(Robot.drivetrain.getInputVoltageL1() - pivotVolts,Robot.drivetrain.getInputVoltageL1() + pivotVolts);
             return;
         }
-//        // Reverses into ball and when no see ball algorithm stops
-//        double reverseVolts = ((yOffset + 45) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_FRICTION_VOLTS;
-//        Robot.drivetrain.tankDriveVolts(-reverseVolts, -reverseVolts); // slows robot down until collects ball
+        // Reverses into ball and when no see ball algorithm stops
+        double reverseVolts = ((yOffset + Constants.Shooter.LIMELIGHT_LOW_BOUND_ANGLE_BALLS) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
+        Robot.drivetrain.tankDriveVolts(-reverseVolts, -reverseVolts); // slows robot down until collects ball
     }
     // Returns true when the command should end.
     @Override
@@ -55,6 +54,5 @@ public class LimelightBallDetection extends CommandBase {
         Robot.drivetrain.tankDriveVolts(0,0);
         Robot.collectorLimelight.setLEDMode(3); // Leave LED on after ball detected
         Globals.indexerEnabled = true;
-        robotHasSettled = false;
     }
 }

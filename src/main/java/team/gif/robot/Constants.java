@@ -80,11 +80,13 @@ public final class Constants {
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
         public static final double MIN_FRICTION_VOLTS = 1.5;
 
-        public static final double MAX_PIVOT = 1;
-        public static final double MIN_PIVOT = 0;
+        public static final double MAX_PIVOT_VOLTS_BALL = 1;
+        public static final double MIN_PIVOT_VOLTS_BALL = 0;
 
-//        public static final double MIN_REVERSE_VOLTS = 1.5;
-//        public static final double MAX_REVERSE_VOLTS = 5.0;
+        public static final double MIN_REVERSE_VOLTS = 1.5;
+        public static final double MAX_REVERSE_VOLTS = 5.0;
+
+        public static final double LIMELIGHT_LOW_BOUND_ANGLE_BALLS = 45.0;
     }
 
     public static class Indexer {
