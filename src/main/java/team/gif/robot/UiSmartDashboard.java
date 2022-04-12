@@ -78,11 +78,13 @@ public class UiSmartDashboard {
         SmartDashboard.putData("Reset", new ResetHeading());
         SmartDashboard.putData("Toggle", new LimelightToggle());
 
+        tab.addNumber("Shooter Speed", shooter::getSpeed)
+                .withPosition(6,0)
+                .withSize(1,1);
 
-        tab.add("LED", new LimelightLED())
+        tab.add("ShooterLED", new LimelightLED())
                 .withPosition(5, 0)
                 .withSize(1, 1);
-
 //        SmartDashboard.putData("LED", new LimelightLED());
     }
 
