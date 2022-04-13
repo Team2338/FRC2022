@@ -1,5 +1,6 @@
 package team.gif.robot.subsystems.drivers;
 
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import team.gif.robot.Globals;
@@ -7,6 +8,11 @@ import team.gif.robot.Globals;
 public class Limelight {
 
     private final NetworkTable table;
+
+    public static final int LED_PIPELINE = 0;
+    public static final int LED_OFF      = 1;
+    public static final int LED_BLINK    = 2;
+    public static final int LED_ON       = 3;
 
     /**
      * Create a new limelight object.
@@ -16,7 +22,7 @@ public class Limelight {
     public Limelight(String key) {
         System.out.println("limelight init");
         table = NetworkTableInstance.getDefault().getTable(key);
-        setLEDMode(3);
+        setLEDMode(Limelight.LED_ON);
     }
 
     /**

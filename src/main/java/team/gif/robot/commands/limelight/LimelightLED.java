@@ -2,6 +2,7 @@ package team.gif.robot.commands.limelight;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 public class LimelightLED extends CommandBase {
 
@@ -17,7 +18,7 @@ public class LimelightLED extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.shooterLimelight.setLEDMode(3); // Turn on LED
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // Turn on LED
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +35,7 @@ public class LimelightLED extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooterLimelight.setLEDMode(1); // Turn off LED
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_OFF); // Turn off LED
     }
 
     @Override

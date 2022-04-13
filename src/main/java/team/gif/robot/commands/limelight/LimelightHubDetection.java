@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 import static java.lang.Math.abs;
 
@@ -19,7 +20,7 @@ public class LimelightHubDetection extends CommandBase {
     @Override
     public void initialize() {
         Globals.indexerEnabled = false;
-        Robot.shooterLimelight.setLEDMode(3); // turn on - just in case they were turned off somehow
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // turn on - just in case they were turned off somehow
         Robot.shooterLimelight.setCamMode(0);
 //        Robot.shooterLimelight.setPipeline(Globals.collectorLimelightBallMode ? 0 : 1);
         count = 0;
@@ -77,7 +78,7 @@ public class LimelightHubDetection extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.drivetrain.tankDriveVolts(0,0);
-        Robot.shooterLimelight.setLEDMode(3); // Leave LED on after ball detected
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // Leave LED on after ball detected
         Globals.indexerEnabled = true;
     }
 }

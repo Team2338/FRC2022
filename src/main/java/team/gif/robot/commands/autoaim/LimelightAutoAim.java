@@ -5,6 +5,7 @@ import team.gif.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 import static java.lang.Math.abs;
 
@@ -25,7 +26,7 @@ public class LimelightAutoAim extends CommandBase {
         targetLocked = false;
 
 //        delayCounter = 0;
-        Robot.shooterLimelight.setLEDMode(3); // turn on - just in case they were turned off somehow
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // turn on - just in case they were turned off somehow
     }
 
     @Override
@@ -135,7 +136,7 @@ public class LimelightAutoAim extends CommandBase {
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
 
-        Robot.shooterLimelight.setLEDMode(3); // Leave LED on after auto aim so we can still use during manual
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // Leave LED on after auto aim so we can still use during manual
 
         Globals.indexerEnabled = true;
     }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 public class ClimberMaxUp extends CommandBase {
 
@@ -23,7 +24,7 @@ public class ClimberMaxUp extends CommandBase {
     @Override
     public void initialize() {
         Globals.climbingActive = true;
-        Robot.shooterLimelight.setLEDMode(0); // turn LED off during climb
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_OFF); // turn LED off during climb
         Robot.collectorPneumatics.collectorLower();
         Robot.climber.setPidPosition(Constants.Climber.MAX_POSITION);
     }

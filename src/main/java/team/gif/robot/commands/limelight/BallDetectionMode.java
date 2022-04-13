@@ -3,6 +3,7 @@ package team.gif.robot.commands.limelight;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 public class BallDetectionMode extends CommandBase {
     public BallDetectionMode() {
@@ -34,7 +35,7 @@ public class BallDetectionMode extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooterLimelight.setLEDMode(1); // Turn off LED
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_OFF); // Turn off LED
     }
 
     @Override

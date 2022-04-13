@@ -181,7 +181,7 @@ public class Robot extends TimedRobot {
         elapsedTime.reset();
         elapsedTime.start();
 
-        shooterLimelight.setLEDMode(1);//turn on during autonomous
+        shooterLimelight.setLEDMode(Limelight.LED_ON);//turn on during autonomous
         collectorLimelight.setCamMode(0); //Set to image processing mode
 
         compressor.disable();
@@ -210,9 +210,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
-        shooterLimelight.setLEDMode(3); // turn LED on for entire teleop
+        shooterLimelight.setLEDMode(Limelight.LED_ON); // turn LED on for entire teleop
         collectorLimelight.setCamMode(0); // Turns on Driver Vision for back limelight
-        collectorLimelight.setLEDMode(0); // Turns off back LEDs
+        collectorLimelight.setLEDMode(Limelight.LED_OFF); // Turns off back LEDs
 
         Globals.autonomousModeActive = false;
         // This makes sure that the autonomous stops running when

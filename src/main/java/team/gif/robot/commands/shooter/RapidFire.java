@@ -3,6 +3,7 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 public class RapidFire extends CommandBase {
 
@@ -21,7 +22,7 @@ public class RapidFire extends CommandBase {
 
     @Override
     public void execute() {
-        Robot.shooterLimelight.setLEDMode(3); // Turn on LED just in case they were turned off
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // Turn on LED just in case they were turned off
 
         if (Robot.shooter.isInTolerance()) {
             Robot.indexer.setBeltMotorSpeedPercent(1.0);

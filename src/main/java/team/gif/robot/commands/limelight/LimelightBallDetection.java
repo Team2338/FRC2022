@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Constants;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 import static java.lang.Math.abs;
 
@@ -22,7 +23,7 @@ public class LimelightBallDetection extends CommandBase {
     @Override
     public void initialize() {
         Globals.indexerEnabled = false;
-        Robot.collectorLimelight.setLEDMode(0); // turn off LED
+        Robot.collectorLimelight.setLEDMode(Limelight.LED_OFF); // turn off LED
         Robot.collectorLimelight.setCamMode(0);
         Robot.collectorLimelight.setPipeline(Globals.collectorLimelightBallMode ? 0 : 1);
         firstCargoPassedThreshold = false; // Indicates that we are close to the first cargo and we should stop when this
@@ -86,7 +87,7 @@ public class LimelightBallDetection extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         Robot.drivetrain.tankDriveVolts(0,0);
-        Robot.collectorLimelight.setLEDMode(3); // Leave LED on after ball detected
+        Robot.collectorLimelight.setLEDMode(Limelight.LED_ON); // Leave LED on after ball detected
         Globals.indexerEnabled = true;
     }
 }
