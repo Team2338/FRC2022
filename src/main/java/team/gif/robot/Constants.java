@@ -66,6 +66,7 @@ public final class Constants {
         public static final double RPM_RING_UPPER_HUB        = 7500;
         public static final double RPM_AUTO_UPPER_HUB        = 7500 + 300; // Middle side auto ring shot, slightly long of ring
         public static final double RPM_AUTO_5_BALL_UPPER_HUB = 7500 + 600; // 5 ball far auto ring shot, long of ring
+        public static final double RPM_AUTO_5_BALL_LL_UPPER_HUB = 7500 + 500; // 5 ball with Limelight far auto ring shot, long of ring
         public static final double RPM_AUTO_RIGHT_RING       = 7100;       // Right side auto ring shot, short of ring
 
         public static final double FLYWHEEL_TOLERANCE = 150;

@@ -122,15 +122,15 @@ public class FiveBallTerminalRightLimelight extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new LimelightHubDetection(),  // Drive to the hub using limelight
                 new CollectorRun().withTimeout(1),
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_LL_UPPER_HUB)
             ),
-            new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB).withTimeout(0.5), // Sit at location to settle bot
+            new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_LL_UPPER_HUB).withTimeout(0.5), // Sit at location to settle bot
             new ParallelDeadlineGroup(
                 new LimelightAutoAim(), // Re-align with limelight. If limelight is not functioning, this will end immediately
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_LL_UPPER_HUB)
             ),
             new ParallelDeadlineGroup(
-                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_LL_UPPER_HUB),
                 new RapidFire()
             )
         );
