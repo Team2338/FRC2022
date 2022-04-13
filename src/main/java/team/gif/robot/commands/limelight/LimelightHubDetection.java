@@ -15,15 +15,18 @@ public class LimelightHubDetection extends CommandBase {
     }
 
     private final double xTolerance = 1.5;
-    private int count = 0;
+    private final double travelVoltage = 5.0;
+    private int lockAttempts = 0;
+    private int inShootingPositionCount = 0;
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         Globals.indexerEnabled = false;
         Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // turn on - just in case they were turned off somehow
         Robot.shooterLimelight.setCamMode(Limelight.MODE_TRACKING);
-//        Robot.shooterLimelight.setPipeline(Globals.collectorLimelightBallMode ? 0 : 1);
-        count = 0;
+        lockAttempts = 0;
+        inShootingPositionCount = 0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -38,39 +41,37 @@ public class LimelightHubDetection extends CommandBase {
         double yOffset = Robot.shooterLimelight.getYOffset(); // Sets y offset
         double pivotVolts = 0;
 
-//        Robot.drivetrain.tankDriveVolts(-2.5,-2.5);
-/*        double reverseVolts = -((yOffset + Constants.Shooter.CARGO_DETECT_MINIMUM) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
-*/
+//        double reverseVolts = -((yOffset + Constants.Shooter.CARGO_DETECT_MINIMUM) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
+
         // More Accurate Than Shalin
         if (abs(xOffset) > xTolerance) {
-            pivotVolts = -xOffset * 0.015 * Constants.Shooter.MAX_PIVOT_VOLTS_BALL;
-
-//            pivotVolts = (xOffset < 0 ? 1 : -1.0) * 0.5;
+            pivotVolts = -xOffset * 0.015 * Constants.Shooter.MAX_PIVOT_VOLTS_BALL; // 0.015 is used as a proportional gain
         }
-        Robot.drivetrain.tankDriveVolts(7 - pivotVolts,7 + pivotVolts);
 
-        // Reverses into ball and when no see ball algorithm stops
-//        double reverseVolts = ((yOffset + Constants.Shooter.LIMELIGHT_LOW_BOUND_ANGLE_BALLS) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
-//        Robot.drivetrain.tankDriveVolts(reverseVolts, reverseVolts); // slows robot down until collects ball
+        // continue to move but adjust each side slightly so it turns
+        Robot.drivetrain.tankDriveVolts(travelVoltage - pivotVolts,travelVoltage + pivotVolts);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         if (Globals.autonomousModeActive && (Robot.shooterLimelight.noTarget())) {
-            System.out.println("No hub target - exiting");
-            return true;
-        }
-
-        System.out.println("hub: " + Robot.shooterLimelight.getYOffset() + " " + count);
-        if( Robot.shooterLimelight.getYOffset() > -8){
-            count++;
-            if( count > 10) {
-                System.out.println("close enough");
+            if (++lockAttempts > 50) {
+                System.out.println("No valid hub target after 50 attempts - aborting");
                 return true;
+            } else {
+                return false;
             }
         }
 
+//        System.out.println("hub: " + Robot.shooterLimelight.getYOffset());
+        if (Robot.shooterLimelight.getYOffset() > -8) { // -8 is the angle we see the hub when we want to shoot
+            inShootingPositionCount++; // Have to see an angle of -8 or less 3 times to prevent jitter
+            if (inShootingPositionCount > 3) {
+                System.out.println("Reached shooting position");
+                return true;
+            }
+        }
         return false;
     }
 
