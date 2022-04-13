@@ -12,20 +12,22 @@ public class LimelightBallDetection extends CommandBase {
         super();
         addRequirements();
     }
-    private boolean shouldStop = false;
-    private boolean stopNow = false;
 
     private final double xTolerance = 1.5;
+    private final double travelVoltage = 4.0;
+    private boolean firstCargoPassedThreshold = false;
+    private boolean trackingSecondCargo = false;
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         Globals.indexerEnabled = false;
-        Robot.collectorLimelight.setLEDMode(0); // turn on - just in case they were turned off somehow
+        Robot.collectorLimelight.setLEDMode(0); // turn off LED
         Robot.collectorLimelight.setCamMode(0);
         Robot.collectorLimelight.setPipeline(Globals.collectorLimelightBallMode ? 0 : 1);
-        shouldStop = false;
-        stopNow = false;
+        firstCargoPassedThreshold = false; // Indicates that we are close to the first cargo and we should stop when this
+                                           // cargo is collected (and goes out of the field of view)
+        trackingSecondCargo = false;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +35,7 @@ public class LimelightBallDetection extends CommandBase {
     public void execute() {
         // Checks if the limelight can see a target
         if (Robot.collectorLimelight.noTarget()) {
-            System.out.println("No target - exiting");
+            System.out.println("No cargo target - exiting limelight ball detection execution loop");
             return;
         }
 
@@ -41,41 +43,39 @@ public class LimelightBallDetection extends CommandBase {
         double yOffset = Robot.collectorLimelight.getYOffset(); // Sets y offset
         double pivotVolts = 0;
 
-        System.out.println(shouldStop + "     " + yOffset);
-        if( yOffset < -10) {
-            shouldStop = true;
+        // This prevents us from picking up a second ball
+        // The current ball should go below a yOffset of -10 degrees
+        // then if another ball is then detected which is at a higher yOffset
+        // we know to stop
+        System.out.println(firstCargoPassedThreshold + "     " + yOffset);
+        if (yOffset < -10) {
+            firstCargoPassedThreshold = true;
         }
 
-        if( yOffset > -5 && shouldStop){
-            stopNow = true;
+        if (yOffset > -5 && firstCargoPassedThreshold) { // A second ball is now being tracked. We know this because the
+            trackingSecondCargo = true;                  // yOffset jumped up and the first cargo was already close to us.
             return;
         }
-//        Robot.drivetrain.tankDriveVolts(-2.5,-2.5);
-/*        double reverseVolts = -((yOffset + Constants.Shooter.CARGO_DETECT_MINIMUM) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
-*/
+
         // More Accurate Than Shalin
         if (abs(xOffset) > xTolerance) {
             pivotVolts = -xOffset * 0.02 * Constants.Shooter.MAX_PIVOT_VOLTS_BALL;
-
-//            pivotVolts = (xOffset < 0 ? 1 : -1.0) * 0.5;
         }
-        Robot.drivetrain.tankDriveVolts(-4 - pivotVolts,-4 + pivotVolts);
-
-        // Reverses into ball and when no see ball algorithm stops
-//        double reverseVolts = ((yOffset + Constants.Shooter.LIMELIGHT_LOW_BOUND_ANGLE_BALLS) * 0.01 * Constants.Shooter.MAX_REVERSE_VOLTS) + Constants.Shooter.MIN_REVERSE_VOLTS;
-//        Robot.drivetrain.tankDriveVolts(reverseVolts, reverseVolts); // slows robot down until collects ball
+        // drive at a constant voltage with some turning adjustment (add to one side, subtract to the other)
+        // negative travel voltage since we are traveling backwards
+        Robot.drivetrain.tankDriveVolts(-travelVoltage - pivotVolts,-travelVoltage + pivotVolts);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
         if (Globals.autonomousModeActive && (Robot.collectorLimelight.noTarget())) {
-            System.out.println("No target - exiting");
+            System.out.println("No cargo target - exiting");
             return true;
         }
 
-        if (stopNow) {
-            System.out.println("stopNow");
+        if (trackingSecondCargo) {
+            System.out.println("Tracking 2nd cargo - stopNow");
             return true;
         }
 
