@@ -18,7 +18,6 @@ import team.gif.robot.commands.autos.TwoBallLeft;
 import team.gif.robot.commands.autos.TwoBallLeftOpp2Ball;
 import team.gif.robot.commands.autos.TwoBallMiddle;
 import team.gif.robot.commands.autos.TwoBallRight;
-import team.gif.robot.commands.autos.BallFollowTest;
 
 import java.util.HashMap;
 
@@ -61,7 +60,6 @@ public class RobotContainer {
         autoCommands.put(autoMode.FOUR_BALL_TERMINAL_RIGHT, new FourBallTerminalRight());
         autoCommands.put(autoMode.FIVE_BALL_TERMINAL_RIGHT, new FiveBallTerminalRight());
         autoCommands.put(autoMode.FIVE_BALL_TERMINAL_RIGHT_LIMELIGHT, new FiveBallTerminalRightLimelight());
-        autoCommands.put(autoMode.BALL_FOLLOW_TEST, new BallFollowTest());
     }
 
     /**
