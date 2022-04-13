@@ -247,11 +247,6 @@ public class Drivetrain extends SubsystemBase {
     }
 
     // Encoder positions in Ticks
-    public double getLeftTalonPos_Ticks() {
-        return leftTalon1.getSelectedSensorPosition();
-    }
-
-    // Encoder positions in Ticks
     public double getLeftEncoderPos_Ticks() {
         return leftEncoderTalon.getSelectedSensorPosition();
     }

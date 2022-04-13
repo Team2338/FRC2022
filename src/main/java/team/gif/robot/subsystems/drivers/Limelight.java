@@ -1,6 +1,5 @@
 package team.gif.robot.subsystems.drivers;
 
-import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import team.gif.robot.Globals;
@@ -13,6 +12,9 @@ public class Limelight {
     public static final int LED_OFF      = 1;
     public static final int LED_BLINK    = 2;
     public static final int LED_ON       = 3;
+
+    public static final int MODE_TRACKING  = 0;
+    public static final int MODE_CAMERA    = 1;
 
     /**
      * Create a new limelight object.

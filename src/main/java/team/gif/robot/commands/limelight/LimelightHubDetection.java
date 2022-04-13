@@ -21,7 +21,7 @@ public class LimelightHubDetection extends CommandBase {
     public void initialize() {
         Globals.indexerEnabled = false;
         Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // turn on - just in case they were turned off somehow
-        Robot.shooterLimelight.setCamMode(0);
+        Robot.shooterLimelight.setCamMode(Limelight.MODE_TRACKING);
 //        Robot.shooterLimelight.setPipeline(Globals.collectorLimelightBallMode ? 0 : 1);
         count = 0;
     }
