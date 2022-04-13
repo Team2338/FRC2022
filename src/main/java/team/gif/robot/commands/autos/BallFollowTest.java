@@ -23,7 +23,7 @@ public class BallFollowTest extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(-7.0, 0.0, 0.0)
+                new Pose2dFeet().set(-10.0, -2.0, -10.0)
             ),
             RobotTrajectory.getInstance().configReverseSlow
         );
@@ -37,7 +37,7 @@ public class BallFollowTest extends SequentialCommandGroup {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
-                new Pose2dFeet().set(7.0, 0.0, 0.0)
+                new Pose2dFeet().set(8.0, -4.0, 0.0)
             ),
             RobotTrajectory.getInstance().configForwardSlow
         );
@@ -56,7 +56,8 @@ public class BallFollowTest extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new LimelightBallDetection(),
                 new CollectorRun()
-            ) /*,
+            ),
+            new CollectorRun().withTimeout(2),
             new ResetHeading(),
             new ParallelDeadlineGroup(
                 forward(),
@@ -69,7 +70,7 @@ public class BallFollowTest extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
                 new RapidFire()
-        )*/
+        )
         );
     }
 }

@@ -44,7 +44,7 @@ public final class Constants {
         public static final double kMediumSpeedMetersPerSecond = 2.3;
         public static final double kFastSpeedMetersPerSecond = 4.0;
         public static final double kFastAccelerationMetersPerSecondSquared = 4.0;
-        public static final double k5BallFastSpeedMetersPerSecond = 4.5;
+        public static final double k5BallFastSpeedMetersPerSecond = 3.0;
         public static final double k5BallFastAccelerationMetersPerSecondSquared = 4.5;
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
@@ -80,7 +80,7 @@ public final class Constants {
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
         public static final double MIN_FRICTION_VOLTS = 1.5;
 
-        public static final double MAX_PIVOT_VOLTS_BALL = 1;
+        public static final double MAX_PIVOT_VOLTS_BALL = 3;
         public static final double MIN_PIVOT_VOLTS_BALL = 0;
 
         public static final double MIN_REVERSE_VOLTS = 1.5;

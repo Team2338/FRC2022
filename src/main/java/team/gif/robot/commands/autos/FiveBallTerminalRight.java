@@ -16,7 +16,10 @@ import team.gif.robot.commands.autoaim.LimelightAutoAim;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
 import team.gif.robot.commands.collector.CollectorUp;
+import team.gif.robot.commands.drivetrain.ResetHeading;
 import team.gif.robot.commands.hood.HoodUp;
+import team.gif.robot.commands.limelight.LimelightBallDetection;
+import team.gif.robot.commands.limelight.LimelightHubDetection;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
@@ -69,6 +72,34 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
+    public Command pickupTerminalClose() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-2.5, 12.0, 48.0),
+                new Pose2dFeet().set(-4.0, 19, 22.0) // 3rd cargo (terminal) location
+            ),
+            RobotTrajectory.getInstance().configReverseFast
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
+    public Command forward2() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-4, 19, 22),
+                new Pose2dFeet().set(-1.0, 12, 60) // shooting location
+            ),
+            RobotTrajectory.getInstance().configForward5BallFast
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
@@ -110,7 +141,38 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new CollectorRun().withTimeout(0.5),
                 new RapidFire()
             ),
+            pickupTerminalClose(),
             new ParallelDeadlineGroup(
+                new LimelightBallDetection(),
+                new CollectorRun()
+            ),
+
+/*            new ParallelDeadlineGroup(
+                new LimelightBallDetection(),
+                new CollectorRun()
+            ),
+*/
+            new CollectorRun().withTimeout(1.5),
+            //new ResetHeading(),
+            //new WaitCommand(3),
+            new ParallelDeadlineGroup(
+                new LimelightHubDetection(),
+                new CollectorRun().withTimeout(1),
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
+            ),
+            new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB).withTimeout(0.5),
+            new ParallelDeadlineGroup(
+                new LimelightAutoAim(), // If limelight is not functioning, this will end immediately
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB)
+            ),
+//            new WaitUntilCommand(Robot.limelight::noTarget), // This is the backup code in case the limelight isn't working
+
+            new ParallelDeadlineGroup(
+                new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
+                new RapidFire()
+            )
+
+/*            new ParallelDeadlineGroup(
                 pickupTerminal(),
                 new WaitCommand(1.0).andThen(new CollectorRun())
             ),
@@ -130,6 +192,6 @@ public class FiveBallTerminalRight extends SequentialCommandGroup {
                 new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_UPPER_HUB),
                 new RapidFire()
             )
-        );
+*/        );
     }
 }
