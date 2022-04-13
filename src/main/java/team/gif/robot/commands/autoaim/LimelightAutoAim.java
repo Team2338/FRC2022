@@ -131,7 +131,7 @@ public class LimelightAutoAim extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         robotHasSettled = false;
-        Robot.shooter.setSpeedPercent(0);
+        //Robot.shooter.setSpeedPercent(0);
         Robot.indexer.setBeltMotorSpeedPercent(0);
         Robot.indexer.setMidMotorSpeed(0);
 
