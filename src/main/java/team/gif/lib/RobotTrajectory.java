@@ -61,7 +61,7 @@ public class RobotTrajectory {
         .addConstraint(new CentripetalAccelerationConstraint(1));
 
     public TrajectoryConfig configForward5BallFast = new TrajectoryConfig(
-        Constants.Auto.k5BallFastSpeedMetersPerSecond,
+        Constants.Auto.kFastSpeedMetersPerSecond,
         Constants.Auto.kFastAccelerationMetersPerSecondSquared)
         // Add kinematics to ensure max speed is actually obeyed
         .setKinematics(Constants.Drivetrain.kDriveKinematics)
