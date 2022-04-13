@@ -203,6 +203,8 @@ public class Robot extends TimedRobot {
             runAutoScheduler = false;
             elapsedTime.stop();
         }
+
+        telemetryLogger.run();
     }
 
     @Override

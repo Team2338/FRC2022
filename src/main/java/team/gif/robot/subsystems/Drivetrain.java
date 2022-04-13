@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -105,6 +106,27 @@ public class Drivetrain extends SubsystemBase {
         leftTalon2.setInverted(false);
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
+
+        /*leftTalon1.configVoltageCompSaturation(10);
+        leftTalon2.configVoltageCompSaturation(10);
+        rightTalon1.configVoltageCompSaturation(10);
+        rightTalon1.configVoltageCompSaturation(10);
+
+        leftTalon1.enableVoltageCompensation(true);
+        leftTalon2.enableVoltageCompensation(true);
+        rightTalon1.enableVoltageCompensation(true);
+        rightTalon2.enableVoltageCompensation(true);*/
+
+        leftTalon1.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+        leftTalon2.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+        rightTalon1.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+        rightTalon2.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+
+        leftTalon1.configVelocityMeasurementWindow(32);
+        leftTalon2.configVelocityMeasurementWindow(32);
+        rightTalon1.configVelocityMeasurementWindow(32);
+        rightTalon2.configVelocityMeasurementWindow(32);
+
 
         pigeon = new Pigeon();
 
