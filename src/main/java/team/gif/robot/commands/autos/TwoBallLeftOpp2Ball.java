@@ -96,7 +96,7 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
     public TwoBallLeftOpp2Ball() {
         addCommands(
             new ParallelDeadlineGroup(
-                new CollectorRun().withTimeout(2),
+                new CollectorRun().withTimeout(2.0),
                 new CollectorDown(),
                 reverse(),
                 new HoodUp(),
@@ -104,6 +104,7 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
             ),
             new ParallelDeadlineGroup(
                 new RapidFire().withTimeout(1.4),
+                new CollectorRun(),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
             ),
             new ParallelDeadlineGroup(
