@@ -45,7 +45,8 @@ public class UiSmartDashboard {
         autoModeChooser.addOption("Three+ Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
         autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
+        autoModeChooser.addOption("Four+ Ball Term Right Path", autoMode.FIVE_BALL_TERMINAL_RIGHT);
+        autoModeChooser.addOption("Four+ Ball Term Right LL", autoMode.FIVE_BALL_TERMINAL_RIGHT_LIMELIGHT);
         autoModeChooser.addOption("Ball Follow Test", autoMode.BALL_FOLLOW_TEST);
 
         tab.add("Auto Select", autoModeChooser)
