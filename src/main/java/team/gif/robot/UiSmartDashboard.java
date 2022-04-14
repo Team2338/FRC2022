@@ -38,6 +38,7 @@ public class UiSmartDashboard {
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
+        autoModeChooser.addOption("Two Ball Left Opp 1 Ball", autoMode.TWO_BALL_LEFT_OPP_ONE_BALL);
         autoModeChooser.addOption("Two Ball Left Opp 2 Ball", autoMode.TWO_BALL_LEFT_OPP_2_BALL);
         autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);
         autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
@@ -45,7 +46,6 @@ public class UiSmartDashboard {
         autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Opposite One Ball", autoMode.OPP_ONE_BALL);
 
         tab.add("Auto Select", autoModeChooser)
             .withWidget(BuiltInWidgets.kComboBoxChooser)

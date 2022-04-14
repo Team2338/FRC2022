@@ -11,7 +11,7 @@ public enum autoMode {
     THREE_BALL_TERMINAL_RIGHT(0),
     FOUR_BALL_TERMINAL_RIGHT(0),
     FIVE_BALL_TERMINAL_RIGHT(0),
-    OPP_ONE_BALL(0);
+    TWO_BALL_LEFT_OPP_ONE_BALL(0);
 
     private int value;
 

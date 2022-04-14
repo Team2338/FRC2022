@@ -6,21 +6,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class Opp1Ball extends SequentialCommandGroup {
+public class TwoBallLeftOpp1Ball extends SequentialCommandGroup {
 
   public Command reverse() {
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -50,11 +48,11 @@ public class Opp1Ball extends SequentialCommandGroup {
     return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
   }
 
-  public Command shootBall() {
+  public Command shootingLocation() {
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
         List.of(
             new Pose2dFeet().set(-4.25, 3.5, 90.0),
-            new Pose2dFeet().set(-6.0,0,137) // change values to turn and shoot
+            new Pose2dFeet().set(-6.0,0,146) // change values to turn and shoot
         ),
         RobotTrajectory.getInstance().configForward
     );
@@ -66,7 +64,7 @@ public class Opp1Ball extends SequentialCommandGroup {
 
 
 
-  public Opp1Ball() {
+  public TwoBallLeftOpp1Ball() {
     addCommands(
         new ParallelDeadlineGroup(
             new CollectorRun().withTimeout(2),
@@ -84,10 +82,7 @@ public class Opp1Ball extends SequentialCommandGroup {
             new CollectorRun()
         ),
         new CollectorRun().withTimeout(0.5),
-        new ParallelDeadlineGroup(
-            shootBall(), //position to shoot ball away
-            new CollectorRun()
-        ),
+        shootingLocation(), //position to shoot ball away
         new ParallelDeadlineGroup(
             new RapidFire(),
             new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED)
