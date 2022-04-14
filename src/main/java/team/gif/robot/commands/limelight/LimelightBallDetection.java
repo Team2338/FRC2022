@@ -26,7 +26,6 @@ public class LimelightBallDetection extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Globals.indexerEnabled = false;
         Robot.collectorLimelight.setLEDMode(Limelight.LED_OFF); // turn off LED
         Robot.collectorLimelight.setCamMode(Limelight.MODE_TRACKING);
         Robot.collectorLimelight.setPipeline( (DriverStation.getAlliance() == DriverStation.Alliance.Blue) ? 3 : 2);
@@ -109,6 +108,5 @@ public class LimelightBallDetection extends CommandBase {
     public void end(boolean interrupted) {
         Robot.drivetrain.tankDriveVolts(0,0);
         Robot.collectorLimelight.setLEDMode(Limelight.LED_OFF); // Leave LED off after ball detected
-        Globals.indexerEnabled = true;
     }
 }

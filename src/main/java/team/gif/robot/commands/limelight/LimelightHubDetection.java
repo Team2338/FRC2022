@@ -22,7 +22,6 @@ public class LimelightHubDetection extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Globals.indexerEnabled = false;
         Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // turn on - just in case they were turned off somehow
         Robot.shooterLimelight.setCamMode(Limelight.MODE_TRACKING);
         lockAttempts = 0;
@@ -80,6 +79,5 @@ public class LimelightHubDetection extends CommandBase {
     public void end(boolean interrupted) {
         Robot.drivetrain.tankDriveVolts(0,0);
         Robot.shooterLimelight.setLEDMode(Limelight.LED_ON); // Leave LED on after ball detected
-        Globals.indexerEnabled = true;
     }
 }
