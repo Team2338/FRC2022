@@ -28,7 +28,7 @@ public class LimelightBallDetection extends CommandBase {
     public void initialize() {
         Robot.collectorLimelight.setLEDMode(Limelight.LED_OFF); // turn off LED
         Robot.collectorLimelight.setCamMode(Limelight.MODE_TRACKING);
-        Robot.collectorLimelight.setPipeline( (DriverStation.getAlliance() == DriverStation.Alliance.Blue) ? 3 : 2);
+        Robot.collectorLimelight.setPipeline( (DriverStation.getAlliance() == DriverStation.Alliance.Red) ? 0 : 1);
         firstCargoPassedThreshold = false; // Indicates that we are close to the first cargo and we should stop when this
                                            // cargo is collected (and goes out of the field of view)
         trackingSecondCargo = false;
