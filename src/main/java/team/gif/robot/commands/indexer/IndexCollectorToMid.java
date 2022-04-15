@@ -24,7 +24,7 @@ public class IndexCollectorToMid extends CommandBase {
     @Override
     public void execute() {
         Robot.indexer.setMidMotorSpeed(1.0);
-        Robot.collector.setSpeedPercentEntry(0.6);
+        Robot.collector.setSpeedPercentEntry(0.8);
     }
 
     // Returns true when the command should end.

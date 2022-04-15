@@ -59,9 +59,13 @@ public final class Constants {
 //        public static final double RPM_LOW = 7500; // Currently only used in LimelightAutoAim
 //        public static final double RPM_HIGH = 10000; // Currently only used in LimelightAutoAim
         public static final double RPM_FENDER_LOWER_HUB = 3500;
-        public static final double RPM_FENDER_UPPER_HUB = 6800;
+
+        // 6400 was good head-on, but bounced on the rim when misaligned or pressed against a ball
+        // 6800 tended to bounce off the wheel when head-on, but great when misaligned
+        // 7200 was the same as 6800, but hits the wheel harder, so it more likely to bounce out
+        public static final double RPM_FENDER_UPPER_HUB = 6600; // 6800 as Midwest
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000;
-        public static final double RPM_LAUNCHPAD = 8000;
+        public static final double RPM_LAUNCHPAD = 8400; // 8000 at Midwest
         public static final double RPM_FAR_COURT = 10800;
         public static final double RPM_RING_UPPER_HUB        = 7500;
         public static final double RPM_AUTO_UPPER_HUB        = 7500 + 300; // Middle side auto ring shot, slightly long of ring
