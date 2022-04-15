@@ -12,6 +12,7 @@ import team.gif.robot.commands.autos.FiveBallTerminalRight;
 import team.gif.robot.commands.autos.FiveBallTerminalRightLimelight;
 import team.gif.robot.commands.autos.FourBallTerminalRight;
 import team.gif.robot.commands.autos.Mobility;
+import team.gif.robot.commands.autos.TwoBallLeftOpp1Ball;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBallLeft;
@@ -53,6 +54,7 @@ public class RobotContainer {
         autoCommands.put(autoMode.MOBILITY, new Mobility());
         autoCommands.put(autoMode.TWO_BALL_LEFT, new TwoBallLeft());
         autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_2_BALL,new TwoBallLeftOpp2Ball());
+        autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_1_BALL, new TwoBallLeftOpp1Ball());
         autoCommands.put(autoMode.TWO_BALL_RIGHT, new TwoBallRight());
         autoCommands.put(autoMode.TWO_BALL_MIDDLE, new TwoBallMiddle());
         autoCommands.put(autoMode.THREE_BALL_TERMINAL_MIDDLE, new ThreeBallTerminalMiddle());

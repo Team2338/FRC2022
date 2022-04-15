@@ -39,6 +39,7 @@ public class UiSmartDashboard {
         // Auto selections
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
+        autoModeChooser.addOption("Two Ball Left Opp 1 Ball", autoMode.TWO_BALL_LEFT_OPP_1_BALL);
         autoModeChooser.addOption("Two Ball Left Opp 2 Ball", autoMode.TWO_BALL_LEFT_OPP_2_BALL);
         autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);
         autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
