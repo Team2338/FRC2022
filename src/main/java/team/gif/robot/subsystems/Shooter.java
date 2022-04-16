@@ -20,8 +20,8 @@ public class Shooter extends SubsystemBase {
         super();
         shooterMotor.configFactoryDefault();
 
-        shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 20);
-        shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 20);
+        shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_4_AinTempVbat, 40);
+        shooterMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 40);
 
         shooterMotor.setNeutralMode(NeutralMode.Coast);
 
