@@ -20,73 +20,88 @@ import java.util.List;
 
 public class TwoBallLeftOpp1Ball extends SequentialCommandGroup {
 
-  public Command reverse() {
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        List.of(
-            new Pose2dFeet().set(0.0, 0.0, 0.0),
-            new Pose2dFeet().set(-4.0, 0.0, 0.0)
-        ),
-        RobotTrajectory.getInstance().configReverseSlow
-    );
-    // Create the command using the trajectory
-    RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
-    // Run path following command, then stop at the end.
-    return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
-  }
+    public Command reverse() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(0.0, 0.0, 0.0),
+                new Pose2dFeet().set(-4.0, 0.0, 0.0)
+            ),
+        RobotTrajectory.getInstance().configReverseSuperSlow
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
 
-  public Command oppOneBall() {
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        List.of(
-            new Pose2dFeet().set(-4.0, 0.0, 0.0),
-            new Pose2dFeet().set(-4.25, 3.5, 90.0)
-        ),
-        RobotTrajectory.getInstance().configReverseSlow
-    );
-    // Create the command using the trajectory
-    RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
-    // Run path following command, then stop at the end.
-    return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
-  }
+    public Command oppOneBall() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-4.0, 0.0, 0.0),
+                new Pose2dFeet().set(-4.25, 3.5, 90.0)
+            ),
+            RobotTrajectory.getInstance().configReverseSlow
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
 
-  public Command shootingLocation() {
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-        List.of(
-            new Pose2dFeet().set(-4.25, 3.5, 90.0),
-            new Pose2dFeet().set(-6.0,0,146) // change values to turn and shoot
-        ),
-        RobotTrajectory.getInstance().configForward
-    );
-    // Create the command using the trajectory
-    RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
-    // Run path following command, then stop at the end.
-    return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
-  }
+    public Command shootingLocation() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-4.25, 3.5, 90.0),
+                new Pose2dFeet().set(-6.0,0,165) // change values to turn and shoot
+            ),
+            RobotTrajectory.getInstance().configForward
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
+    public Command startingLocation() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            List.of(
+                new Pose2dFeet().set(-6.0, 0, 165),
+                new Pose2dFeet().set(-4.0,-3,-60)
+            ),
+            RobotTrajectory.getInstance().configReverseSlow
+        );
+        // Create the command using the trajectory
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
 
 
-
-  public TwoBallLeftOpp1Ball() {
-    addCommands(
-        new ParallelDeadlineGroup(
-            new CollectorRun().withTimeout(2),
-            new CollectorDown(),
-            reverse(),
-            new HoodUp(),
-            new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
-        ),
-        new ParallelDeadlineGroup(
-            new RapidFire().withTimeout(1.4),
-            new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
-        ),
-        new ParallelDeadlineGroup(
-            oppOneBall(),
+    public TwoBallLeftOpp1Ball() {
+        addCommands(
+            new ParallelDeadlineGroup(
+                new CollectorRun().withTimeout(2),
+                new CollectorDown(),
+                reverse(),
+                new HoodUp(),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
+            ),
+            new ParallelDeadlineGroup(
+                new RapidFire().withTimeout(1.4),
+                new CollectorRun(),
+                new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB-400)
+            ),
+            new ParallelDeadlineGroup(
+                oppOneBall(),
             new CollectorRun()
-        ),
-        new CollectorRun().withTimeout(0.5),
-        shootingLocation(), //position to shoot ball away
-        new ParallelDeadlineGroup(
-            new RapidFire(),
-            new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED)
-        )
-    );
-  }
+            ),
+            new CollectorRun().withTimeout(0.5),
+            shootingLocation(), //position to shoot ball away
+            new ParallelDeadlineGroup(
+                new RapidFire().withTimeout(3),
+                new RevFlywheel(Constants.Shooter.RPM_EJECT_OPP_BALL)
+            ),
+            startingLocation()
+        );
+    }
 }

@@ -53,7 +53,7 @@ public class LimelightBallDetection extends CommandBase {
         // The current ball should go below a yOffset of -10 degrees
         // then if another ball is then detected which is at a higher yOffset
         // we know to stop
-//        System.out.println(firstCargoPassedThreshold + "     " + yOffset + " " + count + settleCount);
+        System.out.println(firstCargoPassedThreshold + "     " + yOffset + " " + ++settleCount);
         if (yOffset < -10) { // -10 is the angle we set as locking onto a (or the first) cargo
             ++inThresholdCount;
             if (inThresholdCount > 2) { // prevents jitter

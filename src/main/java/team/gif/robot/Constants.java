@@ -39,6 +39,7 @@ public final class Constants {
         public static final double kStdSpeedMetersPerSecond = 3.8;
         public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
         public static final double kSlowSpeedMetersPerSecond = 2.3; // 1.5
+        public static final double kSuperSlowSpeedMetersPerSecond = 1.5;
         public static final double kSlowAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumSpeedMetersPerSecond = 2.3;
@@ -64,6 +65,7 @@ public final class Constants {
         // 6800 tended to bounce off the wheel when head-on, but great when misaligned
         // 7200 was the same as 6800, but hits the wheel harder, so it more likely to bounce out
         public static final double RPM_FENDER_UPPER_HUB = 6600; // 6800 as Midwest
+        public static final double RPM_EJECT_OPP_BALL = 3300;
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000;
         public static final double RPM_LAUNCHPAD = 8400; // 8000 at Midwest
         public static final double RPM_FAR_COURT = 10800;

@@ -8,6 +8,7 @@ import team.gif.robot.Robot;
 public class EjectSingleCargo extends CommandBase {
 
     private int counter;
+    private int failSafeCounter;
 
     public EjectSingleCargo() {
         super();
@@ -22,6 +23,7 @@ public class EjectSingleCargo extends CommandBase {
         counter=0;
         Robot.hood.setHoodUp();
         Robot.shooter.setSpeedPID(Constants.Shooter.RPM_FENDER_LOWER_HUB);
+        failSafeCounter = 0;
     }
 
     @Override
@@ -35,6 +37,12 @@ public class EjectSingleCargo extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        // only run for 3 seconds max. This can happen if the battery is too low
+        // and is not hitting target shooter speed
+        if (failSafeCounter++ > 150) { // 50 is 1 sec
+            return false;
+        }
+
         // Only run if the shooter is running
         // Without this, the belt runs regardless of the shooter state and
         // could possibly jam a ball between the running belt and the stopped shooter.

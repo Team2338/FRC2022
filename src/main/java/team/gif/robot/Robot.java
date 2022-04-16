@@ -186,6 +186,8 @@ public class Robot extends TimedRobot {
 
         compressor.disable();
 
+        collectorLimelight.setPipeline( (DriverStation.getAlliance() == DriverStation.Alliance.Red) ? 0 : 1);
+
         runAutoScheduler = true;
     }
 
