@@ -3,6 +3,7 @@ package team.gif.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import team.gif.robot.Globals;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.drivers.Limelight;
 
 public class RevFlywheel extends CommandBase {
     private final double setpoint;
@@ -15,7 +16,7 @@ public class RevFlywheel extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.limelight.setLEDMode(3);
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON);
         Robot.shooter.setSpeedPID(setpoint);
         Globals.shooterRunning = true;
     }
@@ -23,7 +24,7 @@ public class RevFlywheel extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        Robot.limelight.setLEDMode(3);
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_ON);
     }
 
     // Returns true when the command should end.
@@ -36,7 +37,7 @@ public class RevFlywheel extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         //Robot.shooter.setSpeedPercent(0);
-        Robot.limelight.setLEDMode(0);//force off
+        Robot.shooterLimelight.setLEDMode(Limelight.LED_OFF);//force off
 
         // This is used to inform RapidFire to stop running the belt.
         // Otherwise, RapidFire will continue to run the belt after the

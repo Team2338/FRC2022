@@ -39,6 +39,7 @@ public final class Constants {
         public static final double kStdSpeedMetersPerSecond = 3.8;
         public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
         public static final double kSlowSpeedMetersPerSecond = 2.3; // 1.5
+        public static final double kSuperSlowSpeedMetersPerSecond = 1.5;
         public static final double kSlowAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumSpeedMetersPerSecond = 2.3;
@@ -59,25 +60,40 @@ public final class Constants {
 //        public static final double RPM_LOW = 7500; // Currently only used in LimelightAutoAim
 //        public static final double RPM_HIGH = 10000; // Currently only used in LimelightAutoAim
         public static final double RPM_FENDER_LOWER_HUB = 3500;
-        public static final double RPM_FENDER_UPPER_HUB = 6800;
+
+        // 6400 was good head-on, but bounced on the rim when misaligned or pressed against a ball
+        // 6800 tended to bounce off the wheel when head-on, but great when misaligned
+        // 7200 was the same as 6800, but hits the wheel harder, so it more likely to bounce out
+        public static final double RPM_FENDER_UPPER_HUB = 6600; // 6800 as Midwest
+        public static final double RPM_EJECT_OPP_BALL = 3300;
         public static final double RPM_FENDER_LOWER_HUB_BLOCKED = 5000;
-        public static final double RPM_LAUNCHPAD = 8000;
+        public static final double RPM_LAUNCHPAD = 8400; // 8000 at Midwest
         public static final double RPM_FAR_COURT = 10800;
         public static final double RPM_RING_UPPER_HUB        = 7500;
         public static final double RPM_AUTO_UPPER_HUB        = 7500 + 300; // Middle side auto ring shot, slightly long of ring
         public static final double RPM_AUTO_5_BALL_UPPER_HUB = 7500 + 600; // 5 ball far auto ring shot, long of ring
+        public static final double RPM_AUTO_5_BALL_LL_UPPER_HUB = 7500 + 500; // 5 ball with Limelight far auto ring shot, long of ring
         public static final double RPM_AUTO_RIGHT_RING       = 7100;       // Right side auto ring shot, short of ring
 
         public static final double FLYWHEEL_TOLERANCE = 150;
 
         // Limelight
-        public static final double klP = 1;
+//        public static final double klP = 1;
 
-        public static final double LIMELIGHT_ANGLE = 30.0;
-        public static final double LIMELIGHT_HEIGHT = 36.0; // 36.5
-        public static final double UPPER_HUB_HEIGHT = 96.0;
+//        public static final double LIMELIGHT_ANGLE = 30.0;
+//        public static final double LIMELIGHT_HEIGHT = 36.0; // 36.5
+//        public static final double UPPER_HUB_HEIGHT = 96.0;
 
         public static final double MAX_PIVOT_VOLTS = 4.0; // 3.3;
+        public static final double MIN_FRICTION_VOLTS = 1.5;
+
+        public static final double MAX_PIVOT_VOLTS_BALL = 3;
+        public static final double MIN_PIVOT_VOLTS_BALL = 0;
+
+        public static final double MIN_REVERSE_VOLTS = 1.5;
+        public static final double MAX_REVERSE_VOLTS = 5.0;
+
+        public static final double CARGO_DETECT_MINIMUM = 17.0;
     }
 
     public static class Indexer {

@@ -52,9 +52,9 @@ public class TwoBallLeft extends SequentialCommandGroup {
             ),
 
             // This is the backup action in case the limelight isn't working
-            new WaitUntilCommand(Robot.limelight::noTarget),
+            new WaitUntilCommand(Robot.shooterLimelight::noTarget),
             new ParallelDeadlineGroup(
-                new RapidFire(),
+                new RapidFire().withTimeout(5),
                 new RevFlywheel(Constants.Shooter.RPM_RING_UPPER_HUB)
             )
         );

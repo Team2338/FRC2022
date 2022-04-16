@@ -25,7 +25,7 @@ public class DriveArcade extends CommandBase {
         /*
          * Arcade Drive
          */
-        double rotation = Robot.oi.driver.getRightX();
+        double rotation = Robot.oi.driver.getRightX() * 0.95 ;
         double currSpeed = Robot.oi.driver.getLeftY();
         if (Robot.isCompBot) {
             Robot.drivetrain.driveArcade(rotation, -currSpeed);

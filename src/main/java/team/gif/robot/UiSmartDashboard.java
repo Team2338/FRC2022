@@ -33,22 +33,25 @@ public class UiSmartDashboard {
         tab.add("BotHead", (x) -> {
             x.setSmartDashboardType("Gyro");
             x.addDoubleProperty("Value", () -> Pigeon.getInstance().getCompassHeading(), null);
-        });
+        })
+        .withPosition(5, 0);
 
         // Auto selections
+        autoModeChooser.addOption("Four+ Ball Term Right LL", autoMode.FIVE_BALL_TERMINAL_RIGHT_LIMELIGHT);
+        autoModeChooser.addOption("Four+ Ball Term Right Path", autoMode.FIVE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
+        autoModeChooser.addOption("Two Ball Left Opp 1 Ball", autoMode.TWO_BALL_LEFT_OPP_1_BALL);
         autoModeChooser.addOption("Two Ball Left Opp 2 Ball", autoMode.TWO_BALL_LEFT_OPP_2_BALL);
         autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);
         autoModeChooser.addOption("Two Ball Right", autoMode.TWO_BALL_RIGHT);
         autoModeChooser.addOption("Three+ Ball Terminal Middle", autoMode.THREE_BALL_TERMINAL_MIDDLE);
         autoModeChooser.addOption("Three+ Ball Terminal Right", autoMode.THREE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Four Ball Terminal Right", autoMode.FOUR_BALL_TERMINAL_RIGHT);
-        autoModeChooser.addOption("Four+ Ball Terminal Right", autoMode.FIVE_BALL_TERMINAL_RIGHT);
 
         tab.add("Auto Select", autoModeChooser)
             .withWidget(BuiltInWidgets.kComboBoxChooser)
-            .withPosition(8, 2)
+            .withPosition(7, 1)
             .withSize(2, 1);
 
         // Auto delay
@@ -70,13 +73,21 @@ public class UiSmartDashboard {
         delayChooser.addOption("15", delay.DELAY_15);
 
         tab.add("Delay", delayChooser)
-            .withPosition(7, 2)
+            .withPosition(7, 0)
             .withSize(1, 1);
 
         SmartDashboard.putData("Climber", new ResetClimber());
-        SmartDashboard.putData("LED", new LimelightLED());
         SmartDashboard.putData("Reset", new ResetHeading());
         SmartDashboard.putData("Toggle", new LimelightToggle());
+
+        tab.addNumber("Shooter Speed", shooter::getSpeed)
+                .withPosition(1,0)
+                .withSize(1,1);
+
+        tab.add("ShooterLED", new LimelightLED())
+                .withPosition(0, 0)
+                .withSize(1, 1);
+//        SmartDashboard.putData("LED", new LimelightLED());
     }
 
     public void updateUI() {
@@ -87,7 +98,7 @@ public class UiSmartDashboard {
         SmartDashboard.putBoolean("Enable Indexer", Globals.indexerEnabled);
 
         // Shooter
-        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
+//        SmartDashboard.putNumber("Shooter Speed", shooter.getSpeed());
 
         // Climber
         SmartDashboard.putString("Climber Position", climber.getPosition_Shuffleboard());
@@ -100,6 +111,7 @@ public class UiSmartDashboard {
         SmartDashboard.putNumber("Temp Right1", drivetrain.getTemperatureRight1());
         SmartDashboard.putNumber("Temp Right2", drivetrain.getTemperatureRight2());
 
-        SmartDashboard.putBoolean("Limelight", Globals.limeLightEnabled);
+        SmartDashboard.putBoolean("LimelightAim", Globals.shooterLimelightEnabled);
+        SmartDashboard.putBoolean("LimelightBallsMode",Globals.collectorLimelightBallMode);
     }
 }

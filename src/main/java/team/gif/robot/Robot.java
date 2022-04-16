@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -41,7 +42,8 @@ public class Robot extends TimedRobot {
 
     private Command autonomousCommand;
     private RobotContainer robotContainer;
-    public static Limelight limelight = null;
+    public static Limelight shooterLimelight = null;
+    public static Limelight collectorLimelight = null;
     public static Drivetrain drivetrain = null;
     private boolean runAutoScheduler = true;
     public static OI oi;
@@ -74,7 +76,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        limelight = new Limelight();
+        // Sets which limelight goes to which commands
+        shooterLimelight = new Limelight("limelight");
+        collectorLimelight = new Limelight("limelight-rear");
 
         pdp = new PowerDistribution();
         drivetrain = new Drivetrain();
@@ -96,7 +100,7 @@ public class Robot extends TimedRobot {
         drivetrain.setDefaultCommand(arcadeDrive);
         climber.setDefaultCommand(new ClimberManualControl());
 
-        limelight.setLEDMode(1);//force off
+
 
         oi = new OI();
 //        ui = new UI();
@@ -119,7 +123,7 @@ public class Robot extends TimedRobot {
         collectorPneumatics.collectorRaise();
         climberPneumatics.setFangsIn();
         Globals.climbingActive = false;
-        Globals.limeLightEnabled = true;
+        Globals.shooterLimelightEnabled = true;
     }
 
     /**
@@ -159,6 +163,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        Globals.collectorLimelightBallMode = DriverStation.getAlliance() == DriverStation.Alliance.Red ? true : false; // Sets color to detect at start of match
+
         eventLogger.addEvent("AUTO", "Auto Init");
         drivetrain.resetPigeon();
         drivetrain.resetEncoders();
@@ -175,9 +181,12 @@ public class Robot extends TimedRobot {
         elapsedTime.reset();
         elapsedTime.start();
 
-        limelight.setLEDMode(1);//turn off during autonomous
+        shooterLimelight.setLEDMode(Limelight.LED_ON);//turn on during autonomous
+        collectorLimelight.setCamMode(Limelight.MODE_TRACKING); //Set to image processing mode
 
         compressor.disable();
+
+        collectorLimelight.setPipeline( (DriverStation.getAlliance() == DriverStation.Alliance.Red) ? 0 : 1);
 
         runAutoScheduler = true;
     }
@@ -196,12 +205,16 @@ public class Robot extends TimedRobot {
             runAutoScheduler = false;
             elapsedTime.stop();
         }
+
+        telemetryLogger.run();
     }
 
     @Override
     public void teleopInit() {
 
-        limelight.setLEDMode(3); // turn LED on for entire teleop
+        shooterLimelight.setLEDMode(Limelight.LED_ON); // turn LED on for entire teleop
+        collectorLimelight.setCamMode(Limelight.MODE_CAMERA); // Turns on Driver Vision for back limelight
+        collectorLimelight.setLEDMode(Limelight.LED_OFF); // Turns off back LEDs
 
         Globals.autonomousModeActive = false;
         // This makes sure that the autonomous stops running when
@@ -248,14 +261,14 @@ public class Robot extends TimedRobot {
         // Shooter
         telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
         telemetryLogger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
-        telemetryLogger.addMetric("Shooter_Percent", shooter::getOutputPercent);
+//        telemetryLogger.addMetric("Shooter_Percent", shooter::getOutputPercent);
         telemetryLogger.addMetric("Shooter_Voltage_In", shooter::getInputVoltage);
         telemetryLogger.addMetric("Shooter_Voltage_Out", shooter::getOutputVoltage);
         telemetryLogger.addMetric("Shooter_Current_In", shooter::getInputCurrent);
-        telemetryLogger.addMetric("Shooter_Current_Out", shooter::getOutputCurrent);
+//        telemetryLogger.addMetric("Shooter_Current_Out", shooter::getOutputCurrent);
         telemetryLogger.addMetric("Shooter_Gain_P", shooter::getGainP);
-        telemetryLogger.addMetric("Shooter_Gain_I", shooter::getGainI);
-        telemetryLogger.addMetric("Shooter_Gain_D", shooter::getGainD);
+//        telemetryLogger.addMetric("Shooter_Gain_I", shooter::getGainI);
+//        telemetryLogger.addMetric("Shooter_Gain_D", shooter::getGainD);
         telemetryLogger.addMetric("Shooter_Gain_F", shooter::getGainF);
 
         // Drivetrain
@@ -275,9 +288,9 @@ public class Robot extends TimedRobot {
         telemetryLogger.addMetric("DriveRight2_Current_In", drivetrain::getInputCurrentR2);
 
         telemetryLogger.addMetric("DriveLeft1_Current_Out", drivetrain::getOutputCurrentL1);
-        telemetryLogger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
+//        telemetryLogger.addMetric("DriveLeft2_Current_Out", drivetrain::getOutputCurrentL2);
         telemetryLogger.addMetric("DriveRight1_Current_Out", drivetrain::getOutputCurrentR1);
-        telemetryLogger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
+//        telemetryLogger.addMetric("DriveRight2_Current_Out", drivetrain::getOutputCurrentR2);
 
         telemetryLogger.addMetric("DriveLeft1_Percent", drivetrain::getOutputPercentL1);
         telemetryLogger.addMetric("DriveLeft2_Percent", drivetrain::getOutputPercentL2);
@@ -289,7 +302,7 @@ public class Robot extends TimedRobot {
 
         // PDP and Compressor
         telemetryLogger.addMetric("PDP_Voltage", pdp::getVoltage);
-        telemetryLogger.addMetric("PDP_Current_DriveLeft1", () -> pdp.getCurrent(0));
+//        telemetryLogger.addMetric("PDP_Current_DriveLeft1", () -> pdp.getCurrent(0));
         telemetryLogger.addMetric("PDP_Total_Current", pdp::getTotalCurrent);
         telemetryLogger.addMetric("Compressor_State", () -> compressor.enabled() ? 1 : 0);
 

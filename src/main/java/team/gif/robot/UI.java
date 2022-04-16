@@ -21,7 +21,6 @@ public class UI {
 	
 	public static SendableChooser<autoMode> autoModeChooser = new SendableChooser<>();
 	public static SendableChooser<delay> delayChooser = new SendableChooser<>();
-	
 	/*
 	 * All the shuffleboard entry
 	 */
@@ -65,10 +64,12 @@ public class UI {
 			.withPosition(9, 0)
 			.withSize(1, 1);
 
-//        shuffleboardTab.addCamera("limelight","limelight","mjpg:http://10.23.38.95:5800")
+//		shuffleboardTab.addCamera("shooterLL","shooterLL","mjpg:http://10.23.38.95:5800")
 //            .withPosition(0,0)
 //            .withSize(4,4);
-		
+//		shuffleboardTab.addCamera("collectorLL","collectorLL","mjpg:https://10.23.38.12:5800")
+//			.withPosition(5,0)
+//			.withSize(4,4);
 		// Pigeon
 		shuffleboardTab.add("Heading", (x) -> {
 				x.setSmartDashboardType("Gyro");

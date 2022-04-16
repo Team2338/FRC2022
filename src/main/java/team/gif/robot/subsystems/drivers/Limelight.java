@@ -8,6 +8,14 @@ public class Limelight {
 
     private final NetworkTable table;
 
+    public static final int LED_PIPELINE = 0;
+    public static final int LED_OFF      = 1;
+    public static final int LED_BLINK    = 2;
+    public static final int LED_ON       = 3;
+
+    public static final int MODE_TRACKING  = 0;
+    public static final int MODE_CAMERA    = 1;
+
     /**
      * Create a new limelight object.
      *
@@ -16,7 +24,7 @@ public class Limelight {
     public Limelight(String key) {
         System.out.println("limelight init");
         table = NetworkTableInstance.getDefault().getTable(key);
-        setLEDMode(3);
+        setLEDMode(Limelight.LED_ON);
     }
 
     /**
@@ -112,7 +120,7 @@ public class Limelight {
      *     and can't use limelight::!hasTarget
      */
     public boolean noTarget() {
-        return !hasTarget() || !Globals.limeLightEnabled;
+        return !hasTarget() || !Globals.shooterLimelightEnabled;
     }
 
     /**

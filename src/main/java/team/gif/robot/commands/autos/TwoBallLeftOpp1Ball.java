@@ -6,21 +6,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.lib.Pose2dFeet;
 import team.gif.lib.RobotTrajectory;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorDown;
 import team.gif.robot.commands.collector.CollectorRun;
-import team.gif.robot.commands.collector.CollectorUp;
 import team.gif.robot.commands.hood.HoodUp;
 import team.gif.robot.commands.shooter.RapidFire;
 import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
+public class TwoBallLeftOpp1Ball extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -28,7 +26,7 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
                 new Pose2dFeet().set(0.0, 0.0, 0.0),
                 new Pose2dFeet().set(-4.0, 0.0, 0.0)
             ),
-            RobotTrajectory.getInstance().configReverseSlow
+        RobotTrajectory.getInstance().configReverseSuperSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -50,11 +48,11 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command oppTwoBallPart1() {
+    public Command shootingLocation() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-4.25, 3.5, 90.0),
-                new Pose2dFeet().set(-6.0,0,137) // 2 point turn
+                new Pose2dFeet().set(-6.0,0,165) // change values to turn and shoot
             ),
             RobotTrajectory.getInstance().configForward
         );
@@ -64,14 +62,13 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command oppTwoBall() {
+    public Command startingLocation() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(-6.0, 0, 137.0),
-                new Pose2dFeet().set(0.0, -1.0, -133), // Apex of turn
-                new Pose2dFeet().set(-1.5, -8.5, -43.0)
+                new Pose2dFeet().set(-6.0, 0, 165),
+                new Pose2dFeet().set(-4.0,-3,-60)
             ),
-            RobotTrajectory.getInstance().configReverseMediumOpp
+            RobotTrajectory.getInstance().configReverseSlow
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
@@ -79,24 +76,11 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
-    public Command oppTwoBallShoot() {
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            List.of(
-                new Pose2dFeet().set(-1.5, -8.5, -43.0),
-                new Pose2dFeet().set(-3.0, -6.0, 156.0)
-            ),
-            RobotTrajectory.getInstance().configForwardFast
-        );
-        // Create the command using the trajectory
-        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
-        // Run path following command, then stop at the end.
-        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
-    }
 
-    public TwoBallLeftOpp2Ball() {
+    public TwoBallLeftOpp1Ball() {
         addCommands(
             new ParallelDeadlineGroup(
-                new CollectorRun().withTimeout(2.0),
+                new CollectorRun().withTimeout(2),
                 new CollectorDown(),
                 reverse(),
                 new HoodUp(),
@@ -109,24 +93,15 @@ public class TwoBallLeftOpp2Ball extends SequentialCommandGroup {
             ),
             new ParallelDeadlineGroup(
                 oppOneBall(),
-                new CollectorRun()
+            new CollectorRun()
             ),
             new CollectorRun().withTimeout(0.5),
-            oppTwoBallPart1(), // drive forward and 2 point turn
-            new CollectorUp(),
+            shootingLocation(), //position to shoot ball away
             new ParallelDeadlineGroup(
-                oppTwoBall(),
-                new WaitCommand(2).andThen(new CollectorDown()),
-                new WaitCommand(2.3).andThen(new CollectorRun())
+                new RapidFire().withTimeout(3),
+                new RevFlywheel(Constants.Shooter.RPM_EJECT_OPP_BALL)
             ),
-            new ParallelDeadlineGroup(
-                oppTwoBallShoot(),
-                new CollectorRun()
-            ),
-            new ParallelDeadlineGroup(
-                new RapidFire(),
-                new RevFlywheel(Constants.Shooter.RPM_FENDER_LOWER_HUB_BLOCKED)
-            )
+            startingLocation()
         );
     }
 }

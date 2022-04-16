@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -39,8 +40,8 @@ public class Drivetrain extends SubsystemBase {
     private static Pigeon pigeon;
     private static int pigeonErrorCount;
 
-    private static final int MAX_SUPPLY_CURRENT_AMPS = 15;
-    private static final int MAX_STATOR_CURRENT_AMPS = 80;
+    private static final int MAX_SUPPLY_CURRENT_AMPS = 20; // 15
+    private static final int MAX_STATOR_CURRENT_AMPS = 90; // 80
     private static final double OPEN_LOOP_RAMP_SECONDS = 0.3;
 
     /*    public static DifferentialDriveKinematics drivekinematics;
@@ -105,6 +106,27 @@ public class Drivetrain extends SubsystemBase {
         leftTalon2.setInverted(false);
         rightTalon1.setInverted(false);
         rightTalon2.setInverted(false);
+
+        /*leftTalon1.configVoltageCompSaturation(10);
+        leftTalon2.configVoltageCompSaturation(10);
+        rightTalon1.configVoltageCompSaturation(10);
+        rightTalon1.configVoltageCompSaturation(10);
+
+        leftTalon1.enableVoltageCompensation(true);
+        leftTalon2.enableVoltageCompensation(true);
+        rightTalon1.enableVoltageCompensation(true);
+        rightTalon2.enableVoltageCompensation(true);*/
+
+        leftTalon1.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+        leftTalon2.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+        rightTalon1.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+        rightTalon2.configVelocityMeasurementPeriod(SensorVelocityMeasPeriod.Period_1Ms);
+
+        leftTalon1.configVelocityMeasurementWindow(32);
+        leftTalon2.configVelocityMeasurementWindow(32);
+        rightTalon1.configVelocityMeasurementWindow(32);
+        rightTalon2.configVelocityMeasurementWindow(32);
+
 
         pigeon = new Pigeon();
 
@@ -232,7 +254,7 @@ public class Drivetrain extends SubsystemBase {
     public double getRightEncoderPos_Ticks() {
         return rightEncoderTalon.getSelectedSensorPosition();
     }
-    
+
     public double getLeftEncoderVelocity_Ticks() {
         return leftEncoderTalon.getSelectedSensorVelocity();
     }
