@@ -37,10 +37,12 @@ public class UiSmartDashboard {
         .withPosition(5, 0);
 
         // Auto selections
+        autoModeChooser.addOption("Five Ball Limelight", autoMode.FIVE_BALL_LIMELIGHT);
         autoModeChooser.addOption("Four+ Ball Term Right LL", autoMode.FIVE_BALL_TERMINAL_RIGHT_LIMELIGHT);
         autoModeChooser.addOption("Four+ Ball Term Right Path", autoMode.FIVE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
+        autoModeChooser.addOption("Two Ball Left Opp 1 Ball short", autoMode.TWO_BALL_LEFT_OPP_1_BALL_SHORT);
         autoModeChooser.addOption("Two Ball Left Opp 1 Ball", autoMode.TWO_BALL_LEFT_OPP_1_BALL);
         autoModeChooser.addOption("Two Ball Left Opp 2 Ball", autoMode.TWO_BALL_LEFT_OPP_2_BALL);
         autoModeChooser.addOption("Two Ball Middle", autoMode.TWO_BALL_MIDDLE);

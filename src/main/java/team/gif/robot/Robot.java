@@ -212,6 +212,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
 
+        collectorLimelight.setSnapshotMode(0);
         shooterLimelight.setLEDMode(Limelight.LED_ON); // turn LED on for entire teleop
         collectorLimelight.setCamMode(Limelight.MODE_CAMERA); // Turns on Driver Vision for back limelight
         collectorLimelight.setLEDMode(Limelight.LED_OFF); // Turns off back LEDs
