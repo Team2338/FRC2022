@@ -17,8 +17,10 @@ import team.gif.robot.commands.autos.TwoBallLeftOpp1Ball;
 import team.gif.robot.commands.autos.ThreeBallTerminalMiddle;
 import team.gif.robot.commands.autos.ThreeBallTerminalRight;
 import team.gif.robot.commands.autos.TwoBallLeft;
+import team.gif.robot.commands.autos.TwoBallLeftOpp1BallKeep;
 import team.gif.robot.commands.autos.TwoBallLeftOpp1BallShort;
 import team.gif.robot.commands.autos.TwoBallLeftOpp2Ball;
+import team.gif.robot.commands.autos.TwoBallLeftOpp2BallKeep;
 import team.gif.robot.commands.autos.TwoBallMiddle;
 import team.gif.robot.commands.autos.TwoBallRight;
 
@@ -57,6 +59,8 @@ public class RobotContainer {
         autoCommands.put(autoMode.TWO_BALL_LEFT, new TwoBallLeft());
         autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_2_BALL,new TwoBallLeftOpp2Ball());
         autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_1_BALL, new TwoBallLeftOpp1Ball());
+        autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_2_BALL_KEEP,new TwoBallLeftOpp2BallKeep());
+        autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_1_BALL_KEEP, new TwoBallLeftOpp1BallKeep());
         autoCommands.put(autoMode.TWO_BALL_LEFT_OPP_1_BALL_SHORT, new TwoBallLeftOpp1BallShort());
         autoCommands.put(autoMode.TWO_BALL_RIGHT, new TwoBallRight());
         autoCommands.put(autoMode.TWO_BALL_MIDDLE, new TwoBallMiddle());
