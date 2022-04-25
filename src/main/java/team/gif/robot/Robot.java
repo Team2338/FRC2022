@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -258,6 +257,10 @@ public class Robot extends TimedRobot {
     }
 
     public void addMetricsToLogger() {
+        telemetryLogger.addMetric("TimeStamp",Timer::getFPGATimestamp);
+        telemetryLogger.addMetric("MatchInfo",DriverStation::getMatchNumber);
+        telemetryLogger.addMetric("MatchTime",DriverStation::getMatchTime);
+
         // Shooter
         telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
         telemetryLogger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
@@ -319,3 +322,4 @@ public class Robot extends TimedRobot {
         telemetryLogger.addMetric("Driver_Right_X", () -> Robot.oi.driver.getRightX());
     }
 }
+

@@ -23,7 +23,7 @@ public class EventFileLogger extends FileLogger {
             return;
         }
 
-        String line = String.format("[%s] %s - %s", mode, getCurrentTime(), event);
+        String line = String.format("%s,[%s],%s", getCurrentTime(), mode, event);
 
         try {
             fw.append(line).append("\n");
