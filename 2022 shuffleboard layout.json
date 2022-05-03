@@ -220,17 +220,6 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "0,4": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Toggle",
-              "_title": "Toggle"
-            }
-          },
           "10,2": {
             "size": [
               1,
@@ -244,7 +233,7 @@
                 {
                   "_type": "Boolean Box",
                   "_source0": "network_table:///SmartDashboard/LimelightAim",
-                  "_title": "",
+                  "_title": "LimelightAim",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
                 },
@@ -252,6 +241,29 @@
                   "_type": "Command",
                   "_source0": "network_table:///SmartDashboard/Toggle",
                   "_title": "Toggle"
+                }
+              ]
+            }
+          },
+          "9,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "Timers",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Time",
+                  "_title": "FPGATime"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Timer",
+                  "_title": "MatchTime"
                 }
               ]
             }
