@@ -1,5 +1,6 @@
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -110,6 +111,7 @@ public class UiSmartDashboard {
 
         // Pressure Sensor
         SmartDashboard.putNumber("Pressure", compressor.getPressure());
+        SmartDashboard.putNumber("Time", Timer.getFPGATimestamp());
 
         SmartDashboard.putNumber("Temp Left1", drivetrain.getTemperatureLeft1());
         SmartDashboard.putNumber("Temp Left2", drivetrain.getTemperatureLeft2());

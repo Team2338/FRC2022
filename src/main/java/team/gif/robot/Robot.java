@@ -4,7 +4,6 @@
 
 package team.gif.robot;
 
-import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -68,7 +67,6 @@ public class Robot extends TimedRobot {
 
     public static DriveArcade arcadeDrive;
 //    public static DriveTank tankDrive;
-
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -259,6 +257,11 @@ public class Robot extends TimedRobot {
     }
 
     public void addMetricsToLogger() {
+        telemetryLogger.addMetric("TimeStamp",Timer::getFPGATimestamp);
+        telemetryLogger.addMetric("MatchNumber",DriverStation::getMatchNumber);
+        telemetryLogger.addMetric("MatchTime",DriverStation::getMatchTime);
+        telemetryLogger.addMetric("GameData",DriverStation::getGameSpecificMessage);
+
         // Shooter
         telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
         telemetryLogger.addMetric("Shooter_Acceleration", shooter::getAcceleration);
@@ -320,3 +323,4 @@ public class Robot extends TimedRobot {
         telemetryLogger.addMetric("Driver_Right_X", () -> Robot.oi.driver.getRightX());
     }
 }
+
