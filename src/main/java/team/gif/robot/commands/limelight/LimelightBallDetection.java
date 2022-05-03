@@ -91,6 +91,7 @@ public class LimelightBallDetection extends CommandBase {
         if (Globals.autonomousModeActive && (Robot.collectorLimelight.noTarget())) {
             if (settleCount > 10) { // 1 second = 50 ... make sure we give the robot time to lock on
                 System.out.println("No cargo target - aborting");
+                Robot.collectorLimelight.setSnapshotMode(1);
                 return true;
             }
         }

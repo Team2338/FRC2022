@@ -18,7 +18,7 @@ import team.gif.robot.commands.shooter.RevFlywheel;
 
 import java.util.List;
 
-public class TwoBallLeftOpp1Ball extends SequentialCommandGroup {
+public class TwoBallLeftOpp1BallShort extends SequentialCommandGroup {
 
     public Command reverse() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -77,7 +77,7 @@ public class TwoBallLeftOpp1Ball extends SequentialCommandGroup {
     }
 
 
-    public TwoBallLeftOpp1Ball() {
+    public TwoBallLeftOpp1BallShort() {
         addCommands(
             new ParallelDeadlineGroup(
                 new CollectorRun().withTimeout(2),
@@ -100,8 +100,7 @@ public class TwoBallLeftOpp1Ball extends SequentialCommandGroup {
             new ParallelDeadlineGroup(
                 new RapidFire().withTimeout(3),
                 new RevFlywheel(Constants.Shooter.RPM_EJECT_OPP_BALL + 550)
-            ),
-            startingLocation()
+            )
         );
     }
 }
