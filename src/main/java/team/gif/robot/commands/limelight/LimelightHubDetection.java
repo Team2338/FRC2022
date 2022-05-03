@@ -15,7 +15,7 @@ public class LimelightHubDetection extends CommandBase {
     }
 
     private final double xTolerance = 1.5;
-    private final double travelVoltage = 5.0;
+    private final double travelVoltage = 6.0;
     private int lockAttempts = 0;
     private int inShootingPositionCount = 0;
 

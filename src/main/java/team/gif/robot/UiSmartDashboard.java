@@ -111,7 +111,8 @@ public class UiSmartDashboard {
 
         // Pressure Sensor
         SmartDashboard.putNumber("Pressure", compressor.getPressure());
-        SmartDashboard.putNumber("Time", Timer.getFPGATimestamp());
+        SmartDashboard.putString("Time", String.format("%.4f",Timer.getFPGATimestamp()));
+        SmartDashboard.putString("Timer",String.format("%.2f",Timer.getMatchTime()));
 
         SmartDashboard.putNumber("Temp Left1", drivetrain.getTemperatureLeft1());
         SmartDashboard.putNumber("Temp Left2", drivetrain.getTemperatureLeft2());

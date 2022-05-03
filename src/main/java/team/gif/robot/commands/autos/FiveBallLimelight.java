@@ -118,13 +118,13 @@ public class FiveBallLimelight extends SequentialCommandGroup {
                 new LimelightBallDetection(), // Use limelight to get us the rest of the way
                 new CollectorRun()
             ),
-            new CollectorRun().withTimeout(0.4), // Give HP time to feed cargo
+            new CollectorRun().withTimeout(0.4), // Give robot time to collect cargo
             new ParallelDeadlineGroup(
-                new LimelightHubDetection().withTimeout(0.3),  // Drive to the hub using limelight
+                new LimelightHubDetection().withTimeout(0.4),  // Drive away from terminal 2 feetish
                 new CollectorRun()
                 //new RevFlywheel(Constants.Shooter.RPM_AUTO_5_BALL_LL_UPPER_HUB)
             ),
-            new CollectorRun().withTimeout(0.7),
+            new CollectorRun().withTimeout(1.0), // Give HP time to feed cargo
             new ParallelDeadlineGroup(
                 new LimelightHubDetection(),  // Drive to the hub using limelight
                 new CollectorRun().withTimeout(1.3),
