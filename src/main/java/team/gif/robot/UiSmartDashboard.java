@@ -41,6 +41,7 @@ public class UiSmartDashboard {
         autoModeChooser.addOption("Four+ Ball Term Right LL", autoMode.FIVE_BALL_TERMINAL_RIGHT_LIMELIGHT);
         autoModeChooser.addOption("Four+ Ball Term Right Path", autoMode.FIVE_BALL_TERMINAL_RIGHT);
         autoModeChooser.addOption("Mobility", autoMode.MOBILITY);
+        autoModeChooser.addOption("One Ball Mid Continue", autoMode.ONE_BALL_MID_CONTINUE);
         autoModeChooser.setDefaultOption("Two Ball Left", autoMode.TWO_BALL_LEFT);
         autoModeChooser.addOption("Two Ball Left Opp 1 Ball short", autoMode.TWO_BALL_LEFT_OPP_1_BALL_SHORT);
         autoModeChooser.addOption("Two Ball Left Opp 1 Ball", autoMode.TWO_BALL_LEFT_OPP_1_BALL);

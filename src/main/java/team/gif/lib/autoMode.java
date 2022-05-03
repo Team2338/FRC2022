@@ -3,6 +3,7 @@ package team.gif.lib;
 public enum autoMode {
 
     MOBILITY(0),
+    ONE_BALL_MID_CONTINUE(0),
     TWO_BALL_LEFT(0),
     TWO_BALL_LEFT_OPP_2_BALL(0),
     TWO_BALL_LEFT_OPP_1_BALL(0),
