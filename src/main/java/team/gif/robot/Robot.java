@@ -68,7 +68,6 @@ public class Robot extends TimedRobot {
     public static DriveArcade arcadeDrive;
 //    public static DriveTank tankDrive;
 
-
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -258,8 +257,9 @@ public class Robot extends TimedRobot {
 
     public void addMetricsToLogger() {
         telemetryLogger.addMetric("TimeStamp",Timer::getFPGATimestamp);
-        telemetryLogger.addMetric("MatchInfo",DriverStation::getMatchNumber);
+        telemetryLogger.addMetric("MatchNumber",DriverStation::getMatchNumber);
         telemetryLogger.addMetric("MatchTime",DriverStation::getMatchTime);
+        telemetryLogger.addMetric("GameData",DriverStation::getGameSpecificMessage);
 
         // Shooter
         telemetryLogger.addMetric("Shooter_Velocity", shooter::getSpeed);
