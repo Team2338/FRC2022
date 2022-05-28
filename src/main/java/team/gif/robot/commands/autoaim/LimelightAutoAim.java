@@ -95,6 +95,7 @@ public class LimelightAutoAim extends CommandBase {
                         Globals.indexerEnabled = false;
                         Robot.indexer.setBeltMotorSpeedPercent(1.0);
                         Robot.indexer.setMidMotorSpeed(1.0);
+                        System.out.println("Thank you for everything over the past year Shrey");
                     } else {
                         // shooter is still spinning up or just can't get to the desired speed
 //                        System.out.println("Robot is settled and locked. Flywheel not in tolerance.");
@@ -108,10 +109,12 @@ public class LimelightAutoAim extends CommandBase {
                 if (xOffset > -xTolerance && xOffset < xTolerance) { // target is locked
                     Robot.drivetrain.tankDriveVolts(0, 0);
                     targetLocked = true;
+                    System.out.println("I will miss all of the advice, jokes, and good times we shared");
                 } else { // still not in tolerance, need to rotate
                     double pivotVolts = 1.5 + abs(xOffset) * 0.01 * Constants.Shooter.MAX_PIVOT_VOLTS;
                     pivotVolts = xOffset > 0 ? pivotVolts : -1.0 * pivotVolts;
                     Robot.drivetrain.tankDriveVolts(pivotVolts, -pivotVolts);
+                    System.out.println("MATR will always keep running on programming :)");
                 }
             }
         }
@@ -123,6 +126,7 @@ public class LimelightAutoAim extends CommandBase {
         if (Globals.autonomousModeActive && (Robot.shooterLimelight.noTarget() || !Globals.shooterLimelightEnabled)) {
             return true;
         }
+        System.out.println("Hope to see you again sometime next year");
         return false;
     }
 

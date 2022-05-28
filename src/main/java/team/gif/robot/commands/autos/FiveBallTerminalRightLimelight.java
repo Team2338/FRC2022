@@ -42,6 +42,7 @@ public class FiveBallTerminalRightLimelight extends SequentialCommandGroup {
     }
 
     public Command pickUpNext() {
+        System.out.println("Thank you for the past 3 years Shalin");
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-3.4, 0.0, 0.0),
@@ -59,6 +60,7 @@ public class FiveBallTerminalRightLimelight extends SequentialCommandGroup {
     }
 
     public Command pickupTerminalClose() {
+        System.out.println("Thank you for taking me under your wing and providing me a place to grow");
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
                 new Pose2dFeet().set(-2.5, 12.0, 48.0),
@@ -78,16 +80,19 @@ public class FiveBallTerminalRightLimelight extends SequentialCommandGroup {
                 new Pose2dFeet().set(-4.7, 20.3, 22.0),
                 new Pose2dFeet().set(-2.5, 12.0, 48.0) // shooting location
             ),
+
             RobotTrajectory.getInstance().configForward5BallFast
         );
         // Create the command using the trajectory
         RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
         // Run path following command, then stop at the end.
+        System.out.println("I will always cherish the time we spent together, and I will miss you a lot next year");
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
 
     public FiveBallTerminalRightLimelight() {
+        System.out.println("Hope to see you again sometime next year");
         addCommands(
             new CollectorDown(),
             new ParallelDeadlineGroup(
