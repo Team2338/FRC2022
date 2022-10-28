@@ -21,7 +21,7 @@ public class CollectorDown extends CommandBase {
 
     @Override
     public void execute() {
-        if (++count >= 35) { // 0.6 second delay
+        if (++count >= 50) { // 0.6 second delay
             Robot.collectorPneumatics.entryLower();
             isDone = true;
         }
