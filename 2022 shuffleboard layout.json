@@ -244,7 +244,7 @@
                 {
                   "_type": "Boolean Box",
                   "_source0": "network_table:///SmartDashboard/LimelightAim",
-                  "_title": "",
+                  "_title": "/SmartDashboard/LimelightAim",
                   "Colors/Color when true": "#7CFC00FF",
                   "Colors/Color when false": "#8B0000FF"
                 },
