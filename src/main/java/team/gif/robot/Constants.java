@@ -38,9 +38,10 @@ public final class Constants {
         // part of trajectory but numbers are from example
         public static final double kStdSpeedMetersPerSecond = 3.8;
         public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
-        public static final double kSlowSpeedMetersPerSecond = 2.3; // 1.5
-        public static final double kSuperSlowSpeedMetersPerSecond = 1.5;
-        public static final double kSlowAccelerationMetersPerSecondSquared = 3.5;
+        public static final double kSlowSpeedMetersPerSecond = 0.5; // 0.5 works also 0.8 // 1.5
+        public static final double kSuperSlowSpeedMetersPerSecond = .15; // 0.15; works
+        public static final double kSuperSlowAccelerationMetersPerSecondSquared = 0.15;
+        public static final double kSlowAccelerationMetersPerSecondSquared = 0.8;
         public static final double kMediumAccelerationMetersPerSecondSquared = 3.5;
         public static final double kMediumSpeedMetersPerSecond = 2.3;
         public static final double kFastSpeedMetersPerSecond = 4.0;

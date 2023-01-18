@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import team.gif.robot.Globals;
 import team.gif.robot.RobotMap;
 
 public class Pigeon {
@@ -13,6 +14,8 @@ public class Pigeon {
     private static Pigeon instance = null;
 
     private final PigeonIMU.GeneralStatus _pigeonGenStatus = new PigeonIMU.GeneralStatus();
+
+    private static double[] pitchHistory;
 
     public static Pigeon getInstance() {
         if (instance == null) {
@@ -24,6 +27,9 @@ public class Pigeon {
     public Pigeon() {
         _pigeon = new PigeonIMU(RobotMap.PIGEON_CAN);
         instance = this;
+        _pigeon.configFactoryDefault();
+
+        pitchHistory = new double [] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     }
 
     public Pigeon(TalonSRX talon) {
@@ -31,6 +37,36 @@ public class Pigeon {
         instance = this;
     }
 
+    public void addPitch(double pitch){
+        pitchHistory[19] = pitchHistory[18];
+        pitchHistory[18] = pitchHistory[17];
+        pitchHistory[17] = pitchHistory[16];
+        pitchHistory[16] = pitchHistory[15];
+        pitchHistory[15] = pitchHistory[14];
+        pitchHistory[14] = pitchHistory[13];
+        pitchHistory[13] = pitchHistory[12];
+        pitchHistory[12] = pitchHistory[11];
+        pitchHistory[11] = pitchHistory[10];
+        pitchHistory[10] = pitchHistory[9];
+        pitchHistory[9] = pitchHistory[8];
+        pitchHistory[8] = pitchHistory[7];
+        pitchHistory[7] = pitchHistory[6];
+        pitchHistory[6] = pitchHistory[5];
+        pitchHistory[5] = pitchHistory[4];
+        pitchHistory[4] = pitchHistory[3];
+        pitchHistory[3] = pitchHistory[2];
+        pitchHistory[2] = pitchHistory[1];
+        pitchHistory[1] = pitchHistory[0];
+        pitchHistory[0] = pitch;
+    }
+
+    public void printHistory(){
+        System.out.println( "history: " + pitchHistory[19] + " " + pitchHistory[0] );
+    }
+
+    public double comparePitch(){
+        return pitchHistory[19] - pitchHistory[0];
+    }
     public void addToShuffleboard(String tabName, String widgetTitle) {
         // Puts a Gyro type widget on dashboard and assigns
         // the function getHeading_Shuffleboard
@@ -56,6 +92,29 @@ public class Pigeon {
         return ypr[0];
     }
 
+    public double getPitch() {
+        double[] ypr = new double[3];
+
+        _pigeon.getYawPitchRoll(ypr);
+
+        return ypr[1];
+    }
+
+    public short getData() {
+        short[] xyz = new short[3];
+
+        _pigeon.getBiasedAccelerometer(xyz);
+
+        return xyz[2];
+    }
+
+    public double getRoll() {
+        double[] ypr = new double[3];
+
+        _pigeon.getYawPitchRoll(ypr);
+
+        return ypr[2];
+    }
     /**
      * Returns heading values between -180 and 180
      * Does this by using the IEEEremainder function which

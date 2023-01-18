@@ -121,5 +121,8 @@ public class UiSmartDashboard {
 
         SmartDashboard.putBoolean("LimelightAim", Globals.shooterLimelightEnabled);
         SmartDashboard.putBoolean("LimelightBallsMode",Globals.collectorLimelightBallMode);
+
+        SmartDashboard.putNumber("Pigeon Data", Pigeon.getInstance().getPitch());
+
     }
 }

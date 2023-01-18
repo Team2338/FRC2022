@@ -28,6 +28,7 @@ import team.gif.robot.subsystems.Collector;
 import team.gif.robot.commands.drivetrain.DriveArcade;
 import team.gif.robot.subsystems.Drivetrain;
 import team.gif.robot.subsystems.Shooter;
+import team.gif.robot.subsystems.drivers.Pigeon;
 import team.gif.robot.subsystems.drivers.RobotCompressor;
 
 /**
@@ -143,6 +144,9 @@ public class Robot extends TimedRobot {
 
         chosenAuto = uiSmartDashboard.autoModeChooser.getSelected();
         chosenDelay = uiSmartDashboard.delayChooser.getSelected();
+
+//        System.out.println(Pigeon.getInstance().getPitch());
+//        System.out.println(Pigeon.getInstance().getData());
     }
 
     /**
@@ -243,6 +247,11 @@ public class Robot extends TimedRobot {
         }
 
         telemetryLogger.run();
+
+//        double pitch = Pigeon.getInstance().getPitch();
+//        Pigeon.getInstance().addPitch( pitch );
+//        if( Math.abs(Pigeon.getInstance().comparePitch()) > 5.0)
+//            System.out.println("TILTED");;
     }
 
     @Override

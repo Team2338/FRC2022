@@ -8,4 +8,7 @@ public abstract class Globals {
     public static boolean climbingActive = false;
     public static boolean shooterLimelightEnabled = true;
     public static boolean collectorLimelightBallMode = true;
+
+    public static double pitchOffset = 0.0;
+
 }
