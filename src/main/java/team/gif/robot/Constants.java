@@ -36,8 +36,8 @@ public final class Constants {
 
     public static class Auto {
         // part of trajectory but numbers are from example
-        public static final double kStdSpeedMetersPerSecond = 3.8;
-        public static final double kStdAccelerationMetersPerSecondSquared = 3.0;
+        public static final double kStdSpeedMetersPerSecond = 2.0;
+        public static final double kStdAccelerationMetersPerSecondSquared = 2.0;
         public static final double kSlowSpeedMetersPerSecond = 0.5; // 0.5 works also 0.8 // 1.5
         public static final double kSuperSlowSpeedMetersPerSecond = .15; // 0.15; works
         public static final double kSuperSlowAccelerationMetersPerSecondSquared = 0.15;

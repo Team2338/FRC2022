@@ -50,10 +50,25 @@ public class Mobility extends SequentialCommandGroup {
         return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
     }
 
+    public Command forwardInit() {
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+                List.of(
+                        new Pose2dFeet().set(0, 0.0, 0.0),
+                        new Pose2dFeet().set(8.0, 0.0, 0.0)
+                ),
+                RobotTrajectory.getInstance().configForward
+        );
+        // Create the command using the trajectory
+        
+        RamseteCommand rc = RobotTrajectory.getInstance().createRamseteCommand(trajectory);
+        // Run path following command, then stop at the end.
+        return rc.andThen(() -> Robot.drivetrain.tankDriveVolts(0, 0));
+    }
+
     public Command forward() {
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
             List.of(
-                new Pose2dFeet().set(0, 0.0, 0.0),
+                new Pose2dFeet().set(8.0, 0.0, 0.0),
                 new Pose2dFeet().set(15.0, 0.0, 0.0)
             ),
             RobotTrajectory.getInstance().configForwardSuperSlow
@@ -69,20 +84,27 @@ public class Mobility extends SequentialCommandGroup {
     public Mobility() {
 
             addCommands(
-            new ParallelDeadlineGroup(
-                new DriveUntilAngle(),
-                reverse()
-            ),
-            new ResetHeading(),
-            new WaitCommand(0.5),
+                    forwardInit(),
+
+            new WaitCommand(0.25),
             new ParallelDeadlineGroup(
                 new DriveUntilLevel(),
                 forward()
-            ),
-            new ParallelDeadlineGroup(
-                new DriveUntilLevel(),
-                reverseAgain()
             )
+//             new ParallelDeadlineGroup(
+//                new DriveUntilAngle(),
+//                reverse()
+//            ),
+//            new ResetHeading(),
+//            new WaitCommand(0.5),
+//            new ParallelDeadlineGroup(
+//                new DriveUntilLevel(),
+//                forward()
+//            ),
+//            new ParallelDeadlineGroup(
+//                new DriveUntilLevel(),
+//                reverseAgain()
+            //)
         );
     }
 }
